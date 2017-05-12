@@ -1,4 +1,4 @@
-[url "https://github.com/"]
+[url "git@github.com:"]
 	insteadOf = gh:
 
 [url "https://bitbucket.org/"]
