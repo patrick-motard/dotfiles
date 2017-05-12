@@ -1,0 +1,10 @@
+[url "https://github.com/"]
+	insteadOf = gh:
+
+[url "https://bitbucket.org/"]
+	insteadOf = bb:
+[user]
+	name = patrick-motard
+	email = motard19@gmail.com
+[core]
+	editor = vim
