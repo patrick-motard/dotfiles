@@ -1,6 +1,5 @@
 [url "git@github.com:"]
 	insteadOf = gh:
-
 [url "https://bitbucket.org/"]
 	insteadOf = bb:
 [user]
