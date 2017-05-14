@@ -66,6 +66,12 @@ bindsym $mod+n exec i3lock-fancy
 ## is not the only container in this workspace
 smart_borders on
 
+## assign applications to workspaces:
+## NOTE: use xprop command to get WM_CLASS (second string value)
+assign [class="Xfce4-terminal"] $ws3
+assign [class="Google-chrome"] $ws2
+
+
 ##--- |||||||| END MY CONFIG ||||||| ---##
 
 # change focus
@@ -118,13 +124,13 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-set $ws1 " 1:  "
-set $ws2  "2:  "
+set $ws2 "2:  "
+set $ws3  "3:  "
 
 # switch to workspace
-bindsym $mod+1 workspace $ws1
+bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace 3
+bindsym $mod+3 workspace $ws3
 bindsym $mod+4 workspace 4
 bindsym $mod+5 workspace 5
 bindsym $mod+6 workspace 6
@@ -134,9 +140,9 @@ bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace $ws2
-bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+3 move container to workspace $ws3
 bindsym $mod+Shift+4 move container to workspace 4
 bindsym $mod+Shift+5 move container to workspace 5
 bindsym $mod+Shift+6 move container to workspace 6
@@ -185,3 +191,7 @@ bar {
         font pango:monospace, Awesome 12
         position top
 }
+
+## start applications on startup
+exec --no-startup-id xfce4-terminal
+exec --no-startup-id google-chrome-stable
