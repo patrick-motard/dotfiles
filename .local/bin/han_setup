@@ -1,0 +1,7 @@
+## install keychain
+## used for maintaining ssh-agent keys
+pacman -S keychain
+
+
+## Install wakatime
+pip install wakatime

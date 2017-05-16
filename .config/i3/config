@@ -68,7 +68,7 @@ smart_borders on
 
 ## assign applications to workspaces:
 ## NOTE: use xprop command to get WM_CLASS (second string value)
-assign [class="Xfce4-terminal"] $ws2
+# assign [class="Xfce4-terminal"] $ws2
 assign [class="Google-chrome" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] $ws4
 assign [class="Google-chrome"] $ws3
 assign [class="Emacs"] $ws1
