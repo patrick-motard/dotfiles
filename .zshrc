@@ -1,5 +1,3 @@
-. ~/.local/bin/env
-
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -101,7 +99,6 @@ export NVM_DIR="$HOME/.nvm"
 
 ## NPM TOKEN SETUP
 export NPM_TOKEN=$NPM_TOKEN
-echo $NPM_TOKEN
 
 autoload -U add-zsh-hook
 load-nvmrc() {
