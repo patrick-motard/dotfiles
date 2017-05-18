@@ -1,3 +1,5 @@
+. ~/.local/bin/env
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -76,6 +78,10 @@ source $ZSH/oh-my-zsh.sh
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
+## add bitbucket and github keys to keychain so that i dont have run ssh-add every time
+## i open shell
+## https://wiki.archlinux.org/index.php/SSH_keys#Keychain
+eval $(keychain --eval --quiet id_rsa id_rsa_bb)
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -92,6 +98,10 @@ alias pbpaste="xclip -selection clipboard -o"
 export PATH=~/.local/bin:$PATH
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+## NPM TOKEN SETUP
+export NPM_TOKEN=$NPM_TOKEN
+echo $NPM_TOKEN
 
 autoload -U add-zsh-hook
 load-nvmrc() {
