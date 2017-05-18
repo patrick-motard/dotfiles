@@ -72,6 +72,8 @@ smart_borders on
 assign [class="Google-chrome" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] $ws4
 assign [class="Google-chrome"] $ws3
 assign [class="Emacs"] $ws1
+assign [class="Mysql-workbench-bin"] $ws5
+assign [class="Xfce4-terminal"] $ws2
 
 ## move workspace to screen
 
@@ -131,6 +133,7 @@ set $ws1 "1: "
 set $ws2 "2: "
 set $ws3  "3:  "
 set $ws4  "4: "
+set $ws5 "5: "
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
