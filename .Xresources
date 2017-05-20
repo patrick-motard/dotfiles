@@ -20,3 +20,15 @@ XTerm*foreground: #e7e7e7
 XTerm*pointerColor: #16A085
 XTerm*faceName: Fixed
 XTerm*faceSize: 11
+
+! ------------------------------------------------------------------------------
+! ROFI Color theme
+! ------------------------------------------------------------------------------
+rofi.color-enabled: true
+rofi.color-window: argb:0011d32, argb:0011d32, argb:0011d32
+rofi.color-normal: #011d32, #acd3ec, #011d32, #011d32, #eee8d5
+rofi.color-active: argb:21fdf6e3, #20A8E8, argb:24eee8d5, #268bd2, #fdf6e3
+rofi.color-urgent: #fdf6e3, #dc322f, #eee8d5, #dc322f, #fdf6e3
+! rofi.fullscreen: true
+! rofi.opacity: "75"
+! rofi.margin: 
