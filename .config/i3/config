@@ -29,11 +29,11 @@ set $midnight-blue  #1F327F
 set $white          #ffffff
 
 set $fg #20A8E8
-set $bg $dodger-blue
+set $bg #1F327F
 
 # class                 border  backgr. text indicator child_border
 client.focused          $fg     $fg     $fg  $fg       $fg
-client.focused_inactive $fg     $fg     $fg  $fg       $fg
+client.focused_inactive $fg     $fg     $fg  $fg       $bg
 client.unfocused        $bg     $bg     $fg  $bg       $bg
 client.urgent           $bg     $bg     $fg  $bg       $bg
 client.placeholder      $bg     $bg     $fg  $bg       $bg
