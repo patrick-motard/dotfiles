@@ -101,6 +101,11 @@ add-zsh-hook chpwd load-nvmrc
 load-nvmrc
 ## END NVM STUFF
 
+## VIM POWERLINE
+if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
+    source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+fi
+
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 ## add bitbucket and github keys to keychain so that i dont have run ssh-add every time
@@ -120,7 +125,13 @@ alias pbpaste="xclip -selection clipboard -o"
 alias gse="git config user.email "patrick.motard@johnsonfit.com""
 alias restart="shutdown -r now"
 alias xrl="xrdb ~/.Xresources"
+
 alias y="yadm"
+alias ya="yadm add"
+alias yc="yadm commit"
+alias ycm="yadm commit -m"
+alias yp="yadm push"
+alias ys="yadm status"
 
 
 
