@@ -17,9 +17,27 @@ set $navy-blue   #011D32
 
 #Needed for i3-gaps
 hide_edge_borders both
-for_window [class="^.*"] border pixel 0 
+for_window [class="^.*"] border pixel 4
 gaps inner 15 
-gaps outer 50
+gaps outer 100
+
+set $indigo         #4F0857
+set $sea-green      #1166B6
+set $dodger-blue    #20A8E8
+set $pale-turquoise #ACD3EC
+set $midnight-blue  #1F327F
+set $white          #ffffff
+
+set $fg #20A8E8
+set $bg $dodger-blue
+
+# class                 border  backgr. text indicator child_border
+client.focused          $fg     $fg     $fg  $fg       $fg
+client.focused_inactive $fg     $fg     $fg  $fg       $fg
+client.unfocused        $bg     $bg     $fg  $bg       $bg
+client.urgent           $bg     $bg     $fg  $bg       $bg
+client.placeholder      $bg     $bg     $fg  $bg       $bg
+client.background $fg
 
 set $mod Mod1
 
@@ -48,7 +66,10 @@ bindsym $mod+Shift+q kill
 ##--- |||||||| MY CONFIG ||||||| ---##
 
 # start rofi (a program launcher)
-bindsym $mod+d exec rofi -show run
+bindsym $mod+d exec rofi -show run -separator-style none -location 0 -lines 4 -width 600 -eh 1 -padding 50 -hide-scrollbar -bw 0
+
+# bindsym $mod+d exec rofi -show run
+
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -70,7 +91,7 @@ bindsym $mod+n exec i3lock-fancy
 
 ## smart borders: draw borders around a container only if it 
 ## is not the only container in this workspace
-smart_borders on
+# smart_borders on
 
 ## assign applications to workspaces:
 ## NOTE: use xprop command to get WM_CLASS (second string value)
@@ -202,8 +223,10 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
     colors {
-            #class      #border     #background     #text
-            background  $navy-blue
+            #class              #border       #background     #text
+            background          $navy-blue
+            focused_workspace   $dodger-blue  $dodger-blue    $white
+            inactive_workspace  $navy-blue    $navy-blue      $pale-turquoise
 
     }
     status_command i3blocks
