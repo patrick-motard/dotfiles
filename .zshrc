@@ -124,7 +124,9 @@ alias pbcopy="xclip -selection clipboard"
 alias pbpaste="xclip -selection clipboard -o"
 alias gse="git config user.email "patrick.motard@johnsonfit.com""
 alias restart="shutdown -r now"
+## reload xresources
 alias xrl="xrdb ~/.Xresources"
+alias sz="source .zshrc"
 
 alias y="yadm"
 alias ya="yadm add"
@@ -132,7 +134,13 @@ alias yc="yadm commit"
 alias ycm="yadm commit -m"
 alias yp="yadm push"
 alias ys="yadm status"
+alias ye="yadm encrypt"
+alias yaf="yadm add ~/.yadm/files.gpg"
 
+#switch between different AWS accounts
+alias work-mode="switch-aws-creds.sh work"
+alias other-mode="switch-aws-creds.sh other"
+alias check-mode="aws s3 ls"
 
 
 
