@@ -1,8 +1,9 @@
 syntax on
 inoremap fd <Esc>
 set laststatus=2 
-let g:powerline_pycmd = 'py3'
- 
+" uncomment the line below if powerline installed with python3
+" let g:powerline_pycmd = 'py3'
+
 """"""""""""""""""""""""""""""""""""
 "                                  "
 "             VUNDLE               "
