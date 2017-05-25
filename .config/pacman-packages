@@ -245,6 +245,7 @@ vlc-nightly
 which
 wmctrl
 wpa_supplicant
+xbindkeys
 xclip
 xcursor-simpleandsoft
 xcursor-vanilla-dmz-aa
