@@ -145,6 +145,7 @@ alias check-mode="aws s3 ls"
 
 
 export PATH=~/.local/bin:$PATH
+export PATH=/opt/idea-IC-171.4424.56/bin:$PATH
 
 ## NPM TOKEN SETUP
 export NPM_TOKEN=$NPM_TOKEN
