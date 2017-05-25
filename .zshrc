@@ -11,7 +11,6 @@
 #ZSH_THEME="gnzh"
 ZSH_THEME="agnoster"
 # ZSH_THEME="lambda-mod"
-
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -150,4 +149,6 @@ export PATH=/opt/idea-IC-171.4424.56/bin:$PATH
 ## NPM TOKEN SETUP
 export NPM_TOKEN=$NPM_TOKEN
 
+# powerline recommended line to run
+. /usr/share/zsh/site-contrib/powerline.zsh
 
