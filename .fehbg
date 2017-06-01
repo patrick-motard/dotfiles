@@ -1,0 +1,2 @@
+#!/bin/sh
+feh  --bg-scale '/home/han/Dropbox/photos/backgrounds/2017/wallhaven-502910.jpg' 
