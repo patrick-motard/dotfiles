@@ -111,6 +111,8 @@ assign [class="Google-chrome"] $ws3
 assign [class="Emacs"] $ws1
 assign [class="Mysql-workbench-bin"] $ws5
 assign [class="Xfce4-terminal"] $ws2
+assign [class="HipChat"] $ws4
+assign [class="Spotify"] $ws6
 
 ## move workspace to screen
 
@@ -171,6 +173,7 @@ set $ws2 "2: "
 set $ws3  "3:  "
 set $ws4  "4: "
 set $ws5 "5: "
+set $ws6 "6: "
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
