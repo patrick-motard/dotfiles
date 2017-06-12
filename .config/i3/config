@@ -69,8 +69,10 @@ bindsym $mod+Shift+q kill
 ##--- |||||||| MY CONFIG ||||||| ---##
 
 # start rofi (a program launcher)
-#bindsym $mod+d exec rofi -show run -separator-style none -location 0 -lines 20 -width 600 -eh 1 -padding 50 -hide-scrollbar -bw 0
-bindsym $mod+d exec rofi -show run -width 1000 -location 0 -lines 10 -bw 2  -padding 100
+bindsym $mod+d exec rofi -show run -separator-style none -location 0 -lines 20 -width 600 -eh 1 -padding 50 -hide-scrollbar -bw 0
+# bindsym $mod+d exec rofi -show run -width 1000 -location 0 -lines 10 -bw 2  -padding 100
+
+# bindsym $mod+d exec rofi -show run -lines 5 -width 100 -padding 300 -fullscreen -opacity "85" -font "Roboto 50" -separator-style "none"
 
 # bindsym $mod+d exec rofi -show run
 
@@ -240,7 +242,6 @@ bar {
             background          $navy-blue
             focused_workspace   $dodger-blue  $dodger-blue    $white
             inactive_workspace  $navy-blue    $navy-blue      $pale-turquoise
-
     }
     status_command i3blocks
     font pango:Hack Regular, Awesome 12
@@ -250,5 +251,7 @@ bar {
 ## start applications on startup
 exec --no-startup-id xfce4-terminal
 exec --no-startup-id google-chrome-stable
-exec --no-startup-id feh --bg-scale '/home/han/Dropbox/photos/backgrounds/2017/wallhaven-502910.jpg' 
+# exec --no-startup-id feh --bg-scale '/home/han/Dropbox/photos/backgrounds/2017/wallhaven-502910.jpg' 
 exec --no-startup-id dropbox
+# exec --no-startup-id ~/.config/polybar/startup.sh
+exec --no-startup-id nitrogen --restore

@@ -119,6 +119,8 @@ eval $(keychain --eval --quiet id_rsa id_rsa_bb)
 alias zshconfig="vim ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias gs="git status"
+alias gcm="git commit -m"
+alias gp="git push"
 alias pbcopy="xclip -selection clipboard"
 alias pbpaste="xclip -selection clipboard -o"
 alias gse="git config user.email "patrick.motard@johnsonfit.com""
@@ -134,7 +136,9 @@ alias ycm="yadm commit -m"
 alias yp="yadm push"
 alias ys="yadm status"
 alias ye="yadm encrypt"
+alias yd="yadm diff"
 alias yaf="yadm add ~/.yadm/files.gpg"
+
 
 #switch between different AWS accounts
 alias work-mode="switch-aws-creds.sh work"
