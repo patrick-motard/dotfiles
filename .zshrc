@@ -127,7 +127,7 @@ alias gse="git config user.email "patrick.motard@johnsonfit.com""
 alias restart="shutdown -r now"
 ## reload xresources
 alias xrl="xrdb ~/.Xresources"
-alias sz="source .zshrc"
+alias sz="source ~/.zshrc"
 
 alias y="yadm"
 alias ya="yadm add"
@@ -138,6 +138,7 @@ alias ys="yadm status"
 alias ye="yadm encrypt"
 alias yd="yadm diff"
 alias yaf="yadm add ~/.yadm/files.gpg"
+alias token=~/.ssh/token
 
 
 #switch between different AWS accounts
