@@ -22,6 +22,16 @@ Existing aliases:
 `other-mode`: switch to other credentials
 
 
+## Additional Setup Steps:
+
+### spacemacs:
+
+Currently using [neotree icons](https://github.com/domtronn/all-the-icons.el). 
+Install using `M-x all-the-icons-install-fonts`
+Restart after install `SPC q r`
+
+
+
 ## Helpful Commands:
 
 ### spacemacs:
