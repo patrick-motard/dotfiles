@@ -20,3 +20,13 @@ e.g. `credentials-my-personal-creds`
 Existing aliases:
 `work-mode`: switch to work credentials
 `other-mode`: switch to other credentials
+
+
+## Helpful Commands:
+
+### spacemacs:
+
+`SPC f e d` *spacemacs/find-dotfile* : opens `.spacemacs` in buffer
+
+`SPC f e R` *dotspacemacs/sync-configuration-files* : reloads .spacemacs config changes
+
