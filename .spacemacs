@@ -62,7 +62,7 @@ values."
    ;; dotspacemacs-additional-packages '(base16-theme)
    dotspacemacs-additional-packages '(
 
-                                      ;; 
+                                      ;;
                                       all-the-icons
                                       )
    ;; A list of packages that cannot be updated.
@@ -138,12 +138,29 @@ values."
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(dracula
                          solarized-dark
-                         tango-plus
                          darktooth
-                         underwater
                          ujelly
                          spacemacs-dark
-                         spacemacs-light)
+                         spacemacs-light
+                         flatui
+                         flatland
+                         solarized-dark
+                         solarized-light
+                         monokai
+                         apropospriate-light
+                         heroku
+                         jazz
+                         lush
+                         molokai
+                         naquadah
+                         obsidian
+                         omtose-phellack
+                         planet
+                         reverse
+                         seti
+                         smyx
+                         soothe
+                         spacegray)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
