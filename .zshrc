@@ -162,5 +162,6 @@ export PATH=/opt/idea-IC-171.4424.56/bin:$PATH
 export NPM_TOKEN=$NPM_TOKEN
 
 # powerline recommended line to run
+powerline-daemon -q
 . /usr/share/zsh/site-contrib/powerline.zsh
 
