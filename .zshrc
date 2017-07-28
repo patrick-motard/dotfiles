@@ -53,7 +53,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git docker)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -146,7 +146,13 @@ alias work-mode="switch-aws-creds.sh work"
 alias other-mode="switch-aws-creds.sh other"
 alias check-mode="aws s3 ls"
 
+## Robo3t -mongo-client-
+export PATH=/usr/bin/robo3t/bin:$PATH
 
+## RUST
+export PATH=~/.cargo/bin:$PATH
+RUST_SRC_PATH=~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
+## end RUST
 
 ## GOLANG
 export GOPATH=~/code/go
