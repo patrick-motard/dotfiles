@@ -1,14 +1,30 @@
 # dotfiles
 All my dotfiles used for linux and osx. Uses YADM. 
 
+## Important Aliases
+
+### setup-run
+This will run `.local/bin/han_setup.zsh`, which includes several installation commands. Use
+this command to install pacman & AUR packages required by the dotfiles. This command also
+updates your pacman.
+
+### setup-edit
+Run this command if you would like to edit the setup file. (i.e. you want to install new packages)
+
+### sz
+sources ~/.zshrc
+
+### rc-edit
+edit `~/.zshrc`
+
+### xrl
+reload changes to ~/.Xresources
+
+
 ## scripts
 ~/.local/bin 
 
 Two scripts below found at [this article](https://wiki.archlinux.org/index.php/migrate_installation_to_new_hardware)
-
-- `installed-packages.sh` : documented, read them
-
-- `install-pacman-packages.sh` : installs packages for pacman listed from `installed-packages.sh` 
 
 - `switch-aws-creds.sh` 
 switch which AWS credentials are default
