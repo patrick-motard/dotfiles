@@ -126,7 +126,7 @@ alias pbpaste="xclip -selection clipboard -o"
 alias restart="shutdown -r now"
 ## reload xresources
 alias xrl="xrdb ~/.Xresources"
-alias zsh-rl="source ~/.zshrc"
+alias sz="source ~/.zshrc"
 
 alias y="yadm"
 alias ya="yadm add"
@@ -139,7 +139,7 @@ alias yd="yadm diff"
 alias yaf="yadm add ~/.yadm/files.gpg"
 alias token=~/.ssh/token
 
-alias setup-run="sudo zsh /home/han/.local/bin/han_setup.zsh"
+alias setup-run="zsh /home/han/.local/bin/han_setup.zsh"
 alias setup-edit="vim ~/.local/bin/han_setup.zsh"
 
 
