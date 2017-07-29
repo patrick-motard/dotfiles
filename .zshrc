@@ -116,18 +116,17 @@ eval $(keychain --eval --quiet id_rsa id_rsa_bb)
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-alias zshconfig="vim ~/.zshrc"
+alias rc-edit="vim ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias gs="git status"
 alias gcm="git commit -m"
 alias gp="git push"
 alias pbcopy="xclip -selection clipboard"
 alias pbpaste="xclip -selection clipboard -o"
-alias gse="git config user.email "patrick.motard@johnsonfit.com""
 alias restart="shutdown -r now"
 ## reload xresources
 alias xrl="xrdb ~/.Xresources"
-alias sz="source ~/.zshrc"
+alias zsh-rl="source ~/.zshrc"
 
 alias y="yadm"
 alias ya="yadm add"
@@ -139,6 +138,9 @@ alias ye="yadm encrypt"
 alias yd="yadm diff"
 alias yaf="yadm add ~/.yadm/files.gpg"
 alias token=~/.ssh/token
+
+alias setup-run="sudo zsh /home/han/.local/bin/han_setup.zsh"
+alias setup-edit="vim ~/.local/bin/han_setup.zsh"
 
 
 #switch between different AWS accounts
