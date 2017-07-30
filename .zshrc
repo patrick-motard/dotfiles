@@ -174,3 +174,4 @@ export NPM_TOKEN=$NPM_TOKEN
 powerline-daemon -q
 . /usr/share/zsh/site-contrib/powerline.zsh
 
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

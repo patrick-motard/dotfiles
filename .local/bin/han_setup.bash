@@ -1,9 +1,14 @@
 ## update pacman
-sudo pacman -Syu
+sudo pacman -Syu --noconfirm
+## rank mirrors by speed and filter out out of date mirrors
+sudo pacman-mirrors -g
+sudo pacman-optimize && sync
 
 export pacman_packages="
   xorg-server
   xorg-xinit
+  virtualbox-guest-utils
+  virtualbox-guest-modules-arch
   vim
   zsh 
   keychain
@@ -23,15 +28,6 @@ if [[ "$(echo $SHELL)" != "/usr/bin/zsh" ]]; then
 	echo "shell set to zsh"
 fi
 
-export yaourt_packages="
-  ttf-font-awesome
-  i3-gaps-git
-  i3-blocks
-"
-for yaourt_package in $yaourt_packages; do
-  yaourt $yaourt_package --noconfirm
-done
-
 ## Install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
@@ -44,5 +40,25 @@ if [[ ! -d /home/han/.vim/bundle/Vundle.vim ]]; then
   git clone https://github.com/VundleVim/Vundle.vim.git /home/han/.vim/bundle/Vundle.vim
 fi
 
+## Install NVM
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+
 ## Set yadm remote to .ssh
 yadm remote set-url origin git@github.com:patrick-motard/dotfiles.git
+
+
+## use vmware setupscript (works with virtualbox)
+git clone https://github.com/rasa/vmware-tools-patches.git ~/downloads/vmware-tools/
+sudo sh /home/han/downloads/vmware-tools/patched-open-vm-tools.sh
+
+## install yaourt packages
+export yaourt_packages="
+  ttf-font-awesome
+  i3-gaps-git
+  i3blocks-gaps-git
+"
+for yaourt_package in $yaourt_packages; do
+  yaourt $yaourt_package --noconfirm
+done
+
+
