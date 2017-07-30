@@ -1,6 +1,23 @@
 # dotfiles
 All my dotfiles used for linux and osx. Uses YADM. 
 
+## Programs Used:
+
+- `nvm` node version manager, defaults to lts/boron
+- `emacs` spacemacs
+- `yadm` dotfile manager
+- `i3-gaps` window manager
+- `i3blocks` status line for i3-bar
+- `termite` terminal
+- `oh-my-zsh` & z shell
+- no display manager
+- `wakatime` for code usage tracking
+- `vim`:
+-- `powerline`
+-- `vundle`
+-- `wakatime`
+- `nitrogen` desktop background management
+
 ## Important Aliases
 
 ### setup-run
