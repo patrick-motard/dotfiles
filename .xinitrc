@@ -1,4 +1,6 @@
 #!/bin/sh
+# start virtualbox client scripts
+/usr/bin/VBoxClient-all
 
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
