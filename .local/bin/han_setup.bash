@@ -16,6 +16,9 @@ export pacman_packages="
   firefox
   termite
   rofi
+  dropbox
+  emacs
+  nitrogen
 "
 
 for package_name in $pacman_packages; do
@@ -45,6 +48,9 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | b
 
 ## Set yadm remote to .ssh
 yadm remote set-url origin git@github.com:patrick-motard/dotfiles.git
+
+## Install Spacemacs
+git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 
 
 ## use vmware setupscript (works with virtualbox)
