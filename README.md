@@ -20,6 +20,10 @@ edit `~/.zshrc`
 ### xrl
 reload changes to ~/.Xresources
 
+### decrypt
+decrypts encrypted yadm files and makes sure they are placed
+correctly in ~/
+
 
 ## scripts
 ~/.local/bin 

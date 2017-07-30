@@ -138,9 +138,10 @@ alias ye="yadm encrypt"
 alias yd="yadm diff"
 alias yaf="yadm add ~/.yadm/files.gpg"
 alias token=~/.ssh/token
+alias decrypt="yadm decrypt && rsync -a ~/home/han/ ~/"
 
-alias setup-run="zsh /home/han/.local/bin/han_setup.zsh"
-alias setup-edit="vim ~/.local/bin/han_setup.zsh"
+alias setup-run="bash /home/han/.local/bin/han_setup.bash"
+alias setup-edit="vim ~/.local/bin/han_setup.bash"
 
 
 #switch between different AWS accounts
