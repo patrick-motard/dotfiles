@@ -43,19 +43,23 @@ if [[ ! -d /home/han/.vim/bundle/Vundle.vim ]]; then
   git clone https://github.com/VundleVim/Vundle.vim.git /home/han/.vim/bundle/Vundle.vim
 fi
 
-## Install NVM
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
-
+## Install NVM if nvm command not recognized
+if command -v nvm >/dev/null 2>&1; then  
+  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+fi
 ## Set yadm remote to .ssh
 yadm remote set-url origin git@github.com:patrick-motard/dotfiles.git
 
 ## Install Spacemacs
-git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
-
+if [[ ! -d ~/.emacs.d/.git ]]; then
+  git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+fi
 
 ## use vmware setupscript (works with virtualbox)
+if [[ ! -d ~/downloads/vmware-tools/.git ]]; then
 git clone https://github.com/rasa/vmware-tools-patches.git ~/downloads/vmware-tools/
 sudo sh /home/han/downloads/vmware-tools/patched-open-vm-tools.sh
+fi
 
 ## install yaourt packages
 export yaourt_packages="
