@@ -20,6 +20,8 @@ export pacman_packages="
   emacs
   nitrogen
   compton
+  pulseaudio
+  pamixer
 "
 
 for package_name in $pacman_packages; do
