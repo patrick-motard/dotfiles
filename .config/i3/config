@@ -254,5 +254,6 @@ exec --no-startup-id google-chrome-stable
 # exec --no-startup-id feh --bg-scale '/home/han/Dropbox/photos/backgrounds/2017/wallhaven-502910.jpg' 
 exec --no-startup-id dropbox
 # exec --no-startup-id ~/.config/polybar/startup.sh
+exec --no-startup-id compton
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id emacs
