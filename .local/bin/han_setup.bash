@@ -59,6 +59,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 ## Python package installs
 ## Install wakatime
 sudo pip install wakatime
+pip install --upgrade --user awscli
 
 ## Install Vundle
 if [[ ! -d /home/han/.vim/bundle/Vundle.vim ]]; then
