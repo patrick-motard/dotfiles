@@ -1,2 +1,2 @@
 #!/bin/sh
-feh  --bg-scale '/home/han/Dropbox/photos/backgrounds/2017/wallhaven-502910.jpg' 
+feh  --bg-fill '/home/han/Dropbox/photos/backgrounds/2017/wallhaven-517840.jpg' '/home/han/Dropbox/photos/backgrounds/2017/wallhaven-502910.jpg' '/home/han/Dropbox/photos/backgrounds/2017/wallhaven-500108.png' '/home/han/Dropbox/photos/backgrounds/2017/wallhaven-533562.jpg' '/home/han/Dropbox/photos/backgrounds/2017/wallhaven-518337.png' '/home/han/Dropbox/photos/backgrounds/2017/wallhaven-475827.jpg' '/home/han/Dropbox/photos/backgrounds/2017/wallhaven-528401.jpg' '/home/han/Dropbox/photos/backgrounds/2017/wallhaven-260102.png' '/home/han/Dropbox/photos/backgrounds/2017/wallhaven-482641.jpg' 

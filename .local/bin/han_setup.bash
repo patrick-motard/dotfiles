@@ -18,15 +18,34 @@ export pacman_packages="
   rofi
   dropbox
   emacs
-  nitrogen
   compton
   pulseaudio
   pamixer
+  feh
+  docker
+  docker-compose
 "
 
 for package_name in $pacman_packages; do
   sudo pacman -S $package_name --needed --noconfirm
 done
+
+
+## if the docker daemon isn't active, set it up
+if [ ! $(systemctl -q is-active docker ) ] ; then
+    echo "Docker isn't running"
+    ## refer to docker daemon documentation for further details:
+    ## https://docs.docker.com/engine/installation/linux/linux-postinstall/
+    ## create a group for docker
+    sudo groupadd docker
+    ## add current user to it so that you dont have to issue sudo everytime
+    sudo usermod -aG docker $USER
+    ## make sure the docker daemon starts on boot
+    sudo systemctl enable docker
+    ## start the docker daemon
+    sudo systemctl start docker
+    echo "Docker now running and set to run on boot. User added to group"
+fi
 
 ## set zsh to default shell
 if [[ "$(echo $SHELL)" != "/usr/bin/zsh" ]]; then
@@ -46,13 +65,15 @@ if [[ ! -d /home/han/.vim/bundle/Vundle.vim ]]; then
   git clone https://github.com/VundleVim/Vundle.vim.git /home/han/.vim/bundle/Vundle.vim
 fi
 
-## Install NVM if nvm command not recognized
-if ! type nvm > /dev/null; then
+## Install NVM if nvm shell sript not downloaded
+if [[ ! -f .nvm/nvm.sh ]]; then
   curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
   . ~/.nvm/nvm.sh ## source nvm
   nvm install lts/boron
   npm i -g tern ## tern is used for the javascript layer in emacs
 fi
+
+mkdir -p $HOME/code
 
 ## Set yadm remote to .ssh
 yadm remote set-url origin git@github.com:patrick-motard/dotfiles.git
@@ -78,5 +99,3 @@ export yaourt_packages="
 for yaourt_package in $yaourt_packages; do
   yaourt $yaourt_package --noconfirm
 done
-
-
