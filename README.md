@@ -1,22 +1,34 @@
 # dotfiles
-All my dotfiles used for linux and osx. Uses YADM. 
+All my dotfiles & setup scripts used for linux. 
+
+
+## Sites used for inspiration & information
+
+### color schemes
+ - [terminal sexy](http://terminal.sexy/)
+
+### dotfile repositories
+ - [unixporn](https://www.reddit.com/r/unixporn)
+ - [dotshareit](http://dotshare.it/)
+
 
 ## Programs Used:
 
+- `yadm` dotfile manager
 - `nvm` node version manager, defaults to lts/boron
 - `emacs` spacemacs
 - `yadm` dotfile manager
 - `i3-gaps` window manager
 - `i3blocks` status line for i3-bar
-- `termite` terminal
+- `termite` terminal ([repo link](https://github.com/thestinger/termite/))
 - `oh-my-zsh` & z shell
 - no display manager
+- `feh` (for desktop backgrounds)
 - `wakatime` for code usage tracking
-- `vim`:
+- `vim`
 -- `powerline`
 -- `vundle`
 -- `wakatime`
-- `nitrogen` desktop background management
 
 ## Important Aliases
 
