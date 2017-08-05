@@ -61,6 +61,23 @@ Existing aliases:
 
 ## Additional Setup Steps:
 
+### AUR pkg `python-powerline-git`
+
+This package gives you a nice powerline styled command line for zsh
+as well as a powerline for vim. However it's setup requires a few 
+extra steps when installing. The package build instructions includes
+dependencies for both the python2 version and the python3 version. 
+If you dont remove all the dependencies and build instructions for 
+the version of python you're not using the install will fail. Make 
+sure to take note of what version of python you are running
+(pip --version). I'm running python3.
+
+When the install asks to "Edit PKGBUILD" type "y" 
+
+Assuming you are running python3 remove python2-powerline-git, 
+python2-setuptools, python2-sphinx (needs to be python-sphinx),
+and `make man SPHINXBUILD=sphinx-build2` needs to be `make man SPHINXBUILD=sphinx-build`
+
 ### spacemacs:
 
 Currently using [neotree icons](https://github.com/domtronn/all-the-icons.el). 
