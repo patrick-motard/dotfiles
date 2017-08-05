@@ -96,7 +96,9 @@ export yaourt_packages="
   i3-gaps-git
   i3blocks-gaps-git
   python-powerline-git
+  xorg-xprop
 "
+
 
 for yaourt_package in $yaourt_packages; do
   yaourt $yaourt_package --noconfirm
