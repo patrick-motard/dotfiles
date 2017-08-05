@@ -95,6 +95,7 @@ export yaourt_packages="
   ttf-font-awesome
   i3-gaps-git
   i3blocks-gaps-git
+  python-powerline-git
 "
 
 for yaourt_package in $yaourt_packages; do
