@@ -21,8 +21,8 @@ set $navy-blue   #011D32
 #Needed for i3-gaps
 hide_edge_borders both
 for_window [class="^.*"] border pixel 4
-gaps inner 15 
-gaps outer 100
+gaps inner 30 
+gaps outer 10
 
 set $indigo         #4F0857
 set $sea-green      #1166B6
@@ -115,6 +115,7 @@ assign [class="Mysql-workbench-bin"] $ws5
 assign [class="Xfce4-terminal"] $ws2
 assign [class="HipChat"] $ws4
 assign [class="Spotify"] $ws6
+assign [class="Firefox"] $ws3
 
 ## move workspace to screen
 
