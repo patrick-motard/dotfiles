@@ -24,6 +24,7 @@ export pacman_packages="
   feh
   docker
   docker-compose
+  thunar
 "
 
 for package_name in $pacman_packages; do
