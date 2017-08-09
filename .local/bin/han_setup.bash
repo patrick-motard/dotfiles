@@ -12,6 +12,7 @@ export pacman_packages="
   vim
   zsh
   keychain
+  xclip
   python-pip
   firefox
   termite
@@ -86,9 +87,9 @@ if [[ ! -d ~/.emacs.d/.git ]]; then
 fi
 
 ## use vmware setupscript (works with virtualbox)
-if [[ ! -d ~/downloads/vmware-tools/.git ]]; then
-  git clone https://github.com/rasa/vmware-tools-patches.git ~/downloads/vmware-tools/
-  sudo sh /home/han/downloads/vmware-tools/patched-open-vm-tools.sh
+if [[ ! -d ~/Downloads/vmware-tools/.git ]]; then
+  git clone https://github.com/rasa/vmware-tools-patches.git ~/Downloads/vmware-tools/
+  sudo sh /home/han/Downloads/vmware-tools/patched-open-vm-tools.sh
 fi
 
 ## install yaourt packages
@@ -98,6 +99,7 @@ export yaourt_packages="
   i3blocks-gaps-git
   python-powerline-git
   xorg-xprop
+  hipchat
 "
 
 
