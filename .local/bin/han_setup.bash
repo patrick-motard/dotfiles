@@ -6,6 +6,7 @@ sudo pacman-optimize && sync
 
 export pacman_packages="
   xorg-server
+  jq
   xorg-xinit
   virtualbox-guest-utils
   virtualbox-guest-modules-arch
@@ -26,6 +27,7 @@ export pacman_packages="
   docker
   docker-compose
   thunar
+  htop
 "
 
 for package_name in $pacman_packages; do
