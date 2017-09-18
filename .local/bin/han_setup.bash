@@ -102,6 +102,7 @@ export yaourt_packages="
   python-powerline-git
   xorg-xprop
   hipchat
+  gtk-theme-arc-git
 "
 
 
