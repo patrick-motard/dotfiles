@@ -116,6 +116,8 @@ Custom themes are downloaded to `/usr/share/themes/`
 
 Instructions for setting the GTK 2 & 3 themes can be found on the [arch wiki](https://wiki.archlinux.org/index.php/GTK%2B#Themes)
 
-I have set my theme to Arc-Dark by adding the following line to my `.zshenv`:
+Settings for gtk 3:
+`~/.config/gtk-3.0/settings.ini`
 
-`export GTK2_RC_FILES=/usr/share/themes/Arc-Dark/gtk-2.0/gtkrc`
+Settings for gtk 2:
+`~/.gtkrc-2.0`
