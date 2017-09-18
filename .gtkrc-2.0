@@ -1,2 +1,10 @@
 gtk-icon-theme-name="Paper"
 gtk-theme-name="Arc-Dark"
+
+style "user-font"
+{
+	font_name="Hack 10"
+}
+
+widget_class "*" style "user-font"
+gtk-font-name = "Hack 10"
