@@ -28,6 +28,7 @@ export pacman_packages="
   docker-compose
   thunar
   htop
+  tumbler
 "
 
 for package_name in $pacman_packages; do
