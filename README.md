@@ -20,6 +20,7 @@ All my dotfiles & setup scripts used for linux.
 - `yadm` dotfile manager
 - `i3-gaps` window manager
 - `i3blocks` status line for i3-bar
+- `tumbler` enables thumbnail view of images for thunar
 - `termite` terminal ([repo link](https://github.com/thestinger/termite/))
 - `oh-my-zsh` & z shell
 - no display manager
