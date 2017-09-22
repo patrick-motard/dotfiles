@@ -7,6 +7,9 @@
 # email      development@arcticicestudio.com                 +
 # copyright  Copyright (C) 2016                              +
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#
+[options]
+font = Hack 10
 
 [colors]
 foreground = #D8DEE9
