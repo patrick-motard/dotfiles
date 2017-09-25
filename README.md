@@ -122,3 +122,8 @@ Settings for gtk 3:
 
 Settings for gtk 2:
 `~/.gtkrc-2.0`
+
+
+# General Ricing Info
+
+How to edit cursor styles [link](https://www.xaprb.com/blog/2006/04/24/beautiful-x11-cursors/)
