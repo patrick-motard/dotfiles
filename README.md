@@ -107,6 +107,15 @@ Restart after install `SPC q r`
 
 `SPC f e R` *dotspacemacs/sync-configuration-files* : reloads .spacemacs config changes
 
+`,` : major mode leader key (quickest way to issue a major mode command)
+
+
+### Org Mode (spacemacs)
+
+`t` toggle TODO item between TODO and DONE state
+
+`alt-shift-RET` insert new TODO
+
 ## Helpful file locations:
 
 ### Themes

@@ -29,6 +29,7 @@ export pacman_packages="
   thunar
   htop
   tumbler
+  weechat
 "
 
 for package_name in $pacman_packages; do
