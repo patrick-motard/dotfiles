@@ -30,6 +30,7 @@ export pacman_packages="
   htop
   tumbler
   weechat
+  xbindkeys
 "
 
 for package_name in $pacman_packages; do

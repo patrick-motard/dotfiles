@@ -31,6 +31,12 @@ All my dotfiles & setup scripts used for linux.
 -- `vundle`
 -- `wakatime`
 
+## Important cmd line apps
+
+### xbindkeys
+
+`xbindkeys -k` : gives you key code fora  pressed key or mouse button
+
 ## Important Aliases
 
 ### setup-run

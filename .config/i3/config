@@ -146,7 +146,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+h split semicolon
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -173,10 +173,10 @@ bindsym $mod+a focus parent
 
 set $ws1 "1: "
 set $ws2 "2: "
-set $ws3  "3:  "
+set $ws3  "3: / "
 set $ws4  "4: "
-set $ws5 "5: "
-set $ws6 "6: "
+set $ws5 "5:"
+set $ws6 "6:"
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -217,10 +217,10 @@ mode "resize" {
 # Pressing right will grow the window’s width.
 # Pressing up will shrink the window’s height.
 # Pressing down will grow the window’s height.
-bindsym j resize shrink width 10 px or 10 ppt
-bindsym k resize grow height 10 px or 10 ppt
-bindsym l resize shrink height 10 px or 10 ppt
-bindsym semicolon resize grow width 10 px or 10 ppt
+bindsym h resize shrink width 10 px or 10 ppt
+bindsym j resize grow height 10 px or 10 ppt
+bindsym k resize shrink height 10 px or 10 ppt
+bindsym l resize grow width 10 px or 10 ppt
 
 # same bindings, but for the arrow keys
 bindsym Left resize shrink width 10 px or 10 ppt
@@ -246,8 +246,12 @@ bar {
     }
     status_command i3blocks
     font pango:Hack Regular, Awesome 12
-    position top
+    position bottom
 }
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
 ## start applications on startup
 exec --no-startup-id xfce4-terminal
