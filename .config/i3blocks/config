@@ -43,10 +43,10 @@ color=#ACD3EC
 
 ## Temperature script found at:
 ## https://github.com/Anachron/i3blocks
-# [temperature]
-# instance=Core
-# label=
-# interval=5
+[temperature]
+instance=Core
+label=
+interval=5
 
 # Volume indicator
 #
