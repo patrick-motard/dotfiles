@@ -4,12 +4,14 @@ sudo pacman -Syu --noconfirm
 ##sudo pacman-mirrors -g
 sudo pacman-optimize && sync
 
+ # virtualbox-guest-utils
+ # virtualbox-guest-modules-arch
 export pacman_packages="
+  nvidia
+  nvidia-dkms
   xorg-server
   jq
   xorg-xinit
-  virtualbox-guest-utils
-  virtualbox-guest-modules-arch
   vim
   zsh
   keychain
@@ -69,9 +71,10 @@ sudo pip install wakatime
 pip install --upgrade --user awscli
 
 ## Install Vundle
-if [[ ! -d /home/han/.vim/bundle/Vundle.vim ]]; then
+## commented out check for directory because it already exists. need to solve this problem another way.
+#if [[ ! -d /home/han/.vim/bundle/Vundle.vim ]]; then
   git clone https://github.com/VundleVim/Vundle.vim.git /home/han/.vim/bundle/Vundle.vim
-fi
+#fi
 
 ## Install NVM if nvm shell sript not downloaded
 if [[ ! -f .nvm/nvm.sh ]]; then
@@ -97,15 +100,20 @@ if [[ ! -d ~/Downloads/vmware-tools/.git ]]; then
   sudo sh /home/han/Downloads/vmware-tools/patched-open-vm-tools.sh
 fi
 
+## packages that need to be installed manually:
+# python-powerline-git
+## -- end manual list
+
 ## install yaourt packages
 export yaourt_packages="
   ttf-font-awesome
-  i3-gaps-git
+  i3-gaps
   i3blocks-gaps-git
-  python-powerline-git
   xorg-xprop
   hipchat
   gtk-theme-arc-git
+  paper-icon-theme-git
+  spotify
 "
 
 
