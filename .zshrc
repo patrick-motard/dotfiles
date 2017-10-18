@@ -139,7 +139,7 @@ alias ye="yadm encrypt"
 alias yd="yadm diff"
 alias yaf="yadm add ~/.yadm/files.gpg"
 alias token=~/.ssh/token
-alias decrypt="yadm decrypt && rsync -a ~/home/han/ ~/"
+alias decrypt="yadm decrypt && rsync -a ~/home/han/ ~/ && rm -rf ~/home/han"
 
 alias setup-run="bash /home/han/.local/bin/han_setup.bash"
 alias setup-edit="vim ~/.local/bin/han_setup.bash"
@@ -175,7 +175,7 @@ export EDITOR=vim
 
 
 # powerline recommended line to run
-powerline-daemon -q
-. /usr/share/zsh/site-contrib/powerline.zsh
+#powerline-daemon -q
+#. /usr/share/zsh/site-contrib/powerline.zsh
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
