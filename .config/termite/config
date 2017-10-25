@@ -9,7 +9,8 @@
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #
 [options]
-font = Hack 10
+scrollback_lines = -1
+font = Hack 12
 
 [colors]
 foreground = #D8DEE9
