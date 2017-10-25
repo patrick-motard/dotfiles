@@ -86,11 +86,25 @@ bindsym $mod+Shift+y	resize shrink width 10 px or 10ppt
 bindsym $mod+Shift+u	resize shrink height 10 px or 10 ppt
 bindsym $mod+Shift+o	resize grow width 10 px or 10 ppt
 
-## gaps resizing
-bindsym $mod+Shift+x       gaps inner current minus 5
-bindsym $mod+x	           gaps inner current plus 5
-bindsym $mod+Shift+z	     gaps outer current minus 5
-bindsym $mod+z	           gaps outer current plus 5
+# good example on how to work with modes:
+# http://christopherdecoster.com/posts/i3-wm/
+set $gapsMode "Gaps | Outer: [O]+ [o]- | Inner: [I]+ [i]-"
+bindsym $mod+g mode $gapsMode
+mode $gapsMode {
+	bindsym i gaps inner current minus 5
+	bindsym Shift+i gaps inner current plus 5
+	bindsym o gaps outer current minus 5
+	bindsym Shift+o gaps outer current plus 5
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+set $modesMode "[G]aps [R]esize"
+bindsym $mod+m mode $modesMode
+mode $modesMode {
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
 
 ## monitor shortcuts
 ## move monitor left
@@ -211,26 +225,26 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-# These bindings trigger as soon as you enter the resize mode
+	# These bindings trigger as soon as you enter the resize mode
 
-# Pressing left will shrink the window’s width.
-# Pressing right will grow the window’s width.
-# Pressing up will shrink the window’s height.
-# Pressing down will grow the window’s height.
-bindsym h resize shrink width 10 px or 10 ppt
-bindsym j resize grow height 10 px or 10 ppt
-bindsym k resize shrink height 10 px or 10 ppt
-bindsym l resize grow width 10 px or 10 ppt
+	# Pressing left will shrink the window’s width.
+	# Pressing right will grow the window’s width.
+	# Pressing up will shrink the window’s height.
+	# Pressing down will grow the window’s height.
+	bindsym h resize shrink width 10 px or 10 ppt
+	bindsym j resize grow height 10 px or 10 ppt
+	bindsym k resize shrink height 10 px or 10 ppt
+	bindsym l resize grow width 10 px or 10 ppt
 
-# same bindings, but for the arrow keys
-bindsym Left resize shrink width 10 px or 10 ppt
-bindsym Down resize grow height 10 px or 10 ppt
-bindsym Up resize shrink height 10 px or 10 ppt
-bindsym Right resize grow width 10 px or 10 ppt
+	# same bindings, but for the arrow keys
+	bindsym Left resize shrink width 10 px or 10 ppt
+	bindsym Down resize grow height 10 px or 10 ppt
+	bindsym Up resize shrink height 10 px or 10 ppt
+	bindsym Right resize grow width 10 px or 10 ppt
 
-# back to normal: Enter or Escape
-bindsym Return mode "default"
-bindsym Escape mode "default"
+	# back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
 }
 
 bindsym $mod+r mode "resize"
@@ -263,6 +277,7 @@ exec --no-startup-id dropbox
 exec --no-startup-id compton
 exec --no-startup-id emacs
 exec --no-startup-id sh ~/.fehbg
+exec --no-startup-id sh ~/.config/arandr/work-dual-portrait-right.sh
 
 # command for random feh image:
 # exec --no-startup-id feh --randomize --bg-fill ~/Dropbox/photos/backgrounds/2017/*
