@@ -115,6 +115,7 @@ export yaourt_packages="
   paper-icon-theme-git
   spotify
   ccat
+  exa-git
 "
 
 
