@@ -144,6 +144,8 @@ alias decrypt="yadm decrypt && rsync -a ~/home/han/ ~/ && rm -rf ~/home/han"
 alias setup-run="bash /home/han/.local/bin/han_setup.bash"
 alias setup-edit="vim ~/.local/bin/han_setup.bash"
 
+alias cat="ccat"
+
 
 #switch between different AWS accounts
 alias work-mode="switch-aws-creds.sh work"

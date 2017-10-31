@@ -30,6 +30,7 @@ All my dotfiles & setup scripts used for linux.
 -- `powerline`
 -- `vundle`
 -- `wakatime`
+- `ccat` colorized cat ([nixcraft](https://www.cyberciti.biz/howto/linux-unix-cat-command-with-colours/))
 
 ## Important cmd line apps
 

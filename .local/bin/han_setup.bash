@@ -114,6 +114,7 @@ export yaourt_packages="
   gtk-theme-arc-git
   paper-icon-theme-git
   spotify
+  ccat
 "
 
 
