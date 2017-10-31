@@ -145,6 +145,8 @@ alias setup-run="bash /home/han/.local/bin/han_setup.bash"
 alias setup-edit="vim ~/.local/bin/han_setup.bash"
 
 alias cat="ccat"
+alias ls="exa"
+alias ll="exa -la"
 
 
 #switch between different AWS accounts
