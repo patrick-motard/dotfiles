@@ -58,3 +58,6 @@ filetype plugin indent on    " required
 
 colorscheme nord
 set number
+set tabstop=4
+set shiftwidth=4
+set expandtab

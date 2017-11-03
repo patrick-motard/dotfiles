@@ -33,6 +33,7 @@ export pacman_packages="
   tumbler
   weechat
   xbindkeys
+  tree
 "
 
 for package_name in $pacman_packages; do

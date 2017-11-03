@@ -32,6 +32,7 @@ All my dotfiles & setup scripts used for linux.
 -- `wakatime`
 - `ccat` colorized cat ([nixcraft](https://www.cyberciti.biz/howto/linux-unix-cat-command-with-colours/))
 - `exa` colorized ls written in rust ([nixcraft](https://www.cyberciti.biz/open-source/command-line-hacks/exa-a-modern-replacement-for-ls-written-in-rust-for-linuxunix/))
+- `tree` see tree folder/file structure from command line
 
 ## Important cmd line apps
 
