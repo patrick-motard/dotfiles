@@ -20,7 +20,7 @@ set $navy-blue   #011D32
 
 #Needed for i3-gaps
 hide_edge_borders both
-for_window [class="^.*"] border pixel 4
+for_window [class="^.*"] border pixel 2
 gaps inner 30 
 gaps outer 10
 
@@ -160,7 +160,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split semicolon
+bindsym $mod+h split h
 
 # split in vertical orientation
 bindsym $mod+v split v
