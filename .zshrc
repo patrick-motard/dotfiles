@@ -147,6 +147,7 @@ alias setup-edit="vim ~/.local/bin/han_setup.bash"
 alias cat="ccat"
 alias ls="exa"
 alias ll="exa -la"
+alias gimme="sudo pacman -S"
 
 
 #switch between different AWS accounts
