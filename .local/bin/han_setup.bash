@@ -20,7 +20,6 @@ export pacman_packages="
   firefox
   termite
   rofi
-  dropbox
   emacs
   compton
   pulseaudio
@@ -117,6 +116,7 @@ export yaourt_packages="
   spotify
   ccat
   exa-git
+  dropbox
 "
 
 
