@@ -271,14 +271,19 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute s
 ## start applications on startup
 exec --no-startup-id xfce4-terminal
 exec --no-startup-id google-chrome-stable
-# exec --no-startup-id feh --bg-scale '/home/han/Dropbox/photos/backgrounds/2017/wallhaven-502910.jpg' 
 exec --no-startup-id dropbox
-# exec --no-startup-id ~/.config/polybar/startup.sh
-# exec --no-startup-id nitrogen --restore
-exec --no-startup-id compton
 exec --no-startup-id emacs
 exec --no-startup-id sh ~/.fehbg
 exec --no-startup-id sh ~/.config/arandr/work-dual-portrait-right.sh
+exec --no-startup-id compton
+
+# Uncomment the line below if running in virtualbox. Fixes issue of screen resolution not resizing
+# when host screen size increased.
+exec --no-startup-id VBoxClient-all
 
 # command for random feh image:
 # exec --no-startup-id feh --randomize --bg-fill ~/Dropbox/photos/backgrounds/2017/*
+
+# exec --no-startup-id feh --bg-scale '/home/han/Dropbox/photos/backgrounds/2017/wallhaven-502910.jpg' 
+# exec --no-startup-id ~/.config/polybar/startup.sh
+# exec --no-startup-id nitrogen --restore

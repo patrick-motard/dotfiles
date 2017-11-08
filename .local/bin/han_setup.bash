@@ -4,11 +4,12 @@ sudo pacman -Syu --noconfirm
 ##sudo pacman-mirrors -g
 sudo pacman-optimize && sync
 
- # virtualbox-guest-utils
- # virtualbox-guest-modules-arch
+
+# nvidia
+# nvidia-dkms
+#  virtualbox-guest-modules-arch
+#  virtualbox-guest-utils
 export pacman_packages="
-  nvidia
-  nvidia-dkms
   xorg-server
   jq
   xorg-xinit
@@ -38,6 +39,8 @@ export pacman_packages="
 for package_name in $pacman_packages; do
   sudo pacman -S $package_name --needed --noconfirm
 done
+
+
 
 
 ## if the docker daemon isn't active, set it up
