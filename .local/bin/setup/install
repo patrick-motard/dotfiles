@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ## update pacman
 sudo pacman -Syu --noconfirm
 ## rank mirrors by speed and filter out out of date mirrors
@@ -5,40 +7,60 @@ sudo pacman -Syu --noconfirm
 sudo pacman-optimize && sync
 
 
-# nvidia
-# nvidia-dkms
-#  virtualbox-guest-modules-arch
-#  virtualbox-guest-utils
-export pacman_packages="
-  xorg-server
-  jq
-  xorg-xinit
-  vim
-  zsh
-  keychain
-  xclip
-  python-pip
-  firefox
-  termite
-  rofi
-  emacs
-  compton
-  pulseaudio
-  pamixer
-  feh
-  docker
-  docker-compose
-  thunar
-  htop
-  tumbler
-  weechat
-  xbindkeys
-  tree
+common_pacman_packages="
+    xorg-server
+    jq
+    xorg-xinit
+    vim
+    zsh
+    keychain
+    xclip
+    python-pip
+    firefox
+    termite
+    rofi
+    emacs
+    compton
+    pulseaudio
+    pamixer
+    feh
+    docker
+    docker-compose
+    thunar
+    htop
+    tumbler
+    weechat
+    xbindkeys
+    tree
+    facter
+    xf86-video-vesa
+    nvidia
+"
+    #nvidia-dkms
+
+virtualbox_packages="
+    virtualbox-guest-modules-arch
+    virtualbox-guest-utils
 "
 
-for package_name in $pacman_packages; do
+physical_packages="
+"
+
+# install common packages
+for package_name in $common_pacman_packages; do
   sudo pacman -S $package_name --needed --noconfirm
 done
+
+# install/update packages for virtualbox or physical install
+[[ "$(facter is_virtual)" ]] && \
+    host_specific_pkgs=$virtualbox_packages || \
+        host_specific_pkgs=$physical_packages
+
+echo 'installing host specific packages'
+for package_name in $host_specific_pkgs; do
+    sudo pacman -S $package_name --needed --noconfirm
+done
+
 
 
 
