@@ -139,10 +139,10 @@ alias ye="yadm encrypt"
 alias yd="yadm diff"
 alias yaf="yadm add ~/.yadm/files.gpg"
 alias token=~/.ssh/token
-alias decrypt="yadm decrypt && rsync -a ~/home/han/ ~/ && rm -rf ~/home/han"
+alias decrypt="yadm decrypt && rsync -a ~/home/$USER/ ~/ && rm -rf ~/home/$USER"
 
-alias setup-run="bash /home/han/.local/bin/han_setup.bash"
-alias setup-edit="vim ~/.local/bin/han_setup.bash"
+alias setup-run="bash ~/.local/bin/setup/install"
+alias setup-edit="vim ~/.local/bin/setup/install"
 
 alias cat="ccat"
 alias ls="exa"
