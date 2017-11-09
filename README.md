@@ -34,13 +34,13 @@ All my dotfiles & setup scripts used for linux.
 - `exa` colorized ls written in rust ([nixcraft](https://www.cyberciti.biz/open-source/command-line-hacks/exa-a-modern-replacement-for-ls-written-in-rust-for-linuxunix/))
 - `tree` see tree folder/file structure from command line
 
-## Important cmd line apps
+## Useful cmd line tools
 
 ### xbindkeys
 
 `xbindkeys -k` : gives you key code fora  pressed key or mouse button
 
-## Important Aliases
+## Useful Aliases
 
 ### setup-run
 This will run `.local/bin/han_setup.zsh`, which includes several installation commands. Use
@@ -62,6 +62,10 @@ reload changes to ~/.Xresources
 ### decrypt
 decrypts encrypted yadm files and makes sure they are placed
 correctly in ~/
+
+### bgf
+if you're in virtualbox and your desktop background is jank, this fixes it temporarily
+i'm working on a better solution
 
 
 ## scripts
