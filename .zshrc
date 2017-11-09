@@ -148,6 +148,7 @@ alias cat="ccat"
 alias ls="exa"
 alias ll="exa -la"
 alias gimme="sudo pacman -S"
+alias bgf="~/.fehbg"
 
 
 #switch between different AWS accounts
