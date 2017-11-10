@@ -35,6 +35,8 @@ common_pacman_packages="
     facter
     xf86-video-vesa
     nvidia
+    scrot
+    i3lock
 "
     #nvidia-dkms
 
