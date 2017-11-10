@@ -125,10 +125,6 @@ if [[ ! -d ~/Downloads/vmware-tools/.git ]]; then
   sudo sh /home/han/Downloads/vmware-tools/patched-open-vm-tools.sh
 fi
 
-## packages that need to be installed manually:
-# python-powerline-git
-## -- end manual list
-
 ## install yaourt packages
 export yaourt_packages="
   ttf-font-awesome

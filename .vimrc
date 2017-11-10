@@ -1,8 +1,8 @@
 syntax on
 inoremap fd <Esc>
-set laststatus=2 
+set laststatus=2
 " uncomment the line below if powerline installed with python3
-let g:powerline_pycmd = 'py3'
+" let g:powerline_pycmd = 'py3'
 
 """"""""""""""""""""""""""""""""""""
 "                                  "
@@ -21,8 +21,9 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'wakatime/vim-wakatime'
-Plugin 'powerline/powerline'
+Plugin 'vim-airline/vim-airline'
 Plugin 'arcticicestudio/nord-vim'
+Plugin 'airblade/vim-gitgutter'
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -55,6 +56,7 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+let g:airline_powerline_fonts = 1
 
 colorscheme nord
 set number
