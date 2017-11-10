@@ -3,4 +3,5 @@ if [ "$(facter is_virtual)" ]
 then
     echo "starting VBoxClient"
     VBoxClient-all
+    sh ~/.fehbg
 fi

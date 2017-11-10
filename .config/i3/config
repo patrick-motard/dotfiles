@@ -288,7 +288,7 @@ exec --no-startup-id emacs
 exec --no-startup-id sh ~/.fehbg
 exec --no-startup-id sh ~/.config/arandr/work-dual-portrait-right.sh
 exec --no-startup-id compton
-exec --no-startup-id start-vbox-client
+exec --no-startup-id sh ~/.local/bin/tools/start-vbox-client
 
 # command for random feh image:
 # exec --no-startup-id feh --randomize --bg-fill ~/Dropbox/photos/backgrounds/2017/*
