@@ -279,7 +279,7 @@ exec --no-startup-id compton
 
 # Uncomment the line below if running in virtualbox. Fixes issue of screen resolution not resizing
 # when host screen size increased.
-exec --no-startup-id VBoxClient-all
+exec --no-startup-id start-vbox-client
 
 # command for random feh image:
 # exec --no-startup-id feh --randomize --bg-fill ~/Dropbox/photos/backgrounds/2017/*

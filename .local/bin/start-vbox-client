@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+if [ "$(facter is_virtual)" ]
+then
+    echo "starting VBoxClient"
+    VBoxClient-all
+fi
