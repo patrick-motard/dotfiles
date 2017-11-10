@@ -172,6 +172,7 @@ export PATH="$PATH:$GOPATH/bin"
 ## END GOLANG
 
 export PATH=~/.local/bin:$PATH
+export PATH=~/.local/bin/tools:$PATH
 export PATH=/opt/idea-IC-171.4424.56/bin:$PATH
 
 ## NPM TOKEN SETUP

@@ -12,6 +12,7 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
+
 # COLOR PALETTE
 set $light-blue  #8fe5fe
 set $navy-blue   #011D32
@@ -89,9 +90,9 @@ bindsym $mod+Shift+o	resize grow width 10 px or 10 ppt
 
 # good example on how to work with modes:
 # http://christopherdecoster.com/posts/i3-wm/
-set $gapsMode "Gaps | Outer: [O]+ [o]- | Inner: [I]+ [i]-"
-bindsym $mod+g mode $gapsMode
-mode $gapsMode {
+set $mode_gaps "[(g)aps] | Outer (O+/o-), Inner (I+/i-)"
+bindsym $mod+g mode $mode_gaps
+mode $mode_gaps {
 	bindsym i gaps inner current minus 5
 	bindsym Shift+i gaps inner current plus 5
 	bindsym o gaps outer current minus 5
@@ -100,9 +101,20 @@ mode $gapsMode {
 	bindsym Escape mode "default"
 }
 
-set $modesMode "[G]aps [R]esize"
-bindsym $mod+m mode $modesMode
-mode $modesMode {
+set $mode_system "[syst(e)m] | (l)ock, l(o)gout, (s)uspend, (h)ibernate, (r)eboot, (S)hutdown"
+bindsym $mod+Shift+e mode $mode_system
+set $locker ~/.local/bin/tools/lock
+mode $mode_system {
+     bindsym l exec --no-startup-id $locker, mode "default"
+
+     ## back to normal: Enter or Escape
+     bindsym Return mode "default"
+     bindsym Escape mode "default"
+}
+
+set $mode_modes "[(m)odes] | (g)aps, (r)esize, Syst(e)m"
+bindsym $mod+m mode $mode_modes
+mode $mode_modes {
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
@@ -222,7 +234,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -233,8 +245,8 @@ mode "resize" {
 	# Pressing up will shrink the window’s height.
 	# Pressing down will grow the window’s height.
 	bindsym h resize shrink width 10 px or 10 ppt
-	bindsym j resize grow height 10 px or 10 ppt
-	bindsym k resize shrink height 10 px or 10 ppt
+	bindsym j resize shrink height 10 px or 10 ppt
+	bindsym k resize grow height 10 px or 10 ppt
 	bindsym l resize grow width 10 px or 10 ppt
 
 	# same bindings, but for the arrow keys
@@ -276,9 +288,6 @@ exec --no-startup-id emacs
 exec --no-startup-id sh ~/.fehbg
 exec --no-startup-id sh ~/.config/arandr/work-dual-portrait-right.sh
 exec --no-startup-id compton
-
-# Uncomment the line below if running in virtualbox. Fixes issue of screen resolution not resizing
-# when host screen size increased.
 exec --no-startup-id start-vbox-client
 
 # command for random feh image:
