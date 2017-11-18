@@ -131,3 +131,48 @@ Settings for gtk 2:
 # General Ricing Info
 
 How to edit cursor styles [link](https://www.xaprb.com/blog/2006/04/24/beautiful-x11-cursors/)
+
+### Debugging chron jobs
+
+add "2>&1 |logger" to end of script: 
+
+`* * * * * echo "test message" 2>&1 |logger`
+
+then view the output:
+`sudo systemctl status fcron`
+
+more info [here](https://www.allcloud.io/how-to/how-to-debug-cron-jobs/)
+
+## Desktop Image Slideshow
+
+Technologies used:
+
+**fcron**: cronjob utility
+**feh**: command line utility for interacting with images
+
+First time setup:
+
+1. Make sure fcron daemon is enabled (runs at startup):
+   
+   `sudo systemctl enable fcron && sudo systemctl start fcron`
+
+2. Load the preconfigured cronjobs for this repo:
+
+   `fcrontab ~/.config/fcron/my-fcrontab`
+   
+
+This will run set up a cron job that will call a tool script `update_background`. Every x minutes the background will change to a new image in the directory.
+
+To change number of between image changes, edit `my-fcrontab` and reload the crontab (step 2).
+
+To change where the cron job searches for images, edit the directory in 
+`update_background`.
+
+Helpful background information:
+
+- [how to reload cron jobs](https://askubuntu.com/questions/216692/where-is-the-user-crontab-stored)
+
+- [cronjobs that run X.org related apps](https://wiki.archlinux.org/index.php/cron#Running_X.org_server-based_applications)
+
+- [handling the annoying "email" issue in fcron (see "Example with msmtp")](https://wiki.archlinux.org/index.php/cron#Running_X.org_server-based_applications)
+

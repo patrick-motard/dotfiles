@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+files=(/home/han/Dropbox/photos/backgrounds/2017/selected/*)
+WALLPAPER=$(printf "%s\n" "${files[RANDOM % ${#files[@]}]}")
+WALLPAPER2=$(printf "%s\n" "${files[RANDOM % ${#files[@]}]}")
+feh -B white --bg-fill $WALLPAPER --bg-fill $WALLPAPER2
