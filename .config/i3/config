@@ -101,7 +101,8 @@ mode $mode_gaps {
 	bindsym Escape mode "default"
 }
 
-set $mode_system "[syst(e)m] | (l)ock, l(o)gout, (s)uspend, (h)ibernate, (r)eboot, (S)hutdown"
+set $mode_system "[syst(E)m] | (l)ock, l(o)gout, (s)uspend, (h)ibernate, (r)eboot, (S)hutdown"
+
 bindsym $mod+Shift+e mode $mode_system
 set $locker ~/.local/bin/tools/lock
 mode $mode_system {
@@ -112,7 +113,7 @@ mode $mode_system {
      bindsym Escape mode "default"
 }
 
-set $mode_modes "[(m)odes] | (g)aps, (r)esize, Syst(e)m"
+set $mode_modes "[(m)odes] | (g)aps, (r)esize, syst(E)m"
 bindsym $mod+m mode $mode_modes
 mode $mode_modes {
 	bindsym Return mode "default"
@@ -215,7 +216,7 @@ bindsym $mod+6 workspace $ws6
 bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
-bindsym $mod+0 workspace $ws10
+bindsym $mod+0 workspace $ws0
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
@@ -227,7 +228,7 @@ bindsym $mod+Shift+6 move container to workspace $ws6
 bindsym $mod+Shift+7 move container to workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $ws10
+bindsym $mod+Shift+0 move container to workspace $ws0
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -296,3 +297,4 @@ exec --no-startup-id sh ~/.local/bin/tools/start-vbox-client
 # exec --no-startup-id feh --bg-scale '/home/han/Dropbox/photos/backgrounds/2017/wallhaven-502910.jpg' 
 # exec --no-startup-id ~/.config/polybar/startup.sh
 # exec --no-startup-id nitrogen --restore
+#
