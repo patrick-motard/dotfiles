@@ -106,11 +106,16 @@ set $mode_system "[syst(E)m] | (l)ock, l(o)gout, (s)uspend, (h)ibernate, (r)eboo
 bindsym $mod+Shift+e mode $mode_system
 set $locker ~/.local/bin/tools/lock
 mode $mode_system {
-     bindsym l exec --no-startup-id $locker, mode "default"
+    bindsym l exec --no-startup-id $locker, mode "default"
+    bindsym o exec --no-startup-id i3-msg exit, mode "default"  
+    bindsym s exec --no-startup-id $locker && systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id $locker && systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Shift+s --no-startup-id systemctl poweroff -i, mode "default"
 
-     ## back to normal: Enter or Escape
-     bindsym Return mode "default"
-     bindsym Escape mode "default"
+    ## back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 
 set $mode_modes "[(m)odes] | (g)aps, (r)esize, syst(E)m"
@@ -201,8 +206,8 @@ bindsym $mod+a focus parent
 
 set $ws1 "1:   "
 set $ws2 "|2:   "
-set $ws3  "|3:   / "
-set $ws4  "|4:   "
+set $ws3 "|3:   / "
+set $ws4 "|4:   "
 set $ws5 "|5:   "
 set $ws6 "|6:   "
 
@@ -229,6 +234,7 @@ bindsym $mod+Shift+7 move container to workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws0
+
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
