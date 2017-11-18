@@ -37,6 +37,7 @@ common_pacman_packages="
     nvidia
     scrot
     i3lock
+    ranger
 "
     #nvidia-dkms
 
