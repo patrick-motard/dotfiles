@@ -15,6 +15,8 @@ All my dotfiles & setup scripts used for linux.
  - [unixporn](https://www.reddit.com/r/unixporn)
  - [dotshareit](http://dotshare.it/)
 
+### dotfile galleries
+ - [calou's](https://imgur.com/gallery/uFVFq)
 
 ## Programs Used:
 
@@ -75,6 +77,7 @@ i'm working on a better solution
 ## Useful Commands
 
 Screenshot:  Print or PrtScr, places screenshot with data+time in `~/Dropbox/Screenshots/2017`
+([source](https://github.com/villasv/rice/blob/master/i3/config#L134))
 
 Launch Application: Alt+d
 
