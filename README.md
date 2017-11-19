@@ -4,6 +4,10 @@ All my dotfiles & setup scripts used for linux.
 
 ## Sites used for inspiration & information
 
+### desktop backgrounds
+ - [unsplash](https://unsplash.com/)
+ - [wallhaven](https://alpha.wallhaven.cc/)
+
 ### color schemes
  - [terminal sexy](http://terminal.sexy/)
 
@@ -32,6 +36,7 @@ All my dotfiles & setup scripts used for linux.
 - `ccat` colorized cat ([nixcraft](https://www.cyberciti.biz/howto/linux-unix-cat-command-with-colours/))
 - `exa` colorized ls written in rust ([nixcraft](https://www.cyberciti.biz/open-source/command-line-hacks/exa-a-modern-replacement-for-ls-written-in-rust-for-linuxunix/))
 - `tree` see tree folder/file structure from command line
+(many more undocumented)
 
 ## Useful cmd line tools
 
@@ -65,6 +70,13 @@ correctly in ~/
 ### bgf
 if you're in virtualbox and your desktop background is jank, this fixes it temporarily
 i'm working on a better solution
+
+
+## Useful Commands
+
+Screenshot:  Print or PrtScr, places screenshot with data+time in `~/Dropbox/Screenshots/2017`
+
+Launch Application: Alt+d
 
 
 ## scripts
@@ -142,6 +154,7 @@ then view the output:
 `sudo systemctl status fcron`
 
 more info [here](https://www.allcloud.io/how-to/how-to-debug-cron-jobs/)
+
 
 ## Desktop Image Slideshow
 

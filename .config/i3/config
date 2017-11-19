@@ -125,18 +125,23 @@ mode $mode_modes {
 	bindsym Escape mode "default"
 }
 
+
 ## monitor shortcuts
+
 ## move monitor left
 bindsym $mod+c move workspace to output left
 ## move monitor right 
 bindsym $mod+u move workspace to output right
 
-## screen lock
-bindsym $mod+n exec i3lock-fancy
+
+# screen capture
+
+bindsym Print exec --no-startup-id scrot "%Y-%m-%d_%H:%M:%S_$wx$h.png" -e 'mv $f ~/Dropbox/Screenshots/2017/$f'
+
 
 ## smart borders: draw borders around a container only if it 
 ## is not the only container in this workspace
-# smart_borders on
+smart_borders on
 
 ## assign applications to workspaces:
 ## NOTE: use xprop command to get WM_CLASS (second string value)
