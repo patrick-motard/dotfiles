@@ -142,7 +142,9 @@ export yaourt_packages="
   ccat
   exa-git
   dropbox
+  rtv
 "
+
 
 
 for yaourt_package in $yaourt_packages; do

@@ -71,7 +71,8 @@ bindsym $mod+Shift+q kill
 ##--- |||||||| MY CONFIG ||||||| ---##
 
 # start rofi (a program launcher)
-bindsym $mod+d exec rofi -show run -separator-style none -location 0 -lines 20 -width 600 -eh 1 -padding 50 -hide-scrollbar -bw 0
+bindsym $mod+d exec rofi -show run -width 2560 -fg "#B0E670" -bg "#14161F" -hlfg "#14161F" -hlbg "#B0E670" -bc "#14161F" -location 0 -lines 19 -bw 0 -font "MonacoB 16" -padding 770 -separator-style none -opacity 80
+# bindsym $mod+d exec rofi -show run -separator-style none -location 0 -lines 20 -width 600 -eh 1 -padding 50 -hide-scrollbar -bw 0
 # bindsym $mod+d exec rofi -show run -width 1000 -location 0 -lines 10 -bw 2  -padding 100
 
 # bindsym $mod+d exec rofi -show run -lines 5 -width 100 -padding 300 -fullscreen -opacity "85" -font "Roboto 50" -separator-style "none"
