@@ -14,6 +14,9 @@ All my dotfiles & setup scripts used for linux.
 ### dotfile repositories
  - [unixporn](https://www.reddit.com/r/unixporn)
  - [dotshareit](http://dotshare.it/)
+ 
+### other people's dotfiles
+ - [demure](https://notabug.org/demure/dotfiles/src/master/i3/config)
 
 ### dotfile galleries
  - [calou's](https://imgur.com/gallery/uFVFq)
