@@ -292,7 +292,7 @@ exec --no-startup-id xfce4-terminal
 exec --no-startup-id google-chrome-stable
 exec --no-startup-id dropbox
 exec --no-startup-id emacs
-exec --no-startup-id sh ~/.fehbg
+# exec --no-startup-id sh ~/.fehbg
 exec --no-startup-id sh ~/.config/arandr/work-dual-portrait-right.sh
 exec --no-startup-id compton
 exec --no-startup-id sh ~/.local/bin/tools/start-vbox-client
