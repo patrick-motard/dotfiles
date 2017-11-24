@@ -48,7 +48,7 @@ set $mod Mod1
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 # font pango:monospace, Awesome 8 # This font is widely installed, provides lots of unicode glyphs, right-to-left
-font pango:Hack, Awesome 10
+font pango:Hack, Siji, Awesome 10
 #font pango:DejaVu Sans Mono 8
 
 # Before i3 v4.8, we used to recommend this one as the default:
@@ -68,7 +68,6 @@ bindsym $mod+Return exec termite
 # kill focused window
 bindsym $mod+Shift+q kill
 
-##--- |||||||| MY CONFIG ||||||| ---##
 
 # start rofi (a program launcher)
 bindsym $mod+d exec rofi -show run -width 2560 -fg "#B0E670" -bg "#14161F" -hlfg "#14161F" -hlbg "#B0E670" -bc "#14161F" -location 0 -lines 19 -bw 0 -font "MonacoB 16" -padding 770 -separator-style none -opacity 80
@@ -78,11 +77,6 @@ bindsym $mod+d exec rofi -show run -width 2560 -fg "#B0E670" -bg "#14161F" -hlfg
 # bindsym $mod+d exec rofi -show run -lines 5 -width 100 -padding 300 -fullscreen -opacity "85" -font "Roboto 50" -separator-style "none"
 
 # bindsym $mod+d exec rofi -show run
-
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 ## alternative resize commands
 bindsym $mod+Shift+y	resize shrink width 10 px or 10ppt
@@ -210,12 +204,16 @@ bindsym $mod+a focus parent
 # focus the chld container
 #bindsym $mod+d focus child
 
-set $ws1 "1:   "
-set $ws2 "|2:   "
-set $ws3 "|3:   / "
-set $ws4 "|4:   "
-set $ws5 "|5:   "
-set $ws6 "|6:   "
+set $ws1 "1: "
+set $ws2 "2: "
+set $ws3 "3: / "
+set $ws4 "4: "
+set $ws5 "5: "
+set $ws6 "6: "
+set $ws7 "7: "
+set $ws8 "8: "
+set $ws9 "9: "
+set $ws0 "0: "
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -257,10 +255,10 @@ mode "resize" {
 	# Pressing right will grow the window’s width.
 	# Pressing up will shrink the window’s height.
 	# Pressing down will grow the window’s height.
-	bindsym h resize shrink width 10 px or 10 ppt
-	bindsym j resize shrink height 10 px or 10 ppt
-	bindsym k resize grow height 10 px or 10 ppt
-	bindsym l resize grow width 10 px or 10 ppt
+	bindsym h resize shrink width 20 px or 20 ppt
+	bindsym j resize shrink height 20 px or 20 ppt
+	bindsym k resize grow height 20 px or 20 ppt
+	bindsym l resize grow width 20 px or 20 ppt
 
 	# same bindings, but for the arrow keys
 	bindsym Left resize shrink width 10 px or 10 ppt
@@ -278,15 +276,16 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-    colors {
-            #class              #border       #background     #text
-            background          $navy-blue
-            focused_workspace   $dodger-blue  $dodger-blue    $white
-            inactive_workspace  $navy-blue    $navy-blue      $pale-turquoise
-    }
-    status_command i3blocks
-    font pango:Hack Regular, Awesome 12
-    position bottom
+    i3bar_command $HOME/.config/polybar/launch.sh
+    # colors {
+    #         #class              #border       #background     #text
+    #         background          $navy-blue
+    #         focused_workspace   $dodger-blue  $dodger-blue    $white
+    #         inactive_workspace  $navy-blue    $navy-blue      $pale-turquoise
+    # }
+    # status_command i3blocks
+    # font pango:Hack Regular, Awesome 12
+    # position top
 }
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
@@ -308,6 +307,6 @@ exec_always --no-startup-id dunst
 # exec --no-startup-id feh --randomize --bg-fill ~/Dropbox/photos/backgrounds/2017/*
 
 # exec --no-startup-id feh --bg-scale '/home/han/Dropbox/photos/backgrounds/2017/wallhaven-502910.jpg' 
-# exec --no-startup-id ~/.config/polybar/startup.sh
+exec_always --no-startup-id ~/.config/polybar/launch.sh
 # exec --no-startup-id nitrogen --restore
 #

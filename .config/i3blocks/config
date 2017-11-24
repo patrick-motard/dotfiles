@@ -43,10 +43,10 @@ color=#ACD3EC
 
 ## Temperature script found at:
 ## https://github.com/Anachron/i3blocks
-[temperature]
-instance=Core
-label=
-interval=5
+# [temperature]
+# instance=Core
+# label=
+# interval=5
 
 # Volume indicator
 #
@@ -67,7 +67,7 @@ separator=false
 # The type defaults to "mem" if the instance is not specified.
 [memory]
 #label=MEM
-label=⋮
+label=
 separator=false
 interval=30
 
@@ -84,7 +84,7 @@ interval=30
 # (defaults to 10 for 10%).
 [disk]
 #label=HOME
-label=⋮
+label=
 #instance=/mnt/data
 interval=30
 separator=false
@@ -126,7 +126,7 @@ separator=false
 # The battery instance defaults to 0.
 [battery]
 #label=BAT
-label=⋮
+label=
 #label=⚡
 #instance=1
 interval=30
@@ -135,13 +135,13 @@ separator=false
 # Date Time
 #
 [time]
-label=⋮
+label=
 command=date '+%m-%d-%Y'
 interval=5
 separator=false
 
 [time]
-label=⋮
+label=
 command=date '+%I:%M'
 interval=5
 separator=false
