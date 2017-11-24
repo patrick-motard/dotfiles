@@ -40,6 +40,8 @@ common_pacman_packages="
     ranger
     fcron
     dunst
+    qutebrowser
+    xorg-xfd
 "
     #nvidia-dkms
 
@@ -145,6 +147,8 @@ export yaourt_packages="
   dropbox
   rtv
   dunstify
+  siji-git
+  xorg-xset
 "
 
 

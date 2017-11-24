@@ -1,0 +1,218 @@
+;=====================================================
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/jaagr/polybar
+;
+;   The README contains alot of information
+;
+;=====================================================
+
+[colors]
+; Based on gruvbox colors
+background = #1d2021
+background-alt = #282828
+foreground = #a89984
+foreground-alt = #665c54
+primary = #458588
+secondary = #cc241d
+alert = #689d6a
+white = #ebdbb2
+
+[global/wm]
+margin-top = 0
+margin-bottom = 0
+
+[bar/top]
+bottom = true
+# monitor = ${env:MONITOR:LVDS1}
+width = 100%
+height = 30
+offset-x = 0
+offset-y = 0
+
+;background = ${xrdb:color9}
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+overline-size = 0
+overline-color = #f00
+underline-size = 0
+underline-color = ${colors.primary}
+
+border-bottom-size = 0
+border-bottom-color = ${colors.primary}
+
+spacing = 1
+padding-left = 1
+padding-right = 1
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = Fixed:pixelsize=8;0
+font-1 = unifont:size=8:Tewi:fontformat=truetype;-2
+font-2 = Siji:pixelsize=8;0
+
+modules-left = menu i3
+modules-center = date
+modules-right = cpu memory temperature wlan battery
+
+tray-position = right
+tray-padding = 2
+
+
+[module/i3]
+type = internal/i3
+
+; ws-icon-[0-9]+ = label;icon
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+ws-icon-9 = 10;
+ws-icon-default = 
+
+strip-wsnumbers = true
+
+label-focused = %{F#cc241d}%{F-}%{F#458588}%name%%{F-}
+label-focused-underline = ${colors.primary}
+#label-focused-foreground = ${colors.white}
+label-focused-padding = 1
+
+label-unfocused = %name%
+label-unfocused-padding = 1
+label-unfocused-foreground = ${colors.foreground-alt}
+
+label-urgent = %name%
+label-urgent-foreground = ${colors.alert}
+label-urgent-padding = 1
+
+label-visible = %name%
+label-visible-padding = 1
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground-alt}
+;format-underline = #f90000
+label = %percentage%
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground-alt}
+;format-underline = #4bffdc
+label = %percentage_used%
+
+[module/wlan]
+type = internal/network
+interface = wlp1s0
+interval = 3.0
+
+format-connected = <ramp-signal> <label-connected>
+;format-connected-underline = #5e468c
+;format-disconnected-underline = ${self.format-connected-underline}
+
+label-connected = %essid%
+label-connected-foreground = ${colors.alert}
+label-disconnected = %ifname% disconnected
+label-disconnected-foreground = ${colors.foreground-alt}
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-foreground = ${colors.alert}
+
+[module/eth]
+type = internal/network
+interface = enp2s0
+interval = 3.0
+
+;format-connected-underline = #287373
+format-connected-prefix = " "
+;format-connected-foreground-foreground = ${colors.foreground-alt}
+label-connected = %local_ip%
+
+;format-disconnected-underline = ${self.format-connected-underline}
+label-disconnected = %ifname% disconnected
+label-disconnected-foreground = ${colors.foreground-alt}
+
+[module/date]
+type = internal/date
+interval = 5
+
+date =
+date-alt = %a %d %b %Y
+
+time = %H:%M
+time-alt = %H:%M:%S
+
+; format-prefix = 
+format-prefix-foreground = ${colors.foreground-alt}
+;format-underline = #0a6cf5
+
+label = %{F#665c54}────[%{F-} %{F#83a598}%date%%{F-}%{F#b16286} %time%%{F-} %{F#665c54}]────%{F-}
+
+[module/battery]
+type = internal/battery
+battery = BAT1
+adapter = ADP1
+full-at = 80
+
+format-charging = <animation-charging> <label-charging>
+;format-charging-underline = #ffb52a
+
+format-discharging = <ramp-capacity> <label-discharging>
+;format-discharging-underline = ${self.format-charging-underline}
+
+; format-full-prefix = " "
+format-full-prefix-foreground = ${colors.foreground-alt}
+;format-full-underline = ${self.format-charging-underline}
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-foreground = ${colors.foreground-alt}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-foreground = ${colors.foreground-alt}
+animation-charging-framerate = 750
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 60
+
+format = <ramp> <label>
+;format-underline = #f50a4d
+format-warn = <ramp> <label-warn>
+;format-warn-underline = ${self.format-underline}
+
+label = %temperature%
+label-warn = %temperature%
+label-warn-foreground = ${colors.secondary}
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-foreground = ${colors.foreground-alt}
+
+[module/menu]
+type = custom/menu
+
+menu-0-0 = %{F#689d6a}Todo%{F-}
+menu-0-0-exec = $HOME/.config/admiral.d/popups/todo/todo
+
+label-open = %{F#458588}%{F-}
+label-close = %{F#fb4934}<<%{F-}
+; vim:ft=dosini
