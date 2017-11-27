@@ -97,7 +97,7 @@ modules-right =  filesystem  volume   memory   cpu   wlan eth 
 ; tray-position = right
 ; tray-padding = 0
 ; tray-transparent = true
-;tray-background = #0063ff
+; tray-background = #0063ff
 
 ;wm-restack = bspwm
 ;wm-restack = i3
