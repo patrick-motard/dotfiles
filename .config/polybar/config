@@ -6,10 +6,15 @@
 ;   The README contains alot of information
 ;
 ;=====================================================
-
+; 
+; 
+; 
+; 
+; 
 [colors]
 ; background = ${xrdb:color0:#222}
 background = #011D32
+fuckyou = #011D32
 ;#222
 background-alt = #444
 ;foreground = ${xrdb:color7:#222}
@@ -18,6 +23,24 @@ foreground-alt = #555
 primary = ;#ffb52a
 secondary = #e60053
 alert = #bd2c40
+
+nord0 = #2E3440
+nord1 = #3B4252
+nord2 = #434C5E
+nord3 = #4C566A
+nord4 = #D8DEE9
+nord5 = #E5E9F0
+nord6 = #ECEFF4
+nord7 = #8FBCBB
+nord8 = #88C0D0
+nord9 = #81A1C1
+nord10 = #5E81AC
+nord11 = #BF616A
+nord12 = #D08770
+nord13 = #EBCB8B
+nord14 = #A3BE8C
+nord15 = #B48EAD
+
 
 [bar/bottom]
 ; monitor = ${env:MONITOR:VGA-1}
@@ -41,6 +64,7 @@ bottom = false
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
 height = 30
+; spacing = 3
 ;offset-x = 1%
 ;offset-y = 1%
 ; radius = 6.0
@@ -48,30 +72,30 @@ fixed-center = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
-
-line-size = 3
+; the line under a given module
+line-size = 0
 line-color = #f00
 
-border-size = 4
+border-size = 0
 border-color = #00000000
 
 padding-left = 0
 padding-right = 2
 
 module-margin-left = 1
-module-margin-right = 2
+module-margin-right = 1
 
 font-0 = fixed:pixelsize=12;1
 font-1 = unifont:fontformat=truetype:size=12:antialias=false;0
 font-2 = fontawesome:fontformat=truetype:size=12:antialias=true;0
 font-3 = Powerline Extra Symbols:size=15
 
-modules-left = i3 
+modules-left = i3 
 modules-center = 
-modules-right = filesystem volume memory cpu wlan eth battery temperature date powermenu
+modules-right =  filesystem  volume   memory   cpu   wlan eth   battery temperature  date  powermenu 
 
-tray-position = right
-tray-padding = 2
+; tray-position = right
+; tray-padding = 0
 ; tray-transparent = true
 ;tray-background = #0063ff
 
@@ -89,10 +113,26 @@ tray-padding = 2
 cursor-click = pointer
 cursor-scroll = ns-resize
 
-
-[module/separator1]
+[module/]
 type = custom/text
-content = %{F#011D32 B#FFB5BD68}
+content = %{F#FFB5BD68  B#011D32 } 
+
+[module/]
+type = custom/text
+content = %{F#FFB5BD68 B#011D32}
+[module/]
+type = custom/text
+format-background = ${colors.nord2}
+format-foreground = ${colors.nord1}
+content = 
+
+; 
+; 
+; 
+; 
+; 
+
+
 
 [module/xwindow]
 type = internal/xwindow
@@ -172,7 +212,7 @@ type = internal/i3
 
 ; Create click handler used to focus workspace
 ; Default: true
-enable-click = false
+enable-click = true
 
 ; Create scroll handlers used to cycle workspaces
 ; Default: true
@@ -195,8 +235,10 @@ fuzzy-match = true
 label-focused-foreground = #ffffff
 label-focused-background = #3f3f3f
 label-focused-underline = #8fe5fe
-label-focused-padding = 3
-label-unfocused-padding = 3
+label-focused-padding = 0
+label-focused-padding-left = 2
+label-unfocused-padding = 0
+label-unfocused-padding-left = 2
 
 [module/mpd]
 type = internal/mpd
