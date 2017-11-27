@@ -307,6 +307,6 @@ exec_always --no-startup-id dunst
 # exec --no-startup-id feh --randomize --bg-fill ~/Dropbox/photos/backgrounds/2017/*
 
 # exec --no-startup-id feh --bg-scale '/home/han/Dropbox/photos/backgrounds/2017/wallhaven-502910.jpg' 
-exec_always --no-startup-id ~/.config/polybar/launch.sh
+# exec_always --no-startup-id ~/.config/polybar/launch.sh
 # exec --no-startup-id nitrogen --restore
 #
