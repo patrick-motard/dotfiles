@@ -151,6 +151,7 @@ export yaourt_packages="
   dunstify
   siji-git
   xorg-xset
+  bashmount
 "
 
 
