@@ -73,14 +73,14 @@ fixed-center = true
 background = ${colors.background}
 foreground = ${colors.foreground}
 ; the line under a given module
-line-size = 0
+line-size = 3
 line-color = #f00
 
 border-size = 0
 border-color = #00000000
 
 padding-left = 0
-padding-right = 2
+padding-right = 0
 
 module-margin-left = 1
 module-margin-right = 1
