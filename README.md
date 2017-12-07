@@ -189,7 +189,7 @@ To change where the cron job searches for images, edit the directory in
 
 Helpful background information:
 
-- [how to reload cron jobs](https://askubuntu.com/questions/216692/where-is-the-user-crontab-stored)
+- [how to import & export cron jobs](https://askubuntu.com/questions/216692/where-is-the-user-crontab-stored)
 
 - [cronjobs that run X.org related apps](https://wiki.archlinux.org/index.php/cron#Running_X.org_server-based_applications)
 
