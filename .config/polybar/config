@@ -235,10 +235,10 @@ fuzzy-match = true
 label-focused-foreground = #ffffff
 label-focused-background = #3f3f3f
 label-focused-underline = #8fe5fe
-label-focused-padding = 0
+label-focused-padding-right = 2
 label-focused-padding-left = 2
-label-unfocused-padding = 0
 label-unfocused-padding-left = 2
+label-unfocused-padding-right = 2
 
 [module/mpd]
 type = internal/mpd
