@@ -43,6 +43,7 @@ common_pacman_packages="
     qutebrowser
     xorg-xfd
     screenfetch
+    remmina
 "
     #nvidia-dkms
 
