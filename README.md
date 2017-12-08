@@ -64,12 +64,13 @@ in vim: `:PluginInstall`
 
 ## Desktop background image slideshow
 
-Technologies used:
+### Technologies used:
 
 **fcron**: cronjob utility
+
 **feh**: command line utility for interacting with images
 
-First time setup:
+### First time setup:
 
 Make sure fcron daemon is enabled (runs at startup):
    
@@ -86,7 +87,7 @@ To change number of between image changes, edit `my-fcrontab` and reload the cro
 To change where the cron job searches for images, edit the directory in 
 `update_background`.
 
-Helpful background information:
+### Helpful background information:
 
 - [how to reload cron jobs](https://askubuntu.com/questions/216692/where-is-the-user-crontab-stored)
 
@@ -108,6 +109,8 @@ places screenshot with data+time in `~/Dropbox/Screenshots/2017`
 ([source](https://github.com/villasv/rice/blob/master/i3/config#L134))
 
 ## Launch Application
+
+This will open the rofi menu, which you can use to launch apps. This shortcut can be run from any workspace with any application in focus.
 
 `Alt+d`
 
