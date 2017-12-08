@@ -187,3 +187,7 @@ export EDITOR=vim
 #. /usr/share/zsh/site-contrib/powerline.zsh
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH=$PATH:/home/han/.local/bin
+
+source '/home/han/.local/bin/azure-cli/az.completion'
