@@ -44,6 +44,7 @@ common_pacman_packages="
     xorg-xfd
     screenfetch
     remmina
+    libreoffice-fresh
 "
     #nvidia-dkms
 
@@ -61,7 +62,7 @@ for package_name in $common_pacman_packages; do
 done
 
 # install/update packages for virtualbox or physical install
-[[ "$(facter is_virtual)" ]] && \
+[[ "$(facter is_virtual)" == true ]] && \
     host_specific_pkgs=$virtualbox_packages || \
         host_specific_pkgs=$physical_packages
 
