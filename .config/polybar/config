@@ -12,18 +12,6 @@
 ; 
 ; 
 [colors]
-; background = ${xrdb:color0:#222}
-background = #011D32
-fuckyou = #011D32
-;#222
-background-alt = #444
-;foreground = ${xrdb:color7:#222}
-foreground = #dfdfdf
-foreground-alt = #555
-primary = ;#ffb52a
-secondary = #e60053
-alert = #bd2c40
-
 nord0 = #2E3440
 nord1 = #3B4252
 nord2 = #434C5E
@@ -40,6 +28,17 @@ nord12 = #D08770
 nord13 = #EBCB8B
 nord14 = #A3BE8C
 nord15 = #B48EAD
+
+; background = ${xrdb:color0:#222}
+background = ${colors.nord0}
+;#222
+background-alt = ${colors.nord9}
+;foreground = ${xrdb:color7:#222}
+foreground = ${colors.nord4}
+foreground-alt = ${colors.nord4}
+primary = ;#ffb52a
+secondary = ${colors.nord0}
+alert = #bd2c40
 
 
 [bar/bottom]
@@ -63,7 +62,7 @@ separator =
 bottom = false
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
-height = 30
+height = 29
 ; spacing = 3
 ;offset-x = 1%
 ;offset-y = 1%
@@ -73,7 +72,7 @@ fixed-center = true
 background = ${colors.background}
 foreground = ${colors.foreground}
 ; the line under a given module
-line-size = 3
+line-size = 0
 line-color = #f00
 
 border-size = 0
@@ -82,17 +81,17 @@ border-color = #00000000
 padding-left = 0
 padding-right = 0
 
-module-margin-left = 1
-module-margin-right = 1
+module-margin-left = 0
+module-margin-right = 0
 
-font-0 = fixed:pixelsize=12;1
-font-1 = unifont:fontformat=truetype:size=12:antialias=false;0
-font-2 = fontawesome:fontformat=truetype:size=12:antialias=true;0
-font-3 = Powerline Extra Symbols:size=15
+font-0 = Powerline Extra Symbols:size=19;4
+font-1 = Hack:pixelsize=12;3
+font-2 = Hack:fontformat=truetype:size=14:antialias=true;10
+font-3 = fontawesome:fontformat=truetype:size=12:antialias=true;3
 
 modules-left = i3 
 modules-center = 
-modules-right =  filesystem  volume   memory   cpu   wlan eth battery temperature  date  powermenu 
+modules-right =  filesystem -red-black volume -red-black  memory -red-black  cpu -red-black  wlan eth battery temperature -red-black date  powermenu
 
 ; tray-position = right
 ; tray-padding = 0
@@ -117,9 +116,15 @@ cursor-scroll = ns-resize
 type = custom/text
 content = %{F#FFB5BD68  B#011D32 } 
 
-[module/]
+[module/-red-black]
 type = custom/text
-content = %{F#FFB5BD68 B#011D32 }
+content = %{F#2E3440 B#BF616A} 
+
+[module/]
+
+type = custom/text
+content = %{F#BF616A }
+
 [module/]
 type = custom/text
 format-background = ${colors.nord2}
@@ -160,7 +165,8 @@ interval = 25
 
 mount-0 = /
 
-label-mounted =   %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
+label-mounted-background = ${colors.nord11}
+label-mounted = %{F#2E3440}  %mountpoint% %percentage_used%% %{F-}
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
@@ -232,13 +238,17 @@ reverse-scroll = false
 ; containing 'code' in the label
 ; Default: false
 fuzzy-match = true
-label-focused-foreground = #ffffff
-label-focused-background = #3f3f3f
+label-focused-foreground = ${colors.foreground-alt}
+label-focused-background = ${colors.background-alt}
+
+label-unfocused-foreground = ${colors.foreground}
+label-unfocused-background = ${colors.secondary}
+
 label-focused-underline = #8fe5fe
-label-focused-padding-right = 2
-label-focused-padding-left = 2
-label-unfocused-padding-left = 2
-label-unfocused-padding-right = 2
+label-focused-padding-right = 1
+label-focused-padding-left = 0
+label-unfocused-padding-left = 0
+label-unfocused-padding-right = 1
 
 [module/mpd]
 type = internal/mpd
@@ -348,19 +358,27 @@ label =  %time%   %date%
 
 [module/volume]
 type = internal/volume
+; master-soundcard = default
+; speaker-soundcard = default
+; headephone-soundcard = default
 
-format-volume = <label-volume> <bar-volume>
+; master-mixer = Master
+
+; speaker-mixer = Speaker
+; headphone-mixer = Headphone
+
+format-volume = "<label-volume> <bar-volume>  "
 label-volume = "   "
-label-volume-foreground = ${root.foreground}
+label-volume-foreground = ${colors.nord0}
 
 format-muted-prefix = " "
-format-muted-foreground = ${colors.foreground-alt}
+format-muted-foreground = ${colors.nord11}
 label-muted = sound muted
 
 bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-0 = ${colors.nord0}
+bar-volume-foreground-1 = ${colors.nord0}
+bar-volume-foreground-2 = ${colors.nord0}
 bar-volume-foreground-3 = #55aa55
 bar-volume-foreground-4 = #55aa55
 bar-volume-foreground-5 = #f5a70a
@@ -372,7 +390,7 @@ bar-volume-fill = ─
 bar-volume-fill-font = 2
 bar-volume-empty = ─
 bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground-alt}
+bar-volume-empty-foreground = ${colors.nord0}
 
 [module/battery]
 type = internal/battery
@@ -418,7 +436,7 @@ label-warn-foreground = ${colors.secondary}
 ramp-0 = 
 ramp-1 = 
 ramp-2 = 
-ramp-foreground = ${colors.nord4}
+ramp-foreground = ${colors.foreground}
 
 [module/powermenu]
 type = custom/menu
