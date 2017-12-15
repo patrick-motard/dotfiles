@@ -112,11 +112,19 @@ fi
 ## https://wiki.archlinux.org/index.php/SSH_keys#Keychain
 eval $(keychain --eval --quiet id_rsa id_rsa_bb)
 
+
+## Functions
+function edit-config {
+    vim "~/.config/${1}/config"
+}
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-alias rc-edit="vim ~/.zshrc"
+alias ec="edit-config"
+alias ez="vim ~/.zshrc"
+alias sz="source ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias gs="git status"
 alias gcm="git commit -m"
@@ -127,7 +135,6 @@ alias pbpaste="xclip -selection clipboard -o"
 alias restart="shutdown -r now"
 ## reload xresources
 alias xrl="xrdb ~/.Xresources"
-alias sz="source ~/.zshrc"
 alias nr="node run.js"
 
 alias y="yadm"
