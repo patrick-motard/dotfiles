@@ -11,6 +11,7 @@
 [options]
 scrollback_lines = -1
 font = Hack 12
+browser = firefox
 
 [colors]
 foreground = #D8DEE9
