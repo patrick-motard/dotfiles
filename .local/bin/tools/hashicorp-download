@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+usage="$(basename "$0")
+NAME
+      download_vault - downloads version of Vault binary to a location
+
+SYNOPSIS
+      download_vault [-h] [-p path] -n name -v version
+
+ARGUMENTS
+
+       -n name (required)
+          Name of the hashicorp product you want to download.
+          'vault' or 'terraform'
+
+       -v version (required)
+          Version of the Vault binary that you want to download. This
+          value should match whatever version is specified in the 'run'
+          bash script in this project (VAULT_VERSION at top of script)
+
+          Example:
+              ./hashicorp-download -n vault -v 0.9.0
+
+       [-p path] (optional)
+           Location to download binary to. Defaults to HOME/.local/bin.
+           Provide this flag with a file path that is in your PATH if
+           the default path is not.
+"
+
+while test $# -gt 0; do
+	  case "$1" in
+        -h|--help|-\?)
+            echo "$usage" >&2
+            exit
+            ;;
+        -n|--name|-\?)
+            name=$2
+            shift
+            ;;
+        -v|--version)
+            version=$2
+            shift
+            ;;
+        -p|--path)
+            path=$2
+            shift
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG" >&2
+            exit 1
+            ;;
+        *)
+            break
+    esac
+    shift
+done
+
+if [ -z ${version} ]; then
+    echo "version must be set using -v or --version"
+    exit 1
+fi
+
+if [ -z ${name} ]; then
+    echo "name must be set using -n or --version"
+    exit 1
+fi
+
+case $name in
+    "vault" )
+        link="https://releases.hashicorp.com/vault/${version}/vault_${version}_linux_amd64.zip"
+        ;;
+    "terraform" )
+        link="https://releases.hashicorp.com/terraform/${version}/terraform_${version}_linux_amd64.zip"
+        ;;
+    * )
+        echo "Supported names (-n) are 'terraform' or 'vault', exiting."
+        exit 1
+        ;;
+esac
+
+echo "Downloading ${name} binary version ${version}"
+
+status_code=$(curl -s -o /dev/null -w "%{http_code}" "${link}")
+
+if [ $status_code == 403 ]; then
+    echo "${name} version ${version} does not exist"
+    exit 1
+fi
+
+filen="test1.txt"
+
+curl -sS "${link}" > "${name}_${version}.zip"
+unzip -oq "${name}_${version}.zip"
+rm "$HOME/.local/bin/$name" &>/dev/null
+mv $name $HOME/.local/bin/
+rm "${name}_${version}.zip"
+
+$name --version
