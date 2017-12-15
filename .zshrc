@@ -151,6 +151,8 @@ alias ll="exa -la"
 alias gimme="sudo pacman -S"
 alias bgf="~/.fehbg"
 
+alias c="cd ~/code && ll"
+
 
 #switch between different AWS accounts
 alias work-mode="switch-aws-creds.sh work"
