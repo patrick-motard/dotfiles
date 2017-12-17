@@ -33,15 +33,19 @@
 - `tumbler` enables thumbnail view of images for thunar
 - `termite` terminal ([repo link](https://github.com/thestinger/termite/))
 - `oh-my-zsh` & z shell
-- `feh` (for desktop backgrounds)
-- `wakatime` for code usage tracking
+- `feh` terminal based image viewer, also used for desktop backgrounds
+- `wakatime` for those interested in [quantifying code usage](https://wakatime.com/)
 - `vim`
-- `vundle`
-- `wakatime`
+- `vundle` vim package manager
+- `wakatime` helps you track how much time you code [see website]
 - `ccat` colorized cat ([nixcraft](https://www.cyberciti.biz/howto/linux-unix-cat-command-with-colours/))
 - `exa` colorized ls written in rust ([nixcraft](https://www.cyberciti.biz/open-source/command-line-hacks/exa-a-modern-replacement-for-ls-written-in-rust-for-linuxunix/))
 - `tree` see tree folder/file structure from command line
+- `task` "Taskwarrior", a terminal based TODO list manager [see website](https://taskwarrior.org/)
+- `rtv` a terminal based reddit browser [see their github](https://github.com/michael-lazar/rtv)
 (many more undocumented)
+
+
 
 # Installation
 
