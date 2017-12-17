@@ -112,17 +112,45 @@ fi
 ## https://wiki.archlinux.org/index.php/SSH_keys#Keychain
 eval $(keychain --eval --quiet id_rsa id_rsa_bb)
 
+## FUNCTIONS
+function print-shortcuts {
+    case $1 in
+        "i3")
+            missing-docs $1
+            break;;
+        "alias")
+            cat << EOF
+Name           Shortcut  Args    Descrption                         Example
+edit config    ec        *       edit config file for given arg     ec polybar
 
-## Functions
+EOF
+            break;;
+        *)
+            ;;
+    esac
+}
+
+function missing-docs {
+    echo "missing docs for ${1}"
+}
+
 function edit-config {
-    vim "~/.config/${1}/config"
+    config_file=~/.config/${1}/config
+    if [[ -f "${config_file}" ]]; then
+        vim $config_file
+    else
+        echo "${config_file}"
+        echo "no config file found for ${1}" >&2
+    fi
 }
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
+alias h=print-shortcuts
 alias ec="edit-config"
+alias ecp="ec polybar"
 alias ez="vim ~/.zshrc"
 alias sz="source ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
