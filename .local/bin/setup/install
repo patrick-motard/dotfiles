@@ -45,6 +45,7 @@ common_pacman_packages="
     screenfetch
     remmina
     libreoffice-fresh
+    task
 "
     #nvidia-dkms
 
