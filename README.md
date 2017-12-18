@@ -43,6 +43,7 @@
 - `tree` see tree folder/file structure from command line
 - `task` "Taskwarrior", a terminal based TODO list manager [see website](https://taskwarrior.org/)
 - `rtv` a terminal based reddit browser [see their github](https://github.com/michael-lazar/rtv)
+- `gtop` pretty neat terminal based visual `top`
 (many more undocumented)
 
 
