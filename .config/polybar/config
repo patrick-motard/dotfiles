@@ -60,7 +60,7 @@ alert = #bd2c40
 
 [bar/example]
 separator = 
-bottom = false
+bottom = true
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
 height = 29
@@ -90,25 +90,9 @@ font-1 = Hack:pixelsize=12;3
 font-2 = Hack:fontformat=truetype:size=14:antialias=true;10
 font-3 = fontawesome:fontformat=truetype:size=12:antialias=true;3
 
-modules-left = i3 
-modules-center = 
-modules-right =  filesystem -1 volume -red-black  memory -red-black  cpu -red-black temperature -alt time -alt-2 calendar powermenu
-
-; tray-position = right
-; tray-padding = 0
-; tray-transparent = true
-; tray-background = #0063ff
-
-;wm-restack = bspwm
-;wm-restack = i3
-
-;override-redirect = true
-
-;scroll-up = bspwm-desknext
-;scroll-down = bspwm-deskprev
-
-;scroll-up = i3wm-wsnext
-;scroll-down = i3wm-wsprev
+modules-left = 
+modules-center = -i3 i3 
+modules-right =  filesystem -1 volume -red-black  memory -red-black  cpu -red-black temperature -time time -calendar calendar powermenu
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -120,6 +104,16 @@ content = %{F#FFB5BD68  B#011D32 }
 [module/-red-black]
 type = custom/text
 content = "%{F#3B4252 B#BF616A}  "
+
+[module/-i3]
+type = custom/text
+content-foreground = ${colors.nord4}
+content = 
+
+[module/-i3]
+type = custom/text
+format-background = ${colors.nord4}
+content = 
 
 [module/]
 type = custom/text
@@ -133,6 +127,16 @@ content = %{F#434C5E B#3B4252}
 type = custom/text
 content = "%{F#5E81AC} "
 
+[module/-calendar]
+type = custom/text
+content-foreground = ${colors.nord9}
+content-background = ${colors.nord10}
+content = ""
+
+[module/-time]
+type = custom/text
+content-foreground = ${colors.nord10}
+content = ""
 
 [module/]
 type = custom/text
@@ -145,29 +149,6 @@ content = 
 ; 
 ; 
 ; 
-
-
-
-[module/xwindow]
-type = internal/xwindow
-label = %title:0:30:...%
-
-[module/xkeyboard]
-type = internal/xkeyboard
-blacklist-0 = num lock
-
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-format-prefix-underline = ${colors.secondary}
-
-label-layout = %layout%
-label-layout-underline = ${colors.secondary}
-
-label-indicator-padding = 2
-label-indicator-margin = 1
-label-indicator-background = ${colors.secondary}
-label-indicator-underline = ${colors.secondary}
-
 [module/filesystem]
 type = internal/fs
 interval = 25
@@ -181,63 +162,30 @@ label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
 [module/i3]
-; ws-icon-0 = 1;♚
-; ws-icon-1 = 2;♛
-; ws-icon-2 = 3;♜
-; ws-icon-3 = 4;♝
-; ws-icon-4 = 5;♞
-; ws-icon-default = ♟
 type = internal/i3
-; format = <label-state> <label-mode>
-
-; Only show workspaces defined on the same output as the bar
-;
-; Useful if you want to show monitor specific workspaces
-; on different bars
-;
-; Default: false
-; pin-workspaces = true
-
-; This will split the workspace name on ':'
-; Default: false
-; strip-wsnumbers = true
-
-; Sort the workspaces by index instead of the default
-; sorting that groups the workspaces by output
-; Default: false
-; index-sort = true
-
-; Create click handler used to focus workspace
-; Default: true
 enable-click = true
-
-; Create scroll handlers used to cycle workspaces
-; Default: true
 enable-scroll = false
-
-; Wrap around when reaching the first/last workspace
-; Default: true
 wrapping-scroll = false
-
-; Set the scroll cycle direction 
-; Default: true
 reverse-scroll = false
-
-; Use fuzzy (partial) matching on labels when assigning 
-; icons to workspaces
-; Example: code;♚ will apply the icon to all workspaces 
-; containing 'code' in the label
-; Default: false
 fuzzy-match = true
-label-focused-foreground = ${colors.foreground-alt}
+
+format = <label-mode><label-state>
+
+label-mode = %mode%
+label-mode-padding-left = 1
+label-mode-padding-right = 1
+label-mode-background = ${colors.nord11}
+label-mode-foreground = ${colors.nord4}
+
+label-focused-foreground = ${colors.nord2}
 label-focused-background = ${colors.background-alt}
 
-label-unfocused-foreground = ${colors.foreground}
-label-unfocused-background = ${colors.secondary}
+label-unfocused-foreground = ${colors.nord2}
+label-unfocused-background = ${colors.nord4}
 
-label-focused-underline = #8fe5fe
 label-focused-padding-right = 1
 label-focused-padding-left = 0
+
 label-unfocused-padding-left = 0
 label-unfocused-padding-right = 1
 
@@ -297,57 +245,14 @@ bar-used-fill = ▐
 bar-used-empty = ▐
 bar-used-empty-foreground = #444444
 
-; [module/wlan]
-; type = internal/network
-; interface = net1
-; interval = 3.0
-
-; format-connected = <ramp-signal> <label-connected>
-; format-connected-underline = #9f78e1
-; label-connected = %essid%
-
-; format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
-
-; ramp-signal-0 = 
-; ramp-signal-1 = 
-; ramp-signal-2 = 
-; ramp-signal-3 = 
-; ramp-signal-4 = 
-; ramp-signal-foreground = ${colors.foreground-alt}
-
-[module/eth]
-type = internal/network
-interface = enp0s3
-interval = 3.0
-
-format-connected-underline = #55aa55
-format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %local_ip%
-
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
-
 [module/time]
 type = internal/date
 interval = 5
+time = %I:%M %p
+format-background = ${colors.nord10}
+format-foreground = ${colors.nord5}
 
-;time = %H:%M
-;time-alt = %H:%M:%S
-time = %I:%M
-
-format-prefix = 
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
-
-label = " %time% "
+label = "   %time%  "
 
 [module/calendar]
 type = internal/date
@@ -356,12 +261,9 @@ interval = 5
 date = %m/%d/%Y
 date-alt = " %Y-%m-%d"
 
-
-format-prefix = 
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
-
-label =  %date%
+format-background = ${colors.nord9}
+format-foreground = ${colors.nord5}
+label = "   %date%  "
 
 
 
