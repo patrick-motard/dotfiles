@@ -46,6 +46,7 @@ common_pacman_packages="
     remmina
     libreoffice-fresh
     task
+    gtop
 "
     #nvidia-dkms
 
