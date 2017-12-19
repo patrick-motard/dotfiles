@@ -83,6 +83,15 @@ bindsym $mod+Shift+y	resize shrink width 10 px or 10ppt
 bindsym $mod+Shift+u	resize shrink height 10 px or 10 ppt
 bindsym $mod+Shift+o	resize grow width 10 px or 10 ppt
 
+set $mode_randr " 1 |  2"
+bindsym  $mod+Shift+a mode $mode_randr
+mode $mode_randr {
+    bindsym 1 exec --no-startup-id ~/.screenlayout/1440.sh && i3-msg restart, mode "default"
+    bindsym 2 exec --no-startup-id ~/.screenlayout/1080L-1440R.sh && i3-msg restart, mode "default"
+    ## back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
 # good example on how to work with modes:
 # http://christopherdecoster.com/posts/i3-wm/
 set $mode_gaps "[(g)aps] | Outer (O+/o-), Inner (I+/i-)"
@@ -96,7 +105,8 @@ mode $mode_gaps {
 	bindsym Escape mode "default"
 }
 
-set $mode_system "[syst(E)m] | (l)ock, l(o)gout, (s)uspend, (h)ibernate, (r)eboot, (S)hutdown"
+#set $mode_system "[syst(E)m] | (l)ock, l(o)gout, (s)uspend, (h)ibernate, (r)eboot, (S)hutdown"
+set $mode_system " l |  o |  s |   h |   r |  S"
 
 bindsym $mod+Shift+e mode $mode_system
 set $locker ~/.local/bin/tools/lock
