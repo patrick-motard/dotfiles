@@ -119,7 +119,7 @@ font-3 = fontawesome:fontformat=truetype:size=12:antialias=true;3
 
 modules-left = i3 
 modules-center = 
-modules-right =  filesystem -1 volume -red-black  memory -red-black  cpu -temp temperature -time time -calendar calendar powermenu
+modules-right =  filesystem -1 volume -memory memory -cpu2 -cpu cpu -temp temperature -time time -calendar calendar powermenu
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -169,7 +169,19 @@ content = ""
 [module/-temp]
 type = custom/text
 content-foreground = ${colors.nord8}
-content-background = ${colors.nord3}
+content-background = ${colors.nord1}
+content = ""
+
+[module/-cpu]
+type = custom/text
+content-foreground = ${colors.nord1}
+content-background = ${colors.nord4}
+content = ""
+
+[module/-memory]
+type = custom/text
+content-foreground = ${colors.nord2}
+content-background = ${colors.nord1}
 content = ""
 
 [module/]
@@ -178,6 +190,11 @@ format-background = ${colors.nord2}
 format-foreground = ${colors.nord1}
 content = 
 
+[module/-cpu2]
+type = custom/text
+content-foreground = ${colors.nord4}
+content-background = ${colors.nord2}
+content = ""
 ; 
 ; 
 ; 
@@ -244,7 +261,7 @@ interval = 2
 label = %percentage:2%%
 
 format = <label> <ramp-coreload>
-format-background = ${colors.nord3}
+format-background = ${colors.nord1}
 format-foreground = ${colors.nord4}
 format-padding = 2
 
@@ -260,20 +277,24 @@ ramp-coreload-7 = █
 
 [module/memory]
 type = internal/memory
-interval = 2
+interval = 1
 format = <label> <bar-used>
-label = " %percentage_used%%"
+label = " %percentage_used%%" 
+format-padding = 2
+format-background = ${colors.nord2}
+format-foreground = ${colors.nord5}
 
 ; Only applies if <bar-used> is used
 bar-used-indicator =
 bar-used-width = 10
-bar-used-foreground-0 = ${colors.nord4}
-bar-used-foreground-1 = #557755
-bar-used-foreground-2 = #f5a70a
-bar-used-foreground-3 = #ff5555
+bar-used-foreground-0 = ${colors.nord1}
+bar-used-foreground-1 = ${colors.nord3}
+bar-used-foreground-2 = ${colors.nord2}
+bar-used-foreground-3 = ${colors.nord1}
 bar-used-fill = ▐
 bar-used-empty = ▐
-bar-used-empty-foreground = #444444
+bar-used-empty-foreground = ${colors.nord9}
+
 
 [module/time]
 type = internal/date
@@ -308,32 +329,32 @@ type = internal/volume
 ; speaker-mixer = Speaker
 ; headphone-mixer = Headphone
 
-format-volume = <label-volume> <bar-volume>
-label-volume = 
+format-volume = <label-volume> 
+label-volume = "   %percentage%%  "
 label-volume-foreground = ${colors.nord4}
 label-volume-background = ${colors.nord2}
 
 
-format-muted-prefix = 
 format-muted-foreground = ${colors.nord5}
 label-muted = "    muted   "
 
-bar-volume-width = 10
-bar-volume-foreground-0 = ${colors.nord4}
-bar-volume-foreground-1 = ${colors.nord5}
-bar-volume-foreground-2 = ${colors.nord4}
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.nord5}
+; bar-volume-width = 10
+; bar-volume-background = ${colors.nord1}
+; bar-volume-foreground-0 = ${colors.nord4}
+; bar-volume-foreground-1 = ${colors.nord5}
+; bar-volume-foreground-2 = ${colors.nord4}
+; bar-volume-foreground-3 = #55aa55
+; bar-volume-foreground-4 = #55aa55
+; bar-volume-foreground-5 = #f5a70a
+; bar-volume-foreground-6 = #ff5555
+; bar-volume-gradient = false
+; bar-volume-indicator = |
+; bar-volume-indicator-font = 2
+; bar-volume-fill = ─
+; bar-volume-fill-font = 2
+; bar-volume-empty = ─
+; bar-volume-empty-font = 2
+; bar-volume-empty-foreground = ${colors.nord5}
 
 [module/temperature]
 type = internal/temperature
