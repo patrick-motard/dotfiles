@@ -30,8 +30,9 @@ nord14 = #A3BE8C
 nord15 = #B48EAD
 
 ; background = ${xrdb:color0:#222}
-background = ${colors.nord0}
-background1 = ${colors.nord1}
+#background = ${colors.nord0}
+background = 
+#background1 = ${colors.nord1}
 ;#222
 background-alt = ${colors.nord9}
 ;foreground = ${xrdb:color7:#222}
@@ -118,7 +119,7 @@ font-3 = fontawesome:fontformat=truetype:size=12:antialias=true;3
 
 modules-left = i3 
 modules-center = 
-modules-right =  filesystem -1 volume -red-black  memory -red-black  cpu -red-black temperature -time time -calendar calendar powermenu
+modules-right =  filesystem -1 volume -red-black  memory -red-black  cpu -temp temperature -time time -calendar calendar powermenu
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -162,6 +163,13 @@ content = ""
 [module/-time]
 type = custom/text
 content-foreground = ${colors.nord10}
+content-background = ${colors.nord8}
+content = ""
+
+[module/-temp]
+type = custom/text
+content-foreground = ${colors.nord8}
+content-background = ${colors.nord3}
 content = ""
 
 [module/]
@@ -229,22 +237,16 @@ icon-next = 
 label-song-maxlen = 25
 label-song-ellipsis = true
 
+
 [module/cpu]
 type = internal/cpu
 interval = 2
-label =  %percentage:2%%
-; Available tags:
-;   <label> (default)
-;   <bar-load>
-;   <ramp-load>
-;   <ramp-coreload>
-format = <label> <ramp-coreload>
+label = %percentage:2%%
 
-; Available tokens:
-;   %percentage% (default) - total cpu load
-;   %percentage-cores% - load percentage for each core
-;   %percentage-core[1-9]% - load percentage for specific core
-; label = CPU %percentage%%
+format = <label> <ramp-coreload>
+format-background = ${colors.nord3}
+format-foreground = ${colors.nord4}
+format-padding = 2
 
 ramp-coreload-0 = ▁
 ramp-coreload-1 = ▂
@@ -255,11 +257,12 @@ ramp-coreload-5 = ▆
 ramp-coreload-6 = ▇
 ramp-coreload-7 = █
 
+
 [module/memory]
 type = internal/memory
 interval = 2
 format = <label> <bar-used>
-label = %percentage_used%%
+label = " %percentage_used%%"
 
 ; Only applies if <bar-used> is used
 bar-used-indicator =
@@ -337,19 +340,18 @@ type = internal/temperature
 thermal-zone = 0
 warn-temperature = 70
 
+format-background = ${colors.nord8}
+format-foreground = ${colors.nord0}
+
 format = <ramp> <label>
-format-underline = #f50a4d
 format-warn = <ramp> <label-warn>
-format-warn-underline = ${self.format-underline}
 
-label = %temperature%
-label-warn = %temperature%
-label-warn-foreground = ${colors.secondary}
+label = "%temperature%  "
+label-warn = "%temperature%  "
 
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-ramp-foreground = ${colors.foreground}
+ramp-2 = "  "
+ramp-1 = "  "
+ramp-0 = "  "
 
 [module/powermenu]
 type = custom/menu
