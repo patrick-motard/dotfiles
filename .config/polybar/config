@@ -119,7 +119,7 @@ font-3 = fontawesome:fontformat=truetype:size=12:antialias=true;3
 
 modules-left = i3 
 modules-center = 
-modules-right =  filesystem -1 volume -memory memory -cpu2 -cpu cpu -temp temperature -time time -calendar calendar powermenu
+modules-right =  filesystem -volume3 -volume2 -volume volume -memory2 -memory memory -cpu2 -cpu cpu -temp temperature -time time -calendar calendar powermenu
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -146,9 +146,17 @@ content = 
 type = custom/text
 content = %{F#3B4252}
 
-[module/-1]
+[module/-volume]
 type = custom/text
-content = %{F#434C5E B#3B4252}
+content-foreground = ${colors.nord8}
+content-background = ${colors.nord3}
+content = ""
+
+[module/-volume2]
+type = custom/text
+content-foreground = ${colors.nord3}
+content-background = ${colors.nord1}
+content = ""
 
 [module/-2]
 type = custom/text
@@ -181,7 +189,13 @@ content = ""
 [module/-memory]
 type = custom/text
 content-foreground = ${colors.nord2}
-content-background = ${colors.nord1}
+content-background = ${colors.nord4}
+content = ""
+
+[module/-memory2]
+type = custom/text
+content-foreground = ${colors.nord4}
+content-background = ${colors.nord8}
 content = ""
 
 [module/]
@@ -331,8 +345,8 @@ type = internal/volume
 
 format-volume = <label-volume> 
 label-volume = "   %percentage%%  "
-label-volume-foreground = ${colors.nord4}
-label-volume-background = ${colors.nord2}
+label-volume-foreground = ${colors.nord1}
+label-volume-background = ${colors.nord8}
 
 
 format-muted-foreground = ${colors.nord5}
