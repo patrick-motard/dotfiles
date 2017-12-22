@@ -4,6 +4,6 @@
 	insteadOf = bb:
 [user]
 	name = patrick-motard
-	email = motard19@gmail.com
+    email = motard19@gmail.com
 [core]
 	editor = vim

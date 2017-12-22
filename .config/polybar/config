@@ -119,7 +119,7 @@ font-3 = fontawesome:fontformat=truetype:size=12:antialias=true;3
 
 modules-left = i3 
 modules-center = 
-modules-right =  filesystem -volume3 -volume2 -volume volume -memory2 -memory memory -cpu2 -cpu cpu -temp temperature -time time -calendar calendar powermenu
+modules-right =  filesystem -volume3 -volume2 -volume volume -memory2 -memory memory -cpu2 -cpu cpu -temp2 -temp temperature -time2 -time time -calendar2 -calendar calendar powermenu
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -165,24 +165,42 @@ content = "%{F#5E81AC} "
 [module/-calendar]
 type = custom/text
 content-foreground = ${colors.nord9}
+content-background = ${colors.nord8}
+content = ""
+
+[module/-calendar2]
+type = custom/text
+content-foreground = ${colors.nord8}
 content-background = ${colors.nord10}
 content = ""
 
 [module/-time]
 type = custom/text
 content-foreground = ${colors.nord10}
+content-background = ${colors.nord9}
+content = ""
+
+[module/-time2]
+type = custom/text
+content-foreground = ${colors.nord9}
 content-background = ${colors.nord8}
 content = ""
 
 [module/-temp]
 type = custom/text
 content-foreground = ${colors.nord8}
-content-background = ${colors.nord1}
+content-background = ${colors.nord4}
+content = ""
+
+[module/-temp2]
+type = custom/text
+content-foreground = ${colors.nord4}
+content-background = ${colors.nord3}
 content = ""
 
 [module/-cpu]
 type = custom/text
-content-foreground = ${colors.nord1}
+content-foreground = ${colors.nord3}
 content-background = ${colors.nord4}
 content = ""
 
@@ -275,7 +293,7 @@ interval = 2
 label = %percentage:2%%
 
 format = <label> <ramp-coreload>
-format-background = ${colors.nord1}
+format-background = ${colors.nord3}
 format-foreground = ${colors.nord4}
 format-padding = 2
 
@@ -315,7 +333,7 @@ type = internal/date
 interval = 5
 time = %I:%M %p
 format-background = ${colors.nord10}
-format-foreground = ${colors.nord5}
+format-foreground = ${colors.nord0}
 
 label = "   %time%  "
 
@@ -327,7 +345,7 @@ date = %m/%d/%Y
 date-alt = " %Y-%m-%d"
 
 format-background = ${colors.nord9}
-format-foreground = ${colors.nord5}
+format-foreground = ${colors.nord0}
 label = "   %date%  "
 
 

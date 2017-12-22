@@ -47,6 +47,7 @@ common_pacman_packages="
     libreoffice-fresh
     task
     gtop
+    perl-anyevent-i3
 "
     #nvidia-dkms
 
