@@ -237,3 +237,6 @@ Settings for gtk 2:
 ### dotfile galleries
  - [calou's](https://imgur.com/gallery/uFVFq)
 
+### Blogs
+ - [Howard Abrams](http://www.howardabrams.com/)
+
