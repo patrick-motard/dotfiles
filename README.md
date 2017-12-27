@@ -232,6 +232,7 @@ Settings for gtk 2:
  
 ### other people's dotfiles
  - [demure](https://notabug.org/demure/dotfiles/src/master/i3/config)
+ - [noctuid](https://github.com/noctuid/dotfiles) Includes a more thorough explanation to all of this than I provide.
 
 ### dotfile galleries
  - [calou's](https://imgur.com/gallery/uFVFq)
