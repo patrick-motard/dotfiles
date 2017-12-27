@@ -57,7 +57,8 @@ values."
      org
      (shell :variables
             shell-default-height 30
-            shell-default-position 'bottom)
+            shell-default-position 'bottom
+            shell-default-shell ansi-term "/usr/bin/zsh")
      wakatime
      themes-megapack
      syntax-checking
