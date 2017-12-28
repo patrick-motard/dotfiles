@@ -116,7 +116,7 @@ eval $(keychain --eval --quiet id_rsa id_rsa_bb)
 function print-shortcuts {
     case $1 in
         "i3")
-            missing-docs $1
+            missing_docs $1
             ;;
         "alias")
             cat << EOF
@@ -125,12 +125,18 @@ edit config    ec        *       edit config file for given arg     ec polybar
 EOF
             ;;
         *)
-            missing-docs $1
+            missing_docs $1 "undefined"
+            cat << EOF
+Options:
+i3
+alias
+EOF
+
             ;;
     esac
 }
 
-function missing-docs {
+function missing_docs {
     echo "missing docs for ${1}"
 }
 

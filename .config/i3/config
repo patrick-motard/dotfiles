@@ -308,7 +308,7 @@ exec --no-startup-id google-chrome-stable
 exec --no-startup-id dropbox
 exec --no-startup-id emacs
 # exec --no-startup-id sh ~/.fehbg
-exec --no-startup-id sh ~/.screenlayout/1080L-1440R.sh
+exec_always --no-startup-id sh ~/.screenlayout/1440L-1080R.sh
 exec --no-startup-id compton
 exec --no-startup-id sh ~/.local/bin/tools/start-vbox-client
 exec_always --no-startup-id dunst
