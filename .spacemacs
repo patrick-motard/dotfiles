@@ -58,7 +58,8 @@ values."
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom
-            shell-default-shell ansi-term "/usr/bin/zsh")
+            shell-default-shell 'ansi-term
+            shell-default-term-shell "/usr/bin/zsh")
      wakatime
      themes-megapack
      syntax-checking
@@ -176,7 +177,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    ;; dotspacemacs-default-font '("Source Code Pro for Powerline"
-   dotspacemacs-default-font '("Hack"
+   dotspacemacs-default-font '("Source Code Pro for Powerline"
                                :size 18
                                :weight normal
                                :width normal

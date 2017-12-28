@@ -352,20 +352,20 @@ label = "   %date%  "
 
 [module/volume]
 type = internal/volume
-; master-soundcard = default
-; speaker-soundcard = default
-; headephone-soundcard = default
+# master-soundcard = default
+# speaker-soundcard = default
+# headephone-soundcard = default
 
-; master-mixer = Master
+master-mixer = Master
 
-; speaker-mixer = Speaker
-; headphone-mixer = Headphone
+# speaker-mixer = Speaker
+headphone-mixer = Headphone
+headphone-id = 41
 
 format-volume = <label-volume> 
 label-volume = "   %percentage%%  "
 label-volume-foreground = ${colors.nord1}
 label-volume-background = ${colors.nord8}
-
 
 format-muted-foreground = ${colors.nord5}
 label-muted = "    muted   "
