@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=$HOME/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -117,15 +117,15 @@ function print-shortcuts {
     case $1 in
         "i3")
             missing-docs $1
-            break;;
+            ;;
         "alias")
             cat << EOF
 Name           Shortcut  Args    Descrption                         Example
 edit config    ec        *       edit config file for given arg     ec polybar
-
 EOF
-            break;;
+            ;;
         *)
+            missing-docs $1
             ;;
     esac
 }
@@ -148,7 +148,7 @@ function edit-config {
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-alias h=print-shortcuts
+alias h="print-shortcuts"
 alias ec="edit-config"
 alias ecp="ec polybar"
 alias ez="vim ~/.zshrc"
