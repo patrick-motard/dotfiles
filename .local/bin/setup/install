@@ -157,6 +157,7 @@ export yaourt_packages="
   siji-git
   xorg-xset
   bashmount
+  remmina-plugin-rdesktop
 "
 
 
