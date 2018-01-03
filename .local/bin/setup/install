@@ -48,6 +48,7 @@ common_pacman_packages="
     task
     gtop
     perl-anyevent-i3
+    rustup
 "
     #nvidia-dkms
 
