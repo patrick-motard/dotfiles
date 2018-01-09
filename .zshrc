@@ -215,6 +215,10 @@ export GOPATH=~/code/go
 export PATH="$PATH:$GOPATH/bin"
 ## END GOLANG
 
+## vimgolf
+export PATH="$PATH:/home/han/.gem/ruby/2.5.0/gems/vimgolf-0.4.8/bin"
+## end vimgolf
+
 export PATH=~/.local/bin:$PATH
 export PATH=~/.local/bin/tools:$PATH
 export PATH=/opt/idea-IC-171.4424.56/bin:$PATH
