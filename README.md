@@ -240,4 +240,4 @@ Settings for gtk 2:
 ### Blogs
  - [Howard Abrams](http://www.howardabrams.com/)
  - [Jeff Lindsay](http://progrium.com/blog/page2/)
-
+ - [Ilya Grigorik - vimgolf creator](https://www.igvita.com/)
