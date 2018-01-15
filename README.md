@@ -241,3 +241,4 @@ Settings for gtk 2:
  - [Howard Abrams](http://www.howardabrams.com/)
  - [Jeff Lindsay](http://progrium.com/blog/page2/)
  - [Ilya Grigorik - vimgolf creator](https://www.igvita.com/)
+ - [Charles Leifer - Suffering for fashion: a glimpse into my Linux theming toolchain](http://charlesleifer.com/blog/suffering-for-fashion-a-glimpse-into-my-linux-theming-toolchain/)
