@@ -50,6 +50,7 @@ common_pacman_packages="
     perl-anyevent-i3
     rustup
     nmap
+    freerdp
 "
     #nvidia-dkms
 
