@@ -52,7 +52,12 @@ common_pacman_packages="
     nmap
     freerdp
 "
-    #nvidia-dkms
+
+# list of packages no longer used
+# to be removed from system to avoid issues
+remove_packages="
+  ttf-font-awesome
+"
 
 virtualbox_packages="
     virtualbox-guest-modules-arch
@@ -77,6 +82,10 @@ for package_name in $host_specific_pkgs; do
     sudo pacman -S $package_name --needed --noconfirm
 done
 
+echo 'removing packages that are no longer needed'
+for package_name in $remove_packages; do
+    sudo pacman -R --noconfirm
+done
 
 
 
