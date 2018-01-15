@@ -240,4 +240,3 @@ Settings for gtk 2:
 ### Blogs
  - [Howard Abrams](http://www.howardabrams.com/)
  - [Jeff Lindsay](http://progrium.com/blog/page2/)
-

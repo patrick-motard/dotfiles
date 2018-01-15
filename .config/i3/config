@@ -130,6 +130,11 @@ mode $mode_modes {
 	bindsym Escape mode "default"
 }
 
+# set $screenshot_mode "Screenshot Mode"
+# bindsym {
+
+# }
+
 
 ## monitor shortcuts
 
@@ -140,7 +145,6 @@ bindsym $mod+u move workspace to output right
 
 
 # screen capture
-
 bindsym Print exec --no-startup-id scrot "%Y-%m-%d_%H:%M:%S_$wx$h.png" -e 'mv $f ~/Dropbox/Screenshots/2017/$f'
 
 
@@ -286,7 +290,8 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-    i3bar_command $HOME/.config/polybar/launch.sh
+    # i3bar_command $HOME/.config/polybar/launch.sh
+    i3bar_command /dev/null
     # colors {
     #         #class              #border       #background     #text
     #         background          $navy-blue
@@ -298,25 +303,18 @@ bar {
     # position top
 }
 
+for_window [title="i3-helm"] floating enable
+
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
 ## start applications on startup
-exec --no-startup-id xfce4-terminal
-exec --no-startup-id google-chrome-stable
 exec --no-startup-id dropbox
 exec --no-startup-id emacs
-# exec --no-startup-id sh ~/.fehbg
+exec --no-startup-id firefox
 exec_always --no-startup-id sh ~/.screenlayout/1440L-1080R.sh
 exec --no-startup-id compton
 exec --no-startup-id sh ~/.local/bin/tools/start-vbox-client
 exec_always --no-startup-id dunst
-
-# command for random feh image:
-# exec --no-startup-id feh --randomize --bg-fill ~/Dropbox/photos/backgrounds/2017/*
-
-# exec --no-startup-id feh --bg-scale '/home/han/Dropbox/photos/backgrounds/2017/wallhaven-502910.jpg' 
-# exec_always --no-startup-id ~/.config/polybar/launch.sh
-# exec --no-startup-id nitrogen --restore
-#
+exec --no-startup-id ~/.config/polybar/launch.sh
