@@ -291,7 +291,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
     # i3bar_command $HOME/.config/polybar/launch.sh
-    i3bar_command /dev/null
+    i3bar_command null
     # colors {
     #         #class              #border       #background     #text
     #         background          $navy-blue
@@ -310,6 +310,7 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #d
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
 ## start applications on startup
+exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec --no-startup-id dropbox
 exec --no-startup-id emacs
 exec --no-startup-id firefox
@@ -317,4 +318,3 @@ exec_always --no-startup-id sh ~/.screenlayout/1440L-1080R.sh
 exec --no-startup-id compton
 exec --no-startup-id sh ~/.local/bin/tools/start-vbox-client
 exec_always --no-startup-id dunst
-exec --no-startup-id ~/.config/polybar/launch.sh
