@@ -30,8 +30,8 @@ foreground-alt = ${colors.nord4}
 secondary = ${colors.nord0}
 alert = ${colors.nord14}
 
-[bar/left]
-monitor = ${env:MAIN_MONITOR:DVI-D-0}
+[bar/right]
+monitor = ${env:MONITOR_RIGHT}
 separator = 
 bottom = false
 ;monitor = ${env:MONITOR:HDMI-1}
