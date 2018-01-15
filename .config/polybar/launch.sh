@@ -14,8 +14,8 @@
 # get list of connected monitors, space separated
 active_monitors=$(xrandr -q | grep " connected" | awk "{print $"${1:-1}"}" ORS=" ")
 
-# my monitor configurations
-# replace with your own (based on the output above)
+# # my monitor configurations
+# # replace with your own (based on the output above)
 work="DVI-I-1 DVI-D-0 "
 work_laptop="VGA-1 "
 

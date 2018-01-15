@@ -144,7 +144,7 @@ fi
 ## install yaourt packages
 export yaourt_packages="
   polybar
-  ttf-font-awesome
+  awesome-terminal-fonts
   i3-gaps
   i3blocks-gaps-git
   xorg-xprop
