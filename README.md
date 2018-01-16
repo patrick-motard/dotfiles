@@ -162,8 +162,7 @@ AUR and Pacman.
 
 ## setup-run
 This will run `.local/bin/setup/install`, which includes several installation commands. Use
-this command to install pacman & AUR packages required by the dotfiles. This command also
-updates your pacman.
+this command to install pacman & AUR packages required by the dotfiles. For updating, usedthe `update` alias.
 
 ## setup-edit
 Run this command if you would like to edit the setup file. (i.e. you want to install new packages)
