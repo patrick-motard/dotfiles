@@ -156,6 +156,9 @@ This will open the rofi menu, which you can use to launch apps. This shortcut ca
 
 # Aliases
 
+## screenshot
+This will run `.local/bin/tools/screenshot` to take a screenshot. Pass `-h` flag for options.
+
 ## update
 This will run `.local/bin/setup/update`, which updates packages installed through both
 AUR and Pacman.
@@ -166,6 +169,9 @@ this command to install pacman & AUR packages required by the dotfiles. For upda
 
 ## setup-edit
 Run this command if you would like to edit the setup file. (i.e. you want to install new packages)
+
+## tools
+cd to ~/.local/bin/tools directory in terminal
 
 ## sz
 sources ~/.zshrc
