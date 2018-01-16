@@ -2,10 +2,6 @@
 
 updates=$(checkupdates | wc -l)
 
-if [ "$updates" -gt 0 ]; then
-    echo "   $updates  "
-else
+aur_updates=$(trizen -Su --aur --quiet | wc -l)
 
-    echo "   $updates  "
-    # echo ""
-fi
+echo " PAC $updates | AUR $aur_updates"

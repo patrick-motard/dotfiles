@@ -156,6 +156,10 @@ This will open the rofi menu, which you can use to launch apps. This shortcut ca
 
 # Aliases
 
+## update
+This will run `.local/bin/setup/update`, which updates packages installed through both
+AUR and Pacman.
+
 ## setup-run
 This will run `.local/bin/setup/install`, which includes several installation commands. Use
 this command to install pacman & AUR packages required by the dotfiles. This command also

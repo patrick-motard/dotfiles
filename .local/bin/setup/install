@@ -6,7 +6,6 @@ sudo pacman -Syu --noconfirm
 ##sudo pacman-mirrors -g
 sudo pacman-optimize && sync
 
-
 common_pacman_packages="
     xorg-server
     jq
@@ -69,7 +68,7 @@ physical_packages="
 
 # install common packages
 for package_name in $common_pacman_packages; do
-  sudo pacman -S $package_name --needed --noconfirm
+  sudo pacman -S $package_name --needed --noconfirm --quiet
 done
 
 # install/update packages for virtualbox or physical install
@@ -88,10 +87,9 @@ for package_name in $remove_packages; do
 done
 
 
-
-
 ## if the docker daemon isn't active, set it up
-if [ ! $(systemctl -q is-active docker ) ] ; then
+systemctl -q is-active docker
+if [[ $? -ne 0 ]] ; then
     echo "Docker isn't running"
     ## refer to docker daemon documentation for further details:
     ## https://docs.docker.com/engine/installation/linux/linux-postinstall/
@@ -132,6 +130,8 @@ if [[ ! -f .nvm/nvm.sh ]]; then
   . ~/.nvm/nvm.sh ## source nvm
   nvm install lts/boron
   npm i -g tern ## tern is used for the javascript layer in emacs
+else
+    echo "NVM already installed, skipping..."
 fi
 
 mkdir -p $HOME/code
@@ -154,7 +154,7 @@ fi
 export yaourt_packages="
   polybar
   awesome-terminal-fonts
-  i3-gaps
+  i3-gaps-next-git
   i3blocks-gaps-git
   xorg-xprop
   hipchat
@@ -170,10 +170,10 @@ export yaourt_packages="
   xorg-xset
   bashmount
   remmina-plugin-rdesktop
+  trizen
 "
 
 
-
 for yaourt_package in $yaourt_packages; do
-  yaourt $yaourt_package --noconfirm
+  yaourt -S --needed $yaourt_package --noconfirm
 done
