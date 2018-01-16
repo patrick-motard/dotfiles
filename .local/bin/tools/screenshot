@@ -1,0 +1,107 @@
+#!/usr/bin/env bash
+
+####################################################################
+#                                                                  #
+#                            About                                 #
+#                                                                  #
+####################################################################
+
+usage="
+NAME
+      screenshot
+
+SYNOPSIS
+      screenshot [-h|-q|-s|-f|-b]
+
+ARGUMENTS
+       -q | --quiet
+
+          Don't send notification to dust.
+
+
+       -s | --selected
+
+          Interactively select window or rectangle with the mouse.
+
+
+       -f | --focused
+
+          Take screenshot of currently focused window
+
+
+       -b | --border
+
+          Include window border
+
+"
+####################################################################
+#                                                                  #
+#                     Dependencies                                 #
+#                                                                  #
+####################################################################
+
+
+
+####################################################################
+#                                                                  #
+#                     Globals & Defaults                           #
+#                                                                  #
+####################################################################
+
+quiet=false
+
+
+####################################################################
+#                                                                  #
+#                     Parse Command Args                           #
+#                                                                  #
+####################################################################
+
+while test $# -gt 0; do
+	  case "$1" in
+        -h|--help|-\?)
+            echo "$usage" >&2
+            exit
+            ;;
+        -q|--quiet)
+            quiet=true
+            ;;
+        -s|--selected)
+            notify-send "Screenshot" "Select an area to capture in screenshot."
+            args=" -s"
+            ;;
+        -f|--focused)
+            args=$args" -u"
+            ;;
+        -b|--border)
+            args=$args" -b"
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG" >&2
+            exit 1
+            ;;
+        *)
+            break
+    esac
+    shift
+done
+
+
+####################################################################
+#                                                                  #
+#                           Functions                              #
+#                                                                  #
+####################################################################
+
+function main {
+    screenshot_directory=~/Dropbox/Screenshots/$(date +"%Y")/
+    mkdir -p $screenshot_directory
+    scrot $screenshot_directory%Y-%m-%d_%H:%M:%S_\$wx\$h.png $args
+
+    if [ "$quiet" = false ]; then
+        notify-send "Screenshot Taken" "Saved to ${screenshot_directory}"
+    fi
+}
+
+main
+exit
