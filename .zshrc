@@ -185,6 +185,7 @@ alias decrypt="yadm decrypt && rsync -a ~/home/$USER/ ~/ && rm -rf ~/home/$USER"
 
 alias setup-run="bash ~/.local/bin/setup/install"
 alias setup-edit="vim ~/.local/bin/setup/install"
+alias update="bash ~/.local/bin/setup/update"
 
 alias cat="ccat"
 alias ls="exa"
