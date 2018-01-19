@@ -250,3 +250,16 @@ Settings for gtk 2:
  - [Jeff Lindsay](http://progrium.com/blog/page2/)
  - [Ilya Grigorik - vimgolf creator](https://www.igvita.com/)
  - [Charles Leifer - Suffering for fashion: a glimpse into my Linux theming toolchain](http://charlesleifer.com/blog/suffering-for-fashion-a-glimpse-into-my-linux-theming-toolchain/)
+
+# Future Ideas
+
+1. rust lib for creating rules for windows and workspaces in i3
+
+examples of problems it could solve:
+
+   * when opening a terminal, make it open with a fixed or relative height and width 
+   * configure and restore workspace layouts, beyond the functionality of i3 
+
+2. a polybar extension or stand alone application like rofi that provides a gui with functionality like emacs helm (spacemacs variety), to make common tasks, scripts, and functions discoverable and callable using symantic keybinds. (would love to use rust for the engine and maybe a language like lua, lisp, or python for scripting it)
+
+3. short of the system variety of helm, a cheatsheet overlay that behaves like rofi and can hook into my config files and scripts to generate and display a cheatsheet would be amazing.
