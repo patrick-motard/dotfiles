@@ -158,7 +158,6 @@ This will open the rofi menu, which you can use to launch apps. This shortcut ca
 
 ## screenshot
 This will run `.local/bin/tools/screenshot` to take a screenshot. Pass `-h` flag for options.
-
 ## update
 This will run `.local/bin/setup/update`, which updates packages installed through both
 AUR and Pacman.
