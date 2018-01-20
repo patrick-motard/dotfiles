@@ -152,7 +152,6 @@ fi
 
 ## install yaourt packages
 export yaourt_packages="
-  polybar
   awesome-terminal-fonts
   i3-gaps-next-git
   i3blocks-gaps-git
@@ -171,6 +170,7 @@ export yaourt_packages="
   bashmount
   remmina-plugin-rdesktop
   trizen
+  polybar-git
 "
 
 
