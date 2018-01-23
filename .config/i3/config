@@ -126,8 +126,8 @@ mode $mode_system {
 set $mode_modes "[(m)odes] | (g)aps, (r)esize, syst(E)m"
 bindsym $mod+m mode $mode_modes
 mode $mode_modes {
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 
 # set $screenshot_mode "Screenshot Mode"
@@ -145,8 +145,17 @@ bindsym $mod+u move workspace to output right
 
 
 # screen capture
-bindsym Print exec --no-startup-id scrot "%Y-%m-%d_%H:%M:%S_$wx$h.png" -e 'mv $f ~/Dropbox/Screenshots/2017/$f'
-
+# bindsym Print exec --no-startup-id scrot "%Y-%m-%d_%H:%M:%S_$wx$h.png" -e 'mv $f ~/Dropbox/Screenshots/2017/$f'
+# bindsym Print exec --no-startup-id screenshot 
+set $mode_print "-s selected, -f focused window, -b focused window + window border"
+bindsym Print mode $mode_print
+mode $mode_print {
+    bindsym s exec --no-startup-id "~/.local/bin/tools/screenshot -s", mode default
+    bindsym f exec --no-startup-id ~/.local/bin/tools/screenshot -f, mode default
+    bindsym b exec --no-startup-id ~/.local/bin/tools/screenshot -b, mode default
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
 
 ## smart borders: draw borders around a container only if it 
 ## is not the only container in this workspace

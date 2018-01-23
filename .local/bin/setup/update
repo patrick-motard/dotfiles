@@ -4,3 +4,4 @@
 # resync, upgrade, and downgrade if newer than repo
 # upgrades aur and pacman packages
 sudo yaourt -Syyuu --noconfirm
+check_for_arch_updates
