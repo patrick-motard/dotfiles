@@ -228,7 +228,7 @@ type = custom/script
 exec = ~/.local/bin/tools/check_for_arch_updates
 format-foreground = ${colors.nord4}
 format-background = ${colors.nord1}
-interval = 600
+interval = 180
 
 [module/filesystem]
 type = internal/fs
