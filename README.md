@@ -267,3 +267,10 @@ examples of problems it could solve:
 4. look into using taskwarrior for task management
 
 5. look into using oh-my-zsh custom plugins for better management of .zshrc [oh-my-zsh wiki "Customization" section](https://github.com/robbyrussell/oh-my-zsh/wiki/Customization)
+
+# Unanswered Questions
+
+Things I want to know but didn't have time to look into when I thought of it.
+
+- i3wm: How to move a window below the window to the right or left of it without moving it below
+the entire tree
