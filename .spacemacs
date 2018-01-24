@@ -354,7 +354,15 @@ before packages are loaded. If you are unsure, you should try in setting them in
 (defun dotspacemacs/user-config ()
   (setq wakatime-api-key (exec-path-from-shell-copy-env "WAKA_API_KEY"))
   (setq wakatime-cli-path "/usr/bin/wakatime")
+
+  ;; importing these env vars allows magit to use the ssh-agent
+  ;; which has my ssh keys in ~/.ssh/config
+  (exec-path-from-shell-copy-env "SSH_AGENT_PID")
+  (exec-path-from-shell-copy-env "SSH_AUTH_SOCK")
+
   (global-centered-cursor-mode t)
+  (setq magit-repository-directories '("~/code/"))
+  (global-git-commit-mode t)
   ;; (spacemacs/enable-transparency)
   (setq neo-theme 'icons)
   (setq powerline-default-separator 'arrow)
