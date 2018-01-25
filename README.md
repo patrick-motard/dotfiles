@@ -62,10 +62,10 @@ I recommend installing Arch using Antergos because it gives a nice gui for insta
 
 Managing your dotfiles in source control is important. This project uses [YADM](https://thelocehiliosan.github.io/yadm/), a dotfile manager that employs git. With YADM you can start with a new repo, or clone an existing repo. Both approachs are explained in depth on the YADM website's [getting started](https://thelocehiliosan.github.io/yadm/docs/getting_started) section. 
 
-1. Install Arch using Antergos, choose the "no desktop environment" option.
-2. On a different computer, fork this repo to your own github account.
-3. Clone your fork to your Antergos install using YADM.
-4. run the install script located at `~/.local/bin/tools/setup/install` in terminal: `setup-run`
+
+1. Fork this repo (or clone this repo directly and change it's upstream to your fork after install is done)
+2. Install Arch using Antergos, choose the "no desktop environment" option.
+4. Follow the instructions outlined in [install.md](install.md)
 5. report any bugs or manual steps as issues to this repo so that the install process can be improved.
 
 Make sure to read the setup script before executing it. It installs my entire environment, tweak it to meet your needs.
