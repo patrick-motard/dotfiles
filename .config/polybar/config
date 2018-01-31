@@ -71,6 +71,41 @@ modules-right = -i3 i3
 cursor-click = pointer
 cursor-scroll = ns-resize
 
+[bar/left]
+monitor = ${env:MONITOR_LEFT}
+separator = 
+bottom = false
+width = 100%
+height = 29
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+line-size = 0
+line-color = #f00
+
+border-size = 0
+border-color = #00000000
+
+padding-left = 0
+padding-right = 0
+
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = Powerline Extra Symbols:size=19;4
+font-2 = fontawesome:size=12;3
+font-1 = Hack:pixelsize=12;3
+font-3 = Hack:fontformat=truetype:size=14:antialias=true;10
+
+
+modules-left = 
+modules-center = 
+modules-right =  i3 
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
 
 [bar/main]
 monitor = ${env:MONITOR_MAIN}
