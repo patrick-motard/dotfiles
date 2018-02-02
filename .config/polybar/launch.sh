@@ -14,8 +14,8 @@
 # get list of connected monitors, space separated
 active_monitors=$(xrandr -q | grep " connected" | awk "{print $"${1:-1}"}" ORS=" ")
 
-# # my monitor configurations
-# # replace with your own (based on the output above)
+# my monitor configurations
+# replace with your own (based on the output above)
 work_desktop="DVI-I-1 DVI-D-0 "
 work_laptop="VGA-1 "
 home_desktop="HDMI-0 DP-0 "
@@ -57,6 +57,5 @@ while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 polybar -r main &
 polybar -r right &
 polybar -r left &
-
 
 echo "Bars launched..."

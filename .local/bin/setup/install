@@ -177,3 +177,10 @@ export yaourt_packages="
 for yaourt_package in $yaourt_packages; do
   yaourt -S --needed $yaourt_package --noconfirm
 done
+
+code=(nodejs rust golang awscli azcli)
+function install_code() {
+    for c in $code; do
+        echo c
+    done
+}
