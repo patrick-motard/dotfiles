@@ -50,6 +50,7 @@ common_pacman_packages="
     rustup
     nmap
     freerdp
+    go-tools
 "
 
 # list of packages no longer used
