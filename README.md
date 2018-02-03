@@ -123,10 +123,9 @@ To change where the cron job searches for images, edit the directory in
 
 ## Screenshot
 
-`Print or PrtScr`
-
-places screenshot with data+time in `~/Dropbox/Screenshots/2017`
-([source](https://github.com/villasv/rice/blob/master/i3/config#L134))
+| Command | Type | Description |
+|---------|------|-------------|
+| Print/PrtScr | keypress | places screenshot with data+time in `~/Dropbox/Screenshots/2017` ([source](https://github.com/villasv/rice/blob/master/i3/config#L134)) |
 
 ## Launch Application
 
