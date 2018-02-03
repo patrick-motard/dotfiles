@@ -112,6 +112,11 @@ fi
 ## https://wiki.archlinux.org/index.php/SSH_keys#Keychain
 eval $(keychain --eval --quiet id_rsa id_rsa_bb)
 
+function pe() {
+    echo "ERROR: $1" >&2
+    exit 1
+}
+
 ## FUNCTIONS
 function print-shortcuts {
     case $1 in
@@ -150,6 +155,36 @@ function edit-config {
     fi
 }
 
+
+# set the following in your ~/.zshenv
+# export BB_ACCOUNT_NAME=""
+# export GH_ACCOUNT_NAME=""
+# export CODE_DIR="~/code"
+# to your values
+# usage example: clone gh dotfiles
+function clone() {
+    dir="${CODE_DIR:-${PWD}}"
+    echo $dir
+    if [[ -z $1 ]]; then
+        pe "Must provide 'gh' or 'bb'"
+    elif [[ -z $2 ]]; then
+        pe "Must provide a repository name"
+    fi
+
+    case $1 in
+        "bb")
+            repo="git@bitbucket.org:${BB_ACCOUNT_NAME}/${2}.git"
+            echo $repo
+            git clone $repo $dir
+            ;;
+        "gh")
+            repo="git@github.com:${GH_ACCOUNT_NAME}/${2}.git"
+            echo $repo
+            git clone $repo $dir
+            ;;
+    esac
+}
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -158,12 +193,13 @@ alias h="print-shortcuts"
 alias ec="edit-config"
 alias ecp="ec polybar"
 alias ez="vim ~/.zshrc"
-alias vz="vim ~/.zshrc" 
+alias vz="vim ~/.zshrc"
 alias sz="source ~/.zshrc"
 alias gs="git status"
 alias gcm="git commit -m"
 alias gp="git push"
 alias gpp="quick-git-check-in"
+alias clone=clone
 alias pbcopy="xclip -selection clipboard"
 alias pbpaste="xclip -selection clipboard -o"
 alias restart="shutdown -r now"
