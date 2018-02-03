@@ -22,6 +22,7 @@ common_pacman_packages="
     compton
     pulseaudio
     pamixer
+    pavucontrol
     feh
     docker
     docker-compose
