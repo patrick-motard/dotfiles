@@ -396,7 +396,7 @@ label = "   %date%  "
 
 
 [module/volume]
-type = internal/volume
+type = internal/alsa
 # master-soundcard = default
 # speaker-soundcard = default
 # headephone-soundcard = default
@@ -406,6 +406,7 @@ master-mixer = Master
 # speaker-mixer = Speaker
 headphone-mixer = Headphone
 headphone-id = 41
+format-background = ${colors.nord9}
 
 format-volume = <label-volume> 
 label-volume = "   %percentage%%  "
