@@ -21,7 +21,6 @@ work_laptop="VGA-1 "
 home_desktop="HDMI-0 DP-0 "
 
 function export_monitor_vars() {
-    echo $1 $2 $3
     export MONITOR_MAIN=$1
     export MONITOR_RIGHT=$2
     export MONITOR_LEFT=$3
