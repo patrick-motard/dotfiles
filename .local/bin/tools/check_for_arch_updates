@@ -4,4 +4,4 @@ updates=$(checkupdates | wc -l)
 
 aur_updates=$(trizen -Su --aur --quiet | wc -l)
 
-echo " PAC $updates | AUR $aur_updates"
+echo " $updates | $aur_updates"
