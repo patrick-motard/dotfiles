@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ## update pacman
 sudo pacman -Syu --noconfirm
@@ -58,6 +58,7 @@ common_pacman_packages="
 # to be removed from system to avoid issues
 remove_packages="
   ttf-font-awesome
+  i3blocks-gaps-git
 "
 
 virtualbox_packages="
@@ -123,14 +124,15 @@ pip install --upgrade --user awscli
 ## Install Vundle
 ## commented out check for directory because it already exists. need to solve this problem another way.
 #if [[ ! -d /home/han/.vim/bundle/Vundle.vim ]]; then
-  git clone https://github.com/VundleVim/Vundle.vim.git /home/han/.vim/bundle/Vundle.vim
+git clone https://github.com/VundleVim/Vundle.vim.git /home/$USER/.vim/bundle/Vundle.vim
 #fi
 
 ## Install NVM if nvm shell sript not downloaded
 if [[ ! -f .nvm/nvm.sh ]]; then
   curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
   . ~/.nvm/nvm.sh ## source nvm
-  nvm install lts/boron
+  node_version=$(<~/.nvmrc)
+  nvm install $node_version
   npm i -g tern ## tern is used for the javascript layer in emacs
 else
     echo "NVM already installed, skipping..."
@@ -149,14 +151,13 @@ fi
 ## use vmware setupscript (works with virtualbox)
 if [[ ! -d ~/Downloads/vmware-tools/.git ]]; then
   git clone https://github.com/rasa/vmware-tools-patches.git ~/Downloads/vmware-tools/
-  sudo sh /home/han/Downloads/vmware-tools/patched-open-vm-tools.sh
+  sudo sh /home/$USER/Downloads/vmware-tools/patched-open-vm-tools.sh
 fi
 
 ## install yaourt packages
 export yaourt_packages="
   awesome-terminal-fonts
   i3-gaps-next-git
-  i3blocks-gaps-git
   xorg-xprop
   hipchat
   gtk-theme-arc-git
