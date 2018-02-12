@@ -3,4 +3,4 @@
 # sudo pacman -Syu --noconfirm
 # resync, upgrade, and downgrade if newer than repo
 # upgrades aur and pacman packages
-sudo trizen -Syua --noconfirm
+trizen -Syua --noconfirm
