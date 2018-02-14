@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# sudo pacman -Syu --noconfirm
+sudo pacman -Syu --noconfirm
 # resync, upgrade, and downgrade if newer than repo
 # upgrades aur and pacman packages
 trizen -Syua --noconfirm
