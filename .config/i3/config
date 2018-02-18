@@ -147,10 +147,11 @@ bindsym $mod+u move workspace to output right
 # screen capture
 # bindsym Print exec --no-startup-id scrot "%Y-%m-%d_%H:%M:%S_$wx$h.png" -e 'mv $f ~/Dropbox/Screenshots/2017/$f'
 # bindsym Print exec --no-startup-id screenshot 
-set $mode_print "-s selected, -f focused window, -b focused window + window border"
+set $mode_print "Print Mode: Press `print` again to capture all monitors, `f`: focused window, `b`: focused window + window border"
 bindsym Print mode $mode_print
 mode $mode_print {
-    bindsym s exec --no-startup-id "~/.local/bin/tools/screenshot -s", mode default
+    # bindsym s exec --no-startup-id "~/.local/bin/tools/screenshot -s", mode default
+    bindsym Print exec --no-startup-id ~/.local/bin/tools/screenshot, mode default
     bindsym f exec --no-startup-id ~/.local/bin/tools/screenshot -f, mode default
     bindsym b exec --no-startup-id ~/.local/bin/tools/screenshot -b, mode default
     bindsym Return mode "default"
