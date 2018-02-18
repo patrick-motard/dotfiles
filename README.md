@@ -132,7 +132,6 @@ All aliases are currently listed in `~/.zshrc`. This list is not comprehensive.
 | ez         | edit ~/.zshrc                                                                                                            |
 | xrl        | reload changes to ~/.Xresources                                                                                          |
 | bgf        | If you're in virtualbox and your desktop background is jank, this fixes it temporarily. I'm working on a better solution |
-|            |                                                                                                                          |
 
 ## Tool Commands
 Tools are scripts included as part of this repo that are used either in config files (like polybar & i3), or you can use directly.
@@ -143,7 +142,6 @@ Tools are located in `~/.local/bin/tools` & `~/.local/bin/setup`
 | update pacman/aur | update        | setup/update  | updates pacman and aur packages (there is an indicator in polybar that shows you if there are updates available) |
 | install dotfiles  | setup-install | setup/install | installs everything included in this repository, see setup instructions for more context                         |
 | take screenshot   | screenshot    |               | Places screenshot with data+time in `~/Dropbox/Screenshots/{YEAR}`, pass `-h` flag for additional options.       |
-|                   |               |               |                                                                                                                  |
 
 ## Rofi Commands
 
@@ -167,6 +165,7 @@ Tools are located in `~/.local/bin/tools` & `~/.local/bin/setup`
 ## Other 3rd Party Commands
 
 | Tool      | Command      | Description                                                                                                             |
+|-----------|--------------|-------------------------------------------------------------------------------------------------------------------------|
 | xbindkeys | xbindkeys -k | Uses xbindkeys to output key code of pressed key or mouse button. Useful for mapping key codes to commands in i3 config |
 
 
