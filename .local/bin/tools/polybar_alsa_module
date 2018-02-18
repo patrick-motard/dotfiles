@@ -1,0 +1,145 @@
+#!/usr/bin/env bash
+
+# =================================================================== #
+# DESCRIPTION:
+# =================================================================== #
+# This script is a polybar module.
+
+# It allows the user to toggle between headphones and speakers
+# without plugging/unplugging headphones. You can leave your
+# headphones plugged in switch between the two ports by clicking
+# on the icon for the module on your polybar.
+
+# =================================================================== #
+# CONFIGURATION
+# =================================================================== #
+# 1. identify which sink your ports belong to:
+#    - open pavucontrol (i do this using rofi)
+#    - click on "output devices" tab (shows a list of sinks)
+#    - identify which sink relates to your headphones/speakers
+#      mine is called "Built-in Audio Analog Stereo".
+# 2. Identify your the sink's id:
+#    - By using `pacmd list | grep "sink"` i can see it is called
+#      "analog-stereo", has an id of 1, and is the default sink'.
+# 3. Set the sink_id variable in this script to your sink's id
+# 4. Set `headphones` & `speakers` variable in script to the name
+#    of your headphone port.
+#    - `pacmd list | grep "active port"`
+
+# =================================================================== #
+# USAGE
+# =================================================================== #
+# To use this script, include the following custom module definition
+# to your polybar config file (replace values in brackets with your own):
+
+# [module/{YOUR_MODULE_NAME}]
+# type = custom/script
+# exec = {PATH_TO_THIS_SCRIPT}/polybar_alsa_module
+# tail = true
+# interval = 0
+# click-left = zsh -c "kill -SIGUSR1 %pid%"
+# format-background = {COLOR_FOR_BACKGROUND_HEX}
+# format-foreground = {COLOR_FOR_ICON_HEX}
+
+# include the module in your bar section:
+# example: placing 'alsa-switcher' module on the left side of a
+# bar named 'main'
+
+# [bar/main]
+# ...
+# modules-left = alsa-switcher
+# ...
+
+# More information on Polybar 'script' modules can be found here:
+# https://github.com/jaagr/polybar/wiki/Module:-script
+
+# =================================================================== #
+# KNOWN BUGS:
+# =================================================================== #
+
+# 1:
+# TLDR: Do not plug in your speakers into line out. Choose rear
+# center speaker or something else.
+
+# On one of my desktops the rear 'line out' jack and the front
+# 'headphone' jack share the 'Front' alsa 'Simple Control'.
+# This wouldn't be a problem except for...
+# When you set the sink port using pacmd to either headphones or
+# lineout, it will keep the Front port at 100% volume. You can
+# confirm this using alsamixer. It will contiue to output audio
+# through the speakers even when this script sets headphones as
+# output.
+# If you know a fix to this, PLEASE email me. I'd love to know
+# what I'm missing. <motard19@gmail.com>
+
+headphones="analog-output-headphones"
+speakers="analog-output-lineout"
+sink_id=1
+t=0
+
+while test $# -gt 0; do
+	  case "$1" in
+        --mutefg)
+            mute_fg=$2
+            shift
+            ;;
+        --mutebg)
+            mute_bg=$2
+            shift
+            ;;
+        --bg)
+            bg=$2
+            shift
+            ;;
+        --fg)
+            fg=$2
+            shift
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG" >&2
+            exit 1
+            ;;
+        *)
+            break
+    esac
+    shift
+done
+
+toggle() {
+    t=$(((t + 1) % 2))
+}
+
+trap "toggle" USR1
+
+
+while true; do
+    muted=$(pamixer --sink $sink_id --get-mute)
+
+    if [ $t -eq 0 ]; then
+        pacmd set-sink-port $sink_id $headphones
+        # set front channel to 0 volume, because muting it mutes headphones as well...
+        # annoying bug with alsa..
+        amixer sset Front 0
+
+        if [[ "$muted" = true ]]; then
+            # echo $mute_fg
+            echo "%{ F#$mute_fg B#$mute_bg } "
+        else
+            # echo $mute_fg
+            echo "%{ F#$fg B#$bg } "
+        fi
+
+    else
+        pacmd set-sink-port $sink_id $speakers
+
+        if [[ "$muted" = true ]]; then
+            # echo $mute_fg
+            echo "%{ F#$mute_fg B#$mute_bg } "
+        else
+            # echo $mute_fg
+            echo "%{ F#$fg B#$bg } "
+        fi
+    fi
+    sleep 1 &
+    wait
+done

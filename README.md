@@ -273,3 +273,12 @@ Things I want to know but didn't have time to look into when I thought of it.
 
 - i3wm: How to move a window below the window to the right or left of it without moving it below
 the entire tree
+
+- how to do snippets in emacs (per mode would be really nice)
+  
+Some things I'd like snippets for:
+
+  - Javascript console logs (figured this out once then promptly forgot how i did it)
+  - argument parsing template for bash scripts (i always end up copy pasting from other scripts)
+  - documentation templates for bash scripts (they're inconsistent between my scripts right now)
+    
