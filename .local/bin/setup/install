@@ -59,6 +59,7 @@ common_pacman_packages="
 # to be removed from system to avoid issues
 remove_packages="
     ttf-font-awesome
+    i3blocks-gaps-git
 "
 
 virtualbox_packages="
@@ -124,14 +125,15 @@ pip install --upgrade --user awscli
 ## Install Vundle
 ## commented out check for directory because it already exists. need to solve this problem another way.
 #if [[ ! -d /home/han/.vim/bundle/Vundle.vim ]]; then
-  git clone https://github.com/VundleVim/Vundle.vim.git /home/han/.vim/bundle/Vundle.vim
+git clone https://github.com/VundleVim/Vundle.vim.git /home/$USER/.vim/bundle/Vundle.vim
 #fi
 
 ## Install NVM if nvm shell sript not downloaded
 if [[ ! -f .nvm/nvm.sh ]]; then
   curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
   . ~/.nvm/nvm.sh ## source nvm
-  nvm install lts/boron
+  node_version=$(<~/.nvmrc)
+  nvm install $node_version
   npm i -g tern ## tern is used for the javascript layer in emacs
 else
     echo "NVM already installed, skipping..."
@@ -158,7 +160,6 @@ fi
 export yaourt_packages="
   awesome-terminal-fonts
   i3-gaps-next-git
-  i3blocks-gaps-git
   xorg-xprop
   hipchat
   gtk-theme-arc-git
@@ -190,3 +191,11 @@ done
 #         echo c
 #     done
 # }
+
+# needed for spacemacs go layer
+# https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Blang/go
+go get -u -v github.com/nsf/gocode
+go get -u -v github.com/rogpeppe/godef
+go get -u -v golang.org/x/tools/cmd/guru
+go get -u -v golang.org/x/tools/cmd/gorename
+go get -u -v golang.org/x/tools/cmd/goimports
