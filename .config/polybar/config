@@ -168,7 +168,7 @@ font-3 = Hack:fontformat=truetype:size=14:antialias=true;10
 
 modules-left = i3  
 modules-center = 
-modules-right =  updates-arch filesystem  -volume2 -volume alsa-switch pulseaudio-tail -memory2 -memory memory -cpu2 -cpu cpu -temp2 -temp temperature -time2 -time time -calendar2 -calendar calendar powermenu
+modules-right =  filesystem  -volume2 -volume alsa-switch pulseaudio-tail -memory2 -memory memory -cpu2 -cpu cpu -temp2 -temp temperature -time2 -time time -calendar2 -calendar calendar powermenu
 
 cursor-click = pointer
 cursor-scroll = ns-resize
