@@ -29,7 +29,7 @@
 - `emacs` spacemacs
 - `yadm` dotfile manager
 - `i3-gaps` window manager
-- `i3blocks` status line for i3-bar
+- `polybar` status line & bar for i3
 - `tumbler` enables thumbnail view of images for thunar
 - `termite` terminal ([repo link](https://github.com/thestinger/termite/))
 - `oh-my-zsh` & z shell
@@ -117,77 +117,57 @@ To change where the cron job searches for images, edit the directory in
 
 - [how to properly format a cronjob](https://stackoverflow.com/questions/5398014/using-crontab-to-execute-script-every-minute-and-another-every-24-hours)
 
+# Commands & Aliases
+
+## Aliases
+
+All aliases are currently listed in `~/.zshrc`. This list is not comprehensive.
+
+| alias      | Description                                                                                                              |
+|------------|--------------------------------------------------------------------------------------------------------------------------|
+| setup-edit | Run this command if you would like to edit the install(dotfiles installer). (i.e. you want to install new packages)      |
+| decrypt    | Decrypts yadm files and makes sure they are placed in ~/. Use this instead of yadm's decrypt command.                    |
+| tools      | cd to ~/.local/bin/tools directory in terminal                                                                           |
+| sz         | source ~/.zshrc                                                                                                          |
+| ez         | edit ~/.zshrc                                                                                                            |
+| xrl        | reload changes to ~/.Xresources                                                                                          |
+| bgf        | If you're in virtualbox and your desktop background is jank, this fixes it temporarily. I'm working on a better solution |
+|            |                                                                                                                          |
+
+## Tool Commands
+Tools are scripts included as part of this repo that are used either in config files (like polybar & i3), or you can use directly.
+Tools are located in `~/.local/bin/tools` & `~/.local/bin/setup`
+
+| Action            | Command       | Location      | Description                                                                                                      |
+|-------------------|---------------|---------------|------------------------------------------------------------------------------------------------------------------|
+| update pacman/aur | update        | setup/update  | updates pacman and aur packages (there is an indicator in polybar that shows you if there are updates available) |
+| install dotfiles  | setup-install | setup/install | installs everything included in this repository, see setup instructions for more context                         |
+| take screenshot   | screenshot    |               | Places screenshot with data+time in `~/Dropbox/Screenshots/{YEAR}`, pass `-h` flag for additional options.       |
+|                   |               |               |                                                                                                                  |
+
+## Rofi Commands
+
+| Action           | Command                 | Type           | Description                                                                |
+|------------------|-------------------------|----------------|----------------------------------------------------------------------------|
+| open rofi        | alt+d                   | key combo      | Opens rofi                                                                 |
+| rofi switch view | alt+n/p (next/previous) | rofi key combo | Switches between views in rofi when rofi is open. Views: run, ssh, windows |
 
 
-# Commands
+## Spacemacs
 
-## Screenshot
-
-|Action | Command | Type | Description |
-|-------|---------|------|-------------|
-| Screenshot | Print/PrtScr | keypress | places screenshot with data+time in `~/Dropbox/Screenshots/2017` ([source](https://github.com/villasv/rice/blob/master/i3/config#L134)) |
-
-## Launch Application
-
-This will open the rofi menu, which you can use to launch apps. This shortcut can be run from any workspace with any application in focus.
-
-`Alt+d`
-
-## xbindkeys
-
-`xbindkeys -k` : gives you key code for a pressed key or mouse button
-
-## spacemacs:
-
-`SPC f e d` *spacemacs/find-dotfile* : opens `.spacemacs` in buffer
-
-`SPC f e R` *dotspacemacs/sync-configuration-files* : reloads .spacemacs config changes
-
-`,` : major mode leader key (quickest way to issue a major mode command)
-
-## Org Mode (spacemacs)
-
-`t` toggle TODO item between TODO and DONE state
-
-`alt-shift-RET` insert new TODO
+| Mode | Action                   | Command         | Description                                                                 |
+|------|--------------------------|-----------------|-----------------------------------------------------------------------------|
+| *    | open `.spacemacs`        | `SPC f e d`     | *spacemacs/find-dotfile* : opens `.spacemacs` in buffer                     |
+|      | reload `.spacemacs`      | `SPC f e R`     | *dotspacemacs/sync-configuration-files* : reloads .spacemacs config changes |
+|      | view major mode commands | `,`             | major mode leader key (quickest way to issue a major mode command)          |
+| Org  | toggle TODO              | `t`             | toggle TODO item between TODO & DONE state in .org file                     |
+|      | insert TODO              | `alt-shift-RET` | insert new TODO in .org file                                                |
 
 
+## Other 3rd Party Commands
 
-# Aliases
-
-## screenshot
-This will run `.local/bin/tools/screenshot` to take a screenshot. Pass `-h` flag for options.
-## update
-This will run `.local/bin/setup/update`, which updates packages installed through both
-AUR and Pacman.
-
-## setup-run
-This will run `.local/bin/setup/install`, which includes several installation commands. Use
-this command to install pacman & AUR packages required by the dotfiles. For updating, usedthe `update` alias.
-
-## setup-edit
-Run this command if you would like to edit the setup file. (i.e. you want to install new packages)
-
-## tools
-cd to ~/.local/bin/tools directory in terminal
-
-## sz
-sources ~/.zshrc
-
-## rc-edit
-edit `~/.zshrc`
-
-## xrl
-reload changes to ~/.Xresources
-
-## decrypt
-decrypts encrypted yadm files and makes sure they are placed
-correctly in ~/
-
-## bgf
-if you're in virtualbox and your desktop background is jank, this fixes it temporarily
-i'm working on a better solution
-
+| Tool      | Command      | Description                                                                                                             |
+| xbindkeys | xbindkeys -k | Uses xbindkeys to output key code of pressed key or mouse button. Useful for mapping key codes to commands in i3 config |
 
 
 # General Ricing Info

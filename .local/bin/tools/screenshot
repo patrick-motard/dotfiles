@@ -61,7 +61,7 @@ while test $# -gt 0; do
 	  case "$1" in
         -h|--help|-\?)
             echo "$usage" >&2
-            exit
+            exit 1
             ;;
         -q|--quiet)
             quiet=true
@@ -81,7 +81,9 @@ while test $# -gt 0; do
             exit 1
             ;;
         *)
-            break
+            echo "$usage" >&2
+            exit 1
+            ;;
     esac
     shift
 done
