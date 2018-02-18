@@ -28,6 +28,14 @@ foreground-alt = ${colors.nord4}
 secondary = ${colors.nord0}
 alert = ${colors.nord14}
 
+
+
+;;=========================================================;;
+;;                                                         ;;
+;;                           BARS                          ;;
+;;                                                         ;;
+;;=========================================================;;
+
 [bar/main.bottom]
 monitor = ${env:MONITOR_MAIN}
 bottom = true
@@ -36,12 +44,16 @@ width = 100%
 background = ${colors.background}
 foreground = ${colors.foreground}
 modules-left = 
-modules-right = 
-modules-center = updates-arch
+modules-right = updates-arch dropbox-watcher
+modules-center = 
 font-0 = Powerline Extra Symbols:size=19;4
 font-1 = FontAwesome:fontformat=truetype:size=12:antialias=false;3
 font-2 = Hack:pixelsize=12;3
 font-3 = Hack:fontformat=truetype:size=14:antialias=true;10
+separator= 
+module-margin-left = 1.5
+module-margin-right = 1.5
+padding-right = 2
 
 
 
@@ -161,7 +173,11 @@ modules-right =  updates-arch filesystem  -volume2 -volume alsa-switch 
 cursor-click = pointer
 cursor-scroll = ns-resize
 
-
+;;=========================================================;;
+;;                                                         ;;
+;;                      MODULES                            ;;
+;;                                                         ;;
+;;=========================================================;;
 
 [module/]
 type = custom/text
@@ -272,6 +288,7 @@ content = ""
 ; 
 ; 
 
+<<<<<<< HEAD
 [module/pulseaudio-tail]
 type = custom/script
 exec = ~/.local/bin/tools/pulseaudio-tail.sh
@@ -289,11 +306,17 @@ tail = true
 interval = 0
 click-left = zsh -c "kill -SIGUSR1 %pid%"
 
+[module/dropbox-watcher]
+type = custom/script
+exec = ~/.local/bin/tools/isrunning_dropbox.sh
+interval = 5
+click-left = ~/polybar-scripts/dropbox-isrunning.sh --toggle
+
 [module/updates-arch]
 type = custom/script
 exec = ~/.local/bin/tools/check_for_arch_updates
 format-foreground = ${colors.nord4}
-format-background = ${colors.nord1}
+format-background = ${colors.nord0}
 interval = 180
 
 [module/filesystem]
