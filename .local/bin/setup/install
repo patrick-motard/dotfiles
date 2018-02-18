@@ -192,8 +192,10 @@ done
 #     done
 # }
 
+
 # needed for spacemacs go layer
 # https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Blang/go
+mkdir -p $GOPATH/src/github.com
 go get -u -v github.com/nsf/gocode
 go get -u -v github.com/rogpeppe/godef
 go get -u -v golang.org/x/tools/cmd/guru
