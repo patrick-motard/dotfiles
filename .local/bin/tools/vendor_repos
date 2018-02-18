@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+vendor_repos=(
+    "https://github.com/x70b1/polybar-scripts.git .config/polybar/custom-modules/community-modules"
+    "https://github.com/VundleVim/Vundle.vim.git .vim/bundle/Vundle.vim"
+)
+
+install_vendor() {
+    for repo in "${vendor_repos[@]}"; do
+        (
+            repo_url=$(echo $repo | cut -d ' ' -f1)
+            install_dir=~/$(echo $repo | cut -d ' ' -f2)
+            repo_name=$(echo $repo_url | rev | cut -d '/' -f 1 | rev)
+
+            if [[ -d "$install_dir/.git" ]]; then
+                echo "${repo_name} has already been cloned"
+                return
+            fi
+
+            mkdir -p $install_dir
+            git clone $repo_url $install_dir
+        )
+    done
+}
+install_vendor

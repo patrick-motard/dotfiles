@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ## update pacman
 sudo pacman -Syu --noconfirm
@@ -21,8 +21,9 @@ common_pacman_packages="
     emacs
     compton
     pulseaudio
-    pamixer
     pavucontrol
+    pamixer
+    alsa-utils
     feh
     docker
     docker-compose
@@ -57,7 +58,7 @@ common_pacman_packages="
 # list of packages no longer used
 # to be removed from system to avoid issues
 remove_packages="
-  ttf-font-awesome
+    ttf-font-awesome
 "
 
 virtualbox_packages="
@@ -146,11 +147,12 @@ if [[ ! -d ~/.emacs.d/.git ]]; then
   git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 fi
 
+## Commenting this out.. not sure if it is needed 2/4/18
 ## use vmware setupscript (works with virtualbox)
-if [[ ! -d ~/Downloads/vmware-tools/.git ]]; then
-  git clone https://github.com/rasa/vmware-tools-patches.git ~/Downloads/vmware-tools/
-  sudo sh /home/han/Downloads/vmware-tools/patched-open-vm-tools.sh
-fi
+# if [[ ! -d ~/Downloads/vmware-tools/.git ]]; then
+#   git clone https://github.com/rasa/vmware-tools-patches.git ~/Downloads/vmware-tools/
+#   sudo sh /home/han/Downloads/vmware-tools/patched-open-vm-tools.sh
+# fi
 
 ## install yaourt packages
 export yaourt_packages="
@@ -180,9 +182,11 @@ for yaourt_package in $yaourt_packages; do
   yaourt -S --needed $yaourt_package --noconfirm
 done
 
-code=(nodejs rust golang awscli azcli)
-function install_code() {
-    for c in $code; do
-        echo c
-    done
-}
+
+# TODO: create function the installs code
+# code=( "nodejs" "rust" "golang" "awscli" "azcli" )
+# function install_code() {
+#     for c in $code; do
+#         echo c
+#     done
+# }
