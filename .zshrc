@@ -206,6 +206,7 @@ alias restart="shutdown -r now"
 ## reload xresources
 alias xrl="xrdb ~/.Xresources"
 alias nr="node run.js"
+alias kl="kubectl"
 
 alias y="yadm"
 alias ya="yadm add"

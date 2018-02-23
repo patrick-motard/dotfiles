@@ -132,6 +132,7 @@ All aliases are currently listed in `~/.zshrc`. This list is not comprehensive.
 | ez         | edit ~/.zshrc                                                                                                            |
 | xrl        | reload changes to ~/.Xresources                                                                                          |
 | bgf        | If you're in virtualbox and your desktop background is jank, this fixes it temporarily. I'm working on a better solution |
+| kl         | kubectl                                                                                                                  |
 
 ## Tool Commands
 Tools are scripts included as part of this repo that are used either in config files (like polybar & i3), or you can use directly.
