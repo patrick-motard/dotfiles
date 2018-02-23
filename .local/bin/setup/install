@@ -176,6 +176,7 @@ export yaourt_packages="
   remmina-plugin-rdesktop
   trizen
   polybar-git
+  pgadmin4
 "
 
 
