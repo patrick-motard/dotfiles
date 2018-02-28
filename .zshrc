@@ -280,3 +280,5 @@ export EDITOR=vim
 export PATH=$PATH:/home/han/.local/bin
 
 source '/home/han/.local/bin/azure-cli/az.completion'
+
+source <(kubectl completion zsh)
