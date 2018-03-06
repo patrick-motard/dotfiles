@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 echo -e "Stashing any unstaged changes that may exist...\n"
 git --no-pager diff
 git stash
