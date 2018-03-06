@@ -199,6 +199,7 @@ alias gs="git status"
 alias gcm="git commit -m"
 alias gp="git push"
 alias gpp="quick-git-check-in"
+alias gl="git log | vim -"
 alias clone=clone
 alias pbcopy="xclip -selection clipboard"
 alias pbpaste="xclip -selection clipboard -o"
