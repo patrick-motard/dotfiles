@@ -1,0 +1,12 @@
+echo -e "Stashing any unstaged changes that may exist...\n"
+git --no-pager diff
+git stash
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+git fetch
+echo -e "\n Merging in latest changes from master...please resolve any conflicts...\n"
+git merge master
+echo -e "\n Resetting to common ancestor...\n"
+git reset --soft $(git merge-base master $current_branch)
+echo "Enter the message for this squashed commit:"
+read message
+git commit -m "$message"
