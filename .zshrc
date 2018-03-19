@@ -235,6 +235,7 @@ alias gimme="sudo pacman -S"
 alias bgf="~/.fehbg"
 
 alias c="cd ~/code && ll"
+alias cgw="cd ~/code/go/src/bitbucket.org/wtsdevops && ll"
 
 
 #switch between different AWS accounts
