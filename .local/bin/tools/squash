@@ -1,13 +1,31 @@
 #!/usr/bin/env bash
-echo -e "Stashing any unstaged changes that may exist...\n"
+
+Red='\033[0;31m'
+Purple='\033[0;35m'
+Color_Off='\033[0m'
+
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+
+echo -e "${Purple}Stashing any unstaged changes that may exist...\n${Color_Off}"
 git --no-pager diff
 git stash
-current_branch=$(git rev-parse --abbrev-ref HEAD)
 git fetch
-echo -e "\n Merging in latest changes from master...please resolve any conflicts...\n"
+
+
+echo -e "${Purple}\nMerging in latest changes from master\n${Color_Off}"
 git merge master
-echo -e "\n Resetting to common ancestor...\n"
+
+if [[ $? == 128 || $? == 1 ]]; then
+    echo -e "${Red}\nPlease resolve merge conflicts.${Color_Off}"
+    exit 1
+fi
+
+
+echo -e "${Purple}\nResetting to common ancestor...\n${Color_Off}"
 git reset --soft $(git merge-base master $current_branch)
-echo "Enter the message for this squashed commit:"
-read message
-git commit -m "$message"
+
+
+echo -e "${Purple}Enter the message for this squashed commit:${Color_Off}"
+git commit
+
