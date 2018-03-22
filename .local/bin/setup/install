@@ -53,7 +53,19 @@ common_pacman_packages="
     nmap
     freerdp
     go-tools
+    bitlbee
+    ncurses
+    fftw
+    mirage
 "
+
+# https://github.com/dpayne/cli-visualizer
+# pacman:
+#    ncurses
+#    fftw
+# aur:
+#    cli-visualizer
+
 
 # list of packages no longer used
 # to be removed from system to avoid issues
@@ -177,6 +189,7 @@ export yaourt_packages="
   trizen
   polybar-git
   pgadmin4
+  cli-visualizer
 "
 
 
