@@ -166,7 +166,7 @@ font-1 = Hack:pixelsize=12;3
 font-3 = Hack:fontformat=truetype:size=14:antialias=true;10
 
 
-modules-left = i3  
+modules-left = i3 -i3
 modules-center = 
 modules-right =  filesystem  -volume2 -volume alsa-switch pulseaudio-tail -memory2 -memory memory -cpu2 -cpu cpu -temp2 -temp temperature -time2 -time time -calendar2 -calendar calendar powermenu
 
@@ -194,8 +194,9 @@ content = 
 
 [module/-i3]
 type = custom/text
-format-background = ${colors.nord4}
-content = 
+content-background = ${colors.nord0}
+content-foreground = ${colors.nord1}
+content = "  "
 
 [module/]
 type = custom/text
@@ -350,8 +351,8 @@ label-mode-foreground = ${colors.nord4}
 label-focused-foreground = ${colors.nord2}
 label-focused-background = ${colors.background-alt}
 
-label-unfocused-foreground = ${colors.nord2}
-label-unfocused-background = ${colors.nord4}
+label-unfocused-foreground = ${colors.nord4}
+label-unfocused-background = ${colors.nord1}
 
 label-focused-padding-right = 1
 label-focused-padding-left = 0
