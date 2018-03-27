@@ -34,3 +34,7 @@ colors() {
 [[ -f ~/.extend.bashrc ]] && . ~/.extend.bashrc
 
 [ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
+
+export PATH=$PATH:/home/han/.local/bin
+
+source '/home/han/.local/bin/azure-cli/az.completion'
