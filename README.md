@@ -247,6 +247,8 @@ examples of problems it could solve:
 
 5. look into using oh-my-zsh custom plugins for better management of .zshrc [oh-my-zsh wiki "Customization" section](https://github.com/robbyrussell/oh-my-zsh/wiki/Customization)
 
+6. script to create issues in github repo for dotfiles from commandline using vim buffer (or maybe emacs plugin if i'm feeling ambitious.)
+
 # Unanswered Questions
 
 Things I want to know but didn't have time to look into when I thought of it.
