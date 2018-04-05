@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
-git add -A
-git commit -m 'push'
-git push
+previous_commit=$(git log -1 --pretty=%B)
+if [[ $previous_commit == 'push' ]]; then
+    git add -A
+    git commit --amend -m 'push'
+    git push -f
+    exit
+fi
+
+echo "Error: previous commit message not 'push', to use this \
+function make a commit with message 'push'"
