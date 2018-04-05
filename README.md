@@ -163,6 +163,17 @@ Tools are located in `~/.local/bin/tools` & `~/.local/bin/setup`
 |      | insert TODO              | `alt-shift-RET` | insert new TODO in .org file                                                |
 
 
+## Termite
+
+using oh-my-zsh vi mode:
+
+"/" vi-history-search-backward
+"?" vi-history-search-forward
+"n" vi-repeat-search
+"N" vi-rev-repeat-search
+
+
+
 ## Other 3rd Party Commands
 
 | Tool      | Command      | Description                                                                                                             |

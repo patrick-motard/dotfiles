@@ -30,18 +30,18 @@ XTerm*faceSize: 11
 ! hlfg Foreground color selected row
 ! hlbg Background color selected row
 
-! State:           'bg',     'fg',     'bgalt',  'hlbg',   'hlfg'
-rofi.color-enabled: true
-rofi.color-window: argb:b2011d32, #20a8e8, #20a8e8
-rofi.color-normal: #1166b6, #acd3ec, #1166b6, #1166b6, #eee8d5
-rofi.color-active: #20a8e8, #acd3ec, #eee8d5, #268bd2, #fdf6e3
-rofi.color-urgent: #fdf6e3, #dc322f, #eee8d5, #dc322f, #fdf6e3
-rofi.terminal:		termite
-rofi.ssh-client:	ssh
-rofi.ssh-command:          {terminal} -e "{ssh-client} {host}"
-rofi.kb-mode-previous: Shift+Left,Control+ISO_Left_Tab,Alt+p
-rofi.kb-mode-next: Shift+Right,Control+Tab,Alt+n
-rofi.kb-delete-entry: Shift+Delete,Alt+d
+! ! State:           'bg',     'fg',     'bgalt',  'hlbg',   'hlfg'
+! rofi.color-enabled: true
+! rofi.color-window: argb:b2011d32, #20a8e8, #20a8e8
+! rofi.color-normal: #1166b6, #acd3ec, #1166b6, #1166b6, #eee8d5
+! rofi.color-active: #20a8e8, #acd3ec, #eee8d5, #268bd2, #fdf6e3
+! rofi.color-urgent: #fdf6e3, #dc322f, #eee8d5, #dc322f, #fdf6e3
+! rofi.terminal:		termite
+! rofi.ssh-client:	ssh
+! rofi.ssh-command:          {terminal} -e "{ssh-client} {host}"
+! rofi.kb-mode-previous: Shift+Left,Control+ISO_Left_Tab,Alt+p
+! rofi.kb-mode-next: Shift+Right,Control+Tab,Alt+n
+! rofi.kb-delete-entry: Shift+Delete,Alt+d
 
 ! +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ! title      Nord XResources                                    +
