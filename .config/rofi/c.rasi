@@ -19,29 +19,44 @@
     nord14: rgb(163, 190, 140, 100 %);
     nord15: rgb(180, 142, 173, 100 %);
 
-    background:  rgba ( 0, 0, 33, 87 % );
-    selected-normal-background: rgba ( 219, 223, 188, 100 % );
-    selected-normal-foreground: rgba ( 2, 20, 63, 100 % );
+    separatorcolor: @nord0;
 }
 
 #window {
-
-    /* border: 100; */
-    padding: 10px;
-    /* background: @nord1; */
-    background-color: @nord1;
-}
-
-#element.mainbox {
+    padding: 100px;
     background-color: @nord0;
 }
 
-#element.selected.normal {
-    background-color: @selected-normal-background;
-    text-color:       @selected-normal-foreground;
+#mainbox {
+    background-color: @nord0;
 }
 
+#inputbar {
+    background-color: @nord0;
+}
+
+#prompt {
+    background-color: @nord0;
+    text-color: @nord14;
+}
+
+#entry {
+    background-color: @nord0;
+    text-color: @nord11;
+}
+
+#case-indicator {
+    background-color: @nord0;
+    text-color: @nord14;
+}
+
+
 #element.selected.normal {
-    background-color: @selected-normal-background;
-    text-color:       @selected-normal-foreground;
+    background-color: @nord8;
+    text-color:       @nord0;
+}
+
+#element.normal {
+    background-color: @nord0;
+    text-color:       @nord8;
 }
