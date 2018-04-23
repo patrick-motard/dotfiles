@@ -58,6 +58,7 @@ common_pacman_packages="
     fftw
     mirage
     gvim
+    groovy
 "
 
 # https://github.com/dpayne/cli-visualizer
