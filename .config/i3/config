@@ -154,7 +154,7 @@ mode $mode_system {
     bindsym Escape mode "default"
 }
 
-set $mode_modes "[(m)odes] | (g)aps, (r)esize, syst(E)m"
+set $mode_modes "[(m)odes] | (g)aps, (r)esize, syst(E)m, (Print)"
 bindsym $mod+m mode $mode_modes
 mode $mode_modes {
     bindsym Return mode "default"
