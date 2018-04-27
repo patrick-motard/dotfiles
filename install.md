@@ -7,7 +7,7 @@ yaourt -S yadm-git
 
 yadm clone https://github.com/patrick-motard/dotfiles
 
-cd ~/.local/bin/setup/install
+cd ~/.local/bin/setup
 
 ./install
 
