@@ -53,6 +53,8 @@ common_pacman_packages="
     nmap
     freerdp
     go-tools
+    ntp
+    networkmanager-dispatcher-ntpd
     bitlbee
     ncurses
     fftw
