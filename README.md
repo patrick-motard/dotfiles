@@ -163,6 +163,17 @@ Tools are located in `~/.local/bin/tools` & `~/.local/bin/setup`
 |      | insert TODO              | `alt-shift-RET` | insert new TODO in .org file                                                |
 
 
+## Termite
+
+using oh-my-zsh vi mode:
+
+"/" vi-history-search-backward
+"?" vi-history-search-forward
+"n" vi-repeat-search
+"N" vi-rev-repeat-search
+
+
+
 ## Other 3rd Party Commands
 
 | Tool      | Command      | Description                                                                                                             |
@@ -246,6 +257,8 @@ examples of problems it could solve:
 4. look into using taskwarrior for task management
 
 5. look into using oh-my-zsh custom plugins for better management of .zshrc [oh-my-zsh wiki "Customization" section](https://github.com/robbyrussell/oh-my-zsh/wiki/Customization)
+
+6. script to create issues in github repo for dotfiles from commandline using vim buffer (or maybe emacs plugin if i'm feeling ambitious.)
 
 # Unanswered Questions
 

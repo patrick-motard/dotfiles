@@ -53,7 +53,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git docker)
+plugins=(git docker vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -197,9 +197,13 @@ alias vz="vim ~/.zshrc"
 alias sz="source ~/.zshrc"
 alias gs="git status"
 alias gcm="git commit -m"
+alias gb="git branch"
+alias gcb="git checkout -b"
+alias gbl="git branch -l"
 alias gp="git push"
 alias gpp="quick-git-check-in"
-alias gl="git log | vim -"
+alias glv="git log | vim -"
+alias gl="git log"
 alias clone=clone
 alias pbcopy="xclip -selection clipboard"
 alias pbpaste="xclip -selection clipboard -o"
@@ -235,6 +239,7 @@ alias gimme="sudo pacman -S"
 alias bgf="~/.fehbg"
 
 alias c="cd ~/code && ll"
+alias cgw="cd ~/code/go/src/bitbucket.org/wtsdevops && ll"
 
 
 #switch between different AWS accounts
@@ -261,6 +266,7 @@ export PATH="$PATH:$GOPATH/bin"
 export PATH="$PATH:/home/han/.gem/ruby/2.5.0/gems/vimgolf-0.4.8/bin"
 ## end vimgolf
 
+export PATH=~/.local/bin/work:$PATH
 export PATH=~/.local/bin:$PATH
 export PATH=~/.local/bin/tools:$PATH
 export PATH=/opt/idea-IC-171.4424.56/bin:$PATH

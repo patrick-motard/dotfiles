@@ -74,7 +74,7 @@
 
 headphones="analog-output-headphones"
 speakers="analog-output-lineout"
-sink_id=1
+sink_id=$(pacmd list | grep '*' | awk 'NR==1{print $3}')
 t=0
 
 while test $# -gt 0; do
@@ -116,10 +116,11 @@ while true; do
     muted=$(pamixer --sink $sink_id --get-mute)
 
     if [ $t -eq 0 ]; then
-        pacmd set-sink-port $sink_id $headphones
+
+        pacmd set-sink-port $sink_id $headphones > /dev/null 2>&1
         # set front channel to 0 volume, because muting it mutes headphones as well...
         # annoying bug with alsa..
-        amixer sset Front 0
+        amixer sset Front 0 2>/dev/null
 
         if [[ "$muted" = true ]]; then
             # echo $mute_fg

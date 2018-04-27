@@ -55,7 +55,21 @@ common_pacman_packages="
     go-tools
     ntp
     networkmanager-dispatcher-ntpd
+    bitlbee
+    ncurses
+    fftw
+    mirage
+    gvim
+    groovy
 "
+
+# https://github.com/dpayne/cli-visualizer
+# pacman:
+#    ncurses
+#    fftw
+# aur:
+#    cli-visualizer
+
 
 # list of packages no longer used
 # to be removed from system to avoid issues
@@ -179,6 +193,7 @@ export yaourt_packages="
   trizen
   polybar-git
   pgadmin4
+  cli-visualizer
 "
 
 
