@@ -194,6 +194,8 @@ export yaourt_packages="
   polybar-git
   pgadmin4
   cli-visualizer
+  slack-desktop
+  slack-term
 "
 
 
