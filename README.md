@@ -275,3 +275,4 @@ Some things I'd like snippets for:
   - argument parsing template for bash scripts (i always end up copy pasting from other scripts)
   - documentation templates for bash scripts (they're inconsistent between my scripts right now)
     
+cli for browsing remote repos on account, as well as cloning and such
