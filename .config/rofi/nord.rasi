@@ -24,6 +24,8 @@
 }
 
 #window {
+    border-color: @nord8;
+    border: 4;
     padding: 100px;
     background-color: @nord0;
 }
