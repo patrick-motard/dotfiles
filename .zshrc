@@ -268,7 +268,7 @@ export PATH="$PATH:$GOPATH/bin"
 ## END GOLANG
 
 ## vimgolf
-export PATH="$PATH:/home/han/.gem/ruby/2.5.0/gems/vimgolf-0.4.8/bin"
+export PATH="$PATH:/home/$USER/.gem/ruby/2.5.0/gems/vimgolf-0.4.8/bin"
 ## end vimgolf
 
 export PATH=~/.local/bin/work:$PATH
@@ -289,8 +289,13 @@ export EDITOR=vim
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-export PATH=$PATH:/home/han/.local/bin
+export PATH=$PATH:/home/$USER/.local/bin
 
-source '/home/han/.local/bin/azure-cli/az.completion'
+if [[ -f ~/.local/bin/azure-cli/az.completion ]]; then
+    source '~/.local/bin/azure-cli/az.completion'
+fi
 
-source <(kubectl completion zsh)
+command -v kubectl >/dev/null 2>&1
+if [[ $? == 0 ]]; then
+    source <(kubectl completion zsh)
+fi
