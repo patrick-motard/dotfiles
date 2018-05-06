@@ -20,6 +20,7 @@
     nord15: rgb(180, 142, 173, 100 %);
 
     separatorcolor: @nord0;
+    background-color: @nord0;
 }
 
 #window {
