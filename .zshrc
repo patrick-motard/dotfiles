@@ -53,7 +53,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git docker vi-mode)
+plugins=(git docker vi-mode archlinux)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -214,6 +214,7 @@ alias restart="shutdown -r now"
 alias xrl="xrdb ~/.Xresources"
 alias nr="node run.js"
 alias kl="kubectl"
+alias pacman="sudo pacman"
 
 alias y="yadm"
 alias ya="yadm add"
