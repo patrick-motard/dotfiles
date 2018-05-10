@@ -196,6 +196,7 @@ export yaourt_packages="
   cli-visualizer
   slack-desktop
   slack-term
+  teams-for-linux
 "
 
 
