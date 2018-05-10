@@ -291,7 +291,7 @@ export EDITOR=vim
 
 export PATH=$PATH:/home/$USER/.local/bin
 
-if [[ -f ~/.local/bin/azure-cli/az.completion ]]; then
+if [[ -f /home/$USER/.local/bin/azure-cli/az.completion ]]; then
     source '~/.local/bin/azure-cli/az.completion'
 fi
 
