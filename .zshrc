@@ -237,6 +237,9 @@ alias setup-edit="vim ~/.local/bin/setup/install"
 alias update="bash ~/.local/bin/setup/update"
 alias tools="cd ~/.local/bin/tools/ && ll"
 
+alias npmis="npm install --save"
+alias npmisd="npm install --save-dev"
+
 alias cat="ccat"
 alias ls="exa"
 alias ll="exa -la"

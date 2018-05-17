@@ -258,7 +258,9 @@ examples of problems it could solve:
 
 5. look into using oh-my-zsh custom plugins for better management of .zshrc [oh-my-zsh wiki "Customization" section](https://github.com/robbyrussell/oh-my-zsh/wiki/Customization)
 
-6. script to create issues in github repo for dotfiles from commandline using vim buffer (or maybe emacs plugin if i'm feeling ambitious.)
+6. +1 script to create issues in github repo for dotfiles from commandline using vim buffer (or maybe emacs plugin if i'm feeling ambitious.) 
+
+7. rofi menu for selecting screen layout. Or maybe something other than rofi. My current i3 method is starting to reach it's limits.
 
 # Unanswered Questions
 
