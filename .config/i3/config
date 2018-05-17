@@ -114,11 +114,12 @@ bindsym $mod+Shift+y	resize shrink width 10 px or 10ppt
 bindsym $mod+Shift+u	resize shrink height 10 px or 10 ppt
 bindsym $mod+Shift+o	resize grow width 10 px or 10 ppt
 
-set $mode_randr " 1 |  2"
+set $mode_randr " 1 |  2 (1080L-1440R) |  3 (1440L-1080R)"
 bindsym  $mod+Shift+a mode $mode_randr
 mode $mode_randr {
-    bindsym 1 exec --no-startup-id ~/.screenlayout/1440.sh && i3-msg restart, mode "default"
-    bindsym 2 exec --no-startup-id ~/.screenlayout/1080L-1440R.sh && i3-msg restart, mode "default"
+    bindsym 1 exec --no-startup-id ~/.screenlayout/1440.sh, mode "default"
+    bindsym 2 exec --no-startup-id ~/.screenlayout/1080L-1440R.sh, mode "default"
+    bindsym 3 exec --no-startup-id ~/.screenlayout/1440L-1080R.sh, mode "default"
     ## back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
