@@ -201,6 +201,7 @@ alias gb="git branch"
 alias gd="git diff"
 alias gds="git diff --staged"
 alias gcb="git checkout -b"
+alias gc="git commit --verbose"
 alias gbl="git branch -l"
 alias gp="git push"
 alias gpp="quick-git-check-in"
@@ -218,7 +219,7 @@ alias pacman="sudo pacman"
 
 alias y="yadm"
 alias ya="yadm add"
-alias yc="yadm commit"
+alias yc="yadm commit --verbose"
 alias yca="yadm commit --amend"
 alias ycm="yadm commit -m"
 alias yp="yadm push"
@@ -295,7 +296,7 @@ export EDITOR=vim
 export PATH=$PATH:/home/$USER/.local/bin
 
 if [[ -f /home/$USER/.local/bin/azure-cli/az.completion ]]; then
-    source '~/.local/bin/azure-cli/az.completion'
+    source /home/$USER/.local/bin/azure-cli/az.completion
 fi
 
 command -v kubectl >/dev/null 2>&1
