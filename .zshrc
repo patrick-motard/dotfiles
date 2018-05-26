@@ -105,44 +105,9 @@ if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.z
     source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 fi
 
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-## add bitbucket and github keys to keychain so that i dont have run ssh-add every time
-## i open shell
-## https://wiki.archlinux.org/index.php/SSH_keys#Keychain
-eval $(keychain --eval --quiet id_rsa id_rsa_bb)
-
 function pe() {
     echo "ERROR: $1" >&2
     exit 1
-}
-
-## FUNCTIONS
-function print-shortcuts {
-    case $1 in
-        "i3")
-            missing_docs $1
-            ;;
-        "alias")
-            cat << EOF
-Name           Shortcut  Args    Descrption                         Example
-edit config    ec        *       edit config file for given arg     ec polybar
-EOF
-            ;;
-        *)
-            missing_docs $1 "undefined"
-            cat << EOF
-Options:
-i3
-alias
-EOF
-
-            ;;
-    esac
-}
-
-function missing_docs {
-    echo "missing docs for ${1}"
 }
 
 function edit-config {
@@ -229,7 +194,7 @@ alias ye="yadm encrypt"
 alias yd="yadm diff"
 alias yds="yadm diff --staged"
 alias yaf="yadm add ~/.yadm/files.gpg"
-alias yafp="yadm add ~/.yadm/files.gpg && yadm commit -m 'encrypt' && yadm push"
+alias yafp="yadm add ~/.yadm/files.gpg ~/.yadm/encrypt && yadm commit -m 'encrypt' && yadm push"
 alias token=~/.ssh/token
 alias decrypt="yadm decrypt && rsync -a ~/home/$USER/ ~/ && rm -rf ~/home/$USER"
 
@@ -249,7 +214,6 @@ alias bgf="~/.fehbg"
 
 alias c="cd ~/code && ll"
 alias cgw="cd ~/code/go/src/bitbucket.org/wtsdevops && ll"
-
 
 #switch between different AWS accounts
 alias work-mode="switch-aws-creds.sh work"
@@ -286,7 +250,6 @@ export NPM_TOKEN=$NPM_TOKEN
 
 export EDITOR=vim
 
-
 # powerline recommended line to run
 #powerline-daemon -q
 #. /usr/share/zsh/site-contrib/powerline.zsh
@@ -299,6 +262,7 @@ if [[ -f /home/$USER/.local/bin/azure-cli/az.completion ]]; then
     source /home/$USER/.local/bin/azure-cli/az.completion
 fi
 
+## Kubernetes
 command -v kubectl >/dev/null 2>&1
 if [[ $? == 0 ]]; then
     source <(kubectl completion zsh)
