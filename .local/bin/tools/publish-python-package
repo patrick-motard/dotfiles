@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# call this in the directory of your python project where
+# setup.py is.
+
+# convert README.md to reStructuredText, the format required
+# for pypi long description section.
+{
+    pandoc README.md --from markdown --to rst -s -o readme.rst
+} || {
+    echo "Error: Failed to convert README.md to .rst" >&2
+    exit 1
+}
+
+# creates the tar in dist/
+python setup.py sdist bdist_wheel
+
+# pushes the new package to pypi
+twine upload -r pypi dist/*
