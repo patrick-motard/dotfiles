@@ -152,27 +152,21 @@ core_aur_packages="
     trizen
     polybar
 "
+for aur_package in $core_aur_packages; do
+    trizen -S --needed $aur_package --noconfirm --noedit
+done
 if [[ $core != true ]]; then
     ## install aur packages
     aur_packages="
         awesome-terminal-fonts
-        i3-gaps-next-git
-        xorg-xprop
         hipchat
         gtk-theme-arc-git
-        paper-icon-theme-git
         spotify
-        ccat
-        exa
         dropbox
         rtv
-        dunstify
         siji-git
         xorg-xset
-        bashmount
         remmina-plugin-rdesktop
-        trizen
-        polybar
         pgadmin4
         cli-visualizer
         slack-desktop
