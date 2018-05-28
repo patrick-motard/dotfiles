@@ -90,7 +90,6 @@ common_pacman_packages="
     bitlbee
     ncurses
     fftw
-    mirage
     groovy
 "
 
@@ -152,6 +151,7 @@ core_aur_packages="
     trizen
     polybar
     awesome-terminal-fonts
+    mirage
 "
 for aur_package in $core_aur_packages; do
     trizen -S --needed $aur_package --noconfirm --noedit
