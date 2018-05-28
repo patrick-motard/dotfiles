@@ -125,6 +125,7 @@ All aliases are currently listed in `~/.zshrc`. This list is not comprehensive.
 
 | alias      | Description                                                                                                              |
 |------------|--------------------------------------------------------------------------------------------------------------------------|
+| alias      | lists all aliases in your terminal                                                                                       |
 | setup-edit | Run this command if you would like to edit the install(dotfiles installer). (i.e. you want to install new packages)      |
 | decrypt    | Decrypts yadm files and makes sure they are placed in ~/. Use this instead of yadm's decrypt command.                    |
 | tools      | cd to ~/.local/bin/tools directory in terminal                                                                           |
