@@ -172,6 +172,10 @@ fi
 #   sudo sh /home/han/Downloads/vmware-tools/patched-open-vm-tools.sh
 # fi
 
+## RUST
+rustup install stable
+rustup default stable
+
 ## install yaourt packages
 export yaourt_packages="
   awesome-terminal-fonts
