@@ -110,8 +110,8 @@ rustup install stable
 rustup default stable
 ## END RUST
 
-## install yaourt packages
-export yaourt_packages="
+## install aur packages
+export aur_packages="
   awesome-terminal-fonts
   i3-gaps-next-git
   xorg-xprop
