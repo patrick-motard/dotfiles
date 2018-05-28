@@ -198,7 +198,8 @@ fi
 
 
 ## Install oh-my-zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+sh ~/.local/bin/tools/install_oh_my_zsh
+yadm checkout .zshrc
 
 ## Python package installs
 ## Install wakatime
