@@ -140,17 +140,18 @@ rustup install stable
 rustup default stable
 ## END RUST
 
+# slow compiling. leaving them out for now while testing
+# polybar
+# paper-icon-theme-git
+# awesome-terminal-fonts
+# exa
+# ccat
 core_aur_packages="
     i3-gaps-next-git
     xorg-xprop
-    paper-icon-theme-git
-    ccat
-    exa
     dunstify
     bashmount
     trizen
-    polybar
-    awesome-terminal-fonts
     mirage
 "
 for aur_package in $core_aur_packages; do
