@@ -9,6 +9,8 @@ ARGUMENTS
 
        -c|--core
           Only install core packages from arch and aur.
+       -u|--user
+          Name of your github account where dotfiles was forked to.
 "
 
 while test $# -gt 0; do
@@ -17,8 +19,12 @@ while test $# -gt 0; do
             echo "$usage" >&2
             exit
             ;;
-        -c|--core|-\?)
+        -c|--core)
             core=true
+            shift
+            ;;
+        -u|--user)
+            github_user=$2
             shift
             ;;
         \?)
@@ -31,7 +37,10 @@ while test $# -gt 0; do
     shift
 done
 
-
+if [[ -z $github_user ]]; then
+    echo "Github account name required" >&2
+    exit 1
+fi
 ## update pacman
 sudo pacman -Syu --noconfirm
 ## rank mirrors by speed and filter out out of date mirrors
@@ -228,7 +237,7 @@ fi
 mkdir -p $HOME/code
 
 ## Set yadm remote to .ssh
-yadm remote set-url origin git@github.com:patrick-motard/dotfiles.git
+yadm remote set-url origin git@github.com:$github_user/dotfiles.git
 
 ## Install Spacemacs
 if [[ ! -d ~/.emacs.d/.git ]]; then

@@ -1,6 +1,10 @@
 run the following in your terminal:
 
-`curl -L -o install goo.gl/FThZtR && chmod +x install && sh install`
+`curl -L -o install goo.gl/FThZtR && chmod +x install && sh install --user {YOUR_GITHUB_ACCOUNT_NAME}`
+
+example:
+
+`curl -L -o install goo.gl/FThZtR && chmod +x install && sh install --user patrick-motard`
 
 The shortened url is for your convenience when typing. It links to [this gist](https://gist.githubusercontent.com/patrick-motard/0314ce77e1002443fdac0cca5a409e5c/raw). After the install script is done running, you should now see X start up and you'll see
 a GUI similar to the screenshot in this repo. Spacemacs will startup and astart installing its packages.
