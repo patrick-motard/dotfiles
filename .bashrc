@@ -37,4 +37,8 @@ colors() {
 
 export PATH=$PATH:/home/han/.local/bin
 
-source '/home/han/.local/bin/azure-cli/az.completion'
+
+if [[ $SHELL != "/usr/bin/zsh" ]]; then
+    echo "Notice: Detected your default shell isn't zsh. Setting zsh as default..."
+    chsh -s $(which zsh)
+fi

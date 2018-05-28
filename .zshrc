@@ -151,10 +151,6 @@ function clone() {
     esac
 }
 
-if [[ $SHELL != "/usr/bin/zsh" ]]; then
-    echo "Notice: Detected your default shell isn't zsh. Setting zsh as default..."
-    chsh -s $(which zsh)
-fi
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
