@@ -21,7 +21,6 @@ while test $# -gt 0; do
             ;;
         -c|--core)
             core=true
-            shift
             ;;
         -u|--user)
             github_user=$2
