@@ -4,6 +4,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
+
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
@@ -149,6 +150,11 @@ function clone() {
             ;;
     esac
 }
+
+if [[ $SHELL != "/usr/bin/zsh" ]]; then
+    echo "Notice: Detected your default shell isn't zsh. Setting zsh as default..."
+    chsh -s $(which zsh)
+fi
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh

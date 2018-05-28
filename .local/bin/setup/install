@@ -151,6 +151,7 @@ core_aur_packages="
     bashmount
     trizen
     polybar
+    awesome-terminal-fonts
 "
 for aur_package in $core_aur_packages; do
     trizen -S --needed $aur_package --noconfirm --noedit
@@ -197,11 +198,6 @@ if [[ $? -ne 0 ]] ; then
     echo "Docker now running and set to run on boot. User added to group"
 fi
 
-## set zsh to default shell
-if [[ "$(echo $SHELL)" != "/usr/bin/zsh" ]]; then
-  chsh -s $(which zsh)
-  echo "shell set to zsh"
-fi
 
 ## Install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
