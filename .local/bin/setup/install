@@ -105,6 +105,43 @@ echo 'removing packages that are no longer needed'
 for package_name in $remove_packages; do
     sudo pacman -R --noconfirm
 done
+## RUST
+rustup install stable
+rustup default stable
+## END RUST
+
+## install yaourt packages
+export yaourt_packages="
+  awesome-terminal-fonts
+  i3-gaps-next-git
+  xorg-xprop
+  hipchat
+  gtk-theme-arc-git
+  paper-icon-theme-git
+  spotify
+  ccat
+  exa-git
+  dropbox
+  rtv
+  dunstify
+  siji-git
+  xorg-xset
+  bashmount
+  remmina-plugin-rdesktop
+  trizen
+  polybar-git
+  pgadmin4
+  cli-visualizer
+  slack-desktop
+  slack-term
+  teams-for-linux
+"
+
+
+for aur_package in $aur_packages; do
+    trizen -S --needed $aur_package --noconfirm --noedit
+done
+exit
 
 
 ## if the docker daemon isn't active, set it up
@@ -171,43 +208,6 @@ fi
 #   git clone https://github.com/rasa/vmware-tools-patches.git ~/Downloads/vmware-tools/
 #   sudo sh /home/han/Downloads/vmware-tools/patched-open-vm-tools.sh
 # fi
-
-## RUST
-rustup install stable
-rustup default stable
-## END RUST
-
-## install yaourt packages
-export yaourt_packages="
-  awesome-terminal-fonts
-  i3-gaps-next-git
-  xorg-xprop
-  hipchat
-  gtk-theme-arc-git
-  paper-icon-theme-git
-  spotify
-  ccat
-  exa-git
-  dropbox
-  rtv
-  dunstify
-  siji-git
-  xorg-xset
-  bashmount
-  remmina-plugin-rdesktop
-  trizen
-  polybar-git
-  pgadmin4
-  cli-visualizer
-  slack-desktop
-  slack-term
-  teams-for-linux
-"
-
-
-for yaourt_package in $yaourt_packages; do
-  yaourt -S --needed $yaourt_package --noconfirm
-done
 
 
 # TODO: create function the installs code
