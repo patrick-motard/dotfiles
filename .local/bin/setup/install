@@ -178,8 +178,6 @@ if [[ $core != true ]]; then
         trizen -S --needed $aur_package --noconfirm --noedit
     done
 fi
-exit
-
 
 ## if the docker daemon isn't active, set it up
 systemctl -q is-active docker
