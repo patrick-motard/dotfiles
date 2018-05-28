@@ -140,13 +140,12 @@ rustup install stable
 rustup default stable
 ## END RUST
 
-# slow compiling. leaving them out for now while testing
-# polybar
-# paper-icon-theme-git
-# awesome-terminal-fonts
-# exa
-# ccat
 core_aur_packages="
+    polybar
+    paper-icon-theme-git
+    awesome-terminal-fonts
+    exa
+    ccat
     i3-gaps-next-git
     xorg-xprop
     dunstify
@@ -266,7 +265,7 @@ fi
 # go get -u -v golang.org/x/tools/cmd/goimports
 
 
-if [[ -z "${DISPLAY}"+x ]]; then
+if [[ -z $DISPLAY ]]; then
     echo 'starting Xserver'
     startx
 fi
