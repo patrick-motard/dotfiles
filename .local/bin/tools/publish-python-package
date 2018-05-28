@@ -1,18 +1,46 @@
 #!/usr/bin/env bash
 # call this in the directory of your python project where
 # setup.py is.
+usage="
+NAME
+      publish-python-package
 
-# convert README.md to reStructuredText, the format required
-# for pypi long description section.
-{
-    pandoc README.md --from markdown --to rst -s -o readme.rst
-} || {
-    echo "Error: Failed to convert README.md to .rst" >&2
+SYNOPSIS
+      publish-python-package [-h] [-p|--prod] [-t|--test]
+
+      - converts README.md to readme.rst
+      - creates distrubution files for version specified in setup.py
+      - publishes dist to either pypi or testpypi
+
+ARGUMENTS
+
+       -t|--test
+
+       -v|--prod
+"
+while test $# -gt 0; do
+    case "$1" in
+        -h|--help|-\?)
+            echo "$usage" && exit;;
+        -t|--test)
+            upstream='pypitest' && shift;;
+        -p|--prod)
+            upstream='pypi' && shift;;
+        *)
+            break
+    esac
+    shift
+done
+
+if [ -z ${upstream+x} ]; then
+    echo "Error: must set either -p or -t, see -h for details"
     exit 1
-}
+fi
 
+# remove the existing dist/ so that we don't re-publish
+rm -rf dist
 # creates the tar in dist/
 python setup.py sdist bdist_wheel
 
 # pushes the new package to pypi
-twine upload -r pypi dist/*
+twine upload -r $upstream dist/*
