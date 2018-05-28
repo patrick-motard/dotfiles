@@ -25,6 +25,7 @@ while test $# -gt 0; do
             ;;
         -u|--user)
             github_user=$2
+            echo $2
             shift
             ;;
         \?)
