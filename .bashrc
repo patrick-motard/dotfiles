@@ -35,10 +35,4 @@ colors() {
 
 [ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
 
-export PATH=$PATH:/home/han/.local/bin
-
-
-if [[ $SHELL != "/usr/bin/zsh" ]]; then
-    echo "Notice: Detected your default shell isn't zsh. Setting zsh as default..."
-    chsh -s $(which zsh)
-fi
+export PATH=$PATH:/home/$USER/.local/bin
