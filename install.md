@@ -1,29 +1,11 @@
+run the following in your terminal:
 
-sudo pacman -S git
+`curl -L -o install goo.gl/FThZtR && chmod +x install && sh install`
 
-sudo pacman -S yaourt
+The shortened url is for your convenience when typing. It links to [this gist](https://gist.githubusercontent.com/patrick-motard/0314ce77e1002443fdac0cca5a409e5c/raw). After the install script is done running, you should now see X start up and you'll see
+a GUI similar to the screenshot in this repo. Spacemacs will startup and astart installing its packages.
 
-yaourt -S yadm-git
-
-yadm clone https://github.com/patrick-motard/dotfiles
-
-cd ~/.local/bin/setup
-
-./install
-
-enter password twice
-
-./install
-
-enter password again
-
-yadm reset --hard origin/master
-
-reboot
-
-when cloning yadm, replace ~/.yadm/encrypt with your own
-
-wait for emacs to finish installing packages before rebooting (when it's time to reboot)
+wait for (spac)emacs to finish installing packages before rebooting (when it's time to reboot)
 
 open firefox
 

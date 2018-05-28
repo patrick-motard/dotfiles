@@ -262,6 +262,9 @@ examples of problems it could solve:
 
 7. rofi menu for selecting screen layout. Or maybe something other than rofi. My current i3 method is starting to reach it's limits.
 
+8. refactor install script to be written in another language
+probably python. move dependencies to list files. have core packages and non core packages. have commands to add and remove packages from both list files and os.
+
 # Unanswered Questions
 
 Things I want to know but didn't have time to look into when I thought of it.
