@@ -204,6 +204,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 ## Install wakatime
 sudo pip install wakatime
 pip install --upgrade --user awscli
+pip install --upgrade --user polybar-reload
 
 ## Install Vundle
 ## commented out check for directory because it already exists. need to solve this problem another way.
