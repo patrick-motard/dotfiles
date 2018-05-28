@@ -204,6 +204,7 @@ yadm checkout .zshrc
 
 ## Python package installs
 ## Install wakatime
+pip install --upgrade --user pip
 sudo pip install wakatime
 pip install --upgrade --user awscli
 pip install --upgrade --user polybar-reload
@@ -254,9 +255,12 @@ fi
 
 # needed for spacemacs go layer
 # https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Blang/go
-mkdir -p $GOPATH/src/github.com
-go get -u -v github.com/nsf/gocode
-go get -u -v github.com/rogpeppe/godef
-go get -u -v golang.org/x/tools/cmd/guru
-go get -u -v golang.org/x/tools/cmd/gorename
-go get -u -v golang.org/x/tools/cmd/goimports
+
+# gopath isn't set, so this trys to make a dir in /src which
+# gives permission denied. subsequent calls to the script succeed beacuse .zshrc is sourced and gopath is set there.
+# mkdir -p $GOPATH/src/github.com
+# go get -u -v github.com/nsf/gocode
+# go get -u -v github.com/rogpeppe/godef
+# go get -u -v golang.org/x/tools/cmd/guru
+# go get -u -v golang.org/x/tools/cmd/gorename
+# go get -u -v golang.org/x/tools/cmd/goimports
