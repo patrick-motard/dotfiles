@@ -37,6 +37,7 @@ alert = ${colors.nord14}
 ;;=========================================================;;
 
 [bar/main.bottom]
+enable-ipc = true
 monitor = ${env:MONITOR_MAIN}
 bottom = true
 height = 30
@@ -58,6 +59,7 @@ padding-right = 2
 
 
 [bar/right]
+enable-ipc = true
 monitor = ${env:MONITOR_RIGHT}
 separator = 
 bottom = false
@@ -132,6 +134,7 @@ cursor-scroll = ns-resize
 
 
 [bar/main]
+enable-ipc = true
 monitor = ${env:MONITOR_MAIN}
 ; montior = VGA-1
 separator = 
