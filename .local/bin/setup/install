@@ -78,8 +78,8 @@ remove_packages="
     i3blocks-gaps-git
 "
 
+# virtualbox-guest-modules-arch
 virtualbox_packages="
-    virtualbox-guest-modules-arch
     virtualbox-guest-utils
 "
 
@@ -175,6 +175,7 @@ fi
 ## RUST
 rustup install stable
 rustup default stable
+## END RUST
 
 ## install yaourt packages
 export yaourt_packages="
