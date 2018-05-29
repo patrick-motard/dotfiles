@@ -251,11 +251,9 @@ export PATH=~/.cargo/bin:$PATH
 ## NPM TOKEN SETUP
 export NPM_TOKEN=$NPM_TOKEN
 
-export EDITOR=vim
+export EDITOR=gvim
 
-# powerline recommended line to run
-#powerline-daemon -q
-#. /usr/share/zsh/site-contrib/powerline.zsh
+export MANPAGER="/bin/sh -c \"col -b | vim -c 'set ft=man ts=8 nomod nolist nonu noma' -\""
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
