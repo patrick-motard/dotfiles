@@ -213,6 +213,7 @@ alias ls="exa"
 alias ll="exa -la"
 alias gimme="sudo pacman -S"
 alias bgf="~/.fehbg"
+alias bgn="update_background"
 
 alias c="cd ~/code && ll"
 alias cgw="cd ~/code/go/src/bitbucket.org/wtsdevops && ll"
