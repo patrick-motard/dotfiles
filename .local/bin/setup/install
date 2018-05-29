@@ -100,7 +100,10 @@ common_pacman_packages="
     ncurses
     fftw
     groovy
+    pacman-contrib
 "
+#pacman-contrib:
+#  used for 'checkupdates' command in polybar module that shows how many updates pacman has
 
 # https://github.com/dpayne/cli-visualizer
 # pacman:
