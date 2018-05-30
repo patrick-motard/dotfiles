@@ -147,6 +147,7 @@ echo 'removing packages that are no longer needed'
 for package_name in $remove_packages; do
     sudo pacman -R --noconfirm
 done
+
 ## RUST
 rustup install stable
 rustup default stable
@@ -211,7 +212,6 @@ fi
 
 ## Install oh-my-zsh
 sh ~/.local/bin/tools/install_oh_my_zsh
-yadm checkout .zshrc
 
 ## Python package installs
 ## Install wakatime
@@ -277,7 +277,6 @@ fi
 # go get -u -v golang.org/x/tools/cmd/goimports
 
 
-if [[ -z $DISPLAY ]]; then
-    echo 'starting Xserver'
-    startx
-fi
+yadm reset --hard origin/master
+
+reboot
