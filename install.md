@@ -1,3 +1,7 @@
+# Installation:
+
+(screenshots coming soon)
+
 run the following in your terminal:
 
 `curl -L -o install goo.gl/FThZtR && chmod +x install && sh install --user {YOUR_GITHUB_ACCOUNT_NAME}`
@@ -6,11 +10,96 @@ example:
 
 `curl -L -o install goo.gl/FThZtR && chmod +x install && sh install --user patrick-motard`
 
-The shortened url is for your convenience when typing. It links to [this gist](https://gist.githubusercontent.com/patrick-motard/0314ce77e1002443fdac0cca5a409e5c/raw). After the install script is done running, you should now see X start up and you'll see
-a GUI similar to the screenshot in this repo. Spacemacs will startup and astart installing its packages.
+The shortened url is for your convenience when typing. It links to [this gist](https://gist.githubusercontent.com/patrick-motard/0314ce77e1002443fdac0cca5a409e5c/raw). This command will download a gist that will start the install script for this project. NOTE: You will be prompted a few times for your root password while the script is running. You can view the install script [here](https://github.com/patrick-motard/dotfiles/blob/master/.local/bin/setup/install).
 
-wait for (spac)emacs to finish installing packages before rebooting (when it's time to reboot)
+After the install script is done, the OS will reboot.
 
+# First Login
+
+(screenshots coming soon)
+
+## Setting up Spacemacs, your main editor
+
+When you are logged in for the first time, you will be in workspace 1. By default, Emacs (spacemacs) opens. When spacemacs opens, it loads `~/.spacemacs`, it's config file. `~/.spacemacs` is included as part of `dotfiles`. Within the file there are several settings. Spacemacs looks for a list of plugins from the `~/.spacemacs` file and will install them automatically. You will see spacemacs installing them. When spacemacs is done installing, it will look very ugly. Restart Spacemacs by pressing `SPC q r`. That's the space bar, then q, then r. Spacemacs will reload and will look great. 
+
+## Install spacemacs font icons:
+
+(screenshot coming soon)
+
+Like most editors, Spacemacs supports file tree view, which shows your files and folders of the current project or current buffers directory. `~/.spacemacs` is already configured to used Neotree with ['all-the-icons' by domtronn](https://github.com/domtronn/all-the-icons.el). The only thing you need to do is tell spacemacs to install the fonts it needs. 
+
+To install `all-the-icons` type: `SPC SPC all-the-icons-install-fonts` then press Enter.
+Once installed, restart Spacemacs after install `SPC q r`. Once Spacemacs opens, you can open the file tree by pressing `SPC f t`, or if you have a project open using Projectile, you can open up the projects file tree using `SPC p t`
+
+## Install vundle plugins:
+
+For quickly editing files in the terminal I prefer vim. I have configured vim to use a few plugins. These plugins are installed via a plugin manager. There are several to choose from. I have chosen Vundle. To install the plugins listed in `~/.vimrc`, do the following:
+
+1. move to workspace 2, this is where i prefer my main terminals to go: `Alt 2`
+2. open a terminal: `Alt Enter`
+3. open vim: in terminal type: `vim` (enter)
+4. in vim type: `:PluginInstall` (enter)
+
+You should see a Vundle buffer open, in which a list of plugins will show install progress. Once the install is done, you can exit vim: `:q` (enter) x 2
+
+
+## Wakatime
+
+Wakatime will be the bane of your existence until you configure it. Both Spacemacs and Vim are configured to use it. In order for it to function, both Vim and Spacemacs need the environment variable `WAKATIME_API_KEY` set in their environments. Until you either A) decide you want to use wakatime and set that environment variable, or B) remove wakatime from vim and spacemacs, both applications will incessantly bug you for that key. In the future `dotfiles` will initialize wakatime if a setting is enabled to use it, but for now it's a manual choice the user *must* make.
+
+What is wakatime? [link](https://wakatime.com/features). I use it to track how much time i spend coding. It's free. It's cool.
+
+Option A: Setup wakatime
+
+1. create a wakatime account [here](https://wakatime.com/login), you can link it to your github if you'd like.
+2. grab your 'Secret API Key' from your account settings
+3. create a `~/.zshenv` file: in terminal `touch ~/.zshenv`, **NOTE:** this file should **NOT** be checked in to yadm. It should be listed in `~/.yadm/encrypt` as a file that should be encrypted in your yadm repo. Use your `~/.zshenv` file to export sensitive environment variables.
+4. place the following in `~/.zshenv`: `export WAKATIME_API_KEY=YOUR-KEY-HERE`
+
+Option B: Uninstall wakatime
+
+I'm too lazy to document this. Uninstall the plugin from vim using vundle, (google it). Remove the wakatime package and wakatime settings from `~/.spacemacs`.
+
+
+## Desktop background image slideshow
+
+This section will show you how to set up a desktop background image slideshow using `feh`, `fcron`.
+
+### Technologies used:
+
+**fcron**: cronjob utility
+
+**feh**: command line utility for interacting with images
+
+### First time setup:
+
+Make sure fcron daemon is enabled (runs at startup):
+   
+`sudo systemctl enable fcron && sudo systemctl start fcron`
+
+Load the preconfigured cronjobs for this repo:
+
+`fcrontab ~/.config/fcron/my-fcrontab`
+
+This will run set up a cron job that will call a tool script `update_background`. Every x minutes the background will change to a new image in the directory.
+
+To change number of between image changes, edit `my-fcrontab` and reload the crontab (step 2).
+
+To change where the cron job searches for images, edit the directory in 
+`update_background`.
+
+### Helpful background information:
+
+- [how to reload cron jobs](https://askubuntu.com/questions/216692/where-is-the-user-crontab-stored)
+
+- [cronjobs that run X.org related apps](https://wiki.archlinux.org/index.php/cron#Running_X.org_server-based_applications)
+
+- [handling the annoying "email" issue in fcron (see "Example with msmtp")](https://wiki.archlinux.org/index.php/cron#Running_X.org_server-based_applications)
+
+- [how to properly format a cronjob](https://stackoverflow.com/questions/5398014/using-crontab-to-execute-script-every-minute-and-another-every-24-hours)
+
+
+## other steps (documentation will be improved soon)
 open firefox
 
 install lastpass firefox extension
@@ -31,14 +120,5 @@ log into dropbox:
     - open dropbox via rofi
     - log into dropbox via firefox
 
-call decrypt alias (modified version of yadm decrypt) (decrypt ~/.yadm/files.gpg file contents to their appropriate file locations), use password from lastpass
-
-cd ~
-
-yadm clone -f git@github.com:patrick-motard/dotfiles.git (or your private fork)
-
-follow instructions in readme for setting up fcrontab and desktop background (manual, annoying, i'll automate)
-
-edit ~/.config/polybar/launch.sh to have your screens
-
-restart i3 in place (alt+shift+r) (editing this file is annoying, ill make it more easily configurable)
+TODO: improve decrypt/encrypt instructions
+If this is based on your fork of dotfiles: call decrypt alias (modified version of yadm decrypt) (decrypt ~/.yadm/files.gpg file contents to their appropriate file locations), use password from lastpass

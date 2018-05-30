@@ -68,55 +68,6 @@ Managing your dotfiles in source control is important. This project uses [YADM](
 4. Follow the instructions outlined in [install.md](install.md)
 5. report any bugs or manual steps as issues to this repo so that the install process can be improved.
 
-Make sure to read the setup script before executing it. It installs my entire environment, tweak it to meet your needs.
-
-
-## Install spacemacs font icons:
-
-Currently using [neotree icons](https://github.com/domtronn/all-the-icons.el). 
-Install using `M-x all-the-icons-install-fonts`
-Restart after install `SPC q r`
-
-## Install vundle plugins:
-
-in vim: `:PluginInstall`
-
-
-## Desktop background image slideshow
-
-### Technologies used:
-
-**fcron**: cronjob utility
-
-**feh**: command line utility for interacting with images
-
-### First time setup:
-
-Make sure fcron daemon is enabled (runs at startup):
-   
-`sudo systemctl enable fcron && sudo systemctl start fcron`
-
-Load the preconfigured cronjobs for this repo:
-
-`fcrontab ~/.config/fcron/my-fcrontab`
-
-This will run set up a cron job that will call a tool script `update_background`. Every x minutes the background will change to a new image in the directory.
-
-To change number of between image changes, edit `my-fcrontab` and reload the crontab (step 2).
-
-To change where the cron job searches for images, edit the directory in 
-`update_background`.
-
-### Helpful background information:
-
-- [how to reload cron jobs](https://askubuntu.com/questions/216692/where-is-the-user-crontab-stored)
-
-- [cronjobs that run X.org related apps](https://wiki.archlinux.org/index.php/cron#Running_X.org_server-based_applications)
-
-- [handling the annoying "email" issue in fcron (see "Example with msmtp")](https://wiki.archlinux.org/index.php/cron#Running_X.org_server-based_applications)
-
-- [how to properly format a cronjob](https://stackoverflow.com/questions/5398014/using-crontab-to-execute-script-every-minute-and-another-every-24-hours)
-
 # Commands & Aliases
 
 ## Aliases
