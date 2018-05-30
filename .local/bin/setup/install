@@ -41,10 +41,8 @@ if [[ -z $github_user ]]; then
     echo "Github account name required" >&2
     exit 1
 fi
-## update pacman
+
 sudo pacman -Syu --noconfirm
-## rank mirrors by speed and filter out out of date mirrors
-##sudo pacman-mirrors -g
 sudo pacman-optimize && sync
 
 common_pacman_packages="
@@ -154,12 +152,12 @@ rustup default stable
 ## END RUST
 
 core_aur_packages="
-    polybar
+    i3-gaps-next-git
+    polybar-git
     paper-icon-theme-git
     awesome-terminal-fonts
     exa
     ccat
-    i3-gaps-next-git
     xorg-xprop
     dunstify
     bashmount
