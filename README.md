@@ -50,21 +50,11 @@
 
 # Installation
 
-How you choose to install this repo will depend on the state of your linux system.
-
-This dotfile repo is intended to be an entire environment, not just dotfiles. It includes scripts for setting up an entire operating system from scratch. In order for the full installation to work, there are a few assumptions:
-
-1. Your operating system is a clean install of Arch, with no desktop environment, display server, nothing, just a terminal to interact with. 
-2. You have git installed and are able to clone a fork of this repo.
-
-I recommend installing Arch using Antergos because it gives a nice gui for installing Arch. It also has the option to install Arch without a desktop environment. I recommend that option because the setup scripts in this repo install your environment for you. Having an existing environment already will probably break these setup scripts.
-
-
 Managing your dotfiles in source control is important. This project uses [YADM](https://thelocehiliosan.github.io/yadm/), a dotfile manager that employs git. With YADM you can start with a new repo, or clone an existing repo. Both approachs are explained in depth on the YADM website's [getting started](https://thelocehiliosan.github.io/yadm/docs/getting_started) section. 
 
-
+1. Download Antergos ISO
 1. Fork this repo (or clone this repo directly and change it's upstream to your fork after install is done)
-2. Install Arch using Antergos, choose the "no desktop environment" option.
+2. Install Arch using Antergos, choose the "no desktop environment" option, it is probably called "Base".
 4. Follow the instructions outlined in [install.md](install.md)
 5. report any bugs or manual steps as issues to this repo so that the install process can be improved.
 
