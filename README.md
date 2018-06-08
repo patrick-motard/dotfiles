@@ -107,11 +107,16 @@ Tools are located in `~/.local/bin/tools` & `~/.local/bin/setup`
 
 ## Termite
 
-using oh-my-zsh vi mode:
+using oh-my-zsh [vi_mode](https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins/vi-mode) plugin:
+
+"fd" escape insert mode
 
 "/" vi-history-search-backward
+
 "?" vi-history-search-forward
+
 "n" vi-repeat-search
+
 "N" vi-rev-repeat-search
 
 
