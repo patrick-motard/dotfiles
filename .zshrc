@@ -223,6 +223,11 @@ alias work-mode="switch-aws-creds.sh work"
 alias other-mode="switch-aws-creds.sh other"
 alias check-mode="aws s3 ls"
 
+## zsh vi-mode settings
+# remaps ESC to fd
+bindkey -M viins 'fd' vi-cmd-mode
+
+
 ## Robo3t -mongo-client-
 export PATH=/usr/bin/robo3t/bin:$PATH
 
@@ -251,7 +256,7 @@ export PATH=~/.cargo/bin:$PATH
 ## NPM TOKEN SETUP
 export NPM_TOKEN=$NPM_TOKEN
 
-export EDITOR=gvim
+export EDITOR=vim
 
 export MANPAGER="/bin/sh -c \"col -b | vim -c 'set ft=man ts=8 nomod nolist nonu noma' -\""
 
