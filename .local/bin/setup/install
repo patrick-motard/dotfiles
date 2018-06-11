@@ -7,6 +7,8 @@ SYNOPSIS
 
 ARGUMENTS
 
+       -r|--restart
+          Restart after completion
        -c|--core
           Only install core packages from arch and aur.
        -u|--user
@@ -19,6 +21,9 @@ while test $# -gt 0; do
             echo "$usage" >&2
             exit
             ;;
+        -r|--restart)
+            _restart=true
+            shift ;;
         -c|--core)
             core=true
             ;;
@@ -277,4 +282,7 @@ fi
 
 yadm reset --hard origin/master
 
-reboot
+if [[ _restart == true ]]; then
+    yadm reset --hard origin/master
+    reboot
+fi
