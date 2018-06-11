@@ -54,7 +54,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git docker vi-mode archlinux)
+plugins=(git docker vi-mode archlinux zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -225,9 +225,12 @@ alias work-mode="switch-aws-creds.sh work"
 alias other-mode="switch-aws-creds.sh other"
 alias check-mode="aws s3 ls"
 
+
+## CUSTOM KEY BINDINGS ##
 ## zsh vi-mode settings
 # remaps ESC to fd
 bindkey -M viins 'fd' vi-cmd-mode
+bindkey 'll' autosuggest-accept
 
 
 ## Robo3t -mongo-client-
