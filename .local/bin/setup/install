@@ -168,6 +168,8 @@ core_aur_packages="
     bashmount
     trizen
     mirage
+    arc-gtk-theme-git
+    awesome-terminal-fonts
 "
 for aur_package in $core_aur_packages; do
     trizen -S --needed $aur_package --noconfirm --noedit
@@ -175,9 +177,7 @@ done
 if [[ $core != true ]]; then
     ## install aur packages
     aur_packages="
-        awesome-terminal-fonts
         hipchat
-        arc-gtk-theme-git
         spotify
         dropbox
         rtv
@@ -187,7 +187,6 @@ if [[ $core != true ]]; then
         pgadmin4
         cli-visualizer
         slack-desktop
-        slack-term
         teams-for-linux
 "
     for aur_package in $aur_packages; do
