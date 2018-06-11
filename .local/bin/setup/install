@@ -177,7 +177,7 @@ if [[ $core != true ]]; then
     aur_packages="
         awesome-terminal-fonts
         hipchat
-        gtk-theme-arc-git
+        arc-gtk-theme-git
         spotify
         dropbox
         rtv
