@@ -214,6 +214,7 @@ fi
 
 ## Install oh-my-zsh
 sh ~/.local/bin/tools/install_oh_my_zsh
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 ## Python package installs
 ## Install wakatime
