@@ -186,6 +186,7 @@ alias pacman="sudo pacman"
 
 alias y="yadm"
 alias ya="yadm add"
+alias yau="yadm add -u" # add only unstaged files
 alias yc="yadm commit --verbose"
 alias yca="yadm commit --amend"
 alias ycm="yadm commit -m"
