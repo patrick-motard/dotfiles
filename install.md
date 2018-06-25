@@ -24,12 +24,14 @@ When you are logged in for the first time, you will be in workspace 1. By defaul
 
 ## Install spacemacs font icons:
 
-(screenshot coming soon)
+Like most editors, Spacemacs supports file tree view, which shows your files and folders of the current project or current buffers directory. `~/.spacemacs` is already configured to used Neotree with ['all-the-icons' by domtronn](https://github.com/domtronn/all-the-icons.el). The only thing you need to do is tell spacemacs to install the fonts it needs. You'll know that you need to install fonts if your projectile tree view (`SPC p t`) looks like this:
 
-Like most editors, Spacemacs supports file tree view, which shows your files and folders of the current project or current buffers directory. `~/.spacemacs` is already configured to used Neotree with ['all-the-icons' by domtronn](https://github.com/domtronn/all-the-icons.el). The only thing you need to do is tell spacemacs to install the fonts it needs. 
+![](.config/dotfiles/screenshots/fonts-missing.png)
 
 To install `all-the-icons` type: `SPC SPC all-the-icons-install-fonts` then press Enter.
-Once installed, restart Spacemacs after install `SPC q r`. Once Spacemacs opens, you can open the file tree by pressing `SPC f t`, or if you have a project open using Projectile, you can open up the projects file tree using `SPC p t`
+Once installed, restart Spacemacs after install `SPC q r`. Once Spacemacs opens, you can open the file tree by pressing `SPC f t`, or if you have a project open using Projectile, you can open up the projects file tree using `SPC p t`. If the fonts were correctly installed, you should see something like this:
+
+![](.config/dotfiles/screenshots/fonts-working.png)
 
 ## Install vundle plugins:
 
