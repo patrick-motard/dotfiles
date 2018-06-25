@@ -24,8 +24,6 @@ When you are logged in for the first time, you will be in workspace 1. By defaul
 
 ## Install spacemacs font icons:
 
-(screenshot coming soon)
-
 Like most editors, Spacemacs supports file tree view, which shows your files and folders of the current project or current buffers directory. `~/.spacemacs` is already configured to used Neotree with ['all-the-icons' by domtronn](https://github.com/domtronn/all-the-icons.el). The only thing you need to do is tell spacemacs to install the fonts it needs. You'll know that you need to install fonts if your projectile tree view (`SPC p t`) looks like this:
 
 ![](/screenshots/fonts-missing.png)
