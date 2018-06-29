@@ -25,6 +25,12 @@ if [ -f "$usermodmap" ]; then
     xmodmap "$usermodmap"
 fi
 
+# set display timeout to 10min
+xset dpms 0 0 1200
+
+# lock screen after 5min
+xautolock -time 5 -locker '/home/$USER/.local/bin/tools/lock' &
+
 # start some nice programs
 
 if [ -d /etc/X11/xinit/xinitrc.d ] ; then
