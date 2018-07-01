@@ -4,48 +4,15 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
+# auto load .nvmrc and apply when cd into a directory that has an .nvmrc
+# this must be loaded before the zsh-nvm plugin
+export NVM_AUTO_USE=true
+
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-#ZSH_THEME="robbyrussell"
-#ZSH_THEME="gnzh"
 ZSH_THEME="agnoster"
-# ZSH_THEME="lambda-mod"
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -54,57 +21,37 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git docker vi-mode archlinux zsh-autosuggestions)
+plugins=(
+    git
+    docker
+    vi-mode
+    archlinux
+    zsh-autosuggestions
+    # custom plugins #
+    # https://github.com/lukechilds/zsh-nvm
+    zsh-nvm)
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
+#############################
+#     USER CONFIGURATION    #
+#############################
 
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# Export these user specific environment variables in your ~/.zshenv
+# in order for these aliases to work:
+    # export GITHUB_ACCOUNT=
+    # export BITBUCKET_ACCOUNT=
+    # export NPM_TOKEN=
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='mvim'
+fi
 
 # Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-## NVM STUFF
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-
-autoload -U add-zsh-hook
-load-nvmrc() {
-    local node_version="$(nvm version)"
-    local nvmrc_path="$(nvm_find_nvmrc)"
-
-    if [ -n "$nvmrc_path" ]; then
-        local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-        if [ "$nvmrc_node_version" = "N/A" ]; then
-            nvm install
-        elif [ "$nvmrc_node_version" != "$node_version" ]; then
-            nvm use
-        fi
-    elif [ "$node_version" != "$(nvm version default)" ]; then
-        echo "Reverting to nvm default version"
-        nvm use default
-    fi
-}
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
-## END NVM STUFF
-
-## VIM POWERLINE
-if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
-    source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
-fi
+export ARCHFLAGS="-arch x86_64"
 
 function pe() {
     echo "ERROR: $1" >&2
@@ -120,37 +67,6 @@ function edit-config {
         echo "no config file found for ${1}" >&2
     fi
 }
-
-
-# set the following in your ~/.zshenv
-# export BB_ACCOUNT_NAME=""
-# export GH_ACCOUNT_NAME=""
-# export CODE_DIR="~/code"
-# to your values
-# usage example: clone gh dotfiles
-function clone() {
-    dir="${CODE_DIR:-${PWD}}"
-    echo $dir
-    if [[ -z $1 ]]; then
-        pe "Must provide 'gh' or 'bb'"
-    elif [[ -z $2 ]]; then
-        pe "Must provide a repository name"
-    fi
-
-    case $1 in
-        "bb")
-            repo="git@bitbucket.org:${BB_ACCOUNT_NAME}/${2}.git"
-            echo $repo
-            git clone $repo $dir
-            ;;
-        "gh")
-            repo="git@github.com:${GH_ACCOUNT_NAME}/${2}.git"
-            echo $repo
-            git clone $repo $dir
-            ;;
-    esac
-}
-
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -184,6 +100,7 @@ alias xrl="xrdb ~/.Xresources"
 alias nr="node run.js"
 alias kl="kubectl"
 alias pacman="sudo pacman"
+alias x="chmod +x"
 
 alias y="yadm"
 alias ya="yadm add"
@@ -218,7 +135,8 @@ alias bgf="~/.fehbg"
 alias bgn="update_background"
 
 alias c="cd ~/code && ll"
-alias cgw="cd ~/code/go/src/bitbucket.org/wtsdevops && ll"
+alias cgbb="cd ~/code/go/src/bitbucket.org/wtsdevops && ll"
+alias cggh="cd $GOPATH/src/github.com/$GITHUB_ACCOUNT && ll"
 
 #switch between different AWS accounts
 alias work-mode="switch-aws-creds.sh work"
@@ -230,7 +148,7 @@ alias check-mode="aws s3 ls"
 ## zsh vi-mode settings
 # remaps ESC to fd
 bindkey -M viins 'fd' vi-cmd-mode
-bindkey 'll' autosuggest-accept
+bindkey 'lk' autosuggest-accept
 
 
 ## Robo3t -mongo-client-
@@ -269,12 +187,19 @@ export MANPAGER="/bin/sh -c \"col -b | vim -c 'set ft=man ts=8 nomod nolist nonu
 
 export PATH=$PATH:/home/$USER/.local/bin
 
-if [[ -f /home/$USER/.local/bin/azure-cli/az.completion ]]; then
-    source /home/$USER/.local/bin/azure-cli/az.completion
-fi
-
 ## Kubernetes
 command -v kubectl >/dev/null 2>&1
 if [[ $? == 0 ]]; then
     source <(kubectl completion zsh)
 fi
+
+## Azure
+if [[ -f /home/$USER/.local/bin/azure-cli/az.completion ]]; then
+    source /home/$USER/.local/bin/azure-cli/az.completion
+fi
+
+## VIM POWERLINE
+if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
+    source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+fi
+
