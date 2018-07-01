@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# usage example: clone gh dotfiles
+# note: --work in progress--
+function clone() {
+    dir="${CODE_DIR:-${PWD}}"
+    echo $dir
+    if [[ -z $1 ]]; then
+        pe "Must provide 'gh' or 'bb'"
+    elif [[ -z $2 ]]; then
+        pe "Must provide a repository name"
+    fi
+
+    case $1 in
+        "bb")
+            repo="git@bitbucket.org:${BITBUCKET_ACCOUNT}/${2}.git"
+            echo $repo
+            git clone $repo $dir
+            ;;
+        "gh")
+            repo="git@github.com:${GITHUB_ACCOUNT}/${2}.git"
+            echo $repo
+            git clone $repo $dir
+            ;;
+    esac
+}
