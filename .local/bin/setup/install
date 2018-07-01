@@ -13,20 +13,22 @@ ARGUMENTS
           Only install core packages from arch and aur.
        -u|--user
           Name of your github account where dotfiles was forked to.
+       -n|--new
+          Indicate this is being run on a new install. This script needs to reset certain
+          files during the initial setup. This flag allows it to do so.
 "
 
 while test $# -gt 0; do
 	  case "$1" in
         -h|--help|-\?)
             echo "$usage" >&2
-            exit
-            ;;
+            exit;;
         -r|--restart)
-            _restart=true
-            shift ;;
+            _restart=true;;
+        -n|--new)
+            _new=true;;
         -c|--core)
-            core=true
-            ;;
+            core=true;;
         -u|--user)
             github_user=$2
             shift
@@ -245,6 +247,7 @@ fi
 # go get -u -v golang.org/x/tools/cmd/gorename
 # go get -u -v golang.org/x/tools/cmd/goimports
 
+
 function main() {
     check_required_params
     update_pacman
@@ -256,10 +259,13 @@ function main() {
     install_node_packages
     install_python_packages
 
-    if [[ _restart == true ]]; then
+    if [[ _new == true ]]; then
         yadm reset --hard origin/master
+    fi
+
+    if [[ _restart == true ]]; then
         reboot
     fi
 }
 
-main
+# main
