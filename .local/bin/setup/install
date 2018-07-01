@@ -7,10 +7,9 @@ SYNOPSIS
 
 ARGUMENTS
 
-       -r|--restart
-          Restart after completion
-       -c|--core
-          Only install core packages from arch and aur.
+
+       -f|--full)
+          Do a full install. Including all AUR packages, not just required ones.
        -u|--user
           Name of your github account where dotfiles was forked to.
        -n|--new
@@ -23,12 +22,10 @@ while test $# -gt 0; do
         -h|--help|-\?)
             echo "$usage" >&2
             exit;;
-        -r|--restart)
-            _restart=true;;
         -n|--new)
             _new=true;;
-        -c|--core)
-            core=true;;
+        -f|--full)
+            full=true;;
         -u|--user)
             github_user=$2
             shift
@@ -126,7 +123,7 @@ function install_aur_packages() {
 }
 
 function install_extra_aur_packages() {
-    if [[ $core != true ]]; then
+    if [[ $full = true ]]; then
         ## install aur packages
         aur_packages="
             hipchat
@@ -169,7 +166,7 @@ function install_docker() {
 function install_oh-my-zsh_and_plugins() {
     ## Install oh-my-zsh
     sh /home/$USER/.local/bin/tools/install_oh_my_zsh
-
+    yadm reset --hard origin/master
     # uses: https://github.com/lukechilds/zsh-nvm
     git clone https://github.com/lukechilds/zsh-nvm \
         ${ZSH_CUSTOM:-/home/$USER/.oh-my-zsh/custom}/plugins/zsh-nvm 2>/dev/null
@@ -207,7 +204,6 @@ function install_python_packages() {
 git clone https://github.com/VundleVim/Vundle.vim.git /home/$USER/.vim/bundle/Vundle.vim 2>/dev/null
 #fi
 
-
 mkdir -p $HOME/code
 
 ## Set yadm remote to .ssh
@@ -235,6 +231,7 @@ fi
 # }
 
 
+# TODO: add golang setup back in
 # needed for spacemacs go layer
 # https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Blang/go
 
@@ -255,17 +252,13 @@ function main() {
     install_aur_packages
     install_extra_aur_packages
     install_docker
-    install_oh-my-zsh_and_plugins
     install_node_packages
     install_python_packages
 
     if [[ _new == true ]]; then
-        yadm reset --hard origin/master
-    fi
-
-    if [[ _restart == true ]]; then
+        install_oh-my-zsh_and_plugins
         reboot
     fi
 }
 
-# main
+main
