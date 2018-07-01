@@ -29,7 +29,6 @@ while test $# -gt 0; do
             ;;
         -u|--user)
             github_user=$2
-            echo $2
             shift
             ;;
         \?)
@@ -42,79 +41,27 @@ while test $# -gt 0; do
     shift
 done
 
-if [[ -z $github_user ]]; then
-    echo "Github account name required" >&2
-    exit 1
-fi
+function check_required_params() {
+    if [[ -z $github_user ]]; then
+        echo "Github account name required" >&2
+        exit 1
+    fi
+}
 
-sudo pacman -Syu --noconfirm
-sudo pacman-optimize && sync
+function update_pacman() {
+    sudo pacman -Syu --noconfirm
+    sudo pacman-optimize && sync
+}
 
-common_pacman_packages="
-    xorg-server
-    jq
-    xorg-xinit
-    vim
-    zsh
-    keychain
-    xclip
-    python-pip
-    firefox
-    termite
-    rofi
-    emacs
-    compton
-    pulseaudio
-    pavucontrol
-    pamixer
-    alsa-utils
-    feh
-    docker
-    docker-compose
-    thunar
-    htop
-    tumbler
-    weechat
-    xbindkeys
-    tree
-    facter
-    xf86-video-vesa
-    nvidia
-    scrot
-    i3lock
-    ranger
-    fcron
-    dunst
-    qutebrowser
-    xorg-xfd
-    screenfetch
-    remmina
-    libreoffice-fresh
-    task
-    gtop
-    perl-anyevent-i3
-    rustup
-    nmap
-    freerdp
-    go-tools
-    ntp
-    networkmanager-dispatcher-ntpd
-    bitlbee
-    ncurses
-    fftw
-    groovy
-    pacman-contrib
-    xautolock
-"
+function install_pacman_packages() {
+    common_pacman_packages=$(cat ~/.config/dotfiles/arch-packages/pacman)
+    for package_name in $common_pacman_packages; do
+        sudo pacman -S $package_name --needed --noconfirm --quiet
+    done
+}
+
 #pacman-contrib:
 #  used for 'checkupdates' command in polybar module that shows how many updates pacman has
-
-# https://github.com/dpayne/cli-visualizer
-# pacman:
-#    ncurses
-#    fftw
-# aur:
-#    cli-visualizer
 
 
 # list of packages no longer used
@@ -132,31 +79,23 @@ virtualbox_packages="
 physical_packages="
 "
 
-# install common packages
-for package_name in $common_pacman_packages; do
-  sudo pacman -S $package_name --needed --noconfirm --quiet
-done
+function install_virtual_machine_needed_packages() {
+    # install/update packages for virtualbox or physical install
+    [[ "$(facter is_virtual)" == true ]] && \
+        host_specific_pkgs=$virtualbox_packages || \
+            host_specific_pkgs=$physical_packages
+    echo 'installing host specific packages'
+    for package_name in $host_specific_pkgs; do
+        sudo pacman -S $package_name --needed --noconfirm
+    done
+}
 
-# install/update packages for virtualbox or physical install
-[[ "$(facter is_virtual)" == true ]] && \
-    host_specific_pkgs=$virtualbox_packages || \
-        host_specific_pkgs=$physical_packages
-
-echo 'installing host specific packages'
-for package_name in $host_specific_pkgs; do
-    sudo pacman -S $package_name --needed --noconfirm
-done
-
-echo 'removing packages that are no longer needed'
-for package_name in $remove_packages; do
-    sudo pacman -R --noconfirm
-done
-
-## RUST
-rustup install stable
-rustup default stable
-## END RUST
-
+function uninstall_deprecated_packages() {
+    echo 'removing packages that are no longer needed'
+    for package_name in $remove_packages; do
+        sudo pacman -R --noconfirm
+    done
+}
 core_aur_packages="
     i3-gaps-next-git
     polybar-git
@@ -172,74 +111,100 @@ core_aur_packages="
     arc-gtk-theme-git
     awesome-terminal-fonts
 "
-for aur_package in $core_aur_packages; do
-    trizen -S --needed $aur_package --noconfirm --noedit
-done
-if [[ $core != true ]]; then
-    ## install aur packages
-    aur_packages="
-        hipchat
-        spotify
-        dropbox
-        rtv
-        siji-git
-        xorg-xset
-        remmina-plugin-rdesktop
-        pgadmin4
-        cli-visualizer
-        slack-desktop
-        teams-for-linux
-"
-    for aur_package in $aur_packages; do
+function install_aur_packages() {
+    ## RUST
+    # some aur packages require compiling rust code
+    # so this intializes rust
+    rustup install stable
+    rustup default stable
+    ## END RUST
+    for aur_package in $core_aur_packages; do
         trizen -S --needed $aur_package --noconfirm --noedit
     done
-fi
+}
 
-## if the docker daemon isn't active, set it up
-systemctl -q is-active docker
-if [[ $? -ne 0 ]] ; then
-    echo "Docker isn't running"
-    ## refer to docker daemon documentation for further details:
-    ## https://docs.docker.com/engine/installation/linux/linux-postinstall/
-    ## create a group for docker
-    sudo groupadd docker
-    ## add current user to it so that you dont have to issue sudo everytime
-    sudo usermod -aG docker $USER
-    ## make sure the docker daemon starts on boot
-    sudo systemctl enable docker
-    ## start the docker daemon
-    sudo systemctl start docker
-    echo "Docker now running and set to run on boot. User added to group"
-fi
+function install_extra_aur_packages() {
+    if [[ $core != true ]]; then
+        ## install aur packages
+        aur_packages="
+            hipchat
+            spotify
+            dropbox
+            rtv
+            siji-git
+            xorg-xset
+            remmina-plugin-rdesktop
+            pgadmin4
+            cli-visualizer
+            slack-desktop
+            teams-for-linux
+    "
+        for aur_package in $aur_packages; do
+            trizen -S --needed $aur_package --noconfirm --noedit
+        done
+    fi
+}
+
+function install_docker() {
+    ## if the docker daemon isn't active, set it up
+    systemctl -q is-active docker
+    if [[ $? -ne 0 ]] ; then
+        echo "Docker isn't running"
+        ## refer to docker daemon documentation for further details:
+        ## https://docs.docker.com/engine/installation/linux/linux-postinstall/
+        ## create a group for docker
+        sudo groupadd docker
+        ## add current user to it so that you dont have to issue sudo everytime
+        sudo usermod -aG docker $USER
+        ## make sure the docker daemon starts on boot
+        sudo systemctl enable docker
+        ## start the docker daemon
+        sudo systemctl start docker
+        echo "Docker now running and set to run on boot. User added to group"
+    fi
+}
+
+function install_oh-my-zsh_and_plugins() {
+    ## Install oh-my-zsh
+    sh /home/$USER/.local/bin/tools/install_oh_my_zsh
+
+    # uses: https://github.com/lukechilds/zsh-nvm
+    git clone https://github.com/lukechilds/zsh-nvm \
+        ${ZSH_CUSTOM:-/home/$USER/.oh-my-zsh/custom}/plugins/zsh-nvm 2>/dev/null
+    # nvm will globally install all packages listed in ~/.nvm/default-packages
+    # TODO: this symlink needs to be made AFTER nvm is installed, which doesn't
+    # happen until after .zshrc is sourced. Need to figure this out before enabling
+    # this line
+    # ln -s ~/.config/nvm/default-packges ~/.nvm/default-packages
+
+    git clone https://github.com/zsh-users/zsh-autosuggestions \
+        ${ZSH_CUSTOM:-/home/$USER/.oh-my-zsh/custom}/plugins/zsh-autosuggestions 2>/dev/null
+}
+
+function install_node_packages() {
+    # note: this function must be run after install_oh-my-zsh_and_plugins
+    . /home/$USER/.nvm/nvm.sh ## source nvm
+    node_version=$(<~/.nvmrc)
+    nvm install $node_version
+    npm i -g tern ## tern is used for the javascript layer in emacs
+}
 
 
-## Install oh-my-zsh
-sh ~/.local/bin/tools/install_oh_my_zsh
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+function install_python_packages() {
+    ## Python package installs
+    pip install --upgrade --user pip
+    pip install --upgrade --user wakatime
+    pip install --upgrade --user awscli
+    pip install --upgrade --user polybar-reload
+}
 
-## Python package installs
-## Install wakatime
-pip install --upgrade --user pip
-sudo pip install wakatime
-pip install --upgrade --user awscli
-pip install --upgrade --user polybar-reload
 
 ## Install Vundle
 ## commented out check for directory because it already exists. need to solve this problem another way.
 #if [[ ! -d /home/han/.vim/bundle/Vundle.vim ]]; then
-git clone https://github.com/VundleVim/Vundle.vim.git /home/$USER/.vim/bundle/Vundle.vim
+git clone https://github.com/VundleVim/Vundle.vim.git /home/$USER/.vim/bundle/Vundle.vim 2>/dev/null
 #fi
 
-## Install NVM if nvm shell sript not downloaded
-if [[ ! -f .nvm/nvm.sh ]]; then
-  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
-  . ~/.nvm/nvm.sh ## source nvm
-  node_version=$(<~/.nvmrc)
-  nvm install $node_version
-  npm i -g tern ## tern is used for the javascript layer in emacs
-else
-    echo "NVM already installed, skipping..."
-fi
 
 mkdir -p $HOME/code
 
@@ -280,10 +245,21 @@ fi
 # go get -u -v golang.org/x/tools/cmd/gorename
 # go get -u -v golang.org/x/tools/cmd/goimports
 
+function main() {
+    check_required_params
+    update_pacman
+    install_pacman_packages
+    install_aur_packages
+    install_extra_aur_packages
+    install_docker
+    install_oh-my-zsh_and_plugins
+    install_node_packages
+    install_python_packages
 
-yadm reset --hard origin/master
+    if [[ _restart == true ]]; then
+        yadm reset --hard origin/master
+        reboot
+    fi
+}
 
-if [[ _restart == true ]]; then
-    yadm reset --hard origin/master
-    reboot
-fi
+main
