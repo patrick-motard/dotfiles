@@ -4,7 +4,9 @@
 
 run the following in your terminal:
 
-`curl -L -o install goo.gl/FThZtR && chmod +x install && sh install --user {YOUR_GITHUB_ACCOUNT_NAME}`
+`curl -L -o install goo.gl/FThZtR && chmod +x install && sh install --user {YOUR_GITHUB_ACCOUNT_NAME}` (optional: --full)
+
+*--full will install all the aur packages i use, not just the essentials*
 
 example:
 
