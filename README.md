@@ -119,6 +119,8 @@ using oh-my-zsh [vi_mode](https://github.com/robbyrussell/oh-my-zsh/tree/master/
 
 "N" vi-rev-repeat-search
 
+"lk" accept auto-suggestion
+
 
 
 ## Other 3rd Party Commands
