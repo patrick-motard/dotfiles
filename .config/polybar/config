@@ -364,6 +364,16 @@ label-focused-padding-left = 0
 label-unfocused-padding-left = 0
 label-unfocused-padding-right = 1
 
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-urgent-foreground = ${colors.nord4}
+label-urgent-background = ${colors.nord11}
+label-urgent-padding-right = 1
+
 [module/mpd]
 type = internal/mpd
 format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
