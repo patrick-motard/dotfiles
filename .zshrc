@@ -152,6 +152,16 @@ alias c="cd ~/code && ll"
 alias cgbb="cd ~/code/go/src/bitbucket.org/wtsdevops && ll"
 alias cggh="cd $GOPATH/src/github.com/$GITHUB_ACCOUNT && ll"
 
+# leave this function with the _ prefix and aliased below without
+# the prefix. Without them zsh errors on sourcing because grep
+# is referencing an alias in this function. ( my grep is grep plus some
+# formatting flags)
+_sshg() {
+    cat ~/.ssh/config | grep "Host $1"
+}
+# quickly grep ssh hosts from config file
+alias grepssh=_sshg
+
 #switch between different AWS accounts
 alias work-mode="switch-aws-creds.sh work"
 alias other-mode="switch-aws-creds.sh other"
