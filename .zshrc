@@ -131,7 +131,6 @@ alias yds="yadm diff --staged"
 alias yaf="yadm add ~/.yadm/files.gpg"
 alias yafp="yadm add ~/.yadm/files.gpg ~/.yadm/encrypt && yadm commit -m 'encrypt' && yadm push"
 alias token=~/.ssh/token
-alias decrypt="yadm decrypt && rsync -a ~/home/$USER/ ~/ && rm -rf ~/home/$USER"
 
 alias setup-run="bash ~/.local/bin/setup/install"
 alias setup-edit="vim ~/.local/bin/setup/install"
