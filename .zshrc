@@ -151,6 +151,8 @@ alias bgn="update_background"
 alias c="cd ~/code && ll"
 alias cgbb="cd ~/code/go/src/bitbucket.org/wtsdevops && ll"
 alias cggh="cd $GOPATH/src/github.com/$GITHUB_ACCOUNT && ll"
+alias vssh="vim ~/.ssh/config"
+alias lssh="ls ~/.ssh"
 
 # leave this function with the _ prefix and aliased below without
 # the prefix. Without them zsh errors on sourcing because grep
