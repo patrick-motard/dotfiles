@@ -1,6 +1,6 @@
 {
     "monitors": {
-        "current": "1440",
-        "location": "~/.screenlayout"
+        "current": "1440-HDMI0-L-1440-DP4-R",
+        "location": "/home/han/.screenlayout"
     }
 }

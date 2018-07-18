@@ -38,7 +38,8 @@ source $ZSH/oh-my-zsh.sh
 #############################
 
 # Export these user specific environment variables in your ~/.zshenv
-# in order for these aliases to work:
+# in order for these aliases to work. Set them to empty string if not
+# applicable:
     # export GITHUB_ACCOUNT=
     # export BITBUCKET_ACCOUNT=
     # export NPM_TOKEN=
