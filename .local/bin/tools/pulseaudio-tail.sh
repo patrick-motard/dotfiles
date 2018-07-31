@@ -1,23 +1,24 @@
 #!/bin/sh
 
-sink=$(pacmd list | grep '*' | awk 'NR==1{print $3}')
 volume_up() {
+    sink=$(pacmd list | grep '*' | awk 'NR==1{print $3}')
     pactl set-sink-volume $sink +1%
 }
 
 volume_down() {
+    sink=$(pacmd list | grep '*' | awk 'NR==1{print $3}')
     pactl set-sink-volume $sink -1%
 }
 
 volume_mute() {
+    sink=$(pacmd list | grep '*' | awk 'NR==1{print $3}')
     pactl set-sink-mute $sink toggle
 }
 
 volume_print() {
-    # muted=$(pamixer --sink $sink --get-mute)
-
+    sink=$(pacmd list | grep '*' | awk 'NR==1{print $3}')
     volume=$(pamixer --sink $sink --get-volume)
-    echo "$volume"
+    echo $volume
 
     # if [ "$muted" = true ]; then
     #     echo "#1 --"
@@ -35,7 +36,6 @@ volume_print() {
 
 listen() {
     volume_print
-
     pactl subscribe | while read -r event; do
         if echo "$event" | grep -q "#$sink"; then
             volume_print
@@ -45,15 +45,11 @@ listen() {
 
 case "$1" in
     --up)
-        volume_up
-        ;;
+        volume_up;;
     --down)
-        volume_down
-        ;;
+        volume_down;;
     --mute)
-        volume_mute
-        ;;
+        volume_mute;;
     *)
-        listen
-        ;;
+        listen;;
 esac
