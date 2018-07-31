@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 usage="
 NAME
-      $(basename) - 
+      docker-stack-redeploy
 
 SYNOPSIS
-      $(basename) [-h] [-c compose-file name] -n name
+      docker-stack-redeploy [-h] [-c compose-file name] -n name
 
       (re)deploys stack to the swarm, will keep trying with backoff until successful.
+
 
 ARGUMENTS
 
@@ -14,13 +15,27 @@ ARGUMENTS
           Name of the stack in the Swarm.
 
           Example:
-              ./$(basename) -n my-application-stack
+              docker-stack-redeploy -n my-application-stack
 
        [-f compose-file name] (optional)
           name of the compose file. Defaults to compose-stack.yaml
 
           Example:
-              ./$(basename) -f my-file.yaml -n my-application-stack
+              docker-stack-redeploy -f my-file.yaml -n my-application-stack
+
+INSTALLATION:
+      Assuming you have the following in your ~/.ssh/config file
+
+            Host {my-swarm-manager-host}
+            User {some-user}
+            HostName {manager-node-public-ip}
+            IdentityFile ~/.ssh/{my-private-key-or-pem}
+
+      Copy this script to a location in your swarm manager nodes $PATH for the user you're sshing into:
+
+          Example: scp docker-stack-redeploy my-swarm-manager-server-host:/dir/in/$PATH/
+
+      You can then call the script in the directory where your .yaml stack file is.
 "
 
 while test $# -gt 0; do
