@@ -118,6 +118,7 @@ alias x="chmod +x"
 
 alias y="yadm"
 alias ya="yadm add"
+alias yaa="yadm add -u" # add only unstaged files
 alias yau="yadm add -u" # add only unstaged files
 alias yc="yadm commit --verbose"
 alias yca="yadm commit --amend"
