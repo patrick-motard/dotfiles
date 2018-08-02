@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+remote=$1
+if [[ -z $remote ]]; then
+    echo "please provide Host of remote server."
+    exit 1
+fi
+
+infocmp > /tmp/termite.terminfo
+
+scp /tmp/termite.terminfo $remote:/tmp/termite.terminfo
+ssh $remote << EOF
+   cd /tmp
+   tic -x termite.terminfo
+   rm termite.terminfo
+EOF
