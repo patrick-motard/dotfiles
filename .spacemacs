@@ -64,7 +64,7 @@ values."
             shell-default-position 'bottom
             shell-default-shell 'multi-term
             shell-default-term-shell "/usr/bin/zsh")
-     wakatime
+     ;; wakatime
      themes-megapack
      syntax-checking
      version-control
@@ -357,8 +357,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   )
 
 (defun dotspacemacs/user-config ()
-  (setq wakatime-api-key (exec-path-from-shell-copy-env "WAKA_API_KEY"))
-  (setq wakatime-cli-path "/usr/bin/wakatime")
+  ;; (setq wakatime-api-key (exec-path-from-shell-copy-env "WAKA_API_KEY"))
+  ;; (setq wakatime-cli-path "/usr/bin/wakatime")
 
 
   ;; groovy
