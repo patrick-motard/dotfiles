@@ -105,7 +105,11 @@ alias gp="git push"
 alias gpp="quick-git-check-in"
 alias glv="git log | vim -"
 alias gl="git log"
-alias clone=clone
+# git push and set upstream to current branch
+function push_upstream () {
+    git push -u origin $(git branch | grep "*" | awk -F " " '{print $NF}')
+}
+alias gpu=push_upstream
 alias pbcopy="xclip -selection clipboard"
 alias pbpaste="xclip -selection clipboard -o"
 alias restart="shutdown -r now"
