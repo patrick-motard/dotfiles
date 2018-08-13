@@ -147,7 +147,7 @@ bindsym $mod+n [instance="dropdown"] scratchpad show
 #######################
 
 ## move monitor left
-# bindsym $mod+c move workspace to output left
+bindsym $mod+c move workspace to output left
 ## move monitor right 
 bindsym $mod+u move workspace to output right
 
