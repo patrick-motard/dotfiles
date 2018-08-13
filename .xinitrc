@@ -40,4 +40,9 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
+# this allows you to have both headphones and speakers plugged in and switch
+# between the two using the polybar module. Auto-Mute mode is when alsa mutes
+# speakers whenever headphones are plugged in.
+/usr/bin/amixer -c 0 sset "Auto-Mute Mode" Disabled
+
 exec i3
