@@ -93,7 +93,8 @@ alias ez="vim ~/.zshrc"
 alias vz="vim ~/.zshrc"
 alias sz="source ~/.zshrc"
 alias gs="git status"
-alias gau"git add -u"
+alias gau="git add -u" # git add unstaged only
+alias gaa="git add -A" # git add all
 alias gcm="git commit -m"
 alias gca="git commit --amend"
 alias gb="git branch"
