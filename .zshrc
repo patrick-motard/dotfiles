@@ -110,6 +110,7 @@ function push_upstream () {
     git push -u origin $(git branch | grep "*" | awk -F " " '{print $NF}')
 }
 alias gpu=push_upstream
+alias sctl="sudo systemctl"
 alias pbcopy="xclip -selection clipboard"
 alias pbpaste="xclip -selection clipboard -o"
 alias restart="shutdown -r now"
