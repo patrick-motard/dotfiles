@@ -77,7 +77,7 @@ RUST_SRC_PATH=~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/s
 export GOPATH=~/code/go
 # add go bin folder to path so that compiled bin files can be
 # executed from anywhere using terminal
-export PATH="$PATH:$GOPATH/bin"
+export PATH="$GOPATH/bin:$PATH"
 ## END GOLANG
 
 
