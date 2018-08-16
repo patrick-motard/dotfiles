@@ -72,19 +72,29 @@ bindsym $mod+Shift+q kill
 
 # start rofi (a program launcher)
 bindsym $mod+d exec rofi -show drun
+# bindsym $mod+c exec zsh -c "rofi -show fb -modi fb:~/code/go/bin/dot"
+# bindsym $mod+c exec rofi --modi "DERP:dot" -show "DERP"
 
 ## alternative resize commands
 bindsym $mod+Shift+y	resize shrink width 10 px or 10ppt
 bindsym $mod+Shift+u	resize shrink height 10 px or 10 ppt
 bindsym $mod+Shift+o	resize grow width 10 px or 10 ppt
 
-set $mode_randr " 1 |  2 (1080L-1440R) |  3 (1440L-1080R) |  4 (1440L-1440R)"
+set $mode_randr " 1 |  2 (1080L-1440R) |  3 (1440L-1080R) |  4 (1440L-1440R) | 5 test.sh | 6 test2.sh "
 bindsym  $mod+Shift+a mode $mode_randr
 mode $mode_randr {
-    bindsym 1 exec --no-startup-id sh ~/.screenlayout/1440 && sh ~/.fehbg && sh ~/.config/polybar/launch.sh, mode "default"
-    bindsym 2 exec --no-startup-id sh ~/.screenlayout/1080L-1440R && sh ~/.fehbg && sh ~/.config/polybar/launch.sh, mode "default"
-    bindsym 3 exec --no-startup-id sh ~/.screenlayout/1440L-1080R && sh ~/.fehbg && sh ~/.config/polybar/launch.sh, mode "default"
-    bindsym 4 exec --no-startup-id sh ~/.screenlayout/1440-HDMI0-L-1440-DP4-R && sh ~/.fehbg && sh ~/.config/polybar/launch.sh, mode "default"
+    bindsym 1 exec --no-startup-id sh dot screen select 1440 && sh ~/.fehbg && sh ~/.config/polybar/launch.sh, mode "default"
+    bindsym 2 exec --no-startup-id sh dot screen select 1080L-1440R && sh ~/.fehbg && sh ~/.config/polybar/launch.sh, mode "default"
+    bindsym 3 exec --no-startup-id sh dot screen select 1440L-1080R && sh ~/.fehbg && sh ~/.config/polybar/launch.sh, mode "default"
+    bindsym 4 exec --no-startup-id sh dot screen select 1440-HDMI0-L-1440-DP4-R && sh ~/.fehbg && sh ~/.config/polybar/launch.sh, mode "default"
+    bindsym 5 exec --no-startup-id sh -c "~/code/go/bin/dot screen select test.sh" && sh ~/.fehbg && sh ~/.config/polybar/launch.sh, mode "default"
+    bindsym 6 exec --no-startup-id sh -c "~/code/go/bin/dot screen select test2.sh" && sh ~/.fehbg && sh ~/.config/polybar/launch.sh, mode "default"
+
+
+    # bindsym 1 exec --no-startup-id sh ~/.screenlayout/1440 && sh ~/.fehbg && sh ~/.config/polybar/launch.sh, mode "default"
+    # bindsym 2 exec --no-startup-id sh ~/.screenlayout/1080L-1440R && sh ~/.fehbg && sh ~/.config/polybar/launch.sh, mode "default"
+    # bindsym 3 exec --no-startup-id sh ~/.screenlayout/1440L-1080R && sh ~/.fehbg && sh ~/.config/polybar/launch.sh, mode "default"
+    # bindsym 4 exec --no-startup-id sh ~/.screenlayout/1440-HDMI0-L-1440-DP4-R && sh ~/.fehbg && sh ~/.config/polybar/launch.sh, mode "default"
     ## back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -178,9 +188,10 @@ assign [class="Emacs"] $ws1
 assign [class="Mysql-workbench-bin"] $ws5
 assign [class="Xfce4-terminal"] $ws2
 assign [class="HipChat"] $ws4
-assign [class="Spotify"] $ws6
 assign [class="Firefox"] $ws3
+assign [class="ckb-next"] $ws9
 for_window [class="trust"] floating enable
+for_window [class="Spotify"] move to workspace $ws6
 
 ## move workspace to screen
 
@@ -281,20 +292,20 @@ bindsym $mod+Shift+r restart
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-	bindsym h resize shrink width 20 px or 10 ppt
-	bindsym j resize shrink height 20 px or 10 ppt
-	bindsym k resize grow height 20 px or 10 ppt
-	bindsym l resize grow width 20 px or 10 ppt
+    bindsym h resize shrink width 20 px or 10 ppt
+    bindsym j resize shrink height 20 px or 10 ppt
+    bindsym k resize grow height 20 px or 10 ppt
+    bindsym l resize grow width 20 px or 10 ppt
 
-	# same bindings, but for the arrow keys
-	bindsym Left resize shrink width 10 px or 10 ppt
-	bindsym Down resize grow height 10 px or 10 ppt
-	bindsym Up resize shrink height 10 px or 10 ppt
-	bindsym Right resize grow width 10 px or 10 ppt
+    # same bindings, but for the arrow keys
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
 
-	# back to normal: Enter or Escape
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 
 bindsym $mod+r mode "resize"
@@ -318,5 +329,7 @@ exec --no-startup-id firefox
 exec_always --no-startup-id sh ~/.screenlayout/1080L-1440R
 exec_always --no-startup-id sh ~/.fehbg
 exec --no-startup-id compton
+exec --no-startup-id spotify
 exec --no-startup-id sh ~/.local/bin/tools/start-vbox-client
+exec --no-startup-id ckb-next &
 exec_always --no-startup-id dunst
