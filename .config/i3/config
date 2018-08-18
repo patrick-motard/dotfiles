@@ -173,23 +173,6 @@ mode $mode_print {
 ## is not the only container in this workspace
 smart_borders on
 
-## assign applications to workspaces:
-## NOTE: use xprop command to get WM_CLASS (second string value)
-# assign [class="Xfce4-terminal"] $ws2
-assign [class="Google-chrome" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] $ws4
-assign [class="Google-chrome"] $ws3
-assign [class="Emacs"] $ws1
-assign [class="Mysql-workbench-bin"] $ws5
-assign [class="Xfce4-terminal"] $ws2
-assign [class="HipChat"] $ws4
-assign [class="Firefox"] $ws3
-assign [class="ckb-next"] $ws9
-for_window [class="trust"] floating enable
-for_window [class="Spotify"] move to workspace $ws6
-
-## move workspace to screen
-
-##--- |||||||| END MY CONFIG ||||||| ---##
 
 # change focus
 bindsym $mod+j focus left
@@ -315,6 +298,19 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id volume up 5 #increase sound vo
 bindsym XF86AudioLowerVolume exec --no-startup-id volume down 5 #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id sh -c "mute_toggle" # mute sound (uses tools/mute_toggle script)
 
+## move workspace to screen
+for_window [class="trust"] floating enable
+
+
+# if an application is set to automatically open on startup
+# and it is assigned to a workspace not in focus, it's window
+# is set to urget, causing the workspace color in i3bar/polybar
+# to color urgent (red), instead of assigning applications to workspaces,
+# I am opening them in the current workspace (default behavior unless assign is specified)
+# and then they are moved to the workspace specified
+for_window [class="Spotify"] move to workspace $ws6
+for_window [class="Firefox"] move to workspace $ws3
+
 ## startup applications
 exec_always --no-startup-id sh -c "~/code/go/bin/dot screen select"
 exec_always --no-startup-id ~/.config/polybar/launch.sh
@@ -326,5 +322,17 @@ exec_always --no-startup-id sh ~/.fehbg
 exec --no-startup-id compton
 exec --no-startup-id spotify
 exec --no-startup-id sh ~/.local/bin/tools/start-vbox-client
-exec --no-startup-id ckb-next &
+exec_always --no-startup-id ckb-next
 exec_always --no-startup-id dunst
+
+## assign applications to workspaces:
+## NOTE: use xprop command to get WM_CLASS (second string value)
+# assign [class="Xfce4-terminal"] $ws2
+assign [class="Google-chrome" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] $ws4
+assign [class="Google-chrome"] $ws3
+assign [class="Emacs"] $ws1
+assign [class="Mysql-workbench-bin"] $ws5
+assign [class="Xfce4-terminal"] $ws2
+assign [class="HipChat"] $ws4
+# assign [class="Firefox"] $ws3
+assign [class="ckb-next"] $ws9
