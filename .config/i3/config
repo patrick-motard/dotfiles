@@ -310,9 +310,10 @@ bar {
 
 for_window [title="i3-helm"] floating enable
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 1 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 1 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 1 toggle # mute sound
+# uses golang github.com/itchyny/volume-go
+bindsym XF86AudioRaiseVolume exec --no-startup-id volume up 5 #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id volume down 5 #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id sh -c "mute_toggle" # mute sound (uses tools/mute_toggle script)
 
 ## startup applications
 exec_always --no-startup-id sh -c "~/code/go/bin/dot screen select"

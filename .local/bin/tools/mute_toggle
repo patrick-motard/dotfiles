@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+echo $(which volume)
+
+muted=$(volume status | awk 'NR==2 { print $2 }')
+
+if [[ $muted == 'false' ]]; then
+    volume mute
+elif [[ $muted == 'true' ]]; then
+    volume unmute
+else
+    sn=$(basename "$0")
+    notify-send --urgency=critical "$sn: failed to parse response from volume-go"
+fi
