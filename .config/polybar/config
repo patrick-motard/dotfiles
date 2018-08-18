@@ -295,12 +295,14 @@ content = ""
 
 [module/pulseaudio-tail]
 type = custom/script
-exec = ~/.local/bin/tools/pulseaudio-tail.sh
+; exec = ~/.local/bin/tools/pulseaudio-tail.sh
+exec = volume get; ~/.local/bin/tools/pulseaudio-tail.sh
 tail = true
 click-right = exec pavucontrol &
-click-left = ~/.local/bin/tools/pulseaudio-tail.sh --mute
-scroll-up = ~/.local/bin/tools/pulseaudio-tail.sh --up
-scroll-down = ~/.local/bin/tools/pulseaudio-tail.sh --down
+click-left = mute_toggle
+scroll-up = volume up 3
+scroll-down = volume down 3
+
 format-padding = 1
 
 [module/alsa-switch]
