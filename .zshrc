@@ -68,20 +68,6 @@ function edit-config {
     fi
 }
 
-## RUST
-export PATH=~/.cargo/bin:$PATH
-RUST_SRC_PATH=~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
-## end RUST
-
-## GOLANG
-export GOPATH=~/code/go
-# add go bin folder to path so that compiled bin files can be
-# executed from anywhere using terminal
-export PATH="$GOPATH/bin:$PATH"
-## END GOLANG
-
-
-
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -184,30 +170,6 @@ alias check-mode="aws s3 ls"
 bindkey -M viins 'fd' vi-cmd-mode
 bindkey 'lk' autosuggest-accept
 
-
-## Robo3t -mongo-client-
-export PATH=/usr/bin/robo3t/bin:$PATH
-
-## vimgolf
-export PATH="$PATH:/home/$USER/.gem/ruby/2.5.0/gems/vimgolf-0.4.8/bin"
-## end vimgolf
-
-export PATH=~/.local/bin/work:$PATH
-export PATH=~/.local/bin:$PATH
-export PATH=~/.local/bin/tools:$PATH
-export PATH=/opt/idea-IC-171.4424.56/bin:$PATH
-export PATH=~/.cargo/bin:$PATH
-
-## NPM TOKEN SETUP
-export NPM_TOKEN=$NPM_TOKEN
-
-export EDITOR=vim
-
-export MANPAGER="/bin/sh -c \"col -b | vim -c 'set ft=man ts=8 nomod nolist nonu noma' -\""
-
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-export PATH=$PATH:/home/$USER/.local/bin
 
 ## Kubernetes
 command -v kubectl >/dev/null 2>&1
