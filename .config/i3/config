@@ -297,6 +297,12 @@ for_window [title="i3-helm"] floating enable
 bindsym XF86AudioRaiseVolume exec --no-startup-id volume up 3 #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id volume down 3 #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id sh -c "mute_toggle" # mute sound (uses tools/mute_toggle script)
+## play/next/previous using tools/sp (control spotify via dbus)
+bindsym XF86AudioPlay exec --no-startup-id sp play # play acts as a toggle
+bindsym XF86AudioNext exec --no-startup-id sp next
+bindsym XF86AudioPrev exec --no-startup-id sp prev
+bindsym XF86AudioStop exec --no-startup-id sp pause
+
 
 ## move workspace to screen
 for_window [class="trust"] floating enable
