@@ -74,7 +74,6 @@
 
 headphones="analog-output-headphones"
 speakers="analog-output-lineout"
-sink_id=$(pacmd list | grep '*' | awk 'NR==1{print $3}')
 t=0
 
 while test $# -gt 0; do
@@ -114,7 +113,7 @@ trap "toggle" USR1
 
 while true; do
     muted=$(pamixer --sink $sink_id --get-mute)
-
+    sink_id=$(pacmd list | grep '*' | awk 'NR==1{print $3}')
     if [ $t -eq 0 ]; then
 
         pacmd set-sink-port $sink_id $headphones > /dev/null 2>&1
