@@ -28,6 +28,7 @@ facter
 xf86-video-vesa
 nvidia
 scrot
+imagemagick
 i3lock
 ranger
 fcron
