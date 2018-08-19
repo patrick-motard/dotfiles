@@ -294,22 +294,15 @@ bar {
 for_window [title="i3-helm"] floating enable
 
 # uses golang github.com/itchyny/volume-go
-bindsym XF86AudioRaiseVolume exec --no-startup-id volume up 5 #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id volume down 5 #decrease sound volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id volume up 3 #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id volume down 3 #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id sh -c "mute_toggle" # mute sound (uses tools/mute_toggle script)
 
 ## move workspace to screen
 for_window [class="trust"] floating enable
 
-
-# if an application is set to automatically open on startup
-# and it is assigned to a workspace not in focus, it's window
-# is set to urget, causing the workspace color in i3bar/polybar
-# to color urgent (red), instead of assigning applications to workspaces,
-# I am opening them in the current workspace (default behavior unless assign is specified)
-# and then they are moved to the workspace specified
+# spotify needs to be moved instead of assigned due to a bug with spotify
 for_window [class="Spotify"] move to workspace $ws6
-for_window [class="Firefox"] move to workspace $ws3
 
 ## startup applications
 exec_always --no-startup-id sh -c "~/code/go/bin/dot screen select"
@@ -322,17 +315,16 @@ exec_always --no-startup-id sh ~/.fehbg
 exec --no-startup-id compton
 exec --no-startup-id spotify
 exec --no-startup-id sh ~/.local/bin/tools/start-vbox-client
-exec_always --no-startup-id ckb-next
-exec_always --no-startup-id dunst
+exec --no-startup-id ckb-next
+exec --no-startup-id dunst
 
 ## assign applications to workspaces:
 ## NOTE: use xprop command to get WM_CLASS (second string value)
-# assign [class="Xfce4-terminal"] $ws2
 assign [class="Google-chrome" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] $ws4
 assign [class="Google-chrome"] $ws3
 assign [class="Emacs"] $ws1
 assign [class="Mysql-workbench-bin"] $ws5
 assign [class="Xfce4-terminal"] $ws2
 assign [class="HipChat"] $ws4
-# assign [class="Firefox"] $ws3
+assign [class="Firefox"] $ws3
 assign [class="ckb-next"] $ws9
