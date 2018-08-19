@@ -70,6 +70,10 @@ remove_packages="
     i3blocks-gaps-git
 "
 
+remove_aur_packages="
+    rtv
+"
+
 # virtualbox-guest-modules-arch
 virtualbox_packages="
     virtualbox-guest-utils
@@ -129,7 +133,6 @@ function install_extra_aur_packages() {
             hipchat
             spotify
             dropbox
-            rtv
             siji-git
             xorg-xset
             remmina-plugin-rdesktop
