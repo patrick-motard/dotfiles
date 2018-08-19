@@ -68,10 +68,16 @@ function edit-config {
     fi
 }
 
+function grep_i3_keybinds {
+    cat "${HOME}"/.config/i3/config | awk '/^bindsym/ { print }' | grep "\$mod+$1 "
+}
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
+#
+alias gi3=grep_i3_keybinds
 alias h="cd ~"
 alias ec="edit-config"
 alias ecp="ec polybar"
@@ -147,6 +153,7 @@ alias cgbb="cd ~/code/go/src/bitbucket.org/wtsdevops && ll"
 alias cggh="cd $GOPATH/src/github.com/$GITHUB_ACCOUNT && ll"
 alias vssh="vim ~/.ssh/config"
 alias lssh="ls ~/.ssh"
+alias rmrf="rm -rfi"
 
 # leave this function with the _ prefix and aliased below without
 # the prefix. Without them zsh errors on sourcing because grep
