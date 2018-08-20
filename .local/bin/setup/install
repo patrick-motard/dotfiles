@@ -107,6 +107,8 @@ core_aur_packages="
     exa
     ccat
     xorg-xprop
+    xorg-xset
+    xprintidle
     dunstify
     bashmount
     trizen
