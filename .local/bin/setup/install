@@ -66,11 +66,11 @@ function install_pacman_packages() {
 # list of packages no longer used
 # to be removed from system to avoid issues
 remove_packages="
-    ttf-font-awesome
-    i3blocks-gaps-git
 "
 
 remove_aur_packages="
+    ttf-font-awesome
+    i3blocks-gaps-git
     rtv
 "
 
@@ -96,8 +96,13 @@ function install_virtual_machine_needed_packages() {
 function uninstall_deprecated_packages() {
     echo 'removing packages that are no longer needed'
     for package_name in $remove_packages; do
-        sudo pacman -R --noconfirm
+        sudo pacman -R --noconfirm package_name
     done
+
+    for package_name in $remove_aur_packages; do
+        trizen -R --noconfirm package_name
+    done
+
 }
 core_aur_packages="
     i3-gaps-next-git
