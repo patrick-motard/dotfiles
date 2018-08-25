@@ -44,6 +44,7 @@ perl-anyevent-i3
 rustup
 nmap
 freerdp
+go
 go-tools
 ntp
 networkmanager-dispatcher-ntpd
