@@ -25,8 +25,8 @@
 # Package List (not comprehensive) 
 
 - `yadm` dotfile manager
-- `nvm` node version manager, defaults to lts/boron
-- `emacs` spacemacs
+- `nvm` node version manager via [zsh plugin](https://github.com/lukechilds/zsh-nvm)
+- `emacs` [spacemacs](https://github.com/syl20bnr/spacemacs)
 - `yadm` dotfile manager
 - `i3-gaps` window manager
 - `polybar` status line & bar for i3
@@ -35,7 +35,7 @@
 - `oh-my-zsh` & z shell
 - `feh` terminal based image viewer, also used for desktop backgrounds
 - `wakatime` for those interested in [quantifying code usage](https://wakatime.com/)
-- `vim`
+- `neovim`
 - `vundle` vim package manager
 - `wakatime` helps you track how much time you code [see website]
 - `ccat` colorized cat ([nixcraft](https://www.cyberciti.biz/howto/linux-unix-cat-command-with-colours/))
@@ -55,7 +55,7 @@ Managing your dotfiles in source control is important. This project uses [YADM](
 1. Download Antergos ISO
 1. Fork this repo (or clone this repo directly and change it's upstream to your fork after install is done)
 2. Install Arch using Antergos, choose the "no desktop environment" option, it is probably called "Base".
-4. Follow the instructions outlined in [install.md](install.md)
+4. Follow the instructions outlined in [INSTALL.md](INSTALL.md)
 5. report any bugs or manual steps as issues to this repo so that the install process can be improved.
 
 # Commands & Aliases

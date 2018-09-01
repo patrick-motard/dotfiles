@@ -77,6 +77,7 @@ function grep_i3_keybinds {
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
+alias vim="nvim"
 alias gi3=grep_i3_keybinds
 alias h="cd ~"
 alias ec="edit-config"
