@@ -27,6 +27,8 @@ tree
 facter
 xf86-video-vesa
 nvidia
+nvidia-utils
+lib32-nvidia-utils
 scrot
 imagemagick
 i3lock
