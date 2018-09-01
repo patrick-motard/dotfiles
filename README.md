@@ -162,6 +162,28 @@ Settings for gtk 2:
 
 [how to import & export cron jobs](https://askubuntu.com/questions/216692/where-is-the-user-crontab-stored)
 
+## Sending notifications to desktop
+
+I use a notification daemon called [Dunst](https://github.com/dunst-project/dunst).
+You can send notifications to the desktop using `dunstify` or `notify-send`
+
+#### Getting Help
+
+For help using these, in your terminal:
+
+```
+dunstify --help
+notify-send --help
+man dunst
+```
+
+#### Customise & Reload
+
+Edit: `~/.config/dunst/dunstrc`
+
+Reload: `killall dunst && notify-send foo`
+
+Customize Dunst notifications via it's config file `~/.configs/dunst/dunstrc`
 
 # Inspiration & Information Sources
 
