@@ -33,11 +33,11 @@ volume_print() {
 }
 
 listen() {
-    volume get
     while true
     do
         volume get
-        sleep 3 &
+        sleep 0.1 &
+        wait
     done
 }
 
