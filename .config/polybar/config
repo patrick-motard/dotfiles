@@ -294,22 +294,23 @@ content = ""
 ; 
 
 [module/pulseaudio-tail]
-#type = custom/script
-#; exec = ~/.local/bin/tools/pulseaudio-tail.sh
-#exec = volume get; ~/.local/bin/tools/pulseaudio-tail.sh
-#tail = true
-#click-right = exec pavucontrol &
-#click-left = mute_toggle
-#scroll-up = volume up 3
-#scroll-down = volume down 3
-#format-padding = 1
+type = custom/script
+exec = ~/.local/bin/tools/pulseaudio-tail.sh
+; interval=1
+; exec = volume get; ~/.local/bin/tools/pulseaudio-tail.sh
+tail = true
+click-right = exec pavucontrol &
+click-left = mute_toggle
+scroll-up = volume up 3
+scroll-down = volume down 3
+format-padding = 1
 
 [module/alsa-switch]
-#type = custom/script
-#exec = ~/.local/bin/tools/polybar_alsa_module --mutefg "BF616A" --mutebg "88C0D0" --bg "88C0D0" --fg "3B4252"
-#tail = true
-#interval = 0
-#click-left = zsh -c "kill -SIGUSR1 %pid%"
+type = custom/script
+exec = ~/.local/bin/tools/polybar_alsa_module --mutefg "BF616A" --mutebg "88C0D0" --bg "88C0D0" --fg "3B4252"
+tail = true
+interval = 0
+click-left = zsh -c "kill -SIGUSR1 %pid%"
 
 [module/dropbox-watcher]
 type = custom/script
