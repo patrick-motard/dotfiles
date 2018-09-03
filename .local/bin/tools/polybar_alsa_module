@@ -13,18 +13,29 @@
 # =================================================================== #
 # CONFIGURATION
 # =================================================================== #
-# 1. identify which sink your ports belong to:
-#    - open pavucontrol (i do this using rofi)
-#    - click on "output devices" tab (shows a list of sinks)
-#    - identify which sink relates to your headphones/speakers
-#      mine is called "Built-in Audio Analog Stereo".
-# 2. Identify your the sink's id:
-#    - By using `pacmd list | grep "sink"` i can see it is called
-#      "analog-stereo", has an id of 1, and is the default sink'.
-# 3. Set the sink_id variable in this script to your sink's id
 # 4. Set `headphones` & `speakers` variable in script to the name
-#    of your headphone port.
-#    - `pacmd list | grep "active port"`
+#    of your headphone and speaker ports.
+#    The following will list all ports for your current sink, assuming
+#    only one sink is available:
+#
+#    $(pacmd list | grep analog-output | awk '($1 !~ /active/) && (!x[$0]++) && gsub(":","") {print $1}')
+#
+# example:
+#
+#  > $(pacmd list | grep analog-output | awk '($1 !~ /active/) && (!x[$0]++) && gsub(":","") {print $1}')
+#    analog-output-lineout
+#    analog-output-headphones
+#
+# You would set the folowing in this script:
+# headphones="analog-output-headphones"
+# speakers="analog-output-lineout"
+
+
+# Although it's not completely relevant, if you'd like to see what your
+# default port is:
+# pacmd stat | awk -F": " '/^Default sink name: /{print $2}' | awk -F"." '{print $NF}'
+
+
 
 # =================================================================== #
 # USAGE
@@ -74,72 +85,65 @@
 
 headphones="analog-output-headphones"
 speakers="analog-output-lineout"
-t=0
+
+listen() {
+    while true; do
+        muted=$(volume status | awk '/^muted/ {print $2}')
+        [[ $(dot sound port) == $speakers ]] && icon="" || icon=""
+        [[ $(volume status | awk '/^muted/ {print $2}') == true ]] && colors="%{ F#$mute_fg B#$mute_bg }" || colors="%{ F#$fg B#$bg }"
+        echo "$colors $icon"
+        sleep 0.5 &
+        wait
+    done
+}
+
+switch() {
+    sink_id=$(pacmd list | grep '*' | awk 'NR==1{print $3}')
+    current_port=$(dot sound port)
+    if [[ $current_port == $speakers ]]; then
+        vol=$(volume get)
+        pacmd set-sink-port $sink_id $headphones > /dev/null 2>&1
+        dot sound port $headphones
+        volume set $vol
+        amixer sset Front 0 1&2>/dev/null
+        # set front channel to 0 volume, because muting it mutes headphones as well...
+        # annoying bug with alsa..
+    elif [[ $current_port == $headphones ]]; then
+        vol=$(volume get)
+        pacmd set-sink-port $sink_id $speakers > /dev/null 2>&1
+        dot sound port $speakers
+        volume set $vol
+    else
+       echo 'ERROR: $current_port is '$current_port" expected either $headphones or $speakers"
+       exit 1
+    fi
+
+    exit 0
+}
 
 while test $# -gt 0; do
 	  case "$1" in
+        --switch)
+            switch;;
         --mutefg)
             mute_fg=$2
-            shift
-            ;;
+            shift;;
         --mutebg)
             mute_bg=$2
-            shift
-            ;;
+            shift;;
         --bg)
             bg=$2
-            shift
-            ;;
+            shift;;
         --fg)
             fg=$2
-            shift
-            ;;
+            shift;;
         \?)
             echo "Invalid option: -$OPTARG" >&2
-            exit 1
-            ;;
+            exit 1;;
         *)
-            break
+            break;;
     esac
     shift
 done
 
-toggle() {
-    t=$(((t + 1) % 2))
-}
-
-trap "toggle" USR1
-
-
-while true; do
-    muted=$(pamixer --sink $sink_id --get-mute)
-    sink_id=$(pacmd list | grep '*' | awk 'NR==1{print $3}')
-    if [ $t -eq 0 ]; then
-
-        pacmd set-sink-port $sink_id $headphones > /dev/null 2>&1
-        # set front channel to 0 volume, because muting it mutes headphones as well...
-        # annoying bug with alsa..
-        amixer sset Front 0 2>/dev/null
-
-        if [[ "$muted" = true ]]; then
-            # echo $mute_fg
-            echo "%{ F#$mute_fg B#$mute_bg } "
-        else
-            # echo $mute_fg
-            echo "%{ F#$fg B#$bg } "
-        fi
-
-    else
-        pacmd set-sink-port $sink_id $speakers
-
-        if [[ "$muted" = true ]]; then
-            # echo $mute_fg
-            echo "%{ F#$mute_fg B#$mute_bg } "
-        else
-            # echo $mute_fg
-            echo "%{ F#$fg B#$bg } "
-        fi
-    fi
-    sleep 1 &
-    wait
-done
+listen

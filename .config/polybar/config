@@ -307,10 +307,9 @@ format-padding = 1
 
 [module/alsa-switch]
 type = custom/script
+click-left = ~/.local/bin/tools/polybar_alsa_module --switch
 exec = ~/.local/bin/tools/polybar_alsa_module --mutefg "BF616A" --mutebg "88C0D0" --bg "88C0D0" --fg "3B4252"
 tail = true
-interval = 0
-click-left = zsh -c "kill -SIGUSR1 %pid%"
 
 [module/dropbox-watcher]
 type = custom/script
