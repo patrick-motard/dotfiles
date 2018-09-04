@@ -12,8 +12,7 @@ case "$1" in
         if [ "$(pgrep dropbox)" ]; then
             echo " %{F#A3BE8C}%{F-} "
         else
-
-            echo " %{F#5E81AC}%{F-} "
+            echo " %{F#EBCB8B}%{F-} "
         fi
         ;;
 esac
