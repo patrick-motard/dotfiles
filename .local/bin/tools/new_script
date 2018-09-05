@@ -12,22 +12,29 @@ ARGUMENTS
           Name of the script you would like to create
           Example:
               ./new_script -n my_script
+       -p path (optional) (default: $HOME/.local/bin/tools)
+          Location to store path in. Pass in '.' for current directory
+ 
 "
 
 while test $# -gt 0; do
 	  case "$1" in
         -h|--help|-\?)
             echo "$usage" >&2
-            exit
-            ;;
+            exit;;
         -n|--name)
             name=$2
-            shift
-            ;;
+            shift;;
+        -p|--path)
+            if [[ "${2}" == "." ]]; then
+                path=$PWD
+            else
+                path=$2
+            fi
+            shift;;
         \?)
             echo "Invalid option: -$OPTARG" >&2
-            exit 1
-            ;;
+            exit 1;;
         *)
             break
     esac
@@ -39,14 +46,17 @@ if [[ -z "${name}" ]]; then
     exit 1
 fi
 
-tool_dir=$HOME/.local/bin/tools
-full=${tool_dir}/$name
+if [[ -z "${path}" ]]; then
+    path=$HOME/.local/bin/tools
+fi
+
+full=${path}/$name
 if [[ -f "${full}" ]]; then
-    echo "Error: ${name} already exists in ${tool_dir}"
+    echo "Error: ${name} already exists in ${path}"
     echo "Edit $name? y/n"
     read answer
     if [[ "${answer}" == "y" ]]; then
-        vim "${full}"
+        nvim "${full}"
     fi
     exit 0
 fi
@@ -55,4 +65,4 @@ echo "#!/usr/bin/env bash" > "${full}"
 
 chmod +x "${full}"
 
-vim "${full}"
+nvim "${full}"
