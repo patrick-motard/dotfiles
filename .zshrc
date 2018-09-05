@@ -121,6 +121,10 @@ alias y="yadm"
 alias ya="yadm add"
 alias yaa="yadm add -u" # add only unstaged files
 alias yau="yadm add -u" # add only unstaged files
+function yadm_add_tool () {
+   yadm add ~/.local/bin/tools/$1
+}
+alias yat=yadm_add_tool
 alias yc="yadm commit --verbose"
 alias yca="yadm commit --amend"
 alias ycm="yadm commit -m"

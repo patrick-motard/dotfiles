@@ -55,7 +55,7 @@ if [[ -f "${full}" ]]; then
     echo "Error: ${name} already exists in ${path}"
     echo "Edit $name? y/n"
     read answer
-    if [[ "${answer}" == "y" ]]; then
+    if [[ "${answer}" != "n" ]]; then
         nvim "${full}"
     fi
     exit 0
