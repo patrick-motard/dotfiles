@@ -62,5 +62,6 @@ polybar -r main &
 polybar -r right &
 polybar -r left &
 polybar -r main.bottom &
+polybar -r left.bottom &
 
 echo "Bars launched..."
