@@ -55,7 +55,7 @@ This project uses [YADM](https://thelocehiliosan.github.io/yadm/), a dotfile man
 1. Download Antergos ISO
 1. Fork this repo (or clone this repo directly and change it's upstream to your fork after install is done)
 2. Install Arch using Antergos, choose the "no desktop environment" option, it is probably called "Base".
-4. Follow the instructions outlined in [INSTALL.md](INSTALL.md)
+4. Follow the instructions outlined in [INSTALL.md](.config/dotfiles/wiki/INSTALL.md)
 5. report any bugs or manual steps as issues to this repo so that the install process can be improved.
 
 # Commands & Aliases
