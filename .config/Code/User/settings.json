@@ -1,0 +1,23 @@
+{
+    "vim.useSystemClipboard": true,
+    "window.menuBarVisibility": "toggle",
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["f", "d"],
+            "after": ["<Esc>"]
+        }
+    ],
+    "vim.insertModeKeyBindings": [
+        {
+            "before": ["f", "d"],
+            "after": ["<Esc>"]
+        }
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+        {
+            "before": ["f", "d"],
+            "after": ["<Esc>"]
+        }
+    ],
+    "workbench.colorTheme": "Nord"
+}
