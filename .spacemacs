@@ -57,7 +57,7 @@ values."
      emacs-lisp
      git
      (markdown :variables
-               markdown-live-preview-engine 'vmd)
+               markdown-live-preview-engine 'vmd) ;; vmd is an npm package installed globally
      org
      (shell :variables
             shell-default-height 30
