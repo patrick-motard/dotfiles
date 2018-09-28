@@ -30,7 +30,7 @@ function export_monitor_vars() {
 function set_monitor_vars() {
     case "${active_monitors}" in
         $work_desktop )
-            export_monitor_vars "DVI-I-1" "DVI-D-0" ""
+            export_monitor_vars "DVI-I-1" ""  "" #"DVI-D-0"
             mode="work"
             ;;
         $work_desktop_4k )
@@ -62,5 +62,6 @@ polybar -r main &
 polybar -r right &
 polybar -r left &
 polybar -r main.bottom &
+polybar -r left.bottom &
 
 echo "Bars launched..."

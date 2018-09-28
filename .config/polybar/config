@@ -28,69 +28,49 @@ foreground-alt = ${colors.nord4}
 secondary = ${colors.nord0}
 alert = ${colors.nord14}
 
-
-
 ;;=========================================================;;
 ;;                                                         ;;
-;;                           BARS                          ;;
+;;                           BARS                          ;; 
 ;;                                                         ;;
 ;;=========================================================;;
+[bar/base]
+font-0 = Powerline Extra Symbols:size=19;4
+font-2 = fontawesome:size=12;3
+font-1 = Hack:pixelsize=12;3
+font-3 = Hack:fontformat=truetype:size=14:antialias=true;10
 
-[bar/main.bottom]
 enable-ipc = true
-monitor = ${env:MONITOR_MAIN}
-bottom = true
-height = 30
-width = 100%
 background = ${colors.background}
 foreground = ${colors.foreground}
-modules-left = 
-modules-right = updates-arch dropbox-watcher
-modules-center = 
-font-0 = Powerline Extra Symbols:size=19;4
-font-1 = FontAwesome:fontformat=truetype:size=12:antialias=false;3
-font-2 = Hack:pixelsize=12;3
-font-3 = Hack:fontformat=truetype:size=14:antialias=true;10
-separator= 
-module-margin-left = 1.5
-module-margin-right = 1.5
-padding-right = 2
+width = 100%
+height = 26
+; module-margin-left = 1.5
+; module-margin-right = 1.5
+cursor-click = pointer
+cursor-scroll = ns-resize
 
+
+[bar/left.bottom]
+inherit = bar/base
+monitor = ${env:MONITOR_LEFT}
+modules-right = -dropbox dropbox-watcher -time3 time
+bottom=true
+
+
+[bar/main.bottom]
+inherit = bar/base
+monitor = ${env:MONITOR_MAIN}
+bottom = true
+modules-left = 
+modules-right = updates-arch -dropbox dropbox-watcher
+modules-center = 
 
 
 [bar/right]
-enable-ipc = true
+inherit = bar/base
 monitor = ${env:MONITOR_RIGHT}
-separator = 
 bottom = false
-width = 100%
-height = 29
-; spacing = 3
-;offset-x = 1%
-;offset-y = 1%
-; radius = 6.0
 fixed-center = true
-
-background = ${colors.background}
-foreground = ${colors.foreground}
-; the line under a given module
-line-size = 0
-line-color = #f00
-
-border-size = 0
-border-color = #00000000
-
-padding-left = 0
-padding-right = 0
-
-module-margin-left = 0
-module-margin-right = 0
-
-font-0 = Powerline Extra Symbols:size=19;4
-font-1 = FontAwesome:fontformat=truetype:size=12:antialias=false;3
-font-2 = Hack:pixelsize=12;3
-font-3 = Hack:fontformat=truetype:size=14:antialias=true;10
-
 modules-left = i3
 modules-center = 
 modules-right = 
@@ -98,84 +78,31 @@ cursor-click = pointer
 cursor-scroll = ns-resize
 
 [bar/left]
+inherit = bar/base
 monitor = ${env:MONITOR_LEFT}
-separator = 
-bottom = false
-width = 100%
-height = 29
-fixed-center = true
-
-background = ${colors.background}
-foreground = ${colors.foreground}
-line-size = 0
-line-color = #f00
-
-border-size = 0
-border-color = #00000000
+height = 30
 
 padding-left = 0
 padding-right = 0
 
 module-margin-left = 0
 module-margin-right = 0
-
-font-0 = Powerline Extra Symbols:size=19;4
-font-2 = fontawesome:size=12;3
-font-1 = Hack:pixelsize=12;3
-font-3 = Hack:fontformat=truetype:size=14:antialias=true;10
-
 
 modules-left = 
 modules-center = 
 modules-right =  i3 
 
-cursor-click = pointer
-cursor-scroll = ns-resize
-
-
 [bar/main]
-enable-ipc = true
+inherit = bar/base
 monitor = ${env:MONITOR_MAIN}
-; montior = VGA-1
-separator = 
-bottom = false
-;monitor = ${env:MONITOR:HDMI-1}
-width = 100%
-height = 29
-; spacing = 3
-;offset-x = 1%
-;offset-y = 1%
-; radius = 6.0
 fixed-center = true
-
-background = ${colors.background}
-foreground = ${colors.foreground}
-; the line under a given module
-line-size = 0
-line-color = #f00
-
-border-size = 0
-border-color = #00000000
-
 padding-left = 0
 padding-right = 0
-
 module-margin-left = 0
 module-margin-right = 0
-
-font-0 = Powerline Extra Symbols:size=19;4
-font-2 = fontawesome:size=12;3
-font-1 = Hack:pixelsize=12;3
-font-3 = Hack:fontformat=truetype:size=14:antialias=true;10
-
-
 modules-left = i3 -i3
 modules-center = 
-; pulseaudio-tail
-modules-right =  filesystem  -volume2 -volume alsa-switch pulseaudio-tail -memory2 -memory memory -cpu2 -cpu cpu -temp2 -temp temperature -time2 -time time -calendar2 -calendar calendar powermenu
-
-cursor-click = pointer
-cursor-scroll = ns-resize
+modules-right =  filesystem  -volume2 -volume alsa-switch pulseaudio-tail -memory2 -memory memory -cpu2 -cpu cpu -temp2 -temp temperature -time2 -time time -calendar2 -calendar calendar 
 
 ;;=========================================================;;
 ;;                                                         ;;
@@ -202,6 +129,12 @@ content-background = ${colors.nord0}
 content-foreground = ${colors.nord1}
 content = "  "
 
+[module/-dropbox]
+type = custom/text
+content-foreground = ${colors.nord2}
+content-background = ${colors.nord0}
+content = 
+
 [module/]
 type = custom/text
 content = %{F#3B4252}
@@ -224,7 +157,7 @@ content = "%{F#5E81AC} "
 
 [module/-calendar]
 type = custom/text
-content-foreground = ${colors.nord9}
+content-foreground = ${colors.nord2}
 content-background = ${colors.nord8}
 content = ""
 
@@ -244,6 +177,12 @@ content = ""
 type = custom/text
 content-foreground = ${colors.nord9}
 content-background = ${colors.nord8}
+content = ""
+
+[module/-time3]
+type = custom/text
+content-foreground = ${colors.nord10}
+content-background = ${colors.nord2}
 content = ""
 
 [module/-temp]
@@ -313,26 +252,26 @@ tail = true
 
 [module/dropbox-watcher]
 type = custom/script
-exec = ~/.local/bin/tools/isrunning_dropbox.sh
+exec = isrunning_dropbox.sh
 interval = 5
-click-left = ~/polybar-scripts/dropbox-isrunning.sh --toggle
+click-left = dropbox-isrunning.sh --toggle
+format-background = ${colors.nord2}
 
 [module/updates-arch]
 type = custom/script
 exec = ~/.local/bin/tools/check_for_arch_updates
 format-foreground = ${colors.nord4}
 format-background = ${colors.nord0}
+format-padding = 1
 interval = 180
 
 [module/filesystem]
 type = internal/fs
 interval = 25
-
 mount-0 = /
-
 label-mounted-background = ${colors.nord1}
 label-mounted-foreground = ${colors.foreground}
-label-mounted =  " %{F#5E81AC}%{F-} %mountpoint% %percentage_used%% "
+label-mounted =  " %{F#81A1C1}%{F-} %mountpoint% %percentage_used%% "
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
@@ -344,27 +283,24 @@ enable-scroll = false
 wrapping-scroll = false
 reverse-scroll = false
 fuzzy-match = true
-
 format = <label-mode><label-state>
 
 label-mode = %mode%
-label-mode-padding-left = 1
-label-mode-padding-right = 1
 label-mode-background = ${colors.nord11}
 label-mode-foreground = ${colors.nord4}
 
 label-focused-foreground = ${colors.nord2}
 label-focused-background = ${colors.background-alt}
 
+label-focused-padding-right = 1
+; visible is the focused workspace on non focused monitor, confusing, i know. :)
+label-visible-padding-right =1
+label-visible-background=${colors.nord3}
+
 label-unfocused-foreground = ${colors.nord4}
 label-unfocused-background = ${colors.nord1}
-
-label-focused-padding-right = 1
-label-focused-padding-left = 0
-
-label-unfocused-padding-left = 0
+label-unfocused-padding-left = 1
 label-unfocused-padding-right = 1
-
 ; Available tokens:
 ;   %name%
 ;   %icon%
@@ -373,7 +309,7 @@ label-unfocused-padding-right = 1
 ; Default: %icon%  %name%
 label-urgent-foreground = ${colors.nord4}
 label-urgent-background = ${colors.nord11}
-label-urgent-padding-right = 1
+label-urgent-padding = 1
 
 [module/mpd]
 type = internal/mpd
@@ -399,14 +335,14 @@ format-background = ${colors.nord3}
 format-foreground = ${colors.nord4}
 format-padding = 2
 
-ramp-coreload-0 = ▁
-ramp-coreload-1 = ▂
-ramp-coreload-2 = ▃
-ramp-coreload-3 = ▄
-ramp-coreload-4 = ▅
-ramp-coreload-5 = ▆
-ramp-coreload-6 = ▇
-ramp-coreload-7 = █
+ramp-coreload-0 = %{F#5E81AC B#4C566A}▁
+ramp-coreload-1 = %{F#5E81AC B#4C566A}▂
+ramp-coreload-2 = %{F#81A1C1 B#4C566A}▃
+ramp-coreload-3 = %{F#81A1C1 B#4C566A}▄
+ramp-coreload-4 = %{F#81A1C1 B#4C566A}▅
+ramp-coreload-5 = %{F#88C0D0 B#4C566A}▆
+ramp-coreload-6 = %{F#88C0D0 B#4C566A}▇
+ramp-coreload-7 = %{F#88C0D0 B#4C566A}█
 
 
 [module/memory]
@@ -421,13 +357,13 @@ format-foreground = ${colors.nord5}
 ; Only applies if <bar-used> is used
 bar-used-indicator =
 bar-used-width = 10
-bar-used-foreground-0 = ${colors.nord1}
-bar-used-foreground-1 = ${colors.nord1}
-bar-used-foreground-2 = ${colors.nord1}
-bar-used-foreground-3 = ${colors.nord1}
+bar-used-foreground-0 = ${colors.nord10}
+bar-used-foreground-1 = ${colors.nord9}
+bar-used-foreground-2 = ${colors.nord8}
+bar-used-foreground-3 = ${colors.nord10}
 bar-used-fill = ▐
 bar-used-empty = ▐
-bar-used-empty-foreground = ${colors.nord9}
+bar-used-empty-foreground = ${colors.nord3}
 
 
 [module/time]
@@ -435,48 +371,36 @@ type = internal/date
 interval = 5
 time = %I:%M %p
 format-background = ${colors.nord10}
-format-foreground = ${colors.nord0}
-
+format-foreground = ${colors.nord5}
 label = "   %time%  "
 
 [module/calendar]
 type = internal/date
 interval = 5
-
 date = %m/%d/%Y
 date-alt = " %Y-%m-%d"
-
-format-background = ${colors.nord9}
-format-foreground = ${colors.nord0}
+format-background = ${colors.nord2}
+format-foreground = ${colors.nord5}
 label = "   %date%  "
-
-
 
 [module/temperature]
 type = internal/temperature
 thermal-zone = 0
 warn-temperature = 70
-
 format-background = ${colors.nord8}
 format-foreground = ${colors.nord0}
-
 format = <ramp> <label>
 format-warn = <ramp> <label-warn>
-
 label = "%temperature%  "
 label-warn = "%temperature%  "
-
 ramp-2 = "  "
 ramp-1 = "  "
 ramp-0 = "  "
 
 [module/powermenu]
 type = custom/menu
-
 expand-right = true
-
 format-spacing = 1
-
 label-open = 
 label-open-foreground = ${colors.secondary}
 label-close =  cancel
