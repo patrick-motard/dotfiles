@@ -19,5 +19,13 @@
             "after": ["<Esc>"]
         }
     ],
-    "workbench.colorTheme": "Nord"
+    "workbench.colorTheme": "Nord",
+    "sync.gist": "9c69d7533b360fb47632ba96e4a44758",
+    "sync.quietSync": false,
+    "sync.removeExtensions": true,
+    "sync.syncExtensions": true,
+    "sync.autoDownload": true,
+    "sync.autoUpload": true,
+    "sync.forceDownload": false,
+    "window.zoomLevel": 0
 }
