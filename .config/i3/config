@@ -343,5 +343,3 @@ assign [class="Mysql-workbench-bin"] $ws5
 assign [class="Xfce4-terminal"] $ws2
 assign [class="HipChat"] $ws4
 assign [class="Firefox"] $ws3
-assign [class="ckb-next"] $ws9
-assign [class="Steam"] $ws8

@@ -84,6 +84,7 @@ values."
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '( firebelly-theme
+                                     php-extras
                                      niflheim-theme
                                      pastels-on-dark-theme
                                      tronesque-theme
