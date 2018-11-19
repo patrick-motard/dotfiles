@@ -134,7 +134,8 @@ function install_extra_aur_packages() {
     if [[ $full = true ]]; then
         ## install aur packages
         aur_packages="
-            hipchat
+            terraform
+            ansible
             spotify
             dropbox
             siji-git
