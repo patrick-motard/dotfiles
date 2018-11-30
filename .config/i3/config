@@ -311,7 +311,7 @@ for_window [class="trust"] floating enable
 for_window [class="Spotify"] move to workspace $ws0
 
 ## startup applications
-exec_always --no-startup-id sh -c "~/code/go/bin/dot screen select"
+exec_always --no-startup-id sh -c "~/code/go/bin/dot displays run"
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec --no-startup-id ~/.local/bin/polybar-reload
 exec --no-startup-id dropbox
@@ -332,6 +332,7 @@ workspace $ws2 output $right
 workspace $ws0 output $left
 workspace $ws8 output $left
 workspace $ws3 output $left
+workspace $ws6 output $right
 
 
 ## assign applications to workspaces:
@@ -343,3 +344,9 @@ assign [class="Mysql-workbench-bin"] $ws5
 assign [class="Xfce4-terminal"] $ws2
 assign [class="HipChat"] $ws4
 assign [class="Firefox"] $ws3
+
+assign [class="ckb-next"] $ws9
+assign [class="Steam"] $ws8
+assign [class="teams-for-linux"] $ws4
+assign [class="RimWorldLinux.x86_64"] $ws6
+assign [class="dota2"] $ws6
