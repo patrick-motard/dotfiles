@@ -42,7 +42,7 @@ done
 
 function check_required_params() {
     if [[ -z $github_user ]]; then
-        echo "Github account name required" >&2
+        echo "FATAL: Github account name required" >&2
         exit 1
     fi
 }
