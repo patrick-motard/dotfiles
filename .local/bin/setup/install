@@ -114,7 +114,6 @@ slow_aur_packages="
 
 core_aur_packages="
     i3-gaps-next-git
-    polybar-git
     exa
     ccat
     xorg-xprop
