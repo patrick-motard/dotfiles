@@ -101,7 +101,7 @@ function uninstall_deprecated_packages() {
         sudo pacman -R --noconfirm $package_name
     done
     for package_name in $remove_aur_packages; do
-        trizen -R --noconfirm package_name
+        trizen -R --noconfirm $package_name
     done
 
 }
