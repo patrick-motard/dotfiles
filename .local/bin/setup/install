@@ -172,7 +172,7 @@ function install_docker() {
     fi
 }
 
-function install_oh-my-zsh_and_plugins() {
+function install_oh_my_zsh_and_plugins() {
     ## Install oh-my-zsh
     sh /home/$USER/.local/bin/tools/install_oh_my_zsh
     yadm reset --hard origin/master
@@ -312,7 +312,7 @@ function main() {
     uninstall_deprecated_packages
 
     if [[ _new == true ]]; then
-        install_oh-my-zsh_and_plugins
+        install_oh_my_zsh_and_plugins
         echo "11. ### Installing oh-my-zsh and it's plugins ###"
         echo ""
         echo ""
