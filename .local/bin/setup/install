@@ -24,6 +24,8 @@ while test $# -gt 0; do
             exit;;
         -n|--new)
             _new=true;;
+        -q|--quick)
+            _quick=true;;
         -f|--full)
             full=true;;
         -u|--user)
@@ -105,11 +107,14 @@ function uninstall_deprecated_packages() {
     done
 
 }
+slow_aur_packages="
+    polybar-git
+    paper-icon-theme-git
+"
+
 core_aur_packages="
     i3-gaps-next-git
     polybar-git
-    paper-icon-theme-git
-    awesome-terminal-fonts
     exa
     ccat
     xorg-xprop
@@ -121,6 +126,12 @@ core_aur_packages="
     awesome-terminal-fonts
 "
 function install_aur_packages() {
+    if [[ _quick != true ]]; then
+        for pkg in $slow_aur_packages; do
+            trizen -S --needed $pkg --noconfirm --noedit
+        done
+    fi
+
     ## RUST
     # some aur packages require compiling rust code
     # so this intializes rust
@@ -132,6 +143,10 @@ function install_aur_packages() {
     done
 }
 
+
+## Packages that take forever to install:
+# - paper-icon-theme-git 
+# - polybar (needs to compile c++)
 function install_extra_aur_packages() {
     if [[ $full = true ]]; then
         ## install aur packages
@@ -290,11 +305,7 @@ function main() {
     echo ""
 
     install_docker
-    echo "7. ### NODE ###"
-    echo ""
-    echo ""
 
-    install_node_packages
     echo "8. ### PYTHON ###"
     echo ""
     echo ""
@@ -316,6 +327,14 @@ function main() {
         echo "11. ### Installing oh-my-zsh and it's plugins ###"
         echo ""
         echo ""
+    fi
+    echo "7. ### NODE ###"
+    echo ""
+    echo ""
+
+    # node has to happen after zsh because nvm is installed as a zsh plugin
+    install_node_packages
+    if [[ _new == true ]]; then
         reboot
     fi
 }
