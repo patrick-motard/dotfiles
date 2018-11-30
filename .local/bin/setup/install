@@ -264,19 +264,58 @@ function install_golang_packages() {
 
 
 function main() {
+    echo "1. ### Checking required params ###"
+    echo ""
+    echo ""
     check_required_params
+    echo "2. ### Updating Pacman ###"
+    echo ""
+    echo ""
     update_pacman
+    echo "3. ### Updating Pacman Packages ###"
+    echo ""
+    echo ""
     install_pacman_packages
+    echo "4. ### Installing AUR packages ###"
+    echo ""
+    echo ""
     install_aur_packages
+    echo "5. ### AUR ###"
+    echo ""
+    echo ""
+
     install_extra_aur_packages
+    echo "6. ### DOCKER ###"
+    echo ""
+    echo ""
+
     install_docker
+    echo "7. ### NODE ###"
+    echo ""
+    echo ""
+
     install_node_packages
+    echo "8. ### PYTHON ###"
+    echo ""
+    echo ""
+
     install_python_packages
+    echo "9. ### GOLANG ###"
+    echo ""
+    echo ""
+
     install_golang_packages
+    echo "10. ### Uninstalling Deprecated Packages ###"
+    echo ""
+    echo ""
+
     uninstall_deprecated_packages
 
     if [[ _new == true ]]; then
         install_oh-my-zsh_and_plugins
+        echo "11. ### Installing oh-my-zsh and it's plugins ###"
+        echo ""
+        echo ""
         reboot
     fi
 }
