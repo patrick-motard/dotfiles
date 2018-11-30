@@ -71,6 +71,8 @@ remove_packages="
 remove_aur_packages="
     ttf-font-awesome
     i3blocks-gaps-git
+    hipchat
+    slack-desktop
     rtv
 "
 
@@ -143,7 +145,6 @@ function install_extra_aur_packages() {
             remmina-plugin-rdesktop
             pgadmin4
             cli-visualizer
-            slack-desktop
             teams-for-linux
     "
         for aur_package in $aur_packages; do
@@ -241,7 +242,7 @@ fi
 
 
 # TODO: add golang setup back in
-function install_golang() {
+function install_golang_packages() {
 
     # needed for spacemacs go layer
     # https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Blang/go
@@ -250,6 +251,7 @@ function install_golang() {
     go get -u -v golang.org/x/tools/cmd/guru
     go get -u -v golang.org/x/tools/cmd/gorename
     go get -u -v golang.org/x/tools/cmd/goimports
+    go get -u -v github.com/patrick-motard/dot
 }
 # gopath isn't set, so this trys to make a dir in /src which
 # gives permission denied. subsequent calls to the script succeed beacuse .zshrc is sourced and gopath is set there.
@@ -270,6 +272,7 @@ function main() {
     install_docker
     install_node_packages
     install_python_packages
+    install_golang_packages
     uninstall_deprecated_packages
 
     if [[ _new == true ]]; then
