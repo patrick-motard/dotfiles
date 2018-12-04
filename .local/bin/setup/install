@@ -301,11 +301,11 @@ function main() {
     echo "3. ### Updating Pacman Packages ###"
     echo ""
     echo ""
-    # install_pacman_packages
+    install_pacman_packages
     echo "4. ### Installing AUR packages ###"
     echo ""
     echo ""
-    # install_aur_packages
+    install_aur_packages
     echo "5. ### AUR ###"
     echo ""
     echo ""
@@ -340,8 +340,8 @@ function main() {
     # node has to happen after zsh because nvm is installed as a zsh plugin
     # install_node_packages
     if [[ $_new == true ]]; then
-        echo hello
-        # reboot
+        # echo hello
+        reboot
     fi
 }
 
