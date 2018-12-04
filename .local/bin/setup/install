@@ -337,6 +337,7 @@ function main() {
     # node has to happen after zsh because nvm is installed as a zsh plugin
     # install_node_packages
     if [[ _new == true ]]; then
+        echo hello
         # reboot
     fi
 }
