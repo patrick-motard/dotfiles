@@ -281,6 +281,7 @@ function install_golang_packages() {
 
 
 function main() {
+    source $HOME/.profile
     echo "1. ### Checking required params ###"
     echo ""
     echo ""
