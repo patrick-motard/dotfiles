@@ -136,7 +136,7 @@ function install_aur_packages() {
         trizen -S --needed $aur_package --noconfirm --noedit
     done
 
-    if [[ _quick != true ]]; then
+    if [[ $_quick != true ]]; then
         # if polybar is installed before i3 it doesn't install compatibility with i3
         for pkg in $slow_aur_packages; do
             trizen -S --needed $pkg --noconfirm --noedit
