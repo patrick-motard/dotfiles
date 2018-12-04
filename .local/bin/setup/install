@@ -190,7 +190,7 @@ function install_docker() {
 }
 
 function install_oh_my_zsh_and_plugins() {
-    sudo usermod --shell $(which zsh) $USER
+    pacman -S zsh --no-confirm
     ## Install oh-my-zsh
     sh /home/$USER/.local/bin/tools/install_oh_my_zsh
     yadm reset --hard origin/master
@@ -284,45 +284,45 @@ function main() {
     echo "1. ### Checking required params ###"
     echo ""
     echo ""
-    check_required_params
+    # check_required_params
     echo "2. ### Updating Pacman ###"
     echo ""
     echo ""
-    update_pacman
+    # update_pacman
     echo "3. ### Updating Pacman Packages ###"
     echo ""
     echo ""
-    install_pacman_packages
+    # install_pacman_packages
     echo "4. ### Installing AUR packages ###"
     echo ""
     echo ""
-    install_aur_packages
+    # install_aur_packages
     echo "5. ### AUR ###"
     echo ""
     echo ""
 
-    install_extra_aur_packages
+    # install_extra_aur_packages
     echo "6. ### DOCKER ###"
     echo ""
     echo ""
 
-    install_docker
+    # install_docker
 
     echo "8. ### PYTHON ###"
     echo ""
     echo ""
 
-    install_python_packages
+    # install_python_packages
     echo "9. ### GOLANG ###"
     echo ""
     echo ""
 
-    install_golang_packages
+    # install_golang_packages
     echo "10. ### Uninstalling Deprecated Packages ###"
     echo ""
     echo ""
 
-    uninstall_deprecated_packages
+    # uninstall_deprecated_packages
 
     if [[ _new == true ]]; then
         install_oh_my_zsh_and_plugins
@@ -335,9 +335,9 @@ function main() {
     echo ""
 
     # node has to happen after zsh because nvm is installed as a zsh plugin
-    install_node_packages
+    # install_node_packages
     if [[ _new == true ]]; then
-        reboot
+        # reboot
     fi
 }
 
