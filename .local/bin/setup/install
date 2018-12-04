@@ -50,7 +50,7 @@ function check_required_params() {
 }
 
 function update_pacman() {
-    sudo pacman -Syu --noconfirm
+    sudo pacman -Syu --noconfirm --quiet
     sudo pacman-optimize && sync
 }
 
@@ -284,11 +284,20 @@ function main() {
     echo "1. ### Checking required params ###"
     echo ""
     echo ""
-    # check_required_params
+    check_required_params
+
     echo "2. ### Updating Pacman ###"
     echo ""
     echo ""
-    # update_pacman
+    update_pacman
+
+    if [[ $_new == true ]]; then
+        install_oh_my_zsh_and_plugins
+        echo "11. ### Installing oh-my-zsh and it's plugins ###"
+        echo ""
+        echo ""
+    fi
+
     echo "3. ### Updating Pacman Packages ###"
     echo ""
     echo ""
@@ -324,19 +333,13 @@ function main() {
 
     # uninstall_deprecated_packages
 
-    if [[ _new == true ]]; then
-        install_oh_my_zsh_and_plugins
-        echo "11. ### Installing oh-my-zsh and it's plugins ###"
-        echo ""
-        echo ""
-    fi
     echo "7. ### NODE ###"
     echo ""
     echo ""
 
     # node has to happen after zsh because nvm is installed as a zsh plugin
     # install_node_packages
-    if [[ _new == true ]]; then
+    if [[ $_new == true ]]; then
         echo hello
         # reboot
     fi
