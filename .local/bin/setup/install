@@ -321,12 +321,12 @@ function main() {
     echo ""
     echo ""
 
-    # install_python_packages
+    install_python_packages
     echo "9. ### GOLANG ###"
     echo ""
     echo ""
 
-    # install_golang_packages
+    install_golang_packages
     echo "10. ### Uninstalling Deprecated Packages ###"
     echo ""
     echo ""
