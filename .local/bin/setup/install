@@ -191,8 +191,6 @@ function install_docker() {
 
 function install_oh_my_zsh_and_plugins() {
     pacman -S zsh --no-confirm
-    # set zsh as default shell
-    sudo usermod --shell $(which zsh) $USER
     ## Install oh-my-zsh
     sh /home/$USER/.local/bin/tools/install_oh_my_zsh
     yadm reset --hard origin/master
