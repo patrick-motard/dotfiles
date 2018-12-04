@@ -216,7 +216,6 @@ function install_node_packages() {
 function install_python_packages() {
     ## Python package installs
     pip install --upgrade --user pip
-    pip install --upgrade --user wakatime
     pip install --upgrade --user awscli
     pip install --upgrade --user polybar-reload
 }

@@ -47,24 +47,6 @@ For quickly editing files in the terminal I prefer vim. I have configured vim to
 You should see a Vundle buffer open, in which a list of plugins will show install progress. Once the install is done, you can exit vim: `:q` (enter) x 2
 
 
-## Wakatime
-
-Wakatime will be the bane of your existence until you configure it. Both Spacemacs and Vim are configured to use it. In order for it to function, both Vim and Spacemacs need the environment variable `WAKATIME_API_KEY` set in their environments. Until you either A) decide you want to use wakatime and set that environment variable, or B) remove wakatime from vim and spacemacs, both applications will incessantly bug you for that key. In the future `dotfiles` will initialize wakatime if a setting is enabled to use it, but for now it's a manual choice the user *must* make.
-
-What is wakatime? [link](https://wakatime.com/features). I use it to track how much time i spend coding. It's free. It's cool.
-
-Option A: Setup wakatime
-
-1. create a wakatime account [here](https://wakatime.com/login), you can link it to your github if you'd like.
-2. grab your 'Secret API Key' from your account settings
-3. create a `~/.zshenv` file: in terminal `touch ~/.zshenv`, **NOTE:** this file should **NOT** be checked in to yadm. It should be listed in `~/.yadm/encrypt` as a file that should be encrypted in your yadm repo. Use your `~/.zshenv` file to export sensitive environment variables.
-4. place the following in `~/.zshenv`: `export WAKATIME_API_KEY=YOUR-KEY-HERE`
-
-Option B: Uninstall wakatime
-
-I'm too lazy to document this. Uninstall the plugin from vim using vundle, (google it). Remove the wakatime package and wakatime settings from `~/.spacemacs`.
-
-
 ## Desktop background image slideshow
 
 This section will show you how to set up a desktop background image slideshow using `feh`, `fcron`.
