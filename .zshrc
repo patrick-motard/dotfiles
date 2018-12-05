@@ -163,6 +163,18 @@ alias update-emacs="cd $HOME/.emacs.d && git pull --rebase && cd $HOME"
 alias ns="new_script --path . --name"
 alias nt="new_script --name"
 
+update_golang() {
+    # update golang pacman package
+    echo "\nUpdating golang...\n"
+    sudo pacman -Sy --needed go
+    echo "\nUpdating golang packages...\n"
+    go get -u all
+}
+
+update_pacman_mirrorlist() {
+    sudo reflector --verbose --protocol https --age 8 --sort rate --save /etc/pacman.d/mirrorlist
+}
+
 # leave this function with the _ prefix and aliased below without
 # the prefix. Without them zsh errors on sourcing because grep
 # is referencing an alias in this function. ( my grep is grep plus some
