@@ -98,7 +98,7 @@ done
 function main {
     screenshot_directory=~/Dropbox/Screenshots/$(date +"%Y")/
     mkdir -p $screenshot_directory
-    scrot $screenshot_directory%Y-%m-%d_%H:%M:%S_\$wx\$h.png $args
+    scrot -d 2 $screenshot_directory%Y-%m-%d_%H:%M:%S_\$wx\$h.png $args
 
     if [ "$quiet" = false ]; then
         notify-send "Screenshot Taken" "Saved to ${screenshot_directory}"
