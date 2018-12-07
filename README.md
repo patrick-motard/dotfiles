@@ -7,7 +7,9 @@
         ▀██▄▄███  ▀██▄▄██▀    ██▄▄▄     ██      ▄▄▄██▄▄▄    ██▄▄▄   ▀██▄▄▄▄█  █▄▄▄▄▄██ 
           ▀▀▀ ▀▀    ▀▀▀▀       ▀▀▀▀     ▀▀      ▀▀▀▀▀▀▀▀     ▀▀▀▀     ▀▀▀▀▀    ▀▀▀▀▀▀  
 ```
+![desktop-screenshot2](https://i.imgur.com/VyHzgFz.png)
 ![desktop-screenshot](https://i.imgur.com/mTvqTcQ.png)
+
 # Description
 
 - Bar: `polybar` (or i3blocks)
