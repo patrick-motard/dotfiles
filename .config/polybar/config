@@ -61,7 +61,7 @@ bottom=true
 inherit = bar/base
 monitor = ${env:MONITOR_MAIN}
 bottom = true
-modules-left = 
+modules-left = yadm-checker.sh
 modules-right = nord.arrow.0-10 updates-arch nord.arrow.10-2 dropbox-watcher
 modules-center = 
 
@@ -244,6 +244,11 @@ content = ""
 ; 
 ; 
 ; 
+
+[module/yadm-checker.sh]
+type = custom/script
+exec = ~/.local/bin/tools/yadm-checker.sh
+
 
 [module/pulseaudio-tail]
 type = custom/script
