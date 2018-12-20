@@ -10,6 +10,8 @@
 ![desktop-screenshot2](https://i.imgur.com/VyHzgFz.png)
 ![desktop-screenshot](https://i.imgur.com/mTvqTcQ.png)
 
+Please see [the wiki](https://github.com/patrick-motard/dotfiles/wiki) for documentation on specific features.
+
 # Description
 
 - Bar: `polybar` (or i3blocks)
