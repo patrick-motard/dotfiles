@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+source $TOOLS/colorize
+
+color $Green "#### Updating dot source code\n"
+
+cd $GOPATH/src/github.com/patrick-motard/dot
+git status
+color $Green '#### Stashing local changes\n'
+git add -A
+git stash
+
+color $Green '#### Checking out master\n'
+git checkout master
+
+color $Green '#### Reseting to remote/master\n'
+git reset --hard origin/master
+git pull
+
+color $Green '#### Updating golang dependencies\n'
+go get ./...
+
+color $Green '#### Installing dot to $GOPATH/bin\n'
+go install
