@@ -189,7 +189,10 @@ alias grepssh=_sshg
 alias work-mode="switch-aws-creds.sh work"
 alias other-mode="switch-aws-creds.sh other"
 alias check-mode="aws s3 ls"
+
 alias dotfiles="cd ~/.config/dotfiles/"
+alias dot-src="cd $GOPATH/src/github.com/patrick-motard/dot"
+export TOOLS="$HOME/.local/bin/tools"
 
 
 ## CUSTOM KEY BINDINGS ##
