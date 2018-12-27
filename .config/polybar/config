@@ -71,7 +71,7 @@ inherit = bar/base
 monitor = ${env:MONITOR_RIGHT}
 bottom = false
 fixed-center = true
-modules-left = i3
+modules-left = i3 
 modules-center = 
 modules-right = 
 cursor-click = pointer
@@ -109,7 +109,6 @@ modules-right =  filesystem  -volume2 -volume alsa-switch pulseaudio-ta
 ;;                      MODULES                            ;;
 ;;                                                         ;;
 ;;=========================================================;;
-
 [module/]
 type = custom/text
 content = %{F#FFB5BD68  B#011D32 } 
