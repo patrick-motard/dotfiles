@@ -39,6 +39,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'arcticicestudio/nord-vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-repeat'
+Plugin 'fatih/vim-go'
 " Plugin 'svermeulen/vim-easyclip'
 
 " The following are examples of different formats supported.
