@@ -330,7 +330,7 @@ exec_always --no-startup-id sh ~/.fehbg
 exec --no-startup-id compton
 exec --no-startup-id spotify
 exec --no-startup-id sh ~/.local/bin/tools/start-vbox-client
-exec --no-startup-id ckb-next
+exec_always --no-startup-id ckb-next -b
 exec --no-startup-id dunst
 
 set $left   "HDMI-0"
