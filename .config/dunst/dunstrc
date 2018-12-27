@@ -162,7 +162,7 @@
     max_icon_size = 100
 
     # Paths to default icons.
-    icon_folders = /usr/share/icons/paper/22x22/status/:/usr/share/icons/paper/22x22/devices/
+    icon_path = /usr/share/icons/paper/22x22/status/:/usr/share/icons/paper/22x22/devices/
 
     ### History ###
 
