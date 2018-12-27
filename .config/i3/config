@@ -344,6 +344,7 @@ workspace $ws8 output $left
 workspace $ws3 output $left
 workspace $ws6 output $middle
 workspace $ws7 output $middle
+workspace $ws4 output $right
 
 
 ## assign applications to workspaces:
