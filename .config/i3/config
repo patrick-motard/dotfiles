@@ -310,6 +310,8 @@ for_window [class="trust"] floating enable
 # spotify needs to be moved instead of assigned due to a bug with spotify
 for_window [class="Spotify"] move to workspace $ws0
 
+for_window [title=".*\(P.*"] move to workspace $ws7
+
 ## startup applications
 exec_always --no-startup-id sh -c "~/code/go/bin/dot displays run"
 exec_always --no-startup-id ~/.config/polybar/launch.sh
@@ -326,13 +328,15 @@ exec --no-startup-id dunst
 
 set $left   "HDMI-0"
 set $right  "DP-0"
+set $middle "DP-4"
 
-workspace $ws1 output $right
+workspace $ws1 output $middle
 workspace $ws2 output $right
 workspace $ws0 output $left
 workspace $ws8 output $left
 workspace $ws3 output $left
-workspace $ws6 output $right
+workspace $ws6 output $middle
+workspace $ws7 output $middle
 
 
 ## assign applications to workspaces:
@@ -344,6 +348,7 @@ assign [class="Mysql-workbench-bin"] $ws5
 assign [class="Xfce4-terminal"] $ws2
 assign [class="HipChat"] $ws4
 assign [class="Firefox"] $ws3
+
 
 assign [class="ckb-next"] $ws9
 assign [class="Steam"] $ws8
