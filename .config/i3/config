@@ -171,7 +171,7 @@ mode $mode_print {
 
 ## smart borders: draw borders around a container only if it 
 ## is not the only container in this workspace
-smart_borders on
+# smart_borders on
 
 
 # change focus
@@ -297,7 +297,7 @@ for_window [title="i3-helm"] floating enable
 bindsym XF86AudioRaiseVolume exec --no-startup-id volume up 3 && sh -c "volnoti-show $(volume get)" #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id volume down 3 && sh -c "volnoti-show $(volume get)" #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id sh -c "mute_toggle" # mute sound (uses tools/mute_toggle script)
-## play/next/previous using tools/sp (control spotify via dbus)
+# play/next/previous using tools/sp (control spotify via dbus)
 bindsym XF86AudioPlay exec --no-startup-id sp play # play acts as a toggle
 bindsym XF86AudioNext exec --no-startup-id sp next
 bindsym XF86AudioPrev exec --no-startup-id sp prev
@@ -310,7 +310,14 @@ for_window [class="trust"] floating enable
 # spotify needs to be moved instead of assigned due to a bug with spotify
 for_window [class="Spotify"] move to workspace $ws0
 
+
+# FIREFOX
+# force private firefox windows to workspace 7
 for_window [title=".*\(P.*"] move to workspace $ws7
+# shortcut to open private browser
+bindsym $mod+Shift+f exec --no-startup-id "firefox --private-window duckduckgo.com"; workspace $ws7
+# END FIREFOX
+
 
 ## startup applications
 exec_always --no-startup-id sh -c "~/code/go/bin/dot displays run"
