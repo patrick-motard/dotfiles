@@ -313,7 +313,7 @@ for_window [class="Spotify"] move to workspace $ws0
 
 # FIREFOX
 # force private firefox windows to workspace 7
-for_window [title=".*\(P.*"] move to workspace $ws7
+for_window [title=".*\(Private Browsing\).*"] move to workspace $ws7
 # shortcut to open private browser
 bindsym $mod+Shift+f exec --no-startup-id "firefox --private-window duckduckgo.com"; workspace $ws7
 # END FIREFOX
