@@ -123,6 +123,7 @@ core_aur_packages="
     mirage
     arc-gtk-theme-git
     awesome-terminal-fonts
+    flashfocus-git
 "
 function install_aur_packages() {
 
