@@ -2,7 +2,6 @@ syntax on
 inoremap fd <Esc>
 set laststatus=2
 set clipboard=unnamedplus
-
 let mapleader=" "
 " " Copy to clipboard
 

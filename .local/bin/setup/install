@@ -126,7 +126,6 @@ core_aur_packages="
     flashfocus-git
 "
 function install_aur_packages() {
-
     ## RUST
     # some aur packages require compiling rust code
     # so this intializes rust
@@ -256,8 +255,6 @@ fi
 #         echo c
 #     done
 # }
-
-
 
 # TODO: add golang setup back in
 function install_golang_packages() {

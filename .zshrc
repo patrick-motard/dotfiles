@@ -194,7 +194,6 @@ alias dotfiles="cd ~/.config/dotfiles/"
 alias dot-src="cd $GOPATH/src/github.com/patrick-motard/dot"
 export TOOLS="$HOME/.local/bin/tools"
 
-
 ## CUSTOM KEY BINDINGS ##
 ## zsh vi-mode settings
 # remaps ESC to fd

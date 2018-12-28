@@ -111,6 +111,7 @@ modules-right =  filesystem  -volume2 -volume alsa-switch pulseaudio-ta
 ;;                      MODULES                            ;;
 ;;                                                         ;;
 ;;=========================================================;;
+
 [module/]
 type = custom/text
 content = %{F#FFB5BD68  B#011D32 } 
@@ -163,7 +164,6 @@ type = custom/text
 content-foreground = ${colors.nord10}
 content-background = ${colors.nord0}
 content = ""
-
 
 [module/-2]
 type = custom/text
@@ -256,6 +256,7 @@ type = custom/script
 exec = ~/.local/bin/tools/pulseaudio-tail.sh
 ; interval=1
 ; exec = volume get; ~/.local/bin/tools/pulseaudio-tail.sh
+
 tail = true
 click-right = exec pavucontrol &
 click-left = mute_toggle
@@ -303,19 +304,15 @@ wrapping-scroll = false
 reverse-scroll = false
 fuzzy-match = true
 format = <label-mode><label-state>
-
 label-mode = %mode%
 label-mode-background = ${colors.nord11}
 label-mode-foreground = ${colors.nord4}
-
 label-focused-foreground = ${colors.nord2}
 label-focused-background = ${colors.background-alt}
-
 label-focused-padding-right = 1
 ; visible is the focused workspace on non focused monitor, confusing, i know. :)
 label-visible-padding-right =1
 label-visible-background=${colors.nord3}
-
 label-unfocused-foreground = ${colors.nord4}
 label-unfocused-background = ${colors.nord1}
 label-unfocused-padding-left = 1
@@ -353,7 +350,6 @@ format = <label> <ramp-coreload>
 format-background = ${colors.nord3}
 format-foreground = ${colors.nord4}
 format-padding = 2
-
 ramp-coreload-0 = %{F#5E81AC B#4C566A}▁
 ramp-coreload-1 = %{F#5E81AC B#4C566A}▂
 ramp-coreload-2 = %{F#81A1C1 B#4C566A}▃
