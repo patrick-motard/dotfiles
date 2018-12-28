@@ -312,6 +312,7 @@ values."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
+   dotspacemacs-mode-line-theme 'spacemacs
    dotspacemacs-line-numbers t
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
@@ -356,6 +357,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   )
 
 (defun dotspacemacs/user-config ()
+  (setq dotspacemacs-mode-line-theme '(all-the-icons :separator 'arrow-fade))
   (add-hook 'json-mode-hook
             (lambda ()
               (make-local-variable 'js-indent-level)
@@ -384,7 +386,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; (spacemacs/enable-transparency)
   (setq neo-theme 'icons)
   (setq powerline-default-separator 'arrow)
-  (setq nord-comment-brightness 20)
+  (setq nord-comment-brightness 50)
 
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
