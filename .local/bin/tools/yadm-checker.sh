@@ -86,5 +86,10 @@ else
     staged_prompt=$(color "${nord14}" "${nord1}" " $staged_icon $staged $modified_icon $modified  $yes ")$(color "${nord0}" "${nord14}" " ")
 fi
 
+if [[ $bg == $fg ]]; then
+    separator=$(color "${bg}" "${nord1}" " ")
+else
+    separator=$(color "${bg}" "${fg}" " ")
+fi
 
-echo $commits_prompt$(color "${bg}" "${fg}" " ")$staged_prompt
+echo $commits_prompt${separator}$staged_prompt
