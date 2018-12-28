@@ -332,6 +332,7 @@ exec --no-startup-id spotify
 exec --no-startup-id sh ~/.local/bin/tools/start-vbox-client
 exec_always --no-startup-id ckb-next -b
 exec --no-startup-id dunst
+exec_always --no-startup-id flashfocus
 
 set $left   "HDMI-0"
 set $right  "DP-0"
