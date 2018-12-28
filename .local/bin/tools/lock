@@ -32,5 +32,4 @@ wait %1
 # Once i3lock finishes, we can kill the DPMS loop. We only
 # want to do DPMS while i3lock is active.
 kill %2
-
 rm /tmp/screen.png

@@ -47,7 +47,7 @@ source $ZSH/oh-my-zsh.sh
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='mvim'
+  export EDITOR='nvim'
 fi
 
 # Compilation flags
@@ -77,6 +77,7 @@ function grep_i3_keybinds {
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
+alias vim="nvim"
 alias gi3=grep_i3_keybinds
 alias h="cd ~"
 alias ec="edit-config"
@@ -120,6 +121,10 @@ alias y="yadm"
 alias ya="yadm add"
 alias yaa="yadm add -u" # add only unstaged files
 alias yau="yadm add -u" # add only unstaged files
+function yadm_add_tool () {
+   yadm add ~/.local/bin/tools/$1
+}
+alias yat=yadm_add_tool
 alias yc="yadm commit --verbose"
 alias yca="yadm commit --amend"
 alias ycm="yadm commit -m"
@@ -155,6 +160,20 @@ alias vssh="vim ~/.ssh/config"
 alias lssh="ls ~/.ssh"
 alias rmrf="rm -rfi"
 alias update-emacs="cd $HOME/.emacs.d && git pull --rebase && cd $HOME"
+alias ns="new_script --path . --name"
+alias nt="new_script --name"
+
+update_golang() {
+    # update golang pacman package
+    echo "\nUpdating golang...\n"
+    sudo pacman -Sy --needed go
+    echo "\nUpdating golang packages...\n"
+    go get -u all
+}
+
+update_pacman_mirrorlist() {
+    sudo reflector --verbose --protocol https --age 8 --sort rate --save /etc/pacman.d/mirrorlist
+}
 
 # leave this function with the _ prefix and aliased below without
 # the prefix. Without them zsh errors on sourcing because grep
@@ -171,6 +190,9 @@ alias work-mode="switch-aws-creds.sh work"
 alias other-mode="switch-aws-creds.sh other"
 alias check-mode="aws s3 ls"
 
+alias dotfiles="cd ~/.config/dotfiles/"
+alias dot-src="cd $GOPATH/src/github.com/patrick-motard/dot"
+export TOOLS="$HOME/.local/bin/tools"
 
 ## CUSTOM KEY BINDINGS ##
 ## zsh vi-mode settings

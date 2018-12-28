@@ -24,6 +24,8 @@ while test $# -gt 0; do
             exit;;
         -n|--new)
             _new=true;;
+        -q|--quick)
+            _quick=true;;
         -f|--full)
             full=true;;
         -u|--user)
@@ -42,13 +44,13 @@ done
 
 function check_required_params() {
     if [[ -z $github_user ]]; then
-        echo "Github account name required" >&2
+        echo "FATAL: Github account name required" >&2
         exit 1
     fi
 }
 
 function update_pacman() {
-    sudo pacman -Syu --noconfirm
+    sudo pacman -Syu --noconfirm --quiet
     sudo pacman-optimize && sync
 }
 
@@ -66,11 +68,13 @@ function install_pacman_packages() {
 # list of packages no longer used
 # to be removed from system to avoid issues
 remove_packages="
-    ttf-font-awesome
-    i3blocks-gaps-git
 "
 
 remove_aur_packages="
+    ttf-font-awesome
+    i3blocks-gaps-git
+    hipchat
+    slack-desktop
     rtv
 "
 
@@ -96,25 +100,30 @@ function install_virtual_machine_needed_packages() {
 function uninstall_deprecated_packages() {
     echo 'removing packages that are no longer needed'
     for package_name in $remove_packages; do
-        sudo pacman -R --noconfirm
+        sudo pacman -R --noconfirm $package_name
     done
+    for package_name in $remove_aur_packages; do
+        trizen -R --noconfirm $package_name
+    done
+
 }
-core_aur_packages="
-    i3-gaps-next-git
+slow_aur_packages="
     polybar-git
     paper-icon-theme-git
-    awesome-terminal-fonts
+"
+
+core_aur_packages="
+    i3-gaps-next-git
     exa
     ccat
     xorg-xprop
-    xorg-xset
-    xprintidle
     dunstify
     bashmount
     trizen
     mirage
     arc-gtk-theme-git
     awesome-terminal-fonts
+    flashfocus-git
 "
 function install_aur_packages() {
     ## RUST
@@ -126,13 +135,26 @@ function install_aur_packages() {
     for aur_package in $core_aur_packages; do
         trizen -S --needed $aur_package --noconfirm --noedit
     done
+
+    if [[ $_quick != true ]]; then
+        # if polybar is installed before i3 it doesn't install compatibility with i3
+        for pkg in $slow_aur_packages; do
+            trizen -S --needed $pkg --noconfirm --noedit
+        done
+    fi
+
 }
 
+
+## Packages that take forever to install:
+# - paper-icon-theme-git 
+# - polybar (needs to compile c++)
 function install_extra_aur_packages() {
     if [[ $full = true ]]; then
         ## install aur packages
         aur_packages="
-            hipchat
+            terraform
+            ansible
             spotify
             dropbox
             siji-git
@@ -140,7 +162,6 @@ function install_extra_aur_packages() {
             remmina-plugin-rdesktop
             pgadmin4
             cli-visualizer
-            slack-desktop
             teams-for-linux
     "
         for aur_package in $aur_packages; do
@@ -168,7 +189,8 @@ function install_docker() {
     fi
 }
 
-function install_oh-my-zsh_and_plugins() {
+function install_oh_my_zsh_and_plugins() {
+    pacman -S zsh --no-confirm
     ## Install oh-my-zsh
     sh /home/$USER/.local/bin/tools/install_oh_my_zsh
     yadm reset --hard origin/master
@@ -197,7 +219,6 @@ function install_node_packages() {
 function install_python_packages() {
     ## Python package installs
     pip install --upgrade --user pip
-    pip install --upgrade --user wakatime
     pip install --upgrade --user awscli
     pip install --upgrade --user polybar-reload
 }
@@ -235,11 +256,23 @@ fi
 #     done
 # }
 
-
 # TODO: add golang setup back in
-# needed for spacemacs go layer
-# https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Blang/go
+function install_golang_packages() {
 
+    # needed for spacemacs go layer
+    # https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Blang/go
+    go get -u -v github.com/nsf/gocode
+    go get -u -v github.com/rogpeppe/godef
+    go get -u -v golang.org/x/tools/cmd/guru
+    go get -u -v golang.org/x/tools/cmd/gorename
+    go get -u -v golang.org/x/tools/cmd/goimports
+
+    # needed for guru -> import/add dependencies (spacemacs go layer)
+    go get -u -v github.com/uudashr/gopkgs/cmd/gopkgs
+
+    # needed for dotfiles
+    go get -u -v github.com/patrick-motard/dot
+}
 # gopath isn't set, so this trys to make a dir in /src which
 # gives permission denied. subsequent calls to the script succeed beacuse .zshrc is sourced and gopath is set there.
 # mkdir -p $GOPATH/src/github.com
@@ -251,17 +284,67 @@ fi
 
 
 function main() {
+    source $HOME/.profile
+    echo "1. ### Checking required params ###"
+    echo ""
+    echo ""
     check_required_params
-    update_pacman
-    install_pacman_packages
-    install_aur_packages
-    install_extra_aur_packages
-    install_docker
-    install_node_packages
-    install_python_packages
 
-    if [[ _new == true ]]; then
-        install_oh-my-zsh_and_plugins
+    echo "2. ### Updating Pacman ###"
+    echo ""
+    echo ""
+    update_pacman
+
+    if [[ $_new == true ]]; then
+        install_oh_my_zsh_and_plugins
+        echo "11. ### Installing oh-my-zsh and it's plugins ###"
+        echo ""
+        echo ""
+    fi
+
+    echo "3. ### Updating Pacman Packages ###"
+    echo ""
+    echo ""
+    install_pacman_packages
+    echo "4. ### Installing AUR packages ###"
+    echo ""
+    echo ""
+    install_aur_packages
+    echo "5. ### AUR ###"
+    echo ""
+    echo ""
+
+    # install_extra_aur_packages
+    echo "6. ### DOCKER ###"
+    echo ""
+    echo ""
+
+    # install_docker
+
+    echo "8. ### PYTHON ###"
+    echo ""
+    echo ""
+
+    install_python_packages
+    echo "9. ### GOLANG ###"
+    echo ""
+    echo ""
+
+    install_golang_packages
+    echo "10. ### Uninstalling Deprecated Packages ###"
+    echo ""
+    echo ""
+
+    # uninstall_deprecated_packages
+
+    echo "7. ### NODE ###"
+    echo ""
+    echo ""
+
+    # node has to happen after zsh because nvm is installed as a zsh plugin
+    # install_node_packages
+    if [[ $_new == true ]]; then
+        # echo hello
         reboot
     fi
 }

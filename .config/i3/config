@@ -171,8 +171,7 @@ mode $mode_print {
 
 ## smart borders: draw borders around a container only if it 
 ## is not the only container in this workspace
-smart_borders on
-
+# smart_borders on
 
 # change focus
 bindsym $mod+j focus left
@@ -229,11 +228,11 @@ set $ws2 "2: "
 set $ws3 "3: /"
 set $ws4 "4: "
 set $ws5 "5: "
-set $ws6 "6: "
-set $ws7 "7:  Windows Server"
-set $ws8 "8:  Windows 10"
+set $ws6 "6: "
+set $ws7 "7:  "
+set $ws8 "8:  "
 set $ws9 "9: "
-set $ws0 "0: "
+set $ws0 "0: "
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -294,10 +293,10 @@ bar {
 for_window [title="i3-helm"] floating enable
 
 # uses golang github.com/itchyny/volume-go
-bindsym XF86AudioRaiseVolume exec --no-startup-id volume up 3 #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id volume down 3 #decrease sound volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id volume up 3 && sh -c "volnoti-show $(volume get)" #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id volume down 3 && sh -c "volnoti-show $(volume get)" #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id sh -c "mute_toggle" # mute sound (uses tools/mute_toggle script)
-## play/next/previous using tools/sp (control spotify via dbus)
+# play/next/previous using tools/sp (control spotify via dbus)
 bindsym XF86AudioPlay exec --no-startup-id sp play # play acts as a toggle
 bindsym XF86AudioNext exec --no-startup-id sp next
 bindsym XF86AudioPrev exec --no-startup-id sp prev
@@ -308,10 +307,19 @@ bindsym XF86AudioStop exec --no-startup-id sp pause
 for_window [class="trust"] floating enable
 
 # spotify needs to be moved instead of assigned due to a bug with spotify
-for_window [class="Spotify"] move to workspace $ws6
+for_window [class="Spotify"] move to workspace $ws0
+
+
+# FIREFOX
+# force private firefox windows to workspace 7
+for_window [title=".*\(Private Browsing\).*"] move to workspace $ws7
+# shortcut to open private browser
+bindsym $mod+Shift+f exec --no-startup-id "firefox --private-window duckduckgo.com"; workspace $ws7
+# END FIREFOX
+
 
 ## startup applications
-exec_always --no-startup-id sh -c "~/code/go/bin/dot screen select"
+exec_always --no-startup-id sh -c "~/code/go/bin/dot displays run"
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec --no-startup-id ~/.local/bin/polybar-reload
 exec --no-startup-id dropbox
@@ -321,8 +329,23 @@ exec_always --no-startup-id sh ~/.fehbg
 exec --no-startup-id compton
 exec --no-startup-id spotify
 exec --no-startup-id sh ~/.local/bin/tools/start-vbox-client
-exec --no-startup-id ckb-next
+exec_always --no-startup-id ckb-next -b
 exec --no-startup-id dunst
+exec_always --no-startup-id flashfocus
+
+set $left   "HDMI-0"
+set $right  "DP-0"
+set $middle "DP-4"
+
+workspace $ws1 output $middle
+workspace $ws2 output $right
+workspace $ws0 output $left
+workspace $ws8 output $left
+workspace $ws3 output $left
+workspace $ws6 output $middle
+workspace $ws7 output $middle
+workspace $ws4 output $right
+
 
 ## assign applications to workspaces:
 ## NOTE: use xprop command to get WM_CLASS (second string value)
@@ -333,4 +356,15 @@ assign [class="Mysql-workbench-bin"] $ws5
 assign [class="Xfce4-terminal"] $ws2
 assign [class="HipChat"] $ws4
 assign [class="Firefox"] $ws3
+
+
 assign [class="ckb-next"] $ws9
+assign [class="teams-for-linux"] $ws4
+
+# games
+assign [class="Steam"] $ws8
+assign [class="RimWorldLinux.x86_64"] $ws6
+assign [class="dota2"] $ws6
+
+for_window [class="dota2"] fullscreen enable
+for_window [class="RimWorldLinux.x86_64"] fullscreen enable

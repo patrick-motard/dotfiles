@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+usage="NAME
+      new_script - create new script in tools dir and edit it in vim
+
+SYNOPSIS
+      new_script [-h] -n|--name
+
+ARGUMENTS
+
+       -n name (required)
+          Name of the script you would like to create
+          Example:
+              ./new_script -n my_script
+       -p path (optional) (default: $HOME/.local/bin/tools)
+          Location to store path in. Pass in '.' for current directory
+ 
+"
+
+while test $# -gt 0; do
+	  case "$1" in
+        -h|--help|-\?)
+            echo "$usage" >&2
+            exit;;
+        -n|--name)
+            name=$2
+            shift;;
+        -p|--path)
+            if [[ "${2}" == "." ]]; then
+                path=$PWD
+            else
+                path=$2
+            fi
+            shift;;
+        \?)
+            echo "Invalid option: -$OPTARG" >&2
+            exit 1;;
+        *)
+            break
+    esac
+    shift
+done
+
+if [[ -z "${name}" ]]; then
+    echo "${usage}"
+    exit 1
+fi
+
+if [[ -z "${path}" ]]; then
+    path=$HOME/.local/bin/tools
+fi
+
+full=${path}/$name
+if [[ -f "${full}" ]]; then
+    echo "Error: ${name} already exists in ${path}"
+    echo "Edit $name? y/n"
+    read answer
+    if [[ "${answer}" != "n" ]]; then
+        nvim "${full}"
+    fi
+    exit 0
+fi
+
+echo "#!/usr/bin/env bash" > "${full}"
+
+chmod +x "${full}"
+
+nvim "${full}"

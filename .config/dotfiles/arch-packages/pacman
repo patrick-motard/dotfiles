@@ -27,6 +27,8 @@ tree
 facter
 xf86-video-vesa
 nvidia
+nvidia-utils
+lib32-nvidia-utils
 scrot
 imagemagick
 i3lock
@@ -44,6 +46,7 @@ perl-anyevent-i3
 rustup
 nmap
 freerdp
+go
 go-tools
 ntp
 networkmanager-dispatcher-ntpd
@@ -54,3 +57,5 @@ groovy
 pacman-contrib
 xautolock
 w3m
+neovim
+reflector

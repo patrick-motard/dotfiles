@@ -7,7 +7,11 @@
         ▀██▄▄███  ▀██▄▄██▀    ██▄▄▄     ██      ▄▄▄██▄▄▄    ██▄▄▄   ▀██▄▄▄▄█  █▄▄▄▄▄██ 
           ▀▀▀ ▀▀    ▀▀▀▀       ▀▀▀▀     ▀▀      ▀▀▀▀▀▀▀▀     ▀▀▀▀     ▀▀▀▀▀    ▀▀▀▀▀▀  
 ```
+![desktop-screenshot2](https://i.imgur.com/VyHzgFz.png)
 ![desktop-screenshot](https://i.imgur.com/mTvqTcQ.png)
+
+Please see [the wiki](https://github.com/patrick-motard/dotfiles/wiki) for documentation on specific features. 
+
 # Description
 
 - Bar: `polybar` (or i3blocks)
@@ -25,8 +29,8 @@
 # Package List (not comprehensive) 
 
 - `yadm` dotfile manager
-- `nvm` node version manager, defaults to lts/boron
-- `emacs` spacemacs
+- `nvm` node version manager via [zsh plugin](https://github.com/lukechilds/zsh-nvm)
+- `emacs` [spacemacs](https://github.com/syl20bnr/spacemacs)
 - `yadm` dotfile manager
 - `i3-gaps` window manager
 - `polybar` status line & bar for i3
@@ -34,10 +38,8 @@
 - `termite` terminal ([repo link](https://github.com/thestinger/termite/))
 - `oh-my-zsh` & z shell
 - `feh` terminal based image viewer, also used for desktop backgrounds
-- `wakatime` for those interested in [quantifying code usage](https://wakatime.com/)
-- `vim`
+- `neovim`
 - `vundle` vim package manager
-- `wakatime` helps you track how much time you code [see website]
 - `ccat` colorized cat ([nixcraft](https://www.cyberciti.biz/howto/linux-unix-cat-command-with-colours/))
 - `exa` colorized ls written in rust ([nixcraft](https://www.cyberciti.biz/open-source/command-line-hacks/exa-a-modern-replacement-for-ls-written-in-rust-for-linuxunix/))
 - `tree` see tree folder/file structure from command line
@@ -50,12 +52,12 @@
 
 # Installation
 
-Managing your dotfiles in source control is important. This project uses [YADM](https://thelocehiliosan.github.io/yadm/), a dotfile manager that employs git. With YADM you can start with a new repo, or clone an existing repo. Both approachs are explained in depth on the YADM website's [getting started](https://thelocehiliosan.github.io/yadm/docs/getting_started) section. 
+This project uses [YADM](https://thelocehiliosan.github.io/yadm/), a dotfile manager that employs git. With YADM you can start with a new repo, or clone an existing repo. Both approachs are explained in depth on the YADM website's [getting started](https://thelocehiliosan.github.io/yadm/docs/getting_started) section. 
 
 1. Download Antergos ISO
 1. Fork this repo (or clone this repo directly and change it's upstream to your fork after install is done)
 2. Install Arch using Antergos, choose the "no desktop environment" option, it is probably called "Base".
-4. Follow the instructions outlined in [install.md](install.md)
+4. Follow the instructions outlined in [INSTALL.md](.config/dotfiles/wiki/INSTALL.md)
 5. report any bugs or manual steps as issues to this repo so that the install process can be improved.
 
 # Commands & Aliases
@@ -162,6 +164,28 @@ Settings for gtk 2:
 
 [how to import & export cron jobs](https://askubuntu.com/questions/216692/where-is-the-user-crontab-stored)
 
+## Sending notifications to desktop
+
+I use a notification daemon called [Dunst](https://github.com/dunst-project/dunst).
+You can send notifications to the desktop using `dunstify` or `notify-send`
+
+#### Getting Help
+
+For help using these, in your terminal:
+
+```
+dunstify --help
+notify-send --help
+man dunst
+```
+
+#### Customise & Reload
+
+Edit: `~/.config/dunst/dunstrc`
+
+Reload: `killall dunst && notify-send foo`
+
+Customize Dunst notifications via it's config file `~/.configs/dunst/dunstrc`
 
 # Inspiration & Information Sources
 
