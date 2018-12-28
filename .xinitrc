@@ -25,6 +25,9 @@ if [ -f "$usermodmap" ]; then
     xmodmap "$usermodmap"
 fi
 
+# lock screen after 5min
+xautolock -time 5 -locker '/home/$USER/.local/bin/tools/lock' &
+# NOTE: This display timeout logic was moved to the lock tool.
 # set display timeout to 10min
 # xset dpms 0 0 1200
 

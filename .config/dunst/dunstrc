@@ -217,6 +217,7 @@
     # where there are multiple screens with very different dpi values.
     per_monitor_dpi = true
 
+
 [shortcuts]
 
     # Shortcuts are specified as [modifier+][modifier+]...key

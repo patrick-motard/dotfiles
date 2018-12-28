@@ -173,7 +173,6 @@ mode $mode_print {
 ## is not the only container in this workspace
 # smart_borders on
 
-
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
