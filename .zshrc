@@ -162,6 +162,7 @@ alias rmrf="rm -rfi"
 alias update-emacs="cd $HOME/.emacs.d && git pull --rebase && cd $HOME"
 alias ns="new_script --path . --name"
 alias nt="new_script --name"
+alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 
 update_golang() {
     # update golang pacman package
