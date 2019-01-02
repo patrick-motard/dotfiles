@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+source $TOOLS/colorize
+
+usage="NAME
+      bb-clone - clone repos quickly from my work bitbucket team
+
+SYNOPSIS
+      ssh-create [-h] -n my-repo
+
+
+ARGUMENTS
+       -n name
+          Name of bitbucket git repository.
+
+          Example:
+              bb-clone -n webcenterpoint
+"
+
+while test $# -gt 0; do
+	  case "$1" in
+        --help|-h|-\?)
+            echo "$usage" >&2
+            exit
+            ;;
+        -n|--repo-name)
+            repo=$2
+            shift
+            ;;
+        \?)
+            echo $(color $Red "Error: Invalid flag: $1") >&2
+            exit 1
+            ;;
+        *)
+            echo $(color $Red "Error: Invalid flag: $1") >&2
+            exit 1
+            break
+    esac
+    shift
+done
+
+
+if [[ -z "${repo}" ]]; then
+    color $Red "Error: You must provide a repo name via the -n flag.\n"
+    echo "$usage"
+    exit
+fi
+git clone git@bitbucket.org:WTSDevOps/"${repo}".git $HOME/code/${repo}
