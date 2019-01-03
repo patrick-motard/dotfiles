@@ -1,5 +1,20 @@
 #!/usr/bin/env bash
 
+# returns true if current times seconds field
+# is divisible by 3
+function delay() {
+    f=$(date +"%S")
+    j=$((10#$f % 3))
+
+    if (( 10#$j == 0 )); then
+        # notify-send $f "$j loading"
+        echo true
+    else
+        # notify-send $f "$j not"
+        echo false
+    fi
+}
+
 ###################
 ## COLOR PALETTE ##
 ###################
