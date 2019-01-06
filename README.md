@@ -254,6 +254,11 @@ Some things I'd like snippets for:
     
 - cli for browsing remote repos on account, as well as cloning and such
 
-- cli based wiki for commands
+- cli based wiki for commands (manpage for dotfiles/dot)
 
 - rofi based login/shutdown/restart menu
+
+- custom homepage for firefox
+
+- framework for rofi menus
+
