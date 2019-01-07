@@ -262,3 +262,5 @@ Some things I'd like snippets for:
 
 - framework for rofi menus
 
+- rofi based password manager for lastpass
+
