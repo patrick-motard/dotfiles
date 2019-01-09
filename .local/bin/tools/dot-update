@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source $TOOLS/colorize
+source $TOOLS/dot-color
 
 color $Green "#### Updating dot source code\n"
 
@@ -21,3 +21,5 @@ go get ./...
 
 color $Green '#### Installing dot to $GOPATH/bin\n'
 go install
+
+color $Blue '#### If you have stashed changes, make sure to pop them.'
