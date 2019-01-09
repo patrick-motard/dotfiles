@@ -8,9 +8,7 @@ export GOPATH=~/code/go
 # executed from anywhere using terminal
 export PATH="$GOPATH/bin:$PATH"
 ## END GOLANG
-
-## RUST
-export PATH=~/.cargo/bin:$PATH
+## RUST export PATH=~/.cargo/bin:$PATH
 RUST_SRC_PATH=~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
 ## end RUST
 
@@ -38,3 +36,8 @@ export MANPAGER="/bin/sh -c \"col -b | vim -c 'set ft=man ts=8 nomod nolist nonu
 
 export PATH=$PATH:/home/$USER/.local/bin
 export BROWSER=/usr/bin/firefox
+
+export TOOLS="$HOME/.local/bin/tools"
+# used by tools/wifi
+export WIFI_DEVICE="wlp4s0"
+export WIFI_PROFILE="wts-wifi"

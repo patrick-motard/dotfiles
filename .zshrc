@@ -195,7 +195,7 @@ alias dotfiles="cd ~/.config/dotfiles/"
 alias dot-src="cd $GOPATH/src/github.com/patrick-motard/dot"
 alias copy-monitors='xrandr -q | grep " connected" | awk "{print $"${1:-1}"}" ORS=" " | pbcopy'
 
-export TOOLS="$HOME/.local/bin/tools"
+
 
 ## CUSTOM KEY BINDINGS ##
 ## zsh vi-mode settings

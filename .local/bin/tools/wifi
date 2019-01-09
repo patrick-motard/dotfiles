@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+# WIFI
+# list wifi profiles: `netctl list`
+
+# export DOT_LOG=true
+
+# Imports:
+source $TOOLS/dot-log
+source $TOOLS/dot-color
+
+#nmcli device wifi connect $WIFI_NAME FBI UPS Truck" password $WIFI_PASSWORD
+
+function connected() {
+    wget -q --spider http://google.com
+    [[ $? == 0 ]] && echo true || echo false
+}
+
+function connect() {
+    sudo ip link set $WIFI_DEVICE down
+    sudo netctl stop $WIFI_PROFILE
+    sudo netctl start $WIFI_PROFILE
+}
+
+function main() {
+    connect
+    if [[ ! connected ]]; then
+        notify-send --urgency critical "dot-wifi" "Failed to connect to wifi: $WIFI_PROFILE"
+        exit 1
+    fi
+    notify-send "dot-wifi" "Connected to wifi: $WIFI_PROFILE"
+}
+
+main
