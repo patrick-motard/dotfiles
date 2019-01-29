@@ -213,6 +213,7 @@ fi
 
 ## Azure
 if [[ -f /home/$USER/.local/bin/azure-cli/az.completion ]]; then
+    autoload bashcompinit && bashcompinit
     source /home/$USER/.local/bin/azure-cli/az.completion
 fi
 
