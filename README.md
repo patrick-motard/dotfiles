@@ -264,3 +264,4 @@ Some things I'd like snippets for:
 
 - rofi based password manager for lastpass
 
+- script for adding and removing packages from ~/.config/dotfiles/arch-packages/pacman
