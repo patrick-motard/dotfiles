@@ -1,0 +1,165 @@
+/* -*- mode: css; -*- */
+configuration {
+    columns: 5;
+    lines: 1;
+}
+
+* {
+    nord0: rgb(46, 52, 64, 100 %);
+    nord1: rgb(59, 66, 82, 100 %);
+    nord2: rgb(67, 76, 94, 100 %);
+    nord3: rgb(76, 86, 106, 100 %);
+    nord4: rgb(216, 222, 233, 100 %);
+    nord5: rgb(229, 233, 240, 100 %);
+    nord6: rgb(236, 239, 244, 100 %);
+    nord7: rgb(143, 188, 187, 100 %);
+    nord8: rgb(136, 192, 208, 100 %);
+    nord9: rgb(129, 161, 193, 100 %);
+    nord10: rgb(94, 129, 172, 100 %);
+    nord11: rgb(191, 97, 106, 100 %);
+    nord12: rgb(208, 135, 112, 100 %);
+    nord13: rgb(235, 203, 139, 100 %);
+    nord14: rgb(163, 190, 140, 100 %);
+    nord15: rgb(180, 142, 173, 100 %);
+
+    separatorcolor: @nord0;
+    background-color: @nord0;
+    alt-bg: @nord3;
+    alt-fg: @nord6;
+
+    /* text-color: @nord15; */
+
+
+    /* active-background: #232731; */
+    /* active-foreground: @foreground; */
+    normal-background: @background;
+    normal-foreground: @foreground;
+    /* urgent-background: #232731; */
+    /* urgent-foreground: @foreground; */
+
+    /* alternate-active-background: @background; */
+    /* alternate-active-foreground: @foreground; */
+    alternate-normal-background: @background;
+    alternate-normal-foreground: @foreground;
+    /* alternate-urgent-background: @background; */
+    /* alternate-urgent-foreground: @foreground; */
+
+    /* selected-active-background: #232731; */
+    /* selected-active-foreground: @foreground; */
+
+    selected-normal-background: @nord10;
+
+    selected-normal-foreground: @alt-fg;
+
+    /* selected-urgent-background: #b4575e; */
+    /* selected-urgent-foreground: @foreground; */
+
+    /* region behind buttons */
+    background-color: @nord6;
+
+
+    /* entire background color */
+    background: @nord6;
+    foreground: @nord10;
+    /* border-color: @nord14; */
+    spacing: 2;
+}
+
+
+
+
+/* window { */
+/*     /\* border-color: @nord8; *\/ */
+/*     border: 4; */
+/*     padding: 100px; */
+/*     foreground: @nord5; */
+/*     /\* location: west; *\/ */
+/*     /\* anchor: west; *\/ */
+
+/*     /\* background-color: @nord0; *\/ */
+/* } */
+
+#window {
+    background-color: @background;
+    border: 5;
+    border-color: @nord9;
+    padding: 2.5ch;
+}
+
+
+#mainbox {
+    border: 0;
+    padding: 0;
+	  children: [ listview ];
+}
+
+#message {
+    border: 2px 0px 0px;
+    border-color: @border-color;
+    padding: 1px;
+}
+
+/* #textbox { */
+/*     /\* text-color: @foreground; *\/ */
+/*     /\* text-color: #ffffff; *\/ */
+/* } */
+
+#listview {
+    fixed-height: 0;
+    border: 0px 0px 0px;
+    border-color: @border-color;
+    spacing: 2px;
+    scrollbar: true;
+    padding: 0px 0px 0px;
+}
+
+#element {
+    border: 0;
+    padding: 10px 40px 10px;
+}
+
+#element.normal.normal {
+    background-color: @normal-background;
+    text-color: @normal-foreground;
+}
+
+#element.normal.urgent {
+    background-color: @urgent-background;
+    text-color: @urgent-foreground;
+}
+
+#element.normal.active {
+    background-color: @active-background;
+    text-color: @active-foreground;
+}
+
+#element.selected.normal {
+    background-color: @selected-normal-background;
+    text-color: @selected-normal-foreground;
+}
+
+#element.selected.urgent {
+    background-color: @selected-urgent-background;
+    text-color: @selected-urgent-foreground;
+}
+
+#element.selected.active {
+    background-color: @selected-active-background;
+    text-color: @selected-active-foreground;
+}
+
+#element.alternate.normal {
+    background-color: @alternate-normal-background;
+    text-color: @alternate-normal-foreground;
+}
+
+#element.alternate.urgent {
+    background-color: @alternate-urgent-background;
+    text-color: @alternate-urgent-foreground;
+}
+
+#element.alternate.active {
+    background-color: @alternate-active-background;
+    text-color: @alternate-active-foreground;
+}
+
