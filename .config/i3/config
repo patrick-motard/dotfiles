@@ -72,6 +72,7 @@ bindsym $mod+Shift+q kill
 
 # start rofi (a program launcher)
 bindsym $mod+d exec rofi -show drun
+
 # bindsym $mod+c exec zsh -c "rofi -show fb -modi fb:~/code/go/bin/dot"
 # bindsym $mod+c exec rofi --modi "DERP:dot" -show "DERP"
 
@@ -108,21 +109,22 @@ mode $mode_gaps {
 }
 
 #set $mode_system "[syst(E)m] | (l)ock, l(o)gout, (s)uspend, (h)ibernate, (r)eboot, (S)hutdown"
-set $mode_system " l |  o |  s |   h |   r |  S"
+# set $mode_system " l |  o |  s |   h |   r |  S"
 
-bindsym $mod+Shift+e mode $mode_system
-set $locker ~/.local/bin/tools/lock
-mode $mode_system {
-    bindsym l exec --no-startup-id $locker, mode "default"
-    bindsym o exec --no-startup-id i3-msg exit, mode "default"  
-    bindsym s exec --no-startup-id $locker && systemctl suspend, mode "default"
-    bindsym h exec --no-startup-id $locker && systemctl hibernate, mode "default"
-    bindsym r exec --no-startup-id systemctl reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
-    ## back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
+bindsym $mod+Shift+e exec sh ~/.config/rofi/on
+#bindsym $mod+Shift+e mode $mode_system
+#set $locker ~/.local/bin/tools/lock
+#mode $mode_system {
+#    bindsym l exec --no-startup-id $locker, mode "default"
+#    bindsym o exec --no-startup-id i3-msg exit, mode "default"  
+#    bindsym s exec --no-startup-id $locker && systemctl suspend, mode "default"
+#    bindsym h exec --no-startup-id $locker && systemctl hibernate, mode "default"
+#    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+#    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
+#    ## back to normal: Enter or Escape
+#    bindsym Return mode "default"
+#    bindsym Escape mode "default"
+#}
 
 set $mode_modes "[(m)odes] | (g)aps, (r)esize, syst(E)m, (Print)"
 bindsym $mod+m mode $mode_modes
