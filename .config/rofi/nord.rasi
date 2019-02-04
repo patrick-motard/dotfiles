@@ -1,3 +1,4 @@
+/* -*- mode: css; -*- */
 * {
     nord0: rgb(46, 52, 64, 100 %);
     nord1: rgb(59, 66, 82, 100 %);
@@ -60,7 +61,4 @@
     background-color: @nord0;
     text-color:       @nord8;
 }
-
 /* vim:ft=css
--*- mode: css; -*-
-
