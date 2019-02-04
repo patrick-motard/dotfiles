@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source $TOOLS/colorize
+source $TOOLS/dot-color
 
 usage="NAME
       bb-clone - clone repos quickly from my work bitbucket team
