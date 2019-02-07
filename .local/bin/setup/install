@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# import lib.sh, has shared code between update and install
+source $HOME/.local/bin/setup/lib.sh
 usage="NAME
       install - install dotfiles project
 
@@ -54,12 +56,12 @@ function update_pacman() {
     sudo pacman-optimize && sync
 }
 
-function install_pacman_packages() {
-    common_pacman_packages=$(cat ~/.config/dotfiles/arch-packages/pacman)
-    for package_name in $common_pacman_packages; do
-        sudo pacman -S $package_name --needed --noconfirm --quiet
-    done
-}
+# function install_pacman_packages() {
+#     common_pacman_packages=$(cat ~/.config/dotfiles/arch-packages/pacman)
+#     for package_name in $common_pacman_packages; do
+#         sudo pacman -S $package_name --needed --noconfirm --quiet
+#     done
+# }
 
 #pacman-contrib:
 #  used for 'checkupdates' command in polybar module that shows how many updates pacman has
@@ -107,6 +109,7 @@ function uninstall_deprecated_packages() {
     done
 
 }
+
 slow_aur_packages="
     polybar-git
     paper-icon-theme-git
