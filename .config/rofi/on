@@ -15,7 +15,7 @@ options="         lock
       shutdown"
 themes_dir=$HOME/.config/rofi
 theme=${1:-$themes_dir/onoff.rasi}
-selection=$(echo -e "${options}" | rofi -dmenu -config $theme -columns 6 -lines 1)
+selection=$(echo -e "${options}" | rofi -dmenu -config $theme -columns 6 -lines 1 -width 1500)
 
 echo "This is your selection: $selection"
 
