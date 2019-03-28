@@ -262,7 +262,9 @@ bindsym $mod+Shift+0 move container to workspace $ws0
 
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+# bindsym $mod+Shift+c reload
+# bindsym $mod+Shift+c exec echo -e "option 1\noption 2\noption 3" | rofi -dmenu
+bindsym $mod+Shift+c exec --no-startup-id ~/.config/polybar/polybar-theme-selector.sh
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)

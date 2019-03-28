@@ -75,6 +75,14 @@ modified_icon=
 staged_icon=
 commits_prompt="  $yadm_icon $behind $behind_icon $ahead $ahead_icon "
 
+# TODO: fix this, not sure how to hand parameters to this script from polybar
+if [[ $1 == true ]]; then
+    arrow=" "
+else
+    arrow=""
+fi
+
+
 
 function color {
     echo "%{B${1}}%{F${2}}${3}%{B-}%{F-}"
@@ -95,16 +103,16 @@ fi
 if [[ $staged != "0" || $modified != "0" ]]; then
 
     bg=$nord13
-    staged_prompt=$(color "${nord13}" "${nord1}" " $staged_icon $staged $modified_icon $modified  $no ")$(color "${nord0}" "${nord13}" " ")
+    staged_prompt=$(color "${nord13}" "${nord1}" " $staged_icon $staged $modified_icon $modified  $no ")$(color "${nord0}" "${nord13}" $arrow)
 else
     bg=$nord14
-    staged_prompt=$(color "${nord14}" "${nord1}" " $staged_icon $staged $modified_icon $modified  $yes ")$(color "${nord0}" "${nord14}" " ")
+    staged_prompt=$(color "${nord14}" "${nord1}" " $staged_icon $staged $modified_icon $modified  $yes ")$(color "${nord0}" "${nord14}" $arrow)
 fi
 
 if [[ $bg == $fg ]]; then
     separator=$(color "${bg}" "${nord1}" " ")
 else
-    separator=$(color "${bg}" "${fg}" " ")
+    separator=$(color "${bg}" "${fg}" $arrow)
 fi
 
 echo $commits_prompt${separator}$staged_prompt
