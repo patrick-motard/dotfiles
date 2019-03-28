@@ -1,0 +1,401 @@
+[bar/base]
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+[colors]
+# include-file = $HOME/.config/polybar/nord/colors
+background = ${colors.nord0}
+background-alt = ${colors.nord9}
+foreground = ${colors.nord4}
+foreground-alt = ${colors.nord4}
+secondary = ${colors.nord0}
+alert = ${colors.nord14}
+
+;;=========================================================;;
+;;                                                         ;;
+;;                           BARS                          ;; 
+;;                                                         ;;
+;;=========================================================;;
+[bar/main]
+inherit = bar/base
+monitor = ${env:MONITOR_MAIN}
+fixed-center = true
+padding-left = 0
+padding-right = 0
+module-margin-left = 0
+module-margin-right = 0
+modules-left = i3 -i3
+modules-center = 
+modules-right =  filesystem  -volume2 -volume alsa-switch pulseaudio-tail -memory2 -memory memory -cpu2 -cpu cpu -temp2 -temp temperature -time2 -time time -calendar2 -calendar calendar 
+
+
+[bar/left.bottom]
+inherit = bar/base
+monitor = ${env:MONITOR_LEFT}
+modules-right = -dropbox dropbox-watcher -time3 time
+bottom=true
+
+
+[bar/main.bottom]
+inherit = bar/base
+monitor = ${env:MONITOR_MAIN}
+bottom = true
+modules-left = yadm-checker.sh
+modules-right = nord.arrow.0-10 updates-arch nord.arrow.10-2 dropbox-watcher
+modules-center = 
+tray-position = right
+tray-background = ${colors.nord2}
+
+
+[bar/right]
+inherit = bar/base
+monitor = ${env:MONITOR_RIGHT}
+bottom = false
+fixed-center = true
+modules-left = i3 
+modules-center = 
+modules-right = 
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+[bar/left]
+inherit = bar/base
+monitor = ${env:MONITOR_LEFT}
+height = 30
+
+padding-left = 0
+padding-right = 0
+
+module-margin-left = 0
+module-margin-right = 0
+
+modules-left = 
+modules-center = 
+modules-right =  i3 
+
+;;=========================================================;;
+;;                                                         ;;
+;;                      MODULES                            ;;
+;;                                                         ;;
+;;=========================================================;;
+
+[module/]
+type = custom/text
+content = %{F#FFB5BD68  B#011D32 } 
+
+[module/-red-black]
+type = custom/text
+content = "%{F#3B4252 B#BF616A}  "
+
+[module/-i3]
+type = custom/text
+content-foreground = ${colors.nord4}
+content = 
+
+[module/-i3]
+type = custom/text
+content-background = ${colors.nord0}
+content-foreground = ${colors.nord1}
+content = "  "
+
+[module/-dropbox]
+type = custom/text
+content-foreground = ${colors.nord2}
+content-background = ${colors.nord0}
+content = 
+
+[module/]
+type = custom/text
+content = %{F#3B4252}
+
+[module/-volume]
+type = custom/text
+content-foreground = ${colors.nord8}
+content-background = ${colors.nord3}
+content = ""
+
+[module/-volume2]
+type = custom/text
+content-foreground = ${colors.nord3}
+content-background = ${colors.nord1}
+content = ""
+
+[module/nord.arrow.10-2]
+type = custom/text
+content-foreground = ${colors.nord2}
+content-background = ${colors.nord10}
+content = ""
+
+[module/nord.arrow.0-10]
+type = custom/text
+content-foreground = ${colors.nord10}
+content-background = ${colors.nord0}
+content = ""
+
+[module/-2]
+type = custom/text
+content = "%{F#5E81AC} "
+
+[module/-calendar]
+type = custom/text
+content-foreground = ${colors.nord2}
+content-background = ${colors.nord8}
+content = ""
+
+[module/-calendar2]
+type = custom/text
+content-foreground = ${colors.nord8}
+content-background = ${colors.nord10}
+content = ""
+
+[module/-time]
+type = custom/text
+content-foreground = ${colors.nord10}
+content-background = ${colors.nord9}
+content = ""
+
+[module/-time2]
+type = custom/text
+content-foreground = ${colors.nord9}
+content-background = ${colors.nord8}
+content = ""
+
+[module/-time3]
+type = custom/text
+content-foreground = ${colors.nord10}
+content-background = ${colors.nord2}
+content = ""
+
+[module/-temp]
+type = custom/text
+content-foreground = ${colors.nord8}
+content-background = ${colors.nord4}
+content = ""
+
+[module/-temp2]
+type = custom/text
+content-foreground = ${colors.nord4}
+content-background = ${colors.nord3}
+content = ""
+
+[module/-cpu]
+type = custom/text
+content-foreground = ${colors.nord3}
+content-background = ${colors.nord4}
+content = ""
+
+[module/-memory]
+type = custom/text
+content-foreground = ${colors.nord2}
+content-background = ${colors.nord4}
+content = ""
+
+[module/-memory2]
+type = custom/text
+content-foreground = ${colors.nord4}
+content-background = ${colors.nord8}
+content = ""
+
+[module/]
+type = custom/text
+format-background = ${colors.nord2}
+format-foreground = ${colors.nord1}
+content = 
+
+[module/-cpu2]
+type = custom/text
+content-foreground = ${colors.nord4}
+content-background = ${colors.nord2}
+content = ""
+; 
+; 
+; 
+; 
+; 
+
+
+[module/dropbox-watcher]
+type = custom/script
+exec = isrunning_dropbox.sh
+interval = 5
+click-left = dropbox-isrunning.sh --toggle
+format-background = ${colors.nord2}
+
+[module/updates-arch]
+type = custom/script
+exec = ~/.local/bin/tools/check_for_arch_updates
+format-foreground = ${colors.nord4}
+format-background = ${colors.nord10}
+format-padding = 1
+interval = 180
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+mount-0 = /
+label-mounted-background = ${colors.nord1}
+label-mounted-foreground = ${colors.foreground}
+label-mounted =  " %{F#81A1C1}%{F-} %mountpoint% %percentage_used%% "
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground-alt}
+
+[module/i3]
+pin-workspaces = true
+type = internal/i3
+enable-click = true
+enable-scroll = false
+wrapping-scroll = false
+reverse-scroll = false
+fuzzy-match = true
+format = <label-mode><label-state>
+label-mode = %mode%
+label-mode-background = ${colors.nord11}
+label-mode-foreground = ${colors.nord4}
+label-focused-foreground = ${colors.nord2}
+label-focused-background = ${colors.background-alt}
+label-focused-padding-right = 1
+; visible is the focused workspace on non focused monitor, confusing, i know. :)
+label-visible-padding-right =1
+label-visible-background=${colors.nord3}
+label-unfocused-foreground = ${colors.nord4}
+label-unfocused-background = ${colors.nord1}
+label-unfocused-padding-left = 1
+label-unfocused-padding-right = 1
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-urgent-foreground = ${colors.nord4}
+label-urgent-background = ${colors.nord11}
+label-urgent-padding = 1
+
+[module/mpd]
+type = internal/mpd
+format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
+
+icon-prev = 
+icon-stop = 
+icon-play = 
+icon-pause = 
+icon-next = 
+
+label-song-maxlen = 25
+label-song-ellipsis = true
+
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+label = %percentage:2%%
+
+format = <label> <ramp-coreload>
+format-background = ${colors.nord3}
+format-foreground = ${colors.nord4}
+format-padding = 2
+ramp-coreload-0 = %{F#5E81AC B#4C566A}▁
+ramp-coreload-1 = %{F#5E81AC B#4C566A}▂
+ramp-coreload-2 = %{F#81A1C1 B#4C566A}▃
+ramp-coreload-3 = %{F#81A1C1 B#4C566A}▄
+ramp-coreload-4 = %{F#81A1C1 B#4C566A}▅
+ramp-coreload-5 = %{F#88C0D0 B#4C566A}▆
+ramp-coreload-6 = %{F#88C0D0 B#4C566A}▇
+ramp-coreload-7 = %{F#88C0D0 B#4C566A}█
+
+
+[module/memory]
+type = internal/memory
+interval = 1
+format = <label> <bar-used>
+label = " %percentage_used%%" 
+format-padding = 2
+format-background = ${colors.nord2}
+format-foreground = ${colors.nord5}
+
+; Only applies if <bar-used> is used
+bar-used-indicator =
+bar-used-width = 10
+bar-used-foreground-0 = ${colors.nord10}
+bar-used-foreground-1 = ${colors.nord9}
+bar-used-foreground-2 = ${colors.nord8}
+bar-used-foreground-3 = ${colors.nord10}
+bar-used-fill = ▐
+bar-used-empty = ▐
+bar-used-empty-foreground = ${colors.nord3}
+
+
+[module/time]
+type = internal/date
+interval = 5
+time = %I:%M %p
+format-foreground = ${colors.nord5}
+format-background = ${colors.nord10}
+label = "   %time%  "
+
+[module/calendar]
+type = internal/date
+interval = 5
+date = %m/%d/%Y
+date-alt = " %Y-%m-%d"
+format-background = ${colors.nord2}
+format-foreground = ${colors.nord5}
+label = "   %date%  "
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 70
+format-background = ${colors.nord8}
+format-foreground = ${colors.nord0}
+format = <ramp> <label>
+format-warn = <ramp> <label-warn>
+label = "%temperature%  "
+label-warn = "%temperature%  "
+ramp-2 = "  "
+ramp-1 = "  "
+ramp-0 = "  "
+
+[module/powermenu]
+type = custom/menu
+expand-right = true
+format-spacing = 1
+label-open = 
+label-open-foreground = ${colors.secondary}
+label-close =  cancel
+label-close-foreground = ${colors.secondary}
+label-separator = |
+label-separator-foreground = ${colors.foreground-alt}
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = sudo reboot
+
+menu-2-0 = power off
+menu-2-0-exec = sudo poweroff
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+
+; [global/wm]
+; margin-top = 150
+; margin-bottom = 5
+
+; vim:ft=dosini
+; 
+; 
+; 
+; 
+; 

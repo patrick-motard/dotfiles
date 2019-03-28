@@ -54,8 +54,13 @@ notify-send "Polybar" "Bars initialized on ${mode} monitors."
 killall -q polybar
 
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
+# TODO set this theme somewhere else, probably via dot?
+if [[ -z $polybar_theme ]]; then
+    export polybar_theme=$HOME/.config/polybar/nord/config
+fi
 
 polybar -r main &
+polybar -r main2 &
 polybar -r right &
 polybar -r left &
 polybar -r main.bottom &

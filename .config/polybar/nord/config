@@ -1,0 +1,68 @@
+[bar/main2]
+; require monitor to be connected to load bar
+monitor-strict = true
+inherit = bar/base
+monitor = ${env:MONITOR_MAIN}
+modules-right = alsa-switch pulseaudio-tail time calendar
+modules-left = yadm-checker.sh true
+modules-center = i32
+background = #00000000
+bottom = true
+tray-position = none
+height = 4%
+padding = 10
+line-size = 4
+line-color = #f00
+; radius = 15
+
+; This creates a fake offset (floating bar)
+; offset causes i3 windows to overlap with the bar.
+; Not specifying border-color makes it transparent.
+border-size = 20
+; border-color = ${colors.primary-bg}
+
+
+[module/i32]
+pin-workspaces = true
+type = internal/i3
+enable-click = true
+enable-scroll = false
+wrapping-scroll = false
+reverse-scroll = false
+fuzzy-match = true
+format = <label-mode><label-state>
+label-mode = %mode%
+label-focused-foreground = ${colors.primary-fg}
+label-focused-background = ${colors.primary-bg}
+label-focused-padding-right = 2
+label-focused-padding-left = 1
+; visible is the focused workspace on non focused monitor, confusing, i know. :)
+label-visible-background=${colors.primary-bg}
+label-visible-foreground=${colors.primary-fg}
+label-visible-padding-right = 2
+label-visible-padding-left = 1
+label-unfocused-foreground = ${colors.secondary-fg}
+label-unfocused-background = ${colors.secondary-bg}
+label-unfocused-padding-right = 2
+label-unfocused-padding-left = 1
+label-urgent-foreground = ${colors.urgent-fg}
+label-urgent-background = ${colors.urgent-bg}
+label-urgent-padding = 1
+
+[module/calendar]
+type = internal/date
+interval = 5
+date = %m/%d/%Y
+date-alt = " %Y-%m-%d"
+format-background = ${colors.primary-bg}
+format-foreground = ${colors.primary-fg}
+label = "   %date%  "
+
+[module/time]
+type = internal/date
+interval = 5
+time = %I:%M %p
+format-foreground = ${colors.secondary-fg}
+format-background = ${colors.secondary-bg}
+label = "   %time%  "
+ vim:ft=dosini

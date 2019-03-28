@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+options=$(find ~/.config/polybar -mindepth 1 -maxdepth 1 -type d -and -not -name '*global*' -printf '%f\n')
+
+rofi_theme=${1:-$HOME/.config/rofi/config.rasi}
+theme=$(echo -e "${options}" | rofi -dmenu -config $rofi_theme)
+
+# make sure to not kill polybar theme didn't change (or wasnt chosen)
+if [[ -z $theme ]]; then
+    exit 1
+fi
+
+polybar_theme=~/.config/polybar/$theme/config sh ~/.config/polybar/launch.sh
