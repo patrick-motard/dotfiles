@@ -16,7 +16,7 @@ SYNOPSIS
 ARGUMENTS
        -q | --quiet
 
-          Don't send notification to dust.
+          Don't send notification to dunst.
 
 
        -s | --selected

@@ -61,7 +61,11 @@ if [[ -z $polybar_theme ]]; then
 fi
 
 polybar -r main &
-polybar -r main2 &
+polybar -r main.top.left &
+polybar -r main.top.middle &
+polybar -r main.top.right &
+polybar -r left.top.middle &
+polybar -r right.top.middle &
 polybar -r right &
 polybar -r left &
 polybar -r main.bottom &
