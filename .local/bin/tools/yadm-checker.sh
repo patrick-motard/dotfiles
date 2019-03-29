@@ -110,7 +110,7 @@ else
 fi
 
 if [[ $bg == $fg ]]; then
-    separator=$(color "${bg}" "${nord1}" " ")
+    separator=$(color "${bg}" "${nord1}" "")
 else
     separator=$(color "${bg}" "${fg}" $arrow)
 fi
