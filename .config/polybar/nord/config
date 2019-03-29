@@ -12,9 +12,6 @@ bottom = false
 tray-position = none
 height = 3%
 padding = 1
-line-size = 4
-line-color = #f00
-; radius = 15
 
 ; This creates a fake offset (floating bar)
 ; offset causes i3 windows to overlap with the bar.
@@ -24,6 +21,41 @@ border-top-size = 20
 border-left-size = 20
 border-right-size = 20
 
+[bar/left]
+; require monitor to be connected to load bar
+monitor-strict = true
+inherit = bar/base
+monitor = ${env:MONITOR_LEFT}
+modules-right = ;time
+modules-left = ;yadm-checker.sh true
+modules-center = time ;i3
+background = #00000000
+bottom = false 
+tray-position = none
+height = 3%
+padding = 1
+border-top-size = 20
+; border-bottom-size = 20 ; switch top/bottom based on 'bottom=false/true'
+border-left-size = 20
+border-right-size = 20
+
+[bar/right]
+; require monitor to be connected to load bar
+monitor-strict = true
+inherit = bar/base
+monitor = ${env:MONITOR_RIGHT}
+modules-right = ;time
+modules-left = ;yadm-checker.sh true
+modules-center = calendar ;i3
+background = #00000000
+bottom = false 
+tray-position = none
+height = 3%
+padding = 1
+border-top-size = 20
+; border-bottom-size = 20 ; switch top/bottom based on 'bottom=false/true'
+border-left-size = 20
+border-right-size = 20
 
 [bar/main.top.middle]
 ; require monitor to be connected to load bar
@@ -79,7 +111,7 @@ modules-left = yadm-checker.sh true
 modules-center = 
 border = 2
 width = 8.8%
-background = ${colors.nord13}
+background = ${colors.secondary-bg}
 bottom = false 
 tray-position = none
 height = 3%
