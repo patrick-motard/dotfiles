@@ -1,16 +1,17 @@
-[bar/main2]
+[bar/main]
 ; require monitor to be connected to load bar
 monitor-strict = true
 inherit = bar/base
 monitor = ${env:MONITOR_MAIN}
-modules-right = alsa-switch pulseaudio-tail time calendar
-modules-left = yadm-checker.sh true
-modules-center = i32
+modules-right = time
+; alsa-switch pulseaudio-tail time calendar
+modules-left = ;yadm-checker.sh true
+modules-center = ;i3
 background = #00000000
-bottom = true
+bottom = false 
 tray-position = none
-height = 4%
-padding = 10
+height = 3%
+padding = 1
 line-size = 4
 line-color = #f00
 ; radius = 15
@@ -18,11 +19,121 @@ line-color = #f00
 ; This creates a fake offset (floating bar)
 ; offset causes i3 windows to overlap with the bar.
 ; Not specifying border-color makes it transparent.
-border-size = 20
-; border-color = ${colors.primary-bg}
+border-top-size = 20
+; border-bottom-size = 20 ; switch top/bottom based on 'bottom=false/true'
+border-left-size = 20
+border-right-size = 20
 
 
-[module/i32]
+[bar/main.top.middle]
+; require monitor to be connected to load bar
+monitor-strict = true
+inherit = bar/base
+monitor = ${env:MONITOR_MAIN}
+modules-right = 
+modules-left = 
+modules-center = i3
+border = 2
+background = ${colors.secondary-bg}
+width = 25%
+bottom = false 
+tray-position = none
+height = 3%
+padding = 0
+override-redirect = true
+offset-x = 37.5%
+offset-y = 20
+border-size = 4
+border-color = ${colors.nord2}
+
+[bar/main.top.right]
+; require monitor to be connected to load bar
+monitor-strict = true
+inherit = bar/base
+monitor = ${env:MONITOR_MAIN}
+modules-right = alsa-switch pulseaudio-tail time calendar
+modules-left = 
+modules-center =
+border = 2
+background = ${colors.secondary-bg}
+width = 350
+bottom = false 
+tray-position = none
+height = 3%
+padding = 0
+override-redirect = true
+offset-x = 85.2%
+offset-y = 20
+border-size = 4
+border-color = ${colors.nord2}
+
+
+
+[bar/main.top.left]
+; require monitor to be connected to load bar
+monitor-strict = true
+inherit = bar/base
+monitor = ${env:MONITOR_MAIN}
+modules-right = 
+modules-left = yadm-checker.sh true
+modules-center = 
+border = 2
+width = 8.8%
+background = #00000000
+bottom = false 
+tray-position = none
+height = 3%
+padding = 0
+override-redirect = true
+offset-x = 30
+offset-y = 20
+border-size = 4
+border-color = ${colors.nord2}
+
+[bar/left.top.middle]
+; require monitor to be connected to load bar
+monitor-strict = true
+inherit = bar/base
+monitor = ${env:MONITOR_LEFT}
+modules-right = 
+modules-left = 
+modules-center = i3
+border = 2
+background = ${colors.secondary-bg}
+width = 25%
+bottom = false 
+tray-position = none
+height = 3%
+padding = 0
+override-redirect = true
+offset-x = 37.5%
+offset-y = 20
+border-size = 4
+border-color = ${colors.nord2}
+
+[bar/right.top.middle]
+; require monitor to be connected to load bar
+monitor-strict = true
+inherit = bar/base
+monitor = ${env:MONITOR_RIGHT}
+modules-right = 
+modules-left = 
+modules-center = i3
+border = 2
+background = ${colors.secondary-bg}
+width = 25%
+bottom = false 
+tray-position = none
+height = 3%
+padding = 0
+override-redirect = true
+offset-x = 37.5%
+offset-y = 20
+border-size = 4
+border-color = ${colors.nord2}
+
+
+[module/i3]
 pin-workspaces = true
 type = internal/i3
 enable-click = true

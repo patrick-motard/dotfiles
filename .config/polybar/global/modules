@@ -17,6 +17,7 @@ scroll-up = volume up 3
 scroll-down = volume down 3
 format-padding = 1
 
+
 [module/yadm-checker.sh]
 type = custom/script
 interval=10
