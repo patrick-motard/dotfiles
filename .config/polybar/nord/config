@@ -3,7 +3,7 @@
 monitor-strict = true
 inherit = bar/base
 monitor = ${env:MONITOR_MAIN}
-modules-right = time
+modules-right = empty
 ; alsa-switch pulseaudio-tail time calendar
 modules-left = ;yadm-checker.sh true
 modules-center = ;i3
@@ -26,9 +26,9 @@ border-right-size = 20
 monitor-strict = true
 inherit = bar/base
 monitor = ${env:MONITOR_LEFT}
-modules-right = ;time
-modules-left = ;yadm-checker.sh true
-modules-center = time ;i3
+modules-right = 
+modules-left = 
+modules-center = empty
 background = #00000000
 bottom = false 
 tray-position = none
@@ -44,9 +44,9 @@ border-right-size = 20
 monitor-strict = true
 inherit = bar/base
 monitor = ${env:MONITOR_RIGHT}
-modules-right = ;time
-modules-left = ;yadm-checker.sh true
-modules-center = calendar ;i3
+modules-right = 
+modules-left = 
+modules-center = empty
 background = #00000000
 bottom = false 
 tray-position = none
@@ -208,4 +208,16 @@ time = %I:%M %p
 format-foreground = ${colors.secondary-fg}
 format-background = ${colors.secondary-bg}
 label = "   %time%  "
- vim:ft=dosini
+
+; [module/empty] is used in [bar/main]. It doesn't output
+; anything. [bar/main] is meant to be an empty bar to provide
+; transparent padding for [bar/main.top.middle]. Polybar bars
+; require at least one module to be specified or the bar will
+; not render.
+; It is also used by [bar/right|left] for the same purpose.
+[module/empty]
+type = custom/script
+exec = "/usr/bin/env sh -c echo ''"
+
+; formatting
+vim:ft=dosini
