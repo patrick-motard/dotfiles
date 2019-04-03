@@ -89,7 +89,8 @@ listen() {
         muted=$(volume status | awk '/^muted/ {print $2}')
         [[ $(dot sound port) == $speakers ]] && icon="" || icon=""
         [[ $(volume status | awk '/^muted/ {print $2}') == true ]] && colors="%{ F#$mute_fg B#$mute_bg }" || colors="%{ F#$fg B#$bg }"
-        echo "$colors $icon"
+        # the expra space on the left acts as a pad-left: 1
+        echo "$padleft$colors $icon"
         sleep 0.5 &
         wait
     done
@@ -135,6 +136,9 @@ while test $# -gt 0; do
         --fg)
             fg=$2
             shift;;
+        --padleft)
+            padleft=$2
+            shift;;
         \?)
             echo "Invalid option: -$OPTARG" >&2
             exit 1;;
@@ -143,5 +147,8 @@ while test $# -gt 0; do
     esac
     shift
 done
+if [[ -z $padleft ]]; then
+    padleft=""
+fi
 
 listen
