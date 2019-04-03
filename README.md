@@ -242,6 +242,9 @@ probably python. move dependencies to list files. have core packages and non cor
 - [ ] better titles for rofi modes
 - [ ] better/other rofi nord themes
 - [ ] different zsh themes
+- [ ] dynamicly load/set width of nord polybar i3 bar
+- [ ] custom firefox home page
+
 # Unanswered Questions
 
 Things I want to know but didn't have time to look into when I thought of it.
