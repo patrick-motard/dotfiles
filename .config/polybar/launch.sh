@@ -57,6 +57,8 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 # TODO set this theme somewhere else, probably via dot?
 if [[ -z $polybar_theme ]]; then
+
+    i3-msg gaps top all set 80
     export polybar_theme=$HOME/.config/polybar/nord/config
 fi
 
