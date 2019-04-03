@@ -238,6 +238,10 @@ examples of problems it could solve:
 8. refactor install script to be written in another language
 probably python. move dependencies to list files. have core packages and non core packages. have commands to add and remove packages from both list files and os.
 
+- [ ] conky + i3gaps (left/right/bottom/etc)
+- [ ] better titles for rofi modes
+- [ ] better/other rofi nord themes
+- [ ] different zsh themes
 # Unanswered Questions
 
 Things I want to know but didn't have time to look into when I thought of it.
@@ -266,3 +270,4 @@ Some things I'd like snippets for:
 - rofi based password manager for lastpass
 
 - script for adding and removing packages from ~/.config/dotfiles/arch-packages/pacman
+
