@@ -15,39 +15,33 @@ volume_mute() {
     pactl set-sink-mute $sink toggle
 }
 
-volume_print() {
-    echo $(volume get)
-
-    # if [ "$muted" = true ]; then
-    #     echo "#1 --"
-    # else
-        # volume=$(pamixer --sink $sink --get-volume)
-        # echo $volume
-
-        # if [ "$volume" -lt 50 ]; then
-        #     echo "#2 $volume %"
-        # else
-        #     echo "#3 $volume %"
-        # fi
-    # fi
-}
 
 listen() {
     while true
     do
-        volume get
+        # the extra space on the right acts like a 'pad-right: 1'
+        echo "$(volume get)$padright"
         sleep 0.1 &
         wait
     done
 }
-
-case "$1" in
-    --up)
-        volume_up;;
-    --down)
-        volume_down;;
-    --mute)
-        volume_mute;;
-    *)
-        listen;;
-esac
+while test $# -gt -1; do
+	  case "$1" in
+        --up)
+            volume_up;;
+        --down)
+            volume_down;;
+        --mute)
+            volume_mute;;
+        --padright)
+            padright=$2
+            shift;;
+        *)
+            echo 'got here'
+            if [[ -z $padright ]]; then
+                padright=""
+            fi
+            listen;;
+    esac
+    shift
+done

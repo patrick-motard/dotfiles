@@ -28,19 +28,17 @@ modules-right = alsa-switch pulseaudio-tail time calendar
 modules-left = 
 modules-center =
 border = 2
-background = ${colors.secondary-bg}
-width = 350
+background = ${colors.secondary-fg}
+width = 365
 bottom = false 
 tray-position = none
 height = 3%
 padding = 0
 override-redirect = true
-offset-x = 85.2%
+offset-x = 84.5%
 offset-y = 20
 border-size = 4
 border-color = ${colors.nord2}
-
-
 
 [bar/main.top.left]
 ; require monitor to be connected to load bar
@@ -150,15 +148,22 @@ format-foreground = ${colors.secondary-fg}
 format-background = ${colors.secondary-bg}
 label = "   %time%  "
 
-; [module/empty] is used in [bar/main]. It doesn't output
-; anything. [bar/main] is meant to be an empty bar to provide
-; transparent padding for [bar/main.top.middle]. Polybar bars
-; require at least one module to be specified or the bar will
-; not render.
-; It is also used by [bar/right|left] for the same purpose.
-[module/empty]
+[module/alsa-switch]
 type = custom/script
-exec = "/usr/bin/env sh -c echo ''"
+click-left = ~/.local/bin/tools/polybar_alsa_module --switch
+exec = ~/.local/bin/tools/polybar_alsa_module --mutefg "BF616A" --mutebg "81A1C1" --bg "81A1C1" --fg "3B4252" --padleft " "
+tail = true
+
+[module/pulseaudio-tail]
+type = custom/script
+exec = ~/.local/bin/tools/pulseaudio-tail.sh --padright " "
+tail = true
+click-right = exec pavucontrol &
+click-left = mute_toggle
+scroll-up = volume up 3
+scroll-down = volume down 3
+format-padding = 1
+
 
 ; formatting
 vim:ft=dosini

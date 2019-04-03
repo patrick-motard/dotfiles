@@ -324,6 +324,15 @@ bar-used-fill = ▐
 bar-used-empty = ▐
 bar-used-empty-foreground = ${colors.nord3}
 
+[module/pulseaudio-tail]
+type = custom/script
+exec = ~/.local/bin/tools/pulseaudio-tail.sh
+tail = true
+click-right = exec pavucontrol &
+click-left = mute_toggle
+scroll-up = volume up 3
+scroll-down = volume down 3
+format-padding = 1
 
 [module/time]
 type = internal/date
@@ -381,6 +390,13 @@ menu-2-0 = power off
 menu-2-0-exec = sudo poweroff
 menu-2-1 = cancel
 menu-2-1-exec = menu-open-0
+
+[module/alsa-switch]
+type = custom/script
+click-left = ~/.local/bin/tools/polybar_alsa_module --switch
+exec = ~/.local/bin/tools/polybar_alsa_module --mutefg "BF616A" --mutebg "88C0D0" --bg "88C0D0" --fg "3B4252"
+tail = true
+
 
 [settings]
 screenchange-reload = true
