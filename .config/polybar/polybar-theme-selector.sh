@@ -9,5 +9,12 @@ theme=$(echo -e "${options}" | rofi -dmenu -config $rofi_theme)
 if [[ -z $theme ]]; then
     exit 1
 fi
+if [[ $theme == 'nord' ]]; then
+
+    i3-msg gaps top all set 80
+else
+
+    i3-msg gaps top all set 10
+fi
 
 polybar_theme=~/.config/polybar/$theme/config sh ~/.config/polybar/launch.sh
