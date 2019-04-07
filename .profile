@@ -9,7 +9,7 @@ export GOPATH=~/code/go
 export PATH="$GOPATH/bin:$PATH"
 ## END GOLANG
 ## RUST export PATH=~/.cargo/bin:$PATH
-RUST_SRC_PATH=~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
+export RUST_SRC_PATH=~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
 ## end RUST
 
 ## Robo3t -mongo-client-
