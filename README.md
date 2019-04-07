@@ -85,7 +85,6 @@ probably python. move dependencies to list files. have core packages and non cor
 - [ ] different zsh themes
 - [ ] dynamicly load/set width of nord polybar i3 bar
 - [ ] custom firefox home page
-- [ ] clean up readme
 - [ ] album of screenshots/gifs showing features/workflows/appearance of desktop and applications
 - [ ] load polybar theme via dot cli
 
