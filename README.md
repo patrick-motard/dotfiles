@@ -15,9 +15,6 @@ Please see [the wiki](https://github.com/patrick-motard/dotfiles/wiki) for docum
 
 # Description
 
-
-# Description
-
 A keyboard based desktop environment that features:
 
 - Automatic installation & setup.
