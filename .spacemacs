@@ -41,9 +41,11 @@ values."
      ;; csv
      nginx
      html
+     neotree
      yaml
      ;; csharp
-     rust
+     (rust :variables
+           rust-format-on-save t)
      go
      ;; vimscript
      python
@@ -58,6 +60,8 @@ values."
      better-defaults
      emacs-lisp
      git
+     ;; (treemacs :variables
+               ;; treemacs-git-mode 'extended)
      (markdown :variables
                markdown-live-preview-engine 'vmd) ;; vmd is an npm package installed globally
      org
@@ -187,7 +191,7 @@ values."
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    ;; dotspacemacs-default-font '("Source Code Pro for Powerline"
    dotspacemacs-default-font '("Hack"
-                               :size 16
+                               :size 20
                                :weight normal
                                :width normal
                                :powerline-scale 1.2)
