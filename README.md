@@ -15,41 +15,13 @@ Please see [the wiki](https://github.com/patrick-motard/dotfiles/wiki) for docum
 
 # Description
 
-- Bar: `polybar` (or i3blocks)
-- Browser: `firefox` (or qutebrowser)
-- Compositor: `compton`
-- IRC Client: `weechat`
-- File Manager: `thunar` & `ranger`
-- Font: `Hack`
-- Program Launcher: `rofi`
-- Text Editor: `spacemacs` & `vim`
-- Terminal Emulator: `termite` & `oh-my-zsh`
-- Window Manager: `i3-gaps`
 
+# Description
 
-# Package List (not comprehensive) 
+A keyboard based desktop environment that features:
 
-- `yadm` dotfile manager
-- `nvm` node version manager via [zsh plugin](https://github.com/lukechilds/zsh-nvm)
-- `emacs` [spacemacs](https://github.com/syl20bnr/spacemacs)
-- `yadm` dotfile manager
-- `i3-gaps` window manager
-- `polybar` status line & bar for i3
-- `tumbler` enables thumbnail view of images for thunar
-- `termite` terminal ([repo link](https://github.com/thestinger/termite/))
-- `oh-my-zsh` & z shell
-- `feh` terminal based image viewer, also used for desktop backgrounds
-- `neovim`
-- `vundle` vim package manager
-- `ccat` colorized cat ([nixcraft](https://www.cyberciti.biz/howto/linux-unix-cat-command-with-colours/))
-- `exa` colorized ls written in rust ([nixcraft](https://www.cyberciti.biz/open-source/command-line-hacks/exa-a-modern-replacement-for-ls-written-in-rust-for-linuxunix/))
-- `tree` see tree folder/file structure from command line
-- `task` "Taskwarrior", a terminal based TODO list manager [see website](https://taskwarrior.org/)
-- `rtv` a terminal based reddit browser [see their github](https://github.com/michael-lazar/rtv)
-- `gtop` pretty neat terminal based visual `top`
-(many more undocumented)
-
-
+- Automatic installation & setup.
+- A full featured i3wm desktop environment.
 
 # Installation
 
