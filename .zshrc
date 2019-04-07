@@ -198,6 +198,7 @@ alias copy-monitors='xrandr -q | grep " connected" | awk "{print $"${1:-1}"}" OR
 
 alias homelab-up="docker stack deploy -c ~/code/homelab/docker-compose.yml homelab"
 alias homelab-down="docker stack rm homelab"
+alias homelab-status="docker service ls | grep homelab"
 
 
 ## CUSTOM KEY BINDINGS ##
