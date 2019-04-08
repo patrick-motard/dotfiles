@@ -374,7 +374,9 @@ assign [class="teams-for-linux"] $ws4
 # games
 assign [class="Steam"] $ws8
 assign [class="RimWorldLinux.x86_64"] $ws6
+assign [class="RocketLeague"] $ws6
 assign [class="dota2"] $ws6
 
 for_window [class="dota2"] fullscreen enable
+for_window [class="RocketLeague"] fullscreen enable
 for_window [class="RimWorldLinux.x86_64"] fullscreen enable
