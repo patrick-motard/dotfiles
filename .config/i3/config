@@ -1,6 +1,17 @@
 ## USEFUL COMMANDS:
 # xbindkeys -k  | gives you the key code for a pressed key or mouse button
 
+set $ws1 "1: "
+set $ws2 "2: "
+set $ws3 "3: /"
+set $ws4 "4: "
+set $ws5 "5: "
+set $ws6 "6: "
+set $ws7 "7:  "
+set $ws8 "8:  "
+set $ws9 "9: "
+set $ws0 "0: "
+
 #Needed for i3-gaps
 hide_edge_borders both
 for_window [class="^.*"] border pixel 4
@@ -10,6 +21,7 @@ gaps left   10
 gaps right  10
 gaps bottom 10
 
+workspace $ws4 gaps left 400
 # gaps outer 17
 
 ###################
@@ -60,7 +72,10 @@ client.urgent           $bg     $bg     $fg     $bg       $bg
 client.placeholder      $bg     $bg     $fg     $bg       $bg
 client.background $fg
 
+# alt key, main modifier
 set $mod Mod1
+# windows key, secondary (super) modifier
+set $sup Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -77,6 +92,9 @@ bindsym $mod+Shift+q kill
 
 # start rofi (a program launcher)
 bindsym $mod+d exec rofi -show drun
+# bindcode --release 133 exec rofi -show drun
+bindsym $sup+c exec conky
+
 
 # bindsym $mod+c exec zsh -c "rofi -show fb -modi fb:~/code/go/bin/dot"
 # bindsym $mod+c exec rofi --modi "DERP:dot" -show "DERP"
@@ -230,16 +248,6 @@ bindsym $mod+a focus parent
 # focus the chld container
 #bindsym $mod+d focus child
 
-set $ws1 "1: "
-set $ws2 "2: "
-set $ws3 "3: /"
-set $ws4 "4: "
-set $ws5 "5: "
-set $ws6 "6: "
-set $ws7 "7:  "
-set $ws8 "8:  "
-set $ws9 "9: "
-set $ws0 "0: "
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
