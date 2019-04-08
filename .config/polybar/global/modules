@@ -3,5 +3,13 @@ type = custom/script
 interval=10
 exec = ~/.local/bin/tools/yadm-checker.sh
 
+[module/updates-arch]
+type = custom/script
+exec = ~/.local/bin/tools/check_for_arch_updates
+format-foreground = ${colors.nord4}
+format-background = ${colors.nord10}
+format-padding = 1
+interval = 180
+
 ; vim:ft=dosini
 
