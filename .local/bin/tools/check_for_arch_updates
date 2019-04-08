@@ -1,7 +1,29 @@
 #!/usr/bin/env bash
 
-updates=$(checkupdates | wc -l)
+pac_updates=$(checkupdates | wc -l)
 
 aur_updates=$(trizen -Su --aur --quiet | wc -l)
 
-echo " $updates | $aur_updates"
+# This script is meant to be used in Polybar.
+# Polybar doesn't support min width for modules.
+# The width of the module is dependent on the number
+# of characters output. This module shows 2 sets of numbers
+# that range from 0 to 300+. The lines below pad both numbers
+# with spaces to ensure the number of characters is always 3 each.
+# Example:
+# Notice how these strings are different lengths.
+# "0 | 12"
+# "13 | 12"
+# "13 | 133"
+# After formating:
+# "  0 | 12 "
+# " 13 | 12 "
+# " 13 | 133"
+p_pac=$((3-${#pac_updates}))
+p_aur=$((3-${#aur_updates}))
+
+printf " "
+printf %' '3d "$p_pac"
+printf " | "
+# printf %' '3d "$p_aur"
+printf '%-3s' "$p_aur"
