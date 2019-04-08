@@ -200,6 +200,16 @@ alias homelab-up="docker stack deploy -c ~/code/homelab/docker-compose.yml homel
 alias homelab-down="docker stack rm homelab"
 alias homelab-status="docker service ls | grep homelab"
 
+function _update-aur-pkglist() {
+    trizen -Qeqm > ~/.config/dotfiles/arch-packages/aur && yadm diff ~/.config/dotfiles/arch-packages/aur
+}
+
+function _update-pac-pkglist() {
+    pacman -Qqen > ~/.config/dotfiles/arch-packages/pacman && yadm diff ~/.config/dotfiles/arch-packages/pacman
+}
+alias update-aur-pkglist=_update-aur-pkglist
+alias update-pac-pkglist=_update-pac-pkglist
+
 
 ## CUSTOM KEY BINDINGS ##
 ## zsh vi-mode settings
