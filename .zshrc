@@ -1,6 +1,3 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -8,19 +5,11 @@ export ZSH=$HOME/.oh-my-zsh
 # this must be loaded before the zsh-nvm plugin
 export NVM_AUTO_USE=true
 
-
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="agnoster"
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git
     docker
@@ -204,18 +193,18 @@ function generate_password() {
 }
 alias passgen=generate_password
 
-function _update-aur-pkglist() {
-    trizen -Qeqm > ~/code/dot-ansible/roles/pacman/files/aur-pkgs \
-            && yadm diff ~/.config/dotfiles/arch-packages/aur
-}
-
-function _update-pac-pkglist() {
-    pacman -Qqen > ~/code/dot-ansible/roles/pacman/files/pacman-pkgs \
-        && yadm diff ~/.config/dotfiles/arch-packages/pacman
-}
-alias update-aur-pkglist=_update-aur-pkglist
-alias update-pac-pkglist=_update-pac-pkglist
-
+#function _update-aur-pkglist() {
+#    trizen -Qeqm > ~/code/dot-ansible/roles/pacman/files/aur-pkgs \
+#            && yadm diff ~/.config/dotfiles/arch-packages/aur
+#}
+#
+#function _update-pac-pkglist() {
+#    pacman -Qqen > ~/code/dot-ansible/roles/pacman/files/pacman-pkgs \
+#        && yadm diff ~/.config/dotfiles/arch-packages/pacman
+#}
+#alias update-aur-pkglist=_update-aur-pkglist
+#alias update-pac-pkglist=_update-pac-pkglist
+#
 
 ## CUSTOM KEY BINDINGS ##
 ## zsh vi-mode settings
