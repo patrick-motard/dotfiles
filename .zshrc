@@ -199,13 +199,21 @@ alias copy-monitors='xrandr -q | grep " connected" | awk "{print $"${1:-1}"}" OR
 alias homelab-up="docker stack deploy -c ~/code/homelab/docker-compose.yml homelab"
 alias homelab-down="docker stack rm homelab"
 alias homelab-status="docker service ls | grep homelab"
+function generate_password() {
+    password=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c 32; echo;)
+    echo $password | pbcopy
+    echo "New password copied to clipboard."
+}
+alias passgen=generate_password
 
 function _update-aur-pkglist() {
-    trizen -Qeqm > ~/.config/dotfiles/arch-packages/aur && yadm diff ~/.config/dotfiles/arch-packages/aur
+    trizen -Qeqm > ~/code/dot-ansible/roles/pacman/files/aur-pkgs \
+            && yadm diff ~/.config/dotfiles/arch-packages/aur
 }
 
 function _update-pac-pkglist() {
-    pacman -Qqen > ~/.config/dotfiles/arch-packages/pacman && yadm diff ~/.config/dotfiles/arch-packages/pacman
+    pacman -Qqen > ~/code/dot-ansible/roles/pacman/files/pacman-pkgs \
+        && yadm diff ~/.config/dotfiles/arch-packages/pacman
 }
 alias update-aur-pkglist=_update-aur-pkglist
 alias update-pac-pkglist=_update-pac-pkglist
