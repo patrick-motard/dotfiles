@@ -23,7 +23,8 @@ p_pac=$((3-${#pac_updates}))
 p_aur=$((3-${#aur_updates}))
 
 printf " "
-printf %' '3d "$p_pac"
+printf %' '"$p_pac"d "$pac_updates"
 printf " | "
 # printf %' '3d "$p_aur"
-printf '%-3s' "$p_aur"
+printf %' '"$p_aur"d "$aur_updates"
+# printf '%-3s' "$p_aur"
