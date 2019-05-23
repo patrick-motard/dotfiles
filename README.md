@@ -24,6 +24,8 @@ A keyboard based desktop environment that features:
 
 This project uses [YADM](https://thelocehiliosan.github.io/yadm/), a dotfile manager that employs git. With YADM you can start with a new repo, or clone an existing repo. Both approachs are explained in depth on the YADM website's [getting started](https://thelocehiliosan.github.io/yadm/docs/getting_started) section. 
 
+**NOTICE:** Antergos was previously recommended as the easiest base install of Arch linux for this project. Antergos is no longer being maintained. For now, installing Arch from scratch is recommend. It's not that bad. :)
+
 1. Fork this repo (or clone this repo directly and change it's upstream to your fork after install is done)
 2. Install Arch linux ([here's a good tutorial video](https://www.youtube.com/watch?v=iF7Y8IH5A3M&list=PL5IqGaS7KgO1XKpQhoValBSmRbO4s16rI&index=5&t=0s) that gives you a working system in < 20 min. Stop following along before he installs KDE. You don't need a desktop environment.)
 4. Follow the instructions outlined in the [Installation Page](https://github.com/patrick-motard/dotfiles/wiki/Installation) in the wiki.
