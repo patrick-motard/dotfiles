@@ -49,3 +49,4 @@ fi
 /usr/bin/amixer -c 0 sset "Auto-Mute Mode" Disabled
 
 exec i3
+/usr/bin/dropbox &
