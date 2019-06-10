@@ -21,11 +21,13 @@ work_desktop="DVI-I-1 DVI-D-0 "
 # work_desktop="DVI-I-1 DP-1 DVI-D-0 "
 work_laptop="VGA-1 "
 home_desktop="DVI-D-0 HDMI-0 DP-4 "
+home_desktop="DVI-D-0 DP-4 "
 
 function export_monitor_vars() {
     export MONITOR_LEFT=$1
     export MONITOR_MAIN=$2
     export MONITOR_RIGHT=$3
+    notify-send $MONITOR_MAIN
 }
 
 function set_monitor_vars() {
@@ -40,7 +42,8 @@ function set_monitor_vars() {
             mode="work laptop"
             ;;
         $home_desktop )
-            export_monitor_vars "HDMI-0" "DP-4" "DVI-D-0"
+            # export_monitor_vars "HDMI-0" "DP-4" "DVI-D-0"
+            export_monitor_vars "" "DP-4" "DVI-D-0"
             mode="home desktop"
             ;;
         * )
@@ -68,6 +71,7 @@ polybar -r left &
 polybar -r main.top.left &
 polybar -r main.top.middle &
 polybar -r main.top.right &
+polybar -r main.bottom.middle &
 polybar -r left.top.middle &
 polybar -r right.top.middle &
 polybar -r main.bottom &
