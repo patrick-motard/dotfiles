@@ -46,7 +46,9 @@ values."
      ;; csharp
      (rust :variables
            rust-format-on-save t)
-     go
+     (go :variables
+         go-tab-width 4
+         go-format-before-save t)
      ;; vimscript
      python
      ;; ----------------------------------------------------------------
