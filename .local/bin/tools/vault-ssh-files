@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-if [[ -z $2 ]]; then
+if [[ -z $1 ]]; then
     echo "enter a key name"
     exit 1
 fi
