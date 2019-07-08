@@ -16,4 +16,4 @@ else
     i3-msg gaps top all set 10
 fi
 
-polybar_theme=~/.config/polybar/$theme/config sh ~/.config/polybar/launch.sh
+polybar_theme=~/.config/polybar/themes/$theme/config sh ~/.config/polybar/launch.sh
