@@ -377,7 +377,7 @@ assign [class="Firefox"] $ws3
 
 
 assign [class="ckb-next"] $ws9
-assign [class="teams-for-linux"] $ws4
+assign [class="Teams for Linux"] $ws4
 
 # games
 assign [class="Steam"] $ws8
