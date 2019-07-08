@@ -50,7 +50,7 @@ modules-left = yadm-checker.sh updates-arch
 modules-center = 
 border = 2
 width = 13.5%
-background = ${colors.secondary-bg}
+background = ${colors.nord10}
 bottom = false 
 tray-position = none
 height = 3%
@@ -60,6 +60,7 @@ offset-x = 30
 offset-y = 20
 border-size = 4
 border-color = ${colors.nord2}
+
 
 [bar/left.top.middle]
 ; require monitor to be connected to load bar
