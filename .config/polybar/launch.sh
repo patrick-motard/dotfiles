@@ -62,7 +62,7 @@ while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 if [[ -z $polybar_theme ]]; then
 
     i3-msg gaps top all set 10
-    export polybar_theme=$HOME/.config/polybar/nord-arrow/config
+    export polybar_theme=$HOME/.config/polybar/themes/nord-arrow/config
 fi
 
 polybar -r main &
