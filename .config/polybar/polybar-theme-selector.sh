@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-options=$(find ~/.config/polybar -mindepth 1 -maxdepth 1 -type d -and -not -name '*global*' -printf '%f\n')
-
+options=$(find ~/.config/polybar/themes -mindepth 1 -maxdepth 1 -type d -and -not -name '*global*' -printf '%f\n')
 rofi_theme=${1:-$HOME/.config/rofi/config.rasi}
 theme=$(echo -e "${options}" | rofi -dmenu -config $rofi_theme)
 
