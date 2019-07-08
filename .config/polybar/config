@@ -1,8 +1,8 @@
-include-file = $HOME/.config/polybar/global/modules
+include-file = $HOME/.config/polybar/themes/global/modules
 include-file = $polybar_theme
 
 [colors]
-include-file = $HOME/.config/polybar/nord/colors
+include-file = $HOME/.config/polybar/themes/nord/colors
 
 [bar/base]
 font-0 = Powerline Extra Symbols:size=19;4
