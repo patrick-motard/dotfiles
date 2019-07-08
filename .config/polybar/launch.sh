@@ -21,7 +21,7 @@ work_desktop="DVI-I-1 "
 # work_desktop="DVI-I-1 DP-1 DVI-D-0 "
 work_laptop="VGA-1 "
 home_desktop="DVI-D-0 HDMI-0 DP-4 "
-home_desktop="DVI-D-0 DP-4 "
+# home_desktop="DVI-D-0 DP-4 "
 
 function export_monitor_vars() {
     export MONITOR_LEFT=$1
@@ -42,8 +42,8 @@ function set_monitor_vars() {
             mode="work laptop"
             ;;
         $home_desktop )
-            # export_monitor_vars "HDMI-0" "DP-4" "DVI-D-0"
-            export_monitor_vars "" "DP-4" "DVI-D-0"
+            export_monitor_vars "HDMI-0" "DP-4" "DVI-D-0"
+            # export_monitor_vars "" "DP-4" "DVI-D-0"
             mode="home desktop"
             ;;
         * )
