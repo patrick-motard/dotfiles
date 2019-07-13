@@ -42,7 +42,7 @@ function set_monitor_vars() {
             mode="work laptop"
             ;;
         $home_desktop )
-            export_monitor_vars "HDMI-0" "DP-4" "DVI-D-0"
+            export_monitor_vars "DP-4" "DVI-D-0" "HDMI-0"
             # export_monitor_vars "" "DP-4" "DVI-D-0"
             mode="home desktop"
             ;;
