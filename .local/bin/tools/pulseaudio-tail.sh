@@ -37,7 +37,6 @@ while test $# -gt -1; do
             padright=$2
             shift;;
         *)
-            echo 'got here'
             if [[ -z $padright ]]; then
                 padright=""
             fi
