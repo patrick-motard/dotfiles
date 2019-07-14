@@ -16,7 +16,7 @@ set $ws0 "0: "
 hide_edge_borders both
 for_window [class="^.*"] border pixel 4
 gaps inner  25 
-gaps top    80 
+gaps top    10 
 gaps left   10
 gaps right  10
 gaps bottom 10
@@ -104,19 +104,9 @@ bindsym $mod+Shift+y	resize shrink width 10 px or 10ppt
 bindsym $mod+Shift+u	resize shrink height 10 px or 10 ppt
 bindsym $mod+Shift+o	resize grow width 10 px or 10 ppt
 
-set $mode_randr " 1 |  2 (1080L-1440R) |  3 (1440L-1080R) |  4 (1440L-1440R) | 5 Home"
-bindsym  $mod+Shift+a mode $mode_randr
-mode $mode_randr {
-    bindsym 1 exec --no-startup-id sh -c "~/code/go/bin/dot 1440" && sh ~/.fehbg && sh ~/.config/polybar/launch.sh, mode "default"
-    bindsym 2 exec --no-startup-id sh -c "~/code/go/bin/dot 1080L-1440R" && sh ~/.fehbg && sh ~/.config/polybar/launch.sh, mode "default"
-    bindsym 3 exec --no-startup-id sh -c "~/code/go/bin/dot screen select 1440L-1080R" && sh ~/.fehbg && sh ~/.config/polybar/launch.sh, mode "default"
-    bindsym 4 exec --no-startup-id sh -c "~/code/go/bin/dot screen select 1440-HDMI0-L-1440-DP4-R" && sh ~/.fehbg && sh ~/.config/polybar/launch.sh, mode "default"
-    bindsym 5 exec --no-startup-id sh -c "~/code/go/bin/dot screen select home_1440-HDMI-L_1440-DP-0-R" && sh ~/.fehbg && sh ~/.config/polybar/launch.sh, mode "default"
+#TODO switch this mode for dot displays select
+# bindsym  $mod+Shift+a mode $mode_randr
 
-    ## back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
 
 # good example on how to work with modes:
 # http://christopherdecoster.com/posts/i3-wm/
@@ -277,7 +267,7 @@ bindsym $mod+Shift+0 move container to workspace $ws0
 # reload the configuration file
 # bindsym $mod+Shift+c reload
 # bindsym $mod+Shift+c exec echo -e "option 1\noption 2\noption 3" | rofi -dmenu
-bindsym $mod+Shift+c exec --no-startup-id ~/.config/polybar/polybar-theme-selector.sh
+bindsym $mod+Shift+c exec --no-startup-id dot polybar --select
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
@@ -337,7 +327,7 @@ bindsym $mod+Shift+f exec --no-startup-id "firefox --private-window duckduckgo.c
 
 ## startup applications
 exec_always --no-startup-id sh -c "~/code/go/bin/dot displays run"
-exec_always --no-startup-id ~/.config/polybar/launch.sh
+exec_always --no-startup-id dot polybar
 exec --no-startup-id ~/.local/bin/polybar-reload
 exec --no-startup-id dropbox
 exec --no-startup-id emacs
