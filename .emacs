@@ -1,17 +1,12 @@
-;; Set up MELPA
+;; Set up MELPA and package.el
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")     
 (require 'package)
-;; Any add to list for package-archives (to add marmalade or melpa) goes here
-(add-to-list 'package-archives 
-    '("MELPA" .
-      "http://melpa.milkbox.net/packages/"))
-(package-initialize);; End Set up MELPA
-      
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(package-initialize)
 
-(add-to-list 'load-path "~/.emacs.d/evil")
+;;(add-to-list 'default-frame-alist '(font . "Inconsolata-18"))
 (require 'evil)
 (evil-mode 1)
-
-(add-to-list 'default-frame-alist '(font . "Inconsolata-18"))
 
 ;; The value is in 1/10pt, so 100 will give you 10pt, etc. 
 ;; This doesn't seem to be necessary if the font size is specified with the font name.
@@ -28,17 +23,17 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 
-
-;; custom-* is controlled by melpa, leave it alone.
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (evil key-chord))))
+ '(package-selected-packages (quote (key-chord evil undo-tree))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+
