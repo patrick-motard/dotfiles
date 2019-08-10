@@ -1,4 +1,4 @@
-[module/yadm-checker.sh]
+[module/yadm-checker]
 type = custom/script
 interval=10
 exec = ~/.local/bin/tools/yadm-checker.sh
