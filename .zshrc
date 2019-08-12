@@ -61,6 +61,31 @@ function grep_i3_keybinds {
     cat "${HOME}"/.config/i3/config | awk '/^bindsym/ { print }' | grep "\$mod+$1 "
 }
 
+
+# start-emacs will create a symlink to whichever emacs folder you want to use.
+# Each of your emacs folders should be ~/.emacs.d.{name} where {name} is the name
+# of the configuration you want to launch. I have ~/.emacs.d.spacemacs and ~/.emacs.d.han.
+# ~/.emacs.d.spacemacs is what would typically be in ~/.emacs.d if you were using spacemacs normally.
+# ~/.emacs.d.han is my own personal emacs configuration that I use when I don't want to use spacemacs.
+# Note: This does not allow switching between multiple spacemacs configurations. It
+# also assumes that for non spacemacs configurations you are using init.el instead of ~/.emacs.
+# Note: If spacemacs, or your own personal configuration is on your system already, copy it to
+# a an ~/.emacs.d.{name} folder before calling this. Otherwise the symlink will fail.
+#
+# Usage: start-emacs spacemacs
+#        start-emacs han
+#        start-emacs {name of your configuration}
+function start-emacs {
+    [[ -d ~/.emacs.d && ! -L ~/.emacs.d ]] && {
+        echo -e "ERROR: ~/.emacs.d already exists and is a directory.\nCopy it to ~/.emacs.d.{name} before calling this command." 
+        return 1
+    }
+    # remove any existing symlink
+    unlink ~/.emacs.d 2&>/dev/null
+    ln -s ~/.emacs.d.$1 ~/.emacs.d
+    emacs &
+}
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
