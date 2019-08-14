@@ -65,7 +65,11 @@
 (require 'cycle-themes)
 (cycle-themes-mode)
 
-(require 'helm-config)
+(require 'ivy)
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq enable-refcursive-minibuffers t)
+
 
 ;; "ensure t" makes sure the package is accessible and downloads it if it's not.
 (use-package general :ensure t
@@ -76,7 +80,16 @@
    :non-normal-prefix "C-SPC"
    "TAB" '(switch-to-other-buffer :which-key "prev buffer")
    "b n" '(switch-to-next-buffer :which-key "next buffer")
-   "b p" '(switch-to-prev-buffer :which-key "previous buffer")))
+   "b p" '(switch-to-prev-buffer :which-key "previous buffer")
+   "f l" '(load-file :which-key "load file")
+   "w d" '(delete-window :which-key "delete window")
+   "w ;" '(evil-window-right :which-key "select window right")
+   "w l" '(evil-window-up :which-key "select window up")
+   "w k" '(evil-window-down :which-key "select window down")
+   "w j" '(evil-window-left :which-key "select window left")
+   "w /" '(split-window-horizontally :which-key "split window horizontally")
+   )
+  )
 
 
 
@@ -113,7 +126,7 @@
  '(objed-cursor-color "#C16069")
  '(package-selected-packages
    (quote
-    (use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
+    (ivy use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
  '(vc-annotate-background "#2E3440")
  '(vc-annotate-color-map
    (list
