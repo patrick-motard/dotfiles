@@ -1713,7 +1713,7 @@
 		   ("Bastien Guerry" . "bzg@gnu.org"))
 		  (:maintainer "Bastien Guerry" . "bzg@gnu.org"))])
  (relint .
-	 [(1 9)
+	 [(1 10)
 	  ((xr
 	    (1 13)))
 	  "Elisp regexp mistake finder" single

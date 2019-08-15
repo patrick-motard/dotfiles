@@ -73,10 +73,39 @@
 (require 'helm)
 (require 'helm-config)
 (helm-mode 1)
+;; Rebind tab in helm-find-files to complete the selection (instead of enter).
+(define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
+(define-key helm-map (kbd "<tab>") #'helm-execute-persistent-action)
+;; Since tab is 'helm-select-action', switch that to C-z so we can still call it.
+(define-key helm-map (kbd "C-z") #'helm-select-action)
 
 (require 'which-key)
 (which-key-mode)
+;; How quickly which-key's popup pops up. Setting to 0.0 is bad. Smaller = faster.
 (setq which-key-idle-delay 0.1)
+
+(require 'spaceline-config)
+(spaceline-spacemacs-theme)
+
+(require 'magit)
+(require 'evil-magit)
+
+;; languages
+;; golang
+(require 'go-mode)
+(add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+
+;; Ansible
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+
+;; irc
+(require 'circe)
+(setq circe-network-options
+      '(("Freenode"
+         :tls t
+         :nick "han_mfalcon"
+         :sasl-username "han_mfalcon")))
 
 ;; "ensure t" makes sure the package is accessible and downloads it if it's not.
 (use-package general :ensure t
@@ -85,19 +114,38 @@
    :states '(normal visual insert emacs)
    :prefix "SPC"
    :non-normal-prefix "C-SPC"
-   "TAB" '(switch-to-other-buffer :which-key "prev buffer")
+   ;; TODO: fiture out how to make tab switch between current and previous buffer
+   ;; with switch-to-prev-buffer it just rotates backwards
+   "TAB" '(switch-to-prev-buffer :which-key "prev buffer")
+   ;; TODO: figure out how to call M-x from SPC SPC
+   ;; "SPC" '(M-x :which-key "M-x")
 
    "b" '(:which-key "buffer")
+   "b b" '(helm-mini :which-key "helm-mini")
    "b n" '(switch-to-next-buffer :which-key "next buffer")
    "b p" '(switch-to-prev-buffer :which-key "previous buffer")
+   "b d" '(kill-this-buffer :which-key "delete buffer")
+
+   "c l" '(comment-or-uncomment-region :which "comment lines")
 
    "e" '(:which-key "emacs misc")
    "e i" '((lambda () (interactive) (find-file user-init-file)) :which-key "edit init.el")
    "e l" '((lambda () (interactive) (load-file user-init-file)) :which-key "load init.el")
+   "e t" '(:which-key "theme")
+   "e t n" '(cycle-themes :which-key "next theme")
+   "e p" '(:which-key "package")
+   "e p i" '(package-install :which-key "install")
+   "e p d" '(package-delete :which-key "delete")
+   "e p r" '(package-refresh-contents :which-key "refresh-contents")
 
    "f" '(:which-key "file")
    "f l" '(load-file :which-key "load file")
+   "f f" '(helm-find-files :which-key "find-file")
    "f s" '(save-buffer :which-key "save file")
+
+   "g" '(:which-key "git")
+   "g s" '(magit-status :which-key "status")
+   "g m" '(magit-dispatch :which-key "dispatch popup")
 
    "w" '(:which-key "window")
    "w d" '(delete-window :which-key "delete window")
@@ -141,7 +189,7 @@
  '(objed-cursor-color "#C16069")
  '(package-selected-packages
    (quote
-    (ivy use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
+    (circe evil-magit yaml-mode magit go-mode dash spaceline ivy use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
  '(vc-annotate-background "#2E3440")
  '(vc-annotate-color-map
    (list
