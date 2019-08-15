@@ -65,11 +65,18 @@
 (require 'cycle-themes)
 (cycle-themes-mode)
 
-(require 'ivy)
-(ivy-mode 1)
-(setq ivy-use-virtual-buffers t)
-(setq enable-refcursive-minibuffers t)
+;;(require 'ivy)
+;;(ivy-mode 1)
+;;(setq ivy-use-virtual-buffers t)
+;;(setq enable-refcursive-minibuffers t)
 
+(require 'helm)
+(require 'helm-config)
+(helm-mode 1)
+
+(require 'which-key)
+(which-key-mode)
+(setq which-key-idle-delay 0.1)
 
 ;; "ensure t" makes sure the package is accessible and downloads it if it's not.
 (use-package general :ensure t
@@ -79,9 +86,20 @@
    :prefix "SPC"
    :non-normal-prefix "C-SPC"
    "TAB" '(switch-to-other-buffer :which-key "prev buffer")
+
+   "b" '(:which-key "buffer")
    "b n" '(switch-to-next-buffer :which-key "next buffer")
    "b p" '(switch-to-prev-buffer :which-key "previous buffer")
+
+   "e" '(:which-key "emacs misc")
+   "e i" '((lambda () (interactive) (find-file user-init-file)) :which-key "edit init.el")
+   "e l" '((lambda () (interactive) (load-file user-init-file)) :which-key "load init.el")
+
+   "f" '(:which-key "file")
    "f l" '(load-file :which-key "load file")
+   "f s" '(save-buffer :which-key "save file")
+
+   "w" '(:which-key "window")
    "w d" '(delete-window :which-key "delete window")
    "w ;" '(evil-window-right :which-key "select window right")
    "w l" '(evil-window-up :which-key "select window up")
@@ -90,9 +108,6 @@
    "w /" '(split-window-horizontally :which-key "split window horizontally")
    )
   )
-
-
-
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
