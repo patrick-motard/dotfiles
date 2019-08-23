@@ -72,9 +72,9 @@ client.urgent           $bg     $bg     $fg     $bg       $bg
 client.placeholder      $bg     $bg     $fg     $bg       $bg
 client.background $fg
 
-# alt key, main modifier
+# windows key, main modifier
 set $mod Mod1
-# windows key, secondary (super) modifier
+# alt key, secondary (super) modifier
 set $sup Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -364,6 +364,7 @@ assign [class="Mysql-workbench-bin"] $ws5
 assign [class="Xfce4-terminal"] $ws2
 assign [class="HipChat"] $ws4
 assign [class="Firefox"] $ws3
+assign [class="firefox"] $ws3
 
 
 
