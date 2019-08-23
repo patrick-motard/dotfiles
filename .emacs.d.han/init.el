@@ -38,7 +38,7 @@
 ;; This doesn't seem to be necessary if the font size is specified with the font name.
 ;; I'll leave it here for reference.
 ;;(set-face-attribute 'default (selected-frame) :height 180)
-(add-to-list 'default-frame-alist '(font . "Inconsolata-18"))
+;;(add-to-list 'default-frame-alist '(font . "Inconsolata-18"))
 (global-display-line-numbers-mode)
 
 ;; Bootstrap `use-package'
@@ -46,6 +46,30 @@
   (package-refresh-contents) ; updage packages archive
   (package-install 'use-package)) ; and install the most recent version of use-package
 (require 'use-package)
+;; fetch list of packages available
+(unless package-archive-contents
+  (package-refresh-contents))
+;; package list
+(setq package-list '(
+    evil
+    key-chord
+    doom-themes
+    cycle-themes
+    magit
+    evil-magit
+    helm
+    which-key
+    go-mode
+    yaml-mode
+    circe
+    org
+    general
+    spaceline
+    org-jira))
+;; install missing packages
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
 
 (require 'evil)
 (evil-mode 1)
@@ -70,9 +94,9 @@
         doom-nord
         doom-city-lights
         doom-dracula
-	doom-nord-light
-	doom-solarized-light
-	doom-peacock))
+        doom-nord-light
+        doom-solarized-light
+        doom-peacock))
 
 ;; cl is required for cycle-themes, at least until
 ;; https://github.com/toroidal-code/cycle-themes.el/issues/4
