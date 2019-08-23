@@ -1,3 +1,19 @@
+;; TODO: org mode
+;; TODO: avy (goto-char, goto-word, goto-word-or-subword, goto-line)
+;; TODO: relative line numbers
+;; TODO: better commenting/uncommenting
+;; TODO: golang layer
+;; TODO: faster/better M-x
+;; TODO: major mode command exploring via ',' character
+;; TODO: magit better hotkeys for finishing commit buffer
+;; TODO: get evil keybinds working with help buffer (and others)
+;; TODO: jira mode
+;; TOOD: move to window by number
+;; TODO: explore kill ring
+;; TODO: load irc password from separate file or something more secure
+;; TODO: neotree
+;; TODO: helm swoop
+
 ;; This TLS setting fixes "failed to download 'gnu' archive" error.
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3") 
 
@@ -107,6 +123,19 @@
          :nick "han_mfalcon"
          :sasl-username "han_mfalcon")))
 
+;; jira
+(require 'org)
+;; # is shorthand for function
+(add-hook 'org-mode-hook #'toggle-word-wrap)
+(add-hook 'org-mode-hook #'(lambda ()
+                             ;; make the lines in the buffer wrap around the edges of the screen.
+                             ;; to press C-c q  or fill-paragraph ever again!
+                             (visual-line-mode)
+                             (org-indent-mode)))
+(require 'org-jira)
+(setq jiralib-url "https://portal.myparadigm.com/")
+;; (setq jiralib-url "https://wtsparadigm1.atlassian.net")
+
 ;; "ensure t" makes sure the package is accessible and downloads it if it's not.
 (use-package general :ensure t
   :config
@@ -127,6 +156,8 @@
    "b d" '(kill-this-buffer :which-key "delete buffer")
 
    "c l" '(comment-or-uncomment-region :which "comment lines")
+   "j" '(:which "jira")
+   "j i" '(org-jira-get-issues :which "get issues")
 
    "e" '(:which-key "emacs misc")
    "e i" '((lambda () (interactive) (find-file user-init-file)) :which-key "edit init.el")
@@ -189,7 +220,7 @@
  '(objed-cursor-color "#C16069")
  '(package-selected-packages
    (quote
-    (circe evil-magit yaml-mode magit go-mode dash spaceline ivy use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
+    (org-jira circe evil-magit yaml-mode magit go-mode dash spaceline ivy use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
  '(vc-annotate-background "#2E3440")
  '(vc-annotate-color-map
    (list
