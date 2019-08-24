@@ -38,7 +38,7 @@
 ;; This doesn't seem to be necessary if the font size is specified with the font name.
 ;; I'll leave it here for reference.
 ;;(set-face-attribute 'default (selected-frame) :height 180)
-;;(add-to-list 'default-frame-alist '(font . "Inconsolata-18"))
+(add-to-list 'default-frame-alist '(font . "Inconsolata-18"))
 (global-display-line-numbers-mode)
 
 ;; Bootstrap `use-package'
@@ -156,13 +156,17 @@
                              ;; to press C-c q  or fill-paragraph ever again!
                              (visual-line-mode)
                              (org-indent-mode)))
-(require 'org-jira)
-(setq jiralib-url "https://portal.myparadigm.com/")
-;; (setq jiralib-url "https://wtsparadigm1.atlassian.net")
+;; (require 'org-jira)
 
 ;; "ensure t" makes sure the package is accessible and downloads it if it's not.
 (use-package general :ensure t
   :config
+  (general-define-key
+    :states '(normal visual emacs)
+   "," (general-simulate-key "C-c"))
+  (general-define-key
+    :states '(normal visual insert emacs)
+   "C-," (general-simulate-key "M-x"))
   (general-define-key
    :states '(normal visual insert emacs)
    :prefix "SPC"
@@ -170,8 +174,8 @@
    ;; TODO: fiture out how to make tab switch between current and previous buffer
    ;; with switch-to-prev-buffer it just rotates backwards
    "TAB" '(switch-to-prev-buffer :which-key "prev buffer")
-   ;; TODO: figure out how to call M-x from SPC SPC
-   ;; "SPC" '(M-x :which-key "M-x")
+   "," (general-simulate-key "C-c")
+   ;; TODO: figure out how to call searchable M-x from SPC SPC
 
    "b" '(:which-key "buffer")
    "b b" '(helm-mini :which-key "helm-mini")
