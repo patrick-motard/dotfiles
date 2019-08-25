@@ -3,7 +3,6 @@
 ;; TODO: relative line numbers
 ;; TODO: better commenting/uncommenting
 ;; TODO: golang layer
-;; TODO: faster/better M-x
 ;; TODO: major mode command exploring via ',' character
 ;; TODO: magit better hotkeys for finishing commit buffer
 ;; TODO: get evil keybinds working with help buffer (and others)
@@ -60,6 +59,7 @@
     helm
     which-key
     go-mode
+    exec-path-from-shell
     yaml-mode
     circe
     org
@@ -113,6 +113,9 @@
 (require 'helm)
 (require 'helm-config)
 (helm-mode 1)
+;;(setq helm-mode-fuzzy-match t)
+;;(setq helm-completion-in-region-fuzzy-match t)
+(setq-default helm-M-x-fuzzy-match t)
 ;; Rebind tab in helm-find-files to complete the selection (instead of enter).
 (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
 (define-key helm-map (kbd "<tab>") #'helm-execute-persistent-action)
@@ -134,6 +137,7 @@
 ;; golang
 (require 'go-mode)
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+
 
 ;; Ansible
 (require 'yaml-mode)
@@ -158,6 +162,7 @@
                              (org-indent-mode)))
 ;; (require 'org-jira)
 
+
 ;; "ensure t" makes sure the package is accessible and downloads it if it's not.
 (use-package general :ensure t
   :config
@@ -175,7 +180,7 @@
    ;; with switch-to-prev-buffer it just rotates backwards
    "TAB" '(switch-to-prev-buffer :which-key "prev buffer")
    "," (general-simulate-key "C-c")
-   ;; TODO: figure out how to call searchable M-x from SPC SPC
+   "SPC" '(helm-M-x :which-key "helm-M-x")
 
    "b" '(:which-key "buffer")
    "b b" '(helm-mini :which-key "helm-mini")
@@ -196,6 +201,7 @@
    "e p i" '(package-install :which-key "install")
    "e p d" '(package-delete :which-key "delete")
    "e p r" '(package-refresh-contents :which-key "refresh-contents")
+   "e n" '((lambda () (interactive) (find-file "~/Dropbox/documents/notes/emacs.org")) :which-key "open notes")
 
    "f" '(:which-key "file")
    "f l" '(load-file :which-key "load file")
