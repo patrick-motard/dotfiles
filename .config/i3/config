@@ -21,7 +21,7 @@ gaps left   10
 gaps right  10
 gaps bottom 10
 
-workspace $ws4 gaps left 400
+# workspace $ws4 gaps left 400
 # gaps outer 17
 
 ###################
@@ -354,7 +354,6 @@ workspace $ws6 output $middle
 workspace $ws7 output $middle
 workspace $ws4 output $right
 
-
 ## assign applications to workspaces:
 ## NOTE: use xprop command to get WM_CLASS (second string value)
 assign [class="Google-chrome" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] $ws4
@@ -362,21 +361,22 @@ assign [class="Google-chrome"] $ws3
 assign [class="Emacs"] $ws1
 assign [class="Mysql-workbench-bin"] $ws5
 assign [class="Xfce4-terminal"] $ws2
-assign [class="HipChat"] $ws4
 assign [class="Firefox"] $ws3
 assign [class="firefox"] $ws3
-
-
-
 assign [class="ckb-next"] $ws9
+
+# chats
+assign [class="weechat"] $ws4
+assign [class="HipChat"] $ws4
 assign [class="Teams for Linux"] $ws4
+assign [class="teams-for-linux"] $ws4
 
 # games
 assign [class="Steam"] $ws8
 assign [class="RimWorldLinux.x86_64"] $ws6
 assign [class="RocketLeague"] $ws6
 assign [class="dota2"] $ws6
-
+assign [class="factorio"] $ws6
 for_window [class="dota2"] fullscreen enable
 for_window [class="RocketLeague"] fullscreen enable
 for_window [class="RimWorldLinux.x86_64"] fullscreen enable
