@@ -162,6 +162,13 @@
                              (org-indent-mode)))
 ;; (require 'org-jira)
 
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+	 ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
 
 ;; "ensure t" makes sure the package is accessible and downloads it if it's not.
 (use-package general :ensure t
@@ -254,7 +261,7 @@
  '(objed-cursor-color "#C16069")
  '(package-selected-packages
    (quote
-    (org-jira circe evil-magit yaml-mode magit go-mode dash spaceline ivy use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
+    (markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline ivy use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
  '(vc-annotate-background "#2E3440")
  '(vc-annotate-color-map
    (list
