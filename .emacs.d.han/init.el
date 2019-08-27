@@ -162,6 +162,19 @@
                              (org-indent-mode)))
 ;; (require 'org-jira)
 
+(use-package yasnippet                  ; Snippets
+  :ensure t
+  :config
+  (yas-global-mode))
+
+(use-package yasnippet-snippets         ; Collection of snippets
+  :ensure t)
+
+(use-package auto-complete
+  :ensure t)
+(use-package ansible
+  :ensure t)
+
 (use-package markdown-mode
   :ensure t
   :commands (markdown-mode gfm-mode)
@@ -261,7 +274,7 @@
  '(objed-cursor-color "#C16069")
  '(package-selected-packages
    (quote
-    (markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline ivy use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
+    (ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline ivy use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
  '(vc-annotate-background "#2E3440")
  '(vc-annotate-color-map
    (list
