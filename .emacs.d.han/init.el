@@ -14,15 +14,15 @@
 ;; TODO: helm swoop
 
 ;; This TLS setting fixes "failed to download 'gnu' archive" error.
-(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3") 
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 ;;(setq package-enable-at-startup nil) ;; dont load packages before startup
 
 ;; Set up MELPA, and the rest, via package.el
 (setq package-archives '(("org"       . "http://orgmode.org/elpa/")
-                         ("gnu"       . "http://elpa.gnu.org/packages/")
-                         ("melpa"     . "https://melpa.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")))
+			 ("gnu"       . "http://elpa.gnu.org/packages/")
+			 ("melpa"     . "https://melpa.org/packages/")
+			 ("marmalade" . "http://marmalade-repo.org/packages/")))
 (require 'package)
 (package-initialize)
 
@@ -32,8 +32,11 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+(add-hook 'before-save-hook 'whitespace-cleanup)
+;; activate shell mode for AUR PKGBUILD files
+(add-to-list 'auto-mode-alist'("\\PKGBUILD\\'" . shell-script-mode))
 
-;; The value is in 1/10pt, so 100 will give you 10pt, etc. 
+;; The value is in 1/10pt, so 100 will give you 10pt, etc.
 ;; This doesn't seem to be necessary if the font size is specified with the font name.
 ;; I'll leave it here for reference.
 ;;(set-face-attribute 'default (selected-frame) :height 180)
@@ -91,12 +94,12 @@
 
 (setq cycle-themes-theme-list
       '(doom-one
-        doom-nord
-        doom-city-lights
-        doom-dracula
-        doom-nord-light
-        doom-solarized-light
-        doom-peacock))
+	doom-nord
+	doom-city-lights
+	doom-dracula
+	doom-nord-light
+	doom-solarized-light
+	doom-peacock))
 
 ;; cl is required for cycle-themes, at least until
 ;; https://github.com/toroidal-code/cycle-themes.el/issues/4
@@ -147,19 +150,19 @@
 (require 'circe)
 (setq circe-network-options
       '(("Freenode"
-         :tls t
-         :nick "han_mfalcon"
-         :sasl-username "han_mfalcon")))
+	 :tls t
+	 :nick "han_mfalcon"
+	 :sasl-username "han_mfalcon")))
 
 ;; jira
 (require 'org)
 ;; # is shorthand for function
 (add-hook 'org-mode-hook #'toggle-word-wrap)
 (add-hook 'org-mode-hook #'(lambda ()
-                             ;; make the lines in the buffer wrap around the edges of the screen.
-                             ;; to press C-c q  or fill-paragraph ever again!
-                             (visual-line-mode)
-                             (org-indent-mode)))
+			     ;; make the lines in the buffer wrap around the edges of the screen.
+			     ;; to press C-c q  or fill-paragraph ever again!
+			     (visual-line-mode)
+			     (org-indent-mode)))
 ;; (require 'org-jira)
 
 (use-package yasnippet                  ; Snippets
@@ -180,7 +183,7 @@
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
 	 ("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
+	 ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
 ;; "ensure t" makes sure the package is accessible and downloads it if it's not.
@@ -193,9 +196,10 @@
     :states '(normal visual insert emacs)
    "C-," (general-simulate-key "M-x"))
   (general-define-key
-   :states '(normal visual insert emacs)
+   :keymaps '(normal visual insert emacs)
    :prefix "SPC"
    :non-normal-prefix "C-SPC"
+   "" nil
    ;; TODO: fiture out how to make tab switch between current and previous buffer
    ;; with switch-to-prev-buffer it just rotates backwards
    "TAB" '(switch-to-prev-buffer :which-key "prev buffer")
@@ -208,7 +212,10 @@
    "b p" '(switch-to-prev-buffer :which-key "previous buffer")
    "b d" '(kill-this-buffer :which-key "delete buffer")
 
-   "c l" '(comment-or-uncomment-region :which "comment lines")
+   "b m" '((lambda () (interactive) (switch-to-buffer "Messages") (evil-motion-state)) :which-key "messages buffer")
+
+   "c l" '(comment-line :which "comment line")
+   "c r" '(comment-region :which "comment region")
    "j" '(:which "jira")
    "j i" '(org-jira-get-issues :which "get issues")
 
