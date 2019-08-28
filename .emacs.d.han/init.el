@@ -34,7 +34,7 @@
 (scroll-bar-mode -1)
 (add-hook 'before-save-hook 'whitespace-cleanup)
 ;; activate shell mode for AUR PKGBUILD files
-(add-to-list 'auto-mode-alist'("\\PKGBUILD\\'" . shell-script-mode))
+(add-to-list 'auto-mode-alist'("PKGBUILD\\'" . shell-script-mode))
 
 ;; The value is in 1/10pt, so 100 will give you 10pt, etc.
 ;; This doesn't seem to be necessary if the font size is specified with the font name.
@@ -187,7 +187,7 @@
   :init (setq markdown-command "multimarkdown"))
 
 ;; "ensure t" makes sure the package is accessible and downloads it if it's not.
-(use-package general :ensure t
+ (use-package general :ensure t
   :config
   (general-define-key
     :states '(normal visual emacs)
@@ -239,12 +239,16 @@
    "g s" '(magit-status :which-key "status")
    "g m" '(magit-dispatch :which-key "dispatch popup")
 
+   "o" '(:which-key "org")
+   "o t" '(org-todo :which-key "todo")
+
    "w" '(:which-key "window")
    "w d" '(delete-window :which-key "delete window")
    "w ;" '(evil-window-right :which-key "select window right")
    "w l" '(evil-window-up :which-key "select window up")
    "w k" '(evil-window-down :which-key "select window down")
    "w j" '(evil-window-left :which-key "select window left")
+   "w s" '(split-window-vertically :which-key "split window vert")
    "w /" '(split-window-horizontally :which-key "split window horizontally")
    )
   )
