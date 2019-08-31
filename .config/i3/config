@@ -90,8 +90,10 @@ bindsym $mod+Return exec termite
 # kill focused window
 bindsym $mod+Shift+q kill
 
+bindsym $mod+Shift+s exec rofi-execute-script.sh
+bindsym $mod+i exec rofi-execute-script.sh
 # start rofi (a program launcher)
-bindsym $mod+d exec rofi -show drun
+bindsym $mod+d exec rofi -show drun 
 bindsym $mod+p exec rofi -modi lpass:rofi-lpass -show lpass
 # bindcode --release 133 exec rofi -show drun
 bindsym $sup+c exec conky
