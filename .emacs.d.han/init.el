@@ -13,6 +13,8 @@
 ;; TODO: neotree
 ;; TODO: helm swoop
 
+(setq user-emacs-directory "~/.emacs.d.han")
+(setq user-init-file "~/.emacs.d.han/init.el")
 ;; This TLS setting fixes "failed to download 'gnu' archive" error.
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
