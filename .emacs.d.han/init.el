@@ -37,6 +37,7 @@
 (add-hook 'before-save-hook 'whitespace-cleanup)
 ;; activate shell mode for AUR PKGBUILD files
 (add-to-list 'auto-mode-alist'("PKGBUILD\\'" . shell-script-mode))
+(global-set-key (kbd "RET") 'newline-and-indent)
 
 ;; The value is in 1/10pt, so 100 will give you 10pt, etc.
 ;; This doesn't seem to be necessary if the font size is specified with the font name.
@@ -70,14 +71,30 @@
     org
     general
     spaceline
+    evil-collection
     org-jira))
+;; TODO: remove this auto installing with use-package ensure: t
 ;; install missing packages
 (dolist (package package-list)
   (unless (package-installed-p package)
     (package-install package)))
+(require 'mu4e)
+(use-package winum
+  :ensure t
+  :init (winum-mode))
 
-(require 'evil)
-(evil-mode 1)
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  :config
+  (evil-mode 1))
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
 
 (require 'key-chord)
 (key-chord-mode 1)
@@ -147,6 +164,12 @@
 ;; Ansible
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+(add-hook 'yaml-mode-hook '(lambda () (setq yaml-indent-offset 2)))
+(add-hook 'yaml-mode-hook '(lambda () (setq tab-width 2)))
+(add-hook 'yaml-mode-hook '(lambda () (setq evil-shift-width 2)))
+;; enable ansible-mode whenever a yaml buffer is opened
+(add-hook 'yaml-mode-hook '(lambda () (ansible 1)))
+(add-hook 'yaml-mode-hook '(lambda () (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 
 ;; irc
 (require 'circe)
@@ -207,6 +230,16 @@
    "TAB" '(switch-to-prev-buffer :which-key "prev buffer")
    "," (general-simulate-key "C-c")
    "SPC" '(helm-M-x :which-key "helm-M-x")
+   "1" '(winum-select-window-1 :which-key "window #1")
+   "2" '(winum-select-window-2 :which-key "window #2")
+   "3" '(winum-select-window-3 :which-key "window #3")
+   "4" '(winum-select-window-4 :which-key "window #4")
+   "5" '(winum-select-window-5 :which-key "window #5")
+   "6" '(winum-select-window-6 :which-key "window #6")
+   "7" '(winum-select-window-7 :which-key "window #7")
+   "8" '(winum-select-window-8 :which-key "window #8")
+   "9" '(winum-select-window-9 :which-key "window #9")
+   "0" '(winum-select-window-0-or-10 :which-key "window #")
 
    "b" '(:which-key "buffer")
    "b b" '(helm-mini :which-key "helm-mini")
@@ -287,7 +320,8 @@
  '(objed-cursor-color "#C16069")
  '(package-selected-packages
    (quote
-    (ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline ivy use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
+    (winum evil-collection evil-mu4e ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline ivy use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
+ '(send-mail-function (quote mailclient-send-it))
  '(vc-annotate-background "#2E3440")
  '(vc-annotate-color-map
    (list
