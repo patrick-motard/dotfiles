@@ -162,7 +162,8 @@
 
 
 ;; Ansible
-(require 'yaml-mode)
+(use-package yaml-mode
+  :ensure t)
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 (add-hook 'yaml-mode-hook '(lambda () (setq yaml-indent-offset 2)))
 (add-hook 'yaml-mode-hook '(lambda () (setq tab-width 2)))
@@ -170,6 +171,8 @@
 ;; enable ansible-mode whenever a yaml buffer is opened
 (add-hook 'yaml-mode-hook '(lambda () (ansible 1)))
 (add-hook 'yaml-mode-hook '(lambda () (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+(use-package ansible-doc :ensure t)
+(add-hook 'yaml-mode-hook #'ansible-doc-mode)
 
 ;; irc
 (require 'circe)
@@ -194,15 +197,12 @@
   :ensure t
   :config
   (yas-global-mode))
-
 (use-package yasnippet-snippets         ; Collection of snippets
   :ensure t)
-
 (use-package auto-complete
   :ensure t)
 (use-package ansible
   :ensure t)
-
 (use-package markdown-mode
   :ensure t
   :commands (markdown-mode gfm-mode)
@@ -241,6 +241,7 @@
    "9" '(winum-select-window-9 :which-key "window #9")
    "0" '(winum-select-window-0-or-10 :which-key "window #")
 
+
    "b" '(:which-key "buffer")
    "b b" '(helm-mini :which-key "helm-mini")
    "b n" '(switch-to-next-buffer :which-key "next buffer")
@@ -273,6 +274,9 @@
    "g" '(:which-key "git")
    "g s" '(magit-status :which-key "status")
    "g m" '(magit-dispatch :which-key "dispatch popup")
+
+   "h" '(:which-key "help")
+   "h a" '(:which-key "ansible-doc")
 
    "o" '(:which-key "org")
    "o t" '(org-todo :which-key "todo")
@@ -320,7 +324,7 @@
  '(objed-cursor-color "#C16069")
  '(package-selected-packages
    (quote
-    (winum evil-collection evil-mu4e ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline ivy use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
+    (ansible-doc ansibe-doc winum evil-collection evil-mu4e ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline ivy use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
  '(send-mail-function (quote mailclient-send-it))
  '(vc-annotate-background "#2E3440")
  '(vc-annotate-color-map
