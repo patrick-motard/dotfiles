@@ -1,6 +1,5 @@
 ;; TODO: avy (goto-char, goto-word, goto-word-or-subword, goto-line)
 ;; TODO: relative line numbers
-;; TODO: better commenting/uncommenting
 ;; TODO: major mode command exploring via ',' character
 ;; TODO: magit better hotkeys for finishing commit buffer
 ;; TODO: get evil keybinds working with help buffer (and others)
@@ -8,7 +7,6 @@
 ;; TOOD: move to window by number
 ;; TODO: explore kill ring
 ;; TODO: load irc password from separate file or something more secure
-;; TODO: helm swoop
 
 (setq user-emacs-directory "~/.emacs.d.han")
 (setq user-init-file "~/.emacs.d.han/init.el")
@@ -59,14 +57,11 @@
     cycle-themes
     magit
     evil-magit
-    helm
-    which-key
     go-mode
     exec-path-from-shell
     yaml-mode
     circe
     org
-    general
     spaceline
     evil-collection
     org-jira))
@@ -75,9 +70,26 @@
 (dolist (package package-list)
   (unless (package-installed-p package)
     (package-install package)))
+
+;; In elisp-mode, allows jumping to definition of function or variables under cursor.
 (use-package elisp-def :ensure t)
 (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
   (add-hook hook #'elisp-def-mode))
+
+(use-package helm :ensure t)
+(require 'helm-config)
+(helm-mode 1)
+;;(setq helm-mode-fuzzy-match t)
+;;(setq helm-completion-in-region-fuzzy-match t)
+(setq-default helm-M-x-fuzzy-match t)
+;; Rebind tab in helm-find-files to complete the selection (instead of enter).
+(define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
+(define-key helm-map (kbd "<tab>") #'helm-execute-persistent-action)
+;; Since tab is 'helm-select-action', switch that to C-z so we can still call it.
+(define-key helm-map (kbd "C-z") #'helm-select-action)
+
+(use-package helm-git-grep :ensure t :defer t)
+(use-package helm-swoop :ensure t :defer t)
 
 (require 'mu4e)
 ;; use mu4e for email in emacs
@@ -193,31 +205,6 @@
 (require 'cycle-themes)
 (cycle-themes-mode)
 
-;;(require 'ivy)
-;;(ivy-mode 1)
-;;(setq ivy-use-virtual-buffers t)
-;;(setq enable-refcursive-minibuffers t)
-
-(require 'helm)
-(require 'helm-config)
-(helm-mode 1)
-;;(setq helm-mode-fuzzy-match t)
-;;(setq helm-completion-in-region-fuzzy-match t)
-(setq-default helm-M-x-fuzzy-match t)
-;; Rebind tab in helm-find-files to complete the selection (instead of enter).
-(define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
-(define-key helm-map (kbd "<tab>") #'helm-execute-persistent-action)
-;; Since tab is 'helm-select-action', switch that to C-z so we can still call it.
-(define-key helm-map (kbd "C-z") #'helm-select-action)
-
-(use-package helm-git-grep
-  :ensure t)
-
-(require 'which-key)
-(which-key-mode)
-;; How quickly which-key's popup pops up. Setting to 0.0 is bad. Smaller = faster.
-(setq which-key-idle-delay 0.1)
-
 (require 'spaceline-config)
 (spaceline-spacemacs-theme)
 
@@ -269,10 +256,8 @@
   (yas-global-mode))
 (use-package yasnippet-snippets         ; Collection of snippets
   :ensure t)
-(use-package auto-complete
-  :ensure t)
-(use-package ansible
-  :ensure t)
+(use-package auto-complete :ensure t)
+(use-package ansible :ensure t)
 (use-package markdown-mode
   :ensure t
   :commands (markdown-mode gfm-mode)
@@ -284,6 +269,13 @@
 (use-package neotree :ensure t :defer t)
 (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 (use-package all-the-icons :ensure t)
+
+(require 'which-key)
+(which-key-mode)
+;; How quickly which-key's popup pops up. Setting to 0.0 is bad. Smaller = faster.
+(setq which-key-idle-delay 0.1)
+
+
 
 ;; "ensure t" makes sure the package is accessible and downloads it if it's not.
  (use-package general :ensure t
@@ -357,7 +349,13 @@
    "h a" '(:which-key "ansible-doc")
 
    "o" '(:which-key "org")
+   "o c" '(:which-key "checkbox")
+   "o c a" '(org-insert-todo-heading :which-key "add")
+   "o c t" '(org-toggle-checkbox :which-key "toggle")
    "o t" '(org-todo :which-key "todo")
+
+   "s" '(:which-key "search")
+   "s s" '(helm-swoop :which-key "helm-swoop")
 
    "w" '(:which-key "window")
    "w d" '(delete-window :which-key "delete window")
@@ -402,7 +400,7 @@
  '(objed-cursor-color "#C16069")
  '(package-selected-packages
    (quote
-    (elisp-def all-the-icons neotree helm-git-grep mu4e-alert chocolate-theme ansible-doc ansibe-doc winum evil-collection evil-mu4e ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline ivy use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
+    (helm-config elisp-def all-the-icons neotree helm-git-grep mu4e-alert chocolate-theme ansible-doc ansibe-doc winum evil-collection evil-mu4e ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
  '(send-mail-function (quote mailclient-send-it))
  '(vc-annotate-background "#2E3440")
  '(vc-annotate-color-map
