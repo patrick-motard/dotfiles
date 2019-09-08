@@ -75,6 +75,10 @@
 (dolist (package package-list)
   (unless (package-installed-p package)
     (package-install package)))
+(use-package elisp-def :ensure t)
+(dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
+  (add-hook hook #'elisp-def-mode))
+
 (require 'mu4e)
 ;; use mu4e for email in emacs
 (setq mail-user-agent 'mu4e-user-agent)
@@ -291,8 +295,9 @@
     :states '(normal visual insert emacs)
    "C-," (general-simulate-key "M-x"))
   (general-define-key
-   :keymaps '(normal visual insert emacs)
+   :keymaps '(normal visual insert emacs dired-mode-map)
    :prefix "SPC"
+   ;; :states '(normal)
    :non-normal-prefix "C-SPC"
    "" nil
    ;; TODO: fiture out how to make tab switch between current and previous buffer
@@ -326,6 +331,7 @@
    "j i" '(org-jira-get-issues :which "get issues")
 
    "e" '(:which-key "emacs misc")
+   "e d" '(elisp-def :which-key "elisp-def (go to function)")
    "e i" '((lambda () (interactive) (find-file user-init-file)) :which-key "edit init.el")
    "e l" '((lambda () (interactive) (load-file user-init-file)) :which-key "load init.el")
    "e t" '(:which-key "theme")
@@ -396,7 +402,7 @@
  '(objed-cursor-color "#C16069")
  '(package-selected-packages
    (quote
-    (all-the-icons neotree helm-git-grep mu4e-alert chocolate-theme ansible-doc ansibe-doc winum evil-collection evil-mu4e ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline ivy use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
+    (elisp-def all-the-icons neotree helm-git-grep mu4e-alert chocolate-theme ansible-doc ansibe-doc winum evil-collection evil-mu4e ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline ivy use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
  '(send-mail-function (quote mailclient-send-it))
  '(vc-annotate-background "#2E3440")
  '(vc-annotate-color-map
