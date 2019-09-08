@@ -239,8 +239,8 @@
 	 :sasl-username "han_mfalcon")))
 
 ;; jira
-(require 'org)
-(setq org-return-follows-link t)
+(use-package org :ensure t
+  :config '(org-return-follows-link t))
 ;; # is shorthand for function
 (add-hook 'org-mode-hook #'toggle-word-wrap)
 (add-hook 'org-mode-hook #'(lambda ()
@@ -248,7 +248,11 @@
 			     ;; to press C-c q  or fill-paragraph ever again!
 			     (visual-line-mode)
 			     (org-indent-mode)))
+;; (add-hook 'before-save-hook '(lambda () (when (eq major-mode 'org-mode)
+;;					  (lambda)))
 ;; (require 'org-jira)
+(use-package highlight-parentheses :ensure t)
+(add-hook 'emacs-lisp-mode-hook #'highlight-parentheses-mode)
 
 (use-package yasnippet                  ; Snippets
   :ensure t
@@ -400,7 +404,7 @@
  '(objed-cursor-color "#C16069")
  '(package-selected-packages
    (quote
-    (helm-config elisp-def all-the-icons neotree helm-git-grep mu4e-alert chocolate-theme ansible-doc ansibe-doc winum evil-collection evil-mu4e ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
+    (highlight-parentheses helm-config elisp-def all-the-icons neotree helm-git-grep mu4e-alert chocolate-theme ansible-doc ansibe-doc winum evil-collection evil-mu4e ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
  '(send-mail-function (quote mailclient-send-it))
  '(vc-annotate-background "#2E3440")
  '(vc-annotate-color-map
