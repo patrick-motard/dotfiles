@@ -1,8 +1,6 @@
-;; TODO: org mode
 ;; TODO: avy (goto-char, goto-word, goto-word-or-subword, goto-line)
 ;; TODO: relative line numbers
 ;; TODO: better commenting/uncommenting
-;; TODO: golang layer
 ;; TODO: major mode command exploring via ',' character
 ;; TODO: magit better hotkeys for finishing commit buffer
 ;; TODO: get evil keybinds working with help buffer (and others)
@@ -10,7 +8,6 @@
 ;; TOOD: move to window by number
 ;; TODO: explore kill ring
 ;; TODO: load irc password from separate file or something more secure
-;; TODO: neotree
 ;; TODO: helm swoop
 
 (setq user-emacs-directory "~/.emacs.d.han")
@@ -79,6 +76,61 @@
   (unless (package-installed-p package)
     (package-install package)))
 (require 'mu4e)
+;; use mu4e for email in emacs
+(setq mail-user-agent 'mu4e-user-agent)
+;;default
+;; (setq mu4e-maildir "~/Maildir")
+(setq mu4e-sent-folder   "/Gmail/[Gmail].Sent Mail"
+      mu4e-drafts-folder "/Gmail/[Gmail].Drafts"
+      mu4e-trash-folder  "/Gmail/[Gmail].Trash"
+      ;; don't save message to Sent Messages, Gmail/IMAP takes care of this
+      mu4e-sent-messages-behavior 'delete
+      ;; allow for updating mail using 'U' in the main view:
+      mu4e-get-mail-command "offlineimap"
+      user-mail-address "motard19@gmail.com"
+      user-full-name  "Patrick Motard"
+      smtpmail-default-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-service 587
+      ;; allow use of helm to select mailboxes
+      mu4e-completing-read-function 'completing-read
+      ;; close messages after they are sent
+      message-kill-buffer-on-exit t
+      ;; don't ask for a 'context' upon opening mu4e
+      mu4e-context-policy 'pick-first
+      ;; don't ask to quit
+      mu4e-confirm-quit nil
+      mu4e-view-prefer-html t)
+
+;;    mu4e-compose-signature
+;;     (concat
+;;       "Foo X. Bar\n"
+;;       "http://www.example.com\n"))
+;; (use-package smtpmail :ensure t)
+;; (setq message-send-mail-function 'smtpmail-send-it
+;;    starttls-use-gnutls t
+;;    smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
+;;    smtpmail-auth-credentials
+;;      '(("smtp.gmail.com" 587 "motard19@gmail.com" nil))
+;;    smtpmail-default-smtp-server "smtp.gmail.com"
+;;    smtpmail-smtp-server "smtp.gmail.com"
+;;    smtpmail-smtp-service 587)
+;; ;; don't keep message buffers around
+;; (setq message-kill-buffer-on-exit t)
+
+(use-package mu4e-alert
+  :ensure t
+  :after mu4e
+  :init
+  (setq mu4e-alert-interesting-mail-query
+	(concat
+	 "flag:unread maildir:/Gmail/INBOX"
+	 ))
+  (mu4e-alert-enable-mode-line-display)
+  (defun gjstein-refresh-mu4e-alert-mode-line ()
+    (interactive)
+    (mu4e~proc-kill)
+    (mu4e-alert-enable-mode-line-display))
+  (run-with-timer 0 60 'gjstein-refresh-mu4e-alert-mode-line))
 (use-package winum
   :ensure t
   :init (winum-mode))
@@ -95,6 +147,11 @@
   :ensure t
   :config
   (evil-collection-init))
+;; Unset RET & SPC in evil mode so that other shortcuts can use them.
+;; Without setting this, RET doesn't work for following links in org mode.
+(with-eval-after-load 'evil-maps
+  (define-key evil-motion-state-map (kbd "SPC") nil)
+  (define-key evil-motion-state-map (kbd "RET") nil))
 
 (require 'key-chord)
 (key-chord-mode 1)
@@ -103,16 +160,21 @@
 (key-chord-define evil-insert-state-map "fd" 'evil-normal-state)
 
 (require 'doom-themes)
-(load-theme 'doom-nord t)
+(load-theme 'doom-nord t t)
 (load-theme 'doom-one t t)
 (load-theme 'doom-city-lights t t)
 (load-theme 'doom-dracula t t)
 (load-theme 'doom-nord-light t t)
 (load-theme 'doom-peacock t t)
 (load-theme 'doom-solarized-light t t)
+(use-package chocolate-theme
+  :ensure t
+  :config
+  (load-theme 'chocolate t))
 
 (setq cycle-themes-theme-list
-      '(doom-one
+      '(chocolate
+	doom-one
 	doom-nord
 	doom-city-lights
 	doom-dracula
@@ -143,6 +205,9 @@
 (define-key helm-map (kbd "<tab>") #'helm-execute-persistent-action)
 ;; Since tab is 'helm-select-action', switch that to C-z so we can still call it.
 (define-key helm-map (kbd "C-z") #'helm-select-action)
+
+(use-package helm-git-grep
+  :ensure t)
 
 (require 'which-key)
 (which-key-mode)
@@ -184,6 +249,7 @@
 
 ;; jira
 (require 'org)
+(setq org-return-follows-link t)
 ;; # is shorthand for function
 (add-hook 'org-mode-hook #'toggle-word-wrap)
 (add-hook 'org-mode-hook #'(lambda ()
@@ -210,6 +276,10 @@
 	 ("\\.md\\'" . markdown-mode)
 	 ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
+
+(use-package neotree :ensure t :defer t)
+(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+(use-package all-the-icons :ensure t)
 
 ;; "ensure t" makes sure the package is accessible and downloads it if it's not.
  (use-package general :ensure t
@@ -239,7 +309,7 @@
    "7" '(winum-select-window-7 :which-key "window #7")
    "8" '(winum-select-window-8 :which-key "window #8")
    "9" '(winum-select-window-9 :which-key "window #9")
-   "0" '(winum-select-window-0-or-10 :which-key "window #")
+   "0" '(neotree-show :which-key "neotree")
 
 
    "b" '(:which-key "buffer")
@@ -265,6 +335,7 @@
    "e p d" '(package-delete :which-key "delete")
    "e p r" '(package-refresh-contents :which-key "refresh-contents")
    "e n" '((lambda () (interactive) (find-file "~/Dropbox/documents/notes/emacs.org")) :which-key "open notes")
+   "e e" '(mu4e :which-key "email")
 
    "f" '(:which-key "file")
    "f l" '(load-file :which-key "load file")
@@ -272,6 +343,7 @@
    "f s" '(save-buffer :which-key "save file")
 
    "g" '(:which-key "git")
+   "g /" '(helm-git-grep :which-key "git-grep")
    "g s" '(magit-status :which-key "status")
    "g m" '(magit-dispatch :which-key "dispatch popup")
 
@@ -316,7 +388,7 @@
    ["#2E3440" "#C16069" "#A2BF8A" "#ECCC87" "#80A0C2" "#B58DAE" "#86C0D1" "#ECEFF4"])
  '(custom-safe-themes
    (quote
-    ("34c99997eaa73d64b1aaa95caca9f0d64229871c200c5254526d0062f8074693" "e3c87e869f94af65d358aa279945a3daf46f8185f1a5756ca1c90759024593dd" default)))
+    ("2277b74ae6f5aa018aa0057ef89752163e34fcb09ab6242f169c1740a72ca27a" "34c99997eaa73d64b1aaa95caca9f0d64229871c200c5254526d0062f8074693" "e3c87e869f94af65d358aa279945a3daf46f8185f1a5756ca1c90759024593dd" default)))
  '(fci-rule-color "#4C566A")
  '(jdee-db-active-breakpoint-face-colors (cons "#191C25" "#80A0C2"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#191C25" "#A2BF8A"))
@@ -324,7 +396,7 @@
  '(objed-cursor-color "#C16069")
  '(package-selected-packages
    (quote
-    (ansible-doc ansibe-doc winum evil-collection evil-mu4e ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline ivy use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
+    (all-the-icons neotree helm-git-grep mu4e-alert chocolate-theme ansible-doc ansibe-doc winum evil-collection evil-mu4e ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline ivy use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
  '(send-mail-function (quote mailclient-send-it))
  '(vc-annotate-background "#2E3440")
  '(vc-annotate-color-map
