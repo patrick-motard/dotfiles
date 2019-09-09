@@ -176,7 +176,7 @@
 (key-chord-define evil-insert-state-map "fd" 'evil-normal-state)
 
 (require 'doom-themes)
-(load-theme 'doom-nord t t)
+(load-theme 'doom-nord t)
 (load-theme 'doom-one t t)
 (load-theme 'doom-city-lights t t)
 (load-theme 'doom-dracula t t)
@@ -186,11 +186,11 @@
 (use-package chocolate-theme
   :ensure t
   :config
-  (load-theme 'chocolate t))
+  (load-theme 'chocolate t t))
 
 (setq cycle-themes-theme-list
-      '(chocolate
-	doom-one
+      '(doom-one
+	chocolate
 	doom-nord
 	doom-city-lights
 	doom-dracula
@@ -248,9 +248,23 @@
 			     ;; to press C-c q  or fill-paragraph ever again!
 			     (visual-line-mode)
 			     (org-indent-mode)))
-;; (add-hook 'before-save-hook '(lambda () (when (eq major-mode 'org-mode)
-;;					  (lambda)))
-;; (require 'org-jira)
+;; Company - Complete anything. Auto-completion library.
+(use-package company
+  :ensure t
+  :config
+  (progn (add-hook 'after-init-hook 'global-company-mode)))
+
+
+(defun org-update-cookies-after-save()
+  (interactive)
+  ;; This (4) is a "universal arguement". Still don't know what that means, but org-update-statistics-cookies
+  ;; expects it to be set if you want to update all cookies in the whole file.
+  (let ((current-prefix-arg '(4)))
+  (org-update-statistics-cookies "ALL")))
+;; Automatically update all cookies when saving the file. This makes sure that any checkboxes added,
+;; removed, or finished, are counted/summed together on each todo (example: [ 1/12 ].
+(add-hook 'org-mode-hook (lambda () (add-hook 'before-save-hook 'org-update-cookies-after-save)))
+
 (use-package highlight-parentheses :ensure t)
 (add-hook 'emacs-lisp-mode-hook #'highlight-parentheses-mode)
 
@@ -404,7 +418,7 @@
  '(objed-cursor-color "#C16069")
  '(package-selected-packages
    (quote
-    (highlight-parentheses helm-config elisp-def all-the-icons neotree helm-git-grep mu4e-alert chocolate-theme ansible-doc ansibe-doc winum evil-collection evil-mu4e ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
+    (company highlight-parentheses helm-config elisp-def all-the-icons neotree helm-git-grep mu4e-alert chocolate-theme ansible-doc ansibe-doc winum evil-collection evil-mu4e ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
  '(send-mail-function (quote mailclient-send-it))
  '(vc-annotate-background "#2E3440")
  '(vc-annotate-color-map
