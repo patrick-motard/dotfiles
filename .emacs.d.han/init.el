@@ -30,6 +30,13 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (add-hook 'before-save-hook 'whitespace-cleanup)
+;; configure file backups
+(setq backup-directory-alist `(("." . "~/.saves")))
+(setq backup-by-copying t)
+(setq delete-old-versions t
+  kept-new-versions 6
+  kept-old-versions 2
+  version-control t)
 ;; activate shell mode for AUR PKGBUILD files
 (add-to-list 'auto-mode-alist'("PKGBUILD\\'" . shell-script-mode))
 (global-set-key (kbd "RET") 'newline-and-indent)
@@ -38,7 +45,7 @@
 ;; This doesn't seem to be necessary if the font size is specified with the font name.
 ;; I'll leave it here for reference.
 ;;(set-face-attribute 'default (selected-frame) :height 180)
-(add-to-list 'default-frame-alist '(font . "Inconsolata-18"))
+(add-to-list 'default-frame-alist '(font . "Inconsolata-14"))
 (global-display-line-numbers-mode)
 
 ;; Bootstrap `use-package'
@@ -183,10 +190,10 @@
 (load-theme 'doom-nord-light t t)
 (load-theme 'doom-peacock t t)
 (load-theme 'doom-solarized-light t t)
-(use-package chocolate-theme
-  :ensure t
-  :config
-  (load-theme 'chocolate t t))
+;; (use-package chocolate-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'chocolate t t))
 
 (setq cycle-themes-theme-list
       '(doom-one
