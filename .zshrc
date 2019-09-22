@@ -152,7 +152,7 @@ alias yaf="yadm add ~/.yadm/files.gpg"
 alias yafp="yadm add ~/.yadm/files.gpg ~/.yadm/encrypt && yadm commit -m 'encrypt' && yadm push"
 alias token=~/.ssh/token
 
-alias update="ansible-playbook ~/code/dot-ansible/main.yml --ask-become-pass"
+alias update="ansible-playbook ~/code/dot-ansible/main.yml -i ~/code/dot-ansible/inventory/$(hostname).yml --ask-become-pass"
 alias tools="cd ~/.local/bin/tools/ && ll"
 
 alias npmis="npm install --save"
