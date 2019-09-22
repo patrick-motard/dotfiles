@@ -90,13 +90,17 @@ bindsym $mod+Return exec termite
 # kill focused window
 bindsym $mod+Shift+q kill
 
-bindsym $mod+Shift+s exec rofi-execute-script.sh
-bindsym $mod+i exec rofi-execute-script.sh
-# start rofi (a program launcher)
-bindsym $mod+d exec rofi -show drun
-bindsym $mod+p exec rofi -modi lpass:rofi-lpass
-# bindcode --release 133 exec rofi -show drun
-bindsym $sup+c exec conky
+# Execute a shell script from rofi. The list of scripts can be found in:
+# ~/.config/rofi/cmd.csv
+bindsym $mod+i exec --no-startup-id rofi-execute-script.sh
+# Select an xrandr script to run, via rofi, and run it.
+bindsym $sup+d exec --no-startup-id dot displays select --rofi
+# Start rofi (a program launcher)
+bindsym $mod+d exec --no-startup-id rofi -show drun
+# Use rofi and lastpass to copy a password to your clipboard.
+bindsym $mod+p exec rofi -modi lpass:rofi-lpass -show lpass
+# Start or kill conky, an application that shows system statistics.
+bindsym $sup+c exec --no-startup-id toggle-conky
 
 
 # bindsym $mod+c exec zsh -c "rofi -show fb -modi fb:~/code/go/bin/dot"
@@ -329,7 +333,8 @@ bindsym $mod+Shift+f exec --no-startup-id "firefox --private-window duckduckgo.c
 
 
 ## startup applications
-exec_always --no-startup-id sh -c "~/code/go/bin/dot displays run"
+# exec_always --no-startup-id sh -c "~/code/go/bin/dot displays run"
+exec_always --no-startup-id dot displays run
 exec_always --no-startup-id dot polybar
 exec --no-startup-id ~/.local/bin/polybar-reload
 exec --no-startup-id dropbox

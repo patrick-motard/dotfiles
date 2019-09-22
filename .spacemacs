@@ -48,6 +48,7 @@ values."
      (rust :variables
            rust-format-on-save t)
      (go :variables
+         gofmt-command "goimports"
          go-tab-width 4
          go-format-before-save t)
      ;; vimscript
@@ -366,6 +367,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   )
 
 (defun dotspacemacs/user-config ()
+
   (setq powerline-default-separator 'arrow)
   (setq dotspacemacs-mode-line-theme '(all-the-icons :separator 'arrow-fade))
   (add-hook 'json-mode-hook
