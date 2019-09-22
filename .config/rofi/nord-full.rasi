@@ -1,0 +1,95 @@
+configuration {
+    show-icons: true;
+}
+* {
+    nord0: rgb(46, 52, 64, 80 %);
+    nord1: rgb(59, 66, 82, 100 %);
+    nord2: rgb(67, 76, 94, 100 %);
+    nord3: rgb(76, 86, 106, 100 %);
+    nord4: rgb(216, 222, 233, 100 %);
+    nord5: rgb(229, 233, 240, 100 %);
+    nord6: rgb(236, 239, 244, 100 %);
+    nord7: rgb(143, 188, 187, 100 %);
+    nord8: rgb(136, 192, 208, 100 %);
+    nord9: rgb(129, 161, 193, 100 %);
+    nord10: rgb(94, 129, 172, 100 %);
+    nord11: rgb(191, 97, 106, 100 %);
+    nord12: rgb(208, 135, 112, 100 %);
+    nord13: rgb(235, 203, 139, 100 %);
+    nord14: rgb(163, 190, 140, 100 %);
+    nord15: rgb(180, 142, 173, 100 %);
+
+    separatorcolor: @nord0;
+    background-color: @nord0;
+    spacing: 0;
+    background-color: transparent;
+    text-color: @nord7;
+    font: "Hack 20";
+}
+
+window {
+  transparency: "real";
+  fullscreen: true;
+  background-color: @nord0;
+}
+
+mainbox {
+  padding: 30% 30%;
+}
+
+inputbar {
+  margin: 0px 0px 20px 0px;
+  children: [prompt, textbox-prompt-colon, entry, case-indicator];
+}
+
+prompt {
+  text-color: @nord14;
+}
+
+textbox-prompt-colon {
+  expand: false;
+  str: ":";
+  text-color: @nord10;
+}
+
+entry {
+  margin: 0px 10px;
+}
+
+listview {
+  spacing: 5px;
+  dynamic: true;
+  scrollbar: false;
+}
+
+element {
+  padding: 5px;
+  highlight: bold rgb(94, 129, 172, 100 %);
+  border-radius: 3px;
+}
+
+element selected {
+  background-color: @nord2;
+  text-color: @nord4;
+}
+
+element urgent, element selected urgent {
+  text-color: @red;
+}
+
+element active, element selected active {
+  text-color: @purple;
+}
+
+message {
+  padding: 5px;
+  border-radius: 3px;
+  background-color: @nord4;
+  border: 1px;
+}
+
+button selected {
+  padding: 5px;
+  border-radius: 3px;
+  background-color: @nord4;
+}

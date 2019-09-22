@@ -1,4 +1,7 @@
 /* -*- mode: css; -*- */
+/* configuration { */
+/*     sidebar-mode: true; */
+/* } */
 * {
     nord0: rgb(46, 52, 64, 100 %);
     nord1: rgb(59, 66, 82, 100 %);
@@ -22,10 +25,17 @@
 }
 
 #window {
+    fullscreen: false;
     border-color: @nord8;
-    border: 4;
+    transparency: "real";
+    border: 0;
     padding: 100px;
     background-color: @nord0;
+    location: west;
+    anchor: west;
+    height: 95.99%;
+    width: 33%;
+    orientation: horizontal;
 }
 
 #mainbox {
@@ -59,6 +69,6 @@
 
 #element.normal {
     background-color: @nord0;
-    text-color:       @nord8;
+    text-color:       @nord4;
 }
 /* vim:ft=css
