@@ -102,18 +102,10 @@ bindsym $mod+p exec rofi -modi lpass:rofi-lpass -show lpass
 # Start or kill conky, an application that shows system statistics.
 bindsym $sup+c exec --no-startup-id toggle-conky
 
-
-# bindsym $mod+c exec zsh -c "rofi -show fb -modi fb:~/code/go/bin/dot"
-# bindsym $mod+c exec rofi --modi "DERP:dot" -show "DERP"
-
 ## alternative resize commands
 bindsym $mod+Shift+y	resize shrink width 10 px or 10ppt
 bindsym $mod+Shift+u	resize shrink height 10 px or 10 ppt
 bindsym $mod+Shift+o	resize grow width 10 px or 10 ppt
-
-#TODO switch this mode for dot displays select
-# bindsym  $mod+Shift+a mode $mode_randr
-
 
 # good example on how to work with modes:
 # http://christopherdecoster.com/posts/i3-wm/
