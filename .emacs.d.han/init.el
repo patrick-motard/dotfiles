@@ -29,7 +29,7 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-(add-hook 'before-save-hook 'whitespace-cleanup)
+;; (add-hook 'before-save-hook 'whitespace-cleanup)
 ;; configure file backups
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq backup-by-copying t)
@@ -45,7 +45,7 @@
 ;; This doesn't seem to be necessary if the font size is specified with the font name.
 ;; I'll leave it here for reference.
 ;;(set-face-attribute 'default (selected-frame) :height 180)
-(add-to-list 'default-frame-alist '(font . "Inconsolata-14"))
+(add-to-list 'default-frame-alist '(font . "Inconsolata-18"))
 (global-display-line-numbers-mode)
 
 ;; Bootstrap `use-package'
@@ -78,6 +78,8 @@
   (unless (package-installed-p package)
     (package-install package)))
 
+(use-package auto-complete :ensure t)
+;; (use-package auto-complete :ensure t :defer t)
 ;; In elisp-mode, allows jumping to definition of function or variables under cursor.
 (use-package elisp-def :ensure t)
 (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
@@ -98,62 +100,62 @@
 (use-package helm-git-grep :ensure t :defer t)
 (use-package helm-swoop :ensure t :defer t)
 
-(require 'mu4e)
-;; use mu4e for email in emacs
-(setq mail-user-agent 'mu4e-user-agent)
-;;default
-;; (setq mu4e-maildir "~/Maildir")
-(setq mu4e-sent-folder   "/Gmail/[Gmail].Sent Mail"
-      mu4e-drafts-folder "/Gmail/[Gmail].Drafts"
-      mu4e-trash-folder  "/Gmail/[Gmail].Trash"
-      ;; don't save message to Sent Messages, Gmail/IMAP takes care of this
-      mu4e-sent-messages-behavior 'delete
-      ;; allow for updating mail using 'U' in the main view:
-      mu4e-get-mail-command "offlineimap"
-      user-mail-address "motard19@gmail.com"
-      user-full-name  "Patrick Motard"
-      smtpmail-default-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-service 587
-      ;; allow use of helm to select mailboxes
-      mu4e-completing-read-function 'completing-read
-      ;; close messages after they are sent
-      message-kill-buffer-on-exit t
-      ;; don't ask for a 'context' upon opening mu4e
-      mu4e-context-policy 'pick-first
-      ;; don't ask to quit
-      mu4e-confirm-quit nil
-      mu4e-view-prefer-html t)
+;; (require 'mu4e)
+;; ;; use mu4e for email in emacs
+;; (setq mail-user-agent 'mu4e-user-agent)
+;; ;;default
+;; ;; (setq mu4e-maildir "~/Maildir")
+;; (setq mu4e-sent-folder   "/Gmail/[Gmail].Sent Mail"
+;;       mu4e-drafts-folder "/Gmail/[Gmail].Drafts"
+;;       mu4e-trash-folder  "/Gmail/[Gmail].Trash"
+;;       ;; don't save message to Sent Messages, Gmail/IMAP takes care of this
+;;       mu4e-sent-messages-behavior 'delete
+;;       ;; allow for updating mail using 'U' in the main view:
+;;       mu4e-get-mail-command "offlineimap"
+;;       user-mail-address "motard19@gmail.com"
+;;       user-full-name  "Patrick Motard"
+;;       smtpmail-default-smtp-server "smtp.gmail.com"
+;;       smtpmail-smtp-service 587
+;;       ;; allow use of helm to select mailboxes
+;;       mu4e-completing-read-function 'completing-read
+;;       ;; close messages after they are sent
+;;       message-kill-buffer-on-exit t
+;;       ;; don't ask for a 'context' upon opening mu4e
+;;       mu4e-context-policy 'pick-first
+;;       ;; don't ask to quit
+;;       mu4e-confirm-quit nil
+;;       mu4e-view-prefer-html t)
 
-;;    mu4e-compose-signature
-;;     (concat
-;;       "Foo X. Bar\n"
-;;       "http://www.example.com\n"))
-;; (use-package smtpmail :ensure t)
-;; (setq message-send-mail-function 'smtpmail-send-it
-;;    starttls-use-gnutls t
-;;    smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
-;;    smtpmail-auth-credentials
-;;      '(("smtp.gmail.com" 587 "motard19@gmail.com" nil))
-;;    smtpmail-default-smtp-server "smtp.gmail.com"
-;;    smtpmail-smtp-server "smtp.gmail.com"
-;;    smtpmail-smtp-service 587)
-;; ;; don't keep message buffers around
-;; (setq message-kill-buffer-on-exit t)
+;; ;;    mu4e-compose-signature
+;; ;;     (concat
+;; ;;       "Foo X. Bar\n"
+;; ;;       "http://www.example.com\n"))
+;; ;; (use-package smtpmail :ensure t)
+;; ;; (setq message-send-mail-function 'smtpmail-send-it
+;; ;;    starttls-use-gnutls t
+;; ;;    smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
+;; ;;    smtpmail-auth-credentials
+;; ;;      '(("smtp.gmail.com" 587 "motard19@gmail.com" nil))
+;; ;;    smtpmail-default-smtp-server "smtp.gmail.com"
+;; ;;    smtpmail-smtp-server "smtp.gmail.com"
+;; ;;    smtpmail-smtp-service 587)
+;; ;; ;; don't keep message buffers around
+;; ;; (setq message-kill-buffer-on-exit t)
 
-(use-package mu4e-alert
-  :ensure t
-  :after mu4e
-  :init
-  (setq mu4e-alert-interesting-mail-query
-	(concat
-	 "flag:unread maildir:/Gmail/INBOX"
-	 ))
-  (mu4e-alert-enable-mode-line-display)
-  (defun gjstein-refresh-mu4e-alert-mode-line ()
-    (interactive)
-    (mu4e~proc-kill)
-    (mu4e-alert-enable-mode-line-display))
-  (run-with-timer 0 60 'gjstein-refresh-mu4e-alert-mode-line))
+;; (use-package mu4e-alert
+;;   :ensure t
+;;   :after mu4e
+;;   :init
+;;   (setq mu4e-alert-interesting-mail-query
+;; 	(concat
+;; 	 "flag:unread maildir:/Gmail/INBOX"
+;; 	 ))
+;;   (mu4e-alert-enable-mode-line-display)
+;;   (defun gjstein-refresh-mu4e-alert-mode-line ()
+;;     (interactive)
+;;     (mu4e~proc-kill)
+;;     (mu4e-alert-enable-mode-line-display))
+;;   (run-with-timer 0 60 'gjstein-refresh-mu4e-alert-mode-line))
 (use-package winum
   :ensure t
   :init (winum-mode))
@@ -220,9 +222,47 @@
 
 ;; languages
 ;; golang
-(require 'go-mode)
+(use-package go-mode :ensure t :defer t)
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+;; godoc
+(defun set-exec-path-from-shell-PATH ()
+  (let ((path-from-shell (replace-regexp-in-string
+                          "[ \t\n]*$"
+                          ""
+                          (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
+    (setenv "PATH" path-from-shell)
+    (setq eshell-path-env path-from-shell) ; for eshell users
+    (setq exec-path (split-string path-from-shell path-separator))))
 
+(when window-system (set-exec-path-from-shell-PATH))
+(setenv "GOPATH" "/home/han/code/go")
+(add-to-list 'exec-path "/home/han/code/go/bin")
+(use-package go-autocomplete :ensure t)
+
+(defun auto-complete-for-go ()
+(auto-complete-mode 1))
+ (add-hook 'go-mode-hook 'auto-complete-for-go)
+
+(with-eval-after-load 'go-mode
+   (require 'go-autocomplete))
+
+(defun my-go-mode-hook ()
+  ; Use goimports instead of go-fmt
+  (setq gofmt-command "goimports")
+  ; Call Gofmt before saving
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  ; Customize compile command to run go build
+  (if (not (string-match "go" compile-command))
+      (set (make-local-variable 'compile-command)
+           "go build -v && go test -v && go vet"))
+  ; Godef jump key binding
+  (local-set-key (kbd "M-.") 'godef-jump)
+  (local-set-key (kbd "M-*") 'pop-tag-mark)
+)
+(add-hook 'go-mode-hook 'my-go-mode-hook)
+
+(use-package go-guru :ensure t :defer t)
+(go-guru-hl-identifier-mode)
 
 ;; Ansible
 (use-package yaml-mode
@@ -281,7 +321,6 @@
   (yas-global-mode))
 (use-package yasnippet-snippets         ; Collection of snippets
   :ensure t)
-(use-package auto-complete :ensure t)
 (use-package ansible :ensure t)
 (use-package markdown-mode
   :ensure t
@@ -425,7 +464,7 @@
  '(objed-cursor-color "#C16069")
  '(package-selected-packages
    (quote
-    (company highlight-parentheses helm-config elisp-def all-the-icons neotree helm-git-grep mu4e-alert chocolate-theme ansible-doc ansibe-doc winum evil-collection evil-mu4e ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
+    (go-guru go-autocomplete company highlight-parentheses helm-config elisp-def all-the-icons neotree helm-git-grep mu4e-alert chocolate-theme ansible-doc ansibe-doc winum evil-collection evil-mu4e ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
  '(send-mail-function (quote mailclient-send-it))
  '(vc-annotate-background "#2E3440")
  '(vc-annotate-color-map
