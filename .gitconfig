@@ -7,3 +7,5 @@
 	email = motard19@gmail.com
 [core]
 	editor = vim
+[alias]
+	tagcommit = rev-list -n 1
