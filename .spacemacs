@@ -195,7 +195,7 @@ values."
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    ;; dotspacemacs-default-font '("Source Code Pro for Powerline"
    dotspacemacs-default-font '("Hack"
-                               :size 20
+                               :size 16
                                :weight normal
                                :width normal
                                :powerline-scale 1.2)
@@ -367,6 +367,14 @@ before packages are loaded. If you are unsure, you should try in setting them in
   )
 
 (defun dotspacemacs/user-config ()
+  ;; org-mode
+  (add-hook 'org-mode-hook #'toggle-word-wrap)
+  (add-hook 'org-mode-hook #'(lambda ()
+                               ;; make the lines in the buffer wrap around the edges of the screen.
+                               ;; to press C-c q  or fill-paragraph ever again!
+                               (visual-line-mode)
+                               (org-indent-mode)))
+
 
   (setq powerline-default-separator 'arrow)
   (setq dotspacemacs-mode-line-theme '(all-the-icons :separator 'arrow-fade))

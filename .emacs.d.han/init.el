@@ -410,7 +410,7 @@
    "g m" '(magit-dispatch :which-key "dispatch popup")
 
    "h" '(:which-key "help")
-   "h a" '(:which-key "ansible-doc")
+   "h a" '(ansible-doc :which-key "ansible-doc")
 
    "o" '(:which-key "org")
    "o c" '(:which-key "checkbox")
