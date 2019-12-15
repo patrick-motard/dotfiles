@@ -391,6 +391,13 @@ click-left = ~/.local/bin/tools/polybar_alsa_module --switch
 exec = ~/.local/bin/tools/polybar_alsa_module --mutefg "BF616A" --mutebg "88C0D0" --bg "88C0D0" --fg "3B4252"
 tail = true
 
+[module/updates-arch]
+type = custom/script
+exec = ~/.local/bin/tools/check_for_arch_updates
+format-foreground = ${colors.nord4}
+format-background = ${colors.nord10}
+format-padding = 1
+interval = 180
 
 [settings]
 screenchange-reload = true
