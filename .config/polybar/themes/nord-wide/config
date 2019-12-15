@@ -3,68 +3,70 @@
 monitor-strict = true
 inherit = bar/base
 monitor = ${env:MONITOR_MAIN}
-modules-right = 
-modules-left = 
+modules-right = alsa-switch pulseaudio-tail time calendar
+modules-left = yadm-checker updates-arch
 modules-center = i3
 background = ${colors.secondary-bg}
-width = 25%
+width = 97%:10
 bottom = false 
 height = 3%
 padding = 0
 override-redirect = true
-offset-x = 37.5%
+offset-x = 33
 offset-y = 20
 border-size = 4
 border-color = ${colors.nord2}
-tray-position = none
+tray-position = right
+tray-background = ${colors.nord0}
+
 
 [bar/main.top.right]
 ; require monitor to be connected to load bar
-monitor-strict = true
-inherit = bar/base
-monitor = ${env:MONITOR_MAIN}
-modules-right = alsa-switch pulseaudio-tail time calendar
-modules-left = 
-modules-center =
-border = 2
-background = ${colors.nord0}
-width = 365
-bottom = false 
-tray-position = none
-height = 3%
-padding = 0
-override-redirect = true
-offset-x = 84.5%
-offset-y = 20
-border-size = 4
-border-color = ${colors.nord2}
-
-; ; require monitor to be connected to load bar
 ; monitor-strict = true
 ; inherit = bar/base
 ; monitor = ${env:MONITOR_MAIN}
-; modules-right =  alsa-switch pulseaudio-tail time calendar
-;  ; time calendar 
-; ; dropbox-watcher
-; ; alsa-switch pulseaudio-tail
+; modules-right = alsa-switch pulseaudio-tail time calendar
 ; modules-left = 
 ; modules-center =
 ; border = 2
 ; background = ${colors.nord0}
-; width = 450
-; ; width = 97%
+; width = 365
 ; bottom = false 
-; ; tray-position = none
+; tray-position = none
 ; height = 3%
 ; padding = 0
 ; override-redirect = true
-; ; offset-x = 84.5%
-; offset-x = 74.5%
+; offset-x = 84.5%
 ; offset-y = 20
 ; border-size = 4
 ; border-color = ${colors.nord2}
-; ; tray-position = right
-; ; tray-background = ${colors.nord0}
+
+; require monitor to be connected to load bar
+monitor-strict = true
+inherit = bar/base
+monitor = ${env:MONITOR_MAIN}
+modules-right =  alsa-switch pulseaudio-tail time calendar
+ ; time calendar 
+; dropbox-watcher
+; alsa-switch pulseaudio-tail
+modules-left = 
+modules-center =
+border = 2
+background = ${colors.nord0}
+width = 450
+; width = 97%
+bottom = false 
+; tray-position = none
+height = 3%
+padding = 0
+override-redirect = true
+; offset-x = 84.5%
+offset-x = 74.5%
+offset-y = 20
+border-size = 4
+border-color = ${colors.nord2}
+; tray-position = right
+; tray-background = ${colors.nord0}
 
 
 [bar/main.top.left]
