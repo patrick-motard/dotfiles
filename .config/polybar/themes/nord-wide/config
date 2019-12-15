@@ -3,7 +3,7 @@
 monitor-strict = true
 inherit = bar/base
 monitor = ${env:MONITOR_MAIN}
-modules-right = alsa-switch pulseaudio-tail time calendar
+modules-right = alsa-switch pulseaudio-tail time calendar dropbox-watcher
 modules-left = yadm-checker updates-arch
 modules-center = i3
 background = ${colors.secondary-bg}
