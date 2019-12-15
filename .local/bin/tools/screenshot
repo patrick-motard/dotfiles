@@ -67,7 +67,8 @@ while test $# -gt 0; do
             quiet=true
             ;;
         -s|--selected)
-            notify-send "Screenshot" "Select an area to capture in screenshot."
+
+            selected=true
             args=" -s"
             ;;
         -f|--focused)
@@ -96,6 +97,10 @@ done
 ####################################################################
 
 function main {
+    if [[ "$quiet" = false ]] && [[ "$selected" = true ]]; then
+        notify-send "Screenshot" "Select an area to capture in screenshot."
+    fi
+
     screenshot_directory=~/Dropbox/Screenshots/$(date +"%Y")/
     mkdir -p $screenshot_directory
     scrot -d 2 $screenshot_directory%Y-%m-%d_%H_%M_%S_\$wx\$h.png $args
