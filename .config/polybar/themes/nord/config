@@ -27,7 +27,7 @@ modules-right = alsa-switch pulseaudio-tail time calendar
 modules-left = 
 modules-center =
 border = 2
-background = ${colors.secondary-fg}
+background = ${colors.nord0}
 width = 365
 bottom = false 
 tray-position = none
@@ -49,7 +49,7 @@ modules-left = yadm-checker updates-arch
 modules-center = 
 border = 2
 width = 13.5%
-background = ${colors.nord10}
+background = ${colors.primary-fg}
 bottom = false 
 tray-position = none
 height = 3%
@@ -136,8 +136,8 @@ type = internal/date
 interval = 5
 date = %m/%d/%Y
 date-alt = " %Y-%m-%d"
-format-background = ${colors.primary-bg}
-format-foreground = ${colors.primary-fg}
+format-foreground = ${colors.primary-bg}
+format-background = ${colors.primary-fg}
 label = "   %date%  "
 
 [module/time]
@@ -151,7 +151,7 @@ label = "   %time%  "
 [module/alsa-switch]
 type = custom/script
 click-left = ~/.local/bin/tools/polybar_alsa_module --switch
-exec = ~/.local/bin/tools/polybar_alsa_module --mutefg "BF616A" --mutebg "81A1C1" --bg "81A1C1" --fg "3B4252" --padleft " "
+exec = ~/.local/bin/tools/polybar_alsa_module --mutefg "2E3440" --mutebg "BF616A" --fg "81A1C1" --bg "2E3440" ; --padleft " "
 tail = true
 
 [module/pulseaudio-tail]
@@ -164,6 +164,13 @@ scroll-up = volume up 3
 scroll-down = volume down 3
 format-padding = 1
 
+[module/updates-arch]
+type = custom/script
+exec = ~/.local/bin/tools/check_for_arch_updates
+format-foreground = ${colors.primary-bg}
+format-background = ${colors.primary-fg}
+format-padding = 1
+interval = 180
 
 ; formatting
 vim:ft=dosini
