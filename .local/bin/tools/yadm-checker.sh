@@ -90,27 +90,27 @@ function color {
 
 if [[ "$behind" -gt 0 ]]; then
     fg=$nord11
-    commits_prompt=$(color "${nord11}" "${nord1}" "${commits_prompt}")
+    commits_prompt=$(color "${nord0}" "${nord11}" "${commits_prompt}")
 elif [[ "$ahead" -gt 0 ]]; then
-    fg=$nord13
-    commits_prompt=$(color "${nord13}" "${nord1}" "${commits_prompt}")
+    fg=$nord15
+    commits_prompt=$(color "${nord0}" "${nord15}" "${commits_prompt}")
 else
     fg=$nord14
-    commits_prompt=$(color "${nord14}" "${nord1}" "${commits_prompt}")
+    commits_prompt=$(color "${nord0}" "${nord14}" "${commits_prompt}")
 fi
 
 
 if [[ $staged != "0" || $modified != "0" ]]; then
 
-    bg=$nord13
-    staged_prompt=$(color "${nord13}" "${nord1}" " $staged_icon $staged $modified_icon $modified  $no ")$(color "${nord0}" "${nord13}" $arrow)
+    bg=$nord15
+    staged_prompt=$(color "${nord0}" "${nord12}" " $staged_icon $staged $modified_icon $modified  $no ")$(color "${nord0}" "${nord13}" $arrow)
 else
     bg=$nord14
-    staged_prompt=$(color "${nord14}" "${nord1}" " $staged_icon $staged $modified_icon $modified  $yes ")$(color "${nord0}" "${nord14}" $arrow)
+    staged_prompt=$(color "${nord0}" "${nord9}" " $staged_icon $staged $modified_icon $modified  $yes ")$(color "${nord0}" "${nord14}" $arrow)
 fi
 
 if [[ $bg == $fg ]]; then
-    separator=$(color "${bg}" "${nord1}" "")
+    separator=$(color "${bg}" "${nord0}" "")
 else
     separator=$(color "${bg}" "${fg}" $arrow)
 fi
