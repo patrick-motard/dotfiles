@@ -325,7 +325,8 @@ bindsym $mod+Shift+f exec --no-startup-id "firefox --private-window duckduckgo.c
 exec_always --no-startup-id i3-xrdb-display.sh
 exec_always --no-startup-id dot displays run
 exec_always --no-startup-id dot polybar
-exec --no-startup-id ~/.local/bin/polybar-reload
+# polybar-reload should only be used on virtual machines
+# exec --no-startup-id ~/.local/bin/polybar-reload
 exec --no-startup-id dropbox
 exec --no-startup-id emacs
 exec --no-startup-id firefox
