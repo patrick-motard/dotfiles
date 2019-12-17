@@ -344,13 +344,13 @@ set_from_resource $right i3wm.display-right
 set_from_resource $left i3wm.display-left
 set_from_resource $primary i3wm.display-primary
 
-workspace $ws1 output $middle
+workspace $ws1 output $primary
 workspace $ws2 output $right
 workspace $ws0 output $left
 workspace $ws8 output $left
 workspace $ws3 output $left
-workspace $ws6 output $middle
-workspace $ws7 output $middle
+workspace $ws6 output $primary
+workspace $ws7 output $primary
 workspace $ws4 output $right
 
 ## assign applications to workspaces:
