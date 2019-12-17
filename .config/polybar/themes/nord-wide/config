@@ -3,7 +3,7 @@
 monitor-strict = true
 inherit = bar/base
 monitor = ${env:MONITOR_MAIN}
-modules-right = alsa-switch pulseaudio-tail time calendar dropbox-watcher
+modules-right = cpu alsa-switch pulseaudio-tail time calendar dropbox-watcher
 modules-left = yadm-checker updates-arch
 modules-center = i3
 background = ${colors.secondary-bg}
@@ -56,6 +56,25 @@ offset-x = 33
 offset-y = 20
 border-size = 4
 border-color = ${colors.nord2}
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+label = %percentage:2%%
+
+format = <label>  <ramp-coreload>  
+format-background = ${colors.secondary-bg}
+format-foreground = ${colors.secondary-fg}
+format-padding = 2
+ramp-coreload-0 = ▁
+ramp-coreload-1 = ▂
+ramp-coreload-2 = ▃
+ramp-coreload-3 = ▄
+ramp-coreload-4 = ▅
+ramp-coreload-5 = ▆
+ramp-coreload-6 = ▇
+ramp-coreload-7 = █
+
 
 [module/filesystem]
 type = internal/fs
