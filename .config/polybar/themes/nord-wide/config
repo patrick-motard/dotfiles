@@ -25,7 +25,7 @@ monitor-strict = true
 inherit = bar/base
 monitor = ${env:MONITOR_LEFT}
 modules-right = alsa-switch pulseaudio-tail time calendar
-modules-left = 
+modules-left =
 modules-center = i3
 background = ${colors.secondary-bg}
 width = 97%:10
@@ -44,7 +44,7 @@ monitor-strict = true
 inherit = bar/base
 monitor = ${env:MONITOR_RIGHT}
 modules-right = alsa-switch pulseaudio-tail time calendar
-modules-left = 
+modules-left = filesystem  
 modules-center = i3
 background = ${colors.secondary-bg}
 width = 97%:10
@@ -57,6 +57,18 @@ offset-y = 20
 border-size = 4
 border-color = ${colors.nord2}
 
+[module/filesystem]
+type = internal/fs
+interval = 25
+mount-0 = /
+mount-1 = /mnt/1tbssd
+mount-2 = /mnt/4tb1
+label-mounted-background = ${colors.secondary-bg}
+label-mounted-foreground = ${colors.primary-bg}
+label-mounted =  " %{F#81A1C1}%{F-} %{F#81A1C1}%mountpoint% %percentage_used%% %{F-}"
+; label-mounted =  "  %mountpoint% %percentage_used%% "
+; label-unmounted = %mountpoint% not mounted
+; label-unmounted-foreground = ${colors.foreground-alt}
 
 [module/i3]
 pin-workspaces = true
@@ -68,8 +80,8 @@ reverse-scroll = false
 fuzzy-match = true
 format = <label-mode><label-state>
 label-mode = %mode%
-label-focused-foreground = ${colors.primary-fg}
-label-focused-background = ${colors.primary-bg}
+label-focused-foreground = #b48ead
+label-focused-background = ${colors.secondary-bg}
 label-focused-padding-right = 2
 label-focused-padding-left = 1
 ; visible is the focused workspace on non focused monitor, confusing, i know. :)
@@ -140,6 +152,16 @@ exec = isrunning_dropbox.sh
 interval = 5
 click-left = dropbox-isrunning.sh --toggle
 ; format-background = ${colors.nord2}
+
+[module/downhill]
+type = custom/text
+content-foreground = ${colors.secondary-fg}
+content-background = ${colors.secondary-bg}
+content = "  "
+
+content-padding-right = 4
+content-padding-left = 3
+
 
 
 ; formatting

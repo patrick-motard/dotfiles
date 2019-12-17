@@ -162,6 +162,7 @@ for_window [instance="dropdown"] move scratchpad
 for_window [instance="dropdown"] border pixel 5
 bindsym $mod+n [instance="dropdown"] scratchpad show
 
+
 #######################
 ## monitor shortcuts ##
 #######################
@@ -237,7 +238,7 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
 # focus the chld container
-#bindsym $mod+d focus child
+# bindsym $mod+d focus child
 
 
 # switch to workspace
@@ -378,3 +379,14 @@ assign [class="factorio"] $ws6
 for_window [class="dota2"] fullscreen enable
 for_window [class="RocketLeague"] fullscreen enable
 for_window [class="RimWorldLinux.x86_64"] fullscreen enable
+
+for_window [class="Pavucontrol"] floating enable
+exec --no-startup-id pavucontrol --name "pavucontrol"
+# positions and screensize below is set for dual monitor, left 1080 and right 1440
+# 1440 is main, termite shows up in the middle of the main monitor
+#                                           width height             x(left) y(top)
+for_window [class="Pavucontrol"] resize set 700   450, move position 4385    85
+for_window [class="Pavucontrol"] move scratchpad
+for_window [class="Pavucontrol"] border pixel 5
+bindsym $mod+Shift+v [class="Pavucontrol"] scratchpad show
+
