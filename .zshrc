@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block, everything else may go below.
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -9,6 +16,7 @@ export NVM_AUTO_USE=true
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="agnoster"
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 
 plugins=(
     git
@@ -91,11 +99,27 @@ function start-emacs {
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
-alias vim="nvim"
-alias gi3=grep_i3_keybinds
+
+# linux specific
+if [[ "$(uname 2> /dev/null)" == "Linux" ]]; then
+    alias pbcopy="xclip -selection clipboard"
+    alias pbpaste="xclip -selection clipboard -o"
+    alias sctl="sudo systemctl"
+    alias vim="nvim"
+    alias ecp="ec polybar"
+    alias gi3=grep_i3_keybinds
+    alias xrl="xrdb ~/.Xresources"
+    alias restart="shutdown -r now"
+    alias cat="ccat"
+    # alias ls="exa"
+    # alias ll="exa -la"
+    alias gimme="sudo pacman -S"
+    alias bgf="~/.fehbg"
+    alias bgn="update_background"
+fi
+
 alias h="cd ~"
 alias ec="edit-config"
-alias ecp="ec polybar"
 alias ez="vim ~/.zshrc"
 alias vz="vim ~/.zshrc"
 alias sz="source ~/.zshrc"
@@ -120,12 +144,8 @@ function push_upstream () {
     git push -u origin $(git branch | grep "*" | awk -F " " '{print $NF}')
 }
 alias gpu=push_upstream
-alias sctl="sudo systemctl"
-alias pbcopy="xclip -selection clipboard"
-alias pbpaste="xclip -selection clipboard -o"
-alias restart="shutdown -r now"
+
 ## reload xresources
-alias xrl="xrdb ~/.Xresources"
 alias nr="node run.js"
 alias kl="kubectl"
 alias pacman="sudo pacman"
@@ -135,6 +155,7 @@ alias y="yadm"
 alias ya="yadm add"
 alias yaa="yadm add -u" # add only unstaged files
 alias yau="yadm add -u" # add only unstaged files
+
 function yadm_add_tool () {
    yadm add ~/.local/bin/tools/$1
 }
@@ -158,12 +179,6 @@ alias tools="cd ~/.local/bin/tools/ && ll"
 alias npmis="npm install --save"
 alias npmisd="npm install --save-dev"
 
-alias cat="ccat"
-alias ls="exa"
-alias ll="exa -la"
-alias gimme="sudo pacman -S"
-alias bgf="~/.fehbg"
-alias bgn="update_background"
 
 alias c="cd ~/code && ll"
 alias cgbb="cd ~/code/go/src/bitbucket.org/wtsdevops && ll"
@@ -211,6 +226,7 @@ alias copy-monitors='xrandr -q | grep " connected" | awk "{print $"${1:-1}"}" OR
 alias homelab-up="docker stack deploy -c ~/code/homelab/docker-compose.yml homelab"
 alias homelab-down="docker stack rm homelab"
 alias homelab-status="docker service ls | grep homelab"
+
 function generate_password() {
     password=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c 32; echo;)
     echo $password | pbcopy
@@ -218,44 +234,18 @@ function generate_password() {
 }
 alias passgen=generate_password
 
-#function _update-aur-pkglist() {
-#    trizen -Qeqm > ~/code/dot-ansible/roles/pacman/files/aur-pkgs \
-#            && yadm diff ~/.config/dotfiles/arch-packages/aur
-#}
-#
-#function _update-pac-pkglist() {
-#    pacman -Qqen > ~/code/dot-ansible/roles/pacman/files/pacman-pkgs \
-#        && yadm diff ~/.config/dotfiles/arch-packages/pacman
-#}
-#alias update-aur-pkglist=_update-aur-pkglist
-#alias update-pac-pkglist=_update-pac-pkglist
-#
-
 ## CUSTOM KEY BINDINGS ##
 ## zsh vi-mode settings
 # remaps ESC to fd
 bindkey -M viins 'fd' vi-cmd-mode
 bindkey 'lk' autosuggest-accept
 
-
-## Kubernetes
-command -v kubectl >/dev/null 2>&1
-if [[ $? == 0 ]]; then
-    source <(kubectl completion zsh)
-fi
-
-## Azure
-if [[ -f /home/$USER/.local/bin/azure-cli/az.completion ]]; then
-    autoload bashcompinit && bashcompinit
-    source /home/$USER/.local/bin/azure-cli/az.completion
-fi
-
 ## VIM POWERLINE
 if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
     source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 fi
-export ANSIBLE_PLAYBOOKS_DIR=~/code/ansible-playbooks
 
 export PATH=$PATH:/home/han/.local/bin
 
-source '/home/han/.local/bin/azure-cli/az.completion'
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
