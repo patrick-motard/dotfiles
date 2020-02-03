@@ -16,17 +16,25 @@ export NVM_AUTO_USE=true
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="agnoster"
-# ZSH_THEME="powerlevel10k/powerlevel10k"
+# hide user@host in agnoster theme on mac
+# https://stackoverflow.com/questions/28491458/zsh-agnoster-theme-showing-machine-name
+export DEFAULT_USER=$USER
+
+[[ "uname 2> /dev/null)" == "Linux" ]] && isLinux=0 || isLinux=1
 
 plugins=(
     git
     docker
     vi-mode
-    archlinux
     zsh-autosuggestions
     # custom plugins #
     # https://github.com/lukechilds/zsh-nvm
     zsh-nvm)
+
+# include linux plugins
+[[ $isLinux == 0 ]] && plugins+=(archlinux)
+# include mac plugins
+[[ $isLinux == 0 ]] && plugins+=()
 
 source $ZSH/oh-my-zsh.sh
 
@@ -100,12 +108,12 @@ function start-emacs {
 # For a full list of active aliases, run `alias`.
 #
 
+
 # linux specific
-if [[ "$(uname 2> /dev/null)" == "Linux" ]]; then
+if [[ $isLinux == 0 ]]; then
     alias pbcopy="xclip -selection clipboard"
     alias pbpaste="xclip -selection clipboard -o"
     alias sctl="sudo systemctl"
-    alias vim="nvim"
     alias ecp="ec polybar"
     alias gi3=grep_i3_keybinds
     alias xrl="xrdb ~/.Xresources"
@@ -118,6 +126,7 @@ if [[ "$(uname 2> /dev/null)" == "Linux" ]]; then
     alias bgn="update_background"
 fi
 
+alias vim="nvim"
 alias h="cd ~"
 alias ec="edit-config"
 alias ez="vim ~/.zshrc"
@@ -245,7 +254,30 @@ if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.z
     source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 fi
 
-export PATH=$PATH:/home/han/.local/bin
+export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/code/dot-ansible
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# Flutter & Android
+export PATH=$PATH:~/Downloads/flutter/bin
+
+
+# export ANDROID_SDK_ROOT="/usr/local/share/android-sdk/"
+# export ANDROID_HOME=/usr/local/share/android-sdk/
+# export ANT_HOME=/usr/local/opt/ant
+# export MAVEN_HOME=/usr/local/opt/maven
+# export GRADLE_HOME=/usr/local/opt/gradle
+# export ANDROID_NDK_HOME=/usr/local/opt/android-ndk
+
+
+# export PATH=$ANT_HOME/bin:$PATH
+# export PATH=$MAVEN_HOME/bin:$PATH
+# export PATH=$GRADLE_HOME/bin:$PATH
+# export PATH=$ANDROID_HOME/tools:$PATH
+# export PATH=$ANDROID_HOME/platform-tools:$PATH
+# export PATH=$ANDROID_HOME/build-tools/19.1.0:$PATH
+
+# BEGIN ZDI
+source /Users/pmotard/Code/zendesk/zdi/dockmaster/zdi.sh
+# END ZDI
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
