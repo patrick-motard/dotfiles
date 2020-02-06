@@ -182,7 +182,15 @@ alias yaf="yadm add ~/.yadm/files.gpg"
 alias yafp="yadm add ~/.yadm/files.gpg ~/.yadm/encrypt && yadm commit -m 'encrypt' && yadm push"
 alias token=~/.ssh/token
 
-alias update="ansible-playbook ~/code/dot-ansible/main.yml -i ~/code/dot-ansible/inventory/$(hostname).yml --ask-become-pass"
+if [[ $isLinux == 0 ]]; then
+    dot_playbook="main.yml"
+    dot_flags="--ask-become-pass"
+else
+    dot_playbook="mac.yml"
+    dot_flags=""
+fi
+
+alias update="ansible-playbook ~/code/dot-ansible/${dot_playbook} -i ~/code/dot-ansible/inventory/$(hostname).yml ${dot_flags}"
 alias tools="cd ~/.local/bin/tools/ && ll"
 
 alias npmis="npm install --save"
