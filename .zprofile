@@ -1,7 +1,5 @@
-emulate sh
-. ~/.profile
-emulate zsh
-
-if [ -z "$DISPLAY" -a $XDG_VTNR -eq 1 ]; then
-	startx
-fi
+# emulate sh
+# . ~/.profile
+# emulate zsh
+emulate sh -c '. ~/.profile'
+eval "$(rbenv init -)"

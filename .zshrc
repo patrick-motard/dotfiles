@@ -9,16 +9,25 @@ export NVM_AUTO_USE=true
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="agnoster"
+# hide user@host in agnoster theme on mac
+# https://stackoverflow.com/questions/28491458/zsh-agnoster-theme-showing-machine-name
+export DEFAULT_USER=$USER
+
+[[ "uname 2> /dev/null)" == "Linux" ]] && isLinux=0 || isLinux=1
 
 plugins=(
     git
     docker
     vi-mode
-    archlinux
     zsh-autosuggestions
     # custom plugins #
     # https://github.com/lukechilds/zsh-nvm
     zsh-nvm)
+
+# include linux plugins
+[[ $isLinux == 0 ]] && plugins+=(archlinux)
+# include mac plugins
+[[ $isLinux == 0 ]] && plugins+=()
 
 source $ZSH/oh-my-zsh.sh
 
@@ -91,11 +100,26 @@ function start-emacs {
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
+# linux specific
+if [[ $isLinux == 0 ]]; then
+    alias pbcopy="xclip -selection clipboard"
+    alias pbpaste="xclip -selection clipboard -o"
+    alias sctl="sudo systemctl"
+    alias ecp="ec polybar"
+    alias gi3=grep_i3_keybinds
+    alias xrl="xrdb ~/.Xresources"
+    alias restart="shutdown -r now"
+    alias cat="ccat"
+    # alias ls="exa"
+    # alias ll="exa -la"
+    alias gimme="sudo pacman -S"
+    alias bgf="~/.fehbg"
+    alias bgn="update_background"
+fi
+
 alias vim="nvim"
-alias gi3=grep_i3_keybinds
 alias h="cd ~"
 alias ec="edit-config"
-alias ecp="ec polybar"
 alias ez="vim ~/.zshrc"
 alias vz="vim ~/.zshrc"
 alias sz="source ~/.zshrc"
@@ -120,12 +144,7 @@ function push_upstream () {
     git push -u origin $(git branch | grep "*" | awk -F " " '{print $NF}')
 }
 alias gpu=push_upstream
-alias sctl="sudo systemctl"
-alias pbcopy="xclip -selection clipboard"
-alias pbpaste="xclip -selection clipboard -o"
-alias restart="shutdown -r now"
-## reload xresources
-alias xrl="xrdb ~/.Xresources"
+
 alias nr="node run.js"
 alias kl="kubectl"
 alias pacman="sudo pacman"
@@ -135,6 +154,7 @@ alias y="yadm"
 alias ya="yadm add"
 alias yaa="yadm add -u" # add only unstaged files
 alias yau="yadm add -u" # add only unstaged files
+
 function yadm_add_tool () {
    yadm add ~/.local/bin/tools/$1
 }
@@ -152,18 +172,19 @@ alias yaf="yadm add ~/.yadm/files.gpg"
 alias yafp="yadm add ~/.yadm/files.gpg ~/.yadm/encrypt && yadm commit -m 'encrypt' && yadm push"
 alias token=~/.ssh/token
 
-alias update="ansible-playbook ~/code/dot-ansible/main.yml -i ~/code/dot-ansible/inventory/$(hostname).yml --ask-become-pass"
+if [[ $isLinux == 0 ]]; then
+    dot_playbook="main.yml"
+    dot_flags="--ask-become-pass"
+else
+    dot_playbook="mac.yml"
+    dot_flags=""
+fi
+
+alias update="ansible-playbook ~/code/dot-ansible/${dot_playbook} -i ~/code/dot-ansible/inventory/$(hostname).yml ${dot_flags}"
 alias tools="cd ~/.local/bin/tools/ && ll"
 
 alias npmis="npm install --save"
 alias npmisd="npm install --save-dev"
-
-alias cat="ccat"
-alias ls="exa"
-alias ll="exa -la"
-alias gimme="sudo pacman -S"
-alias bgf="~/.fehbg"
-alias bgn="update_background"
 
 alias c="cd ~/code && ll"
 alias cgbb="cd ~/code/go/src/bitbucket.org/wtsdevops && ll"
@@ -211,6 +232,7 @@ alias copy-monitors='xrandr -q | grep " connected" | awk "{print $"${1:-1}"}" OR
 alias homelab-up="docker stack deploy -c ~/code/homelab/docker-compose.yml homelab"
 alias homelab-down="docker stack rm homelab"
 alias homelab-status="docker service ls | grep homelab"
+
 function generate_password() {
     password=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c 32; echo;)
     echo $password | pbcopy
@@ -237,25 +259,34 @@ alias passgen=generate_password
 bindkey -M viins 'fd' vi-cmd-mode
 bindkey 'lk' autosuggest-accept
 
-
-## Kubernetes
-command -v kubectl >/dev/null 2>&1
-if [[ $? == 0 ]]; then
-    source <(kubectl completion zsh)
-fi
-
-## Azure
-if [[ -f /home/$USER/.local/bin/azure-cli/az.completion ]]; then
-    autoload bashcompinit && bashcompinit
-    source /home/$USER/.local/bin/azure-cli/az.completion
-fi
-
 ## VIM POWERLINE
 if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
     source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 fi
-export ANSIBLE_PLAYBOOKS_DIR=~/code/ansible-playbooks
+export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/code/dot-ansible
 
-export PATH=$PATH:/home/han/.local/bin
+# Flutter & Android
+export PATH=$PATH:~/Downloads/flutter/bin
 
-source '/home/han/.local/bin/azure-cli/az.completion'
+
+# export ANDROID_SDK_ROOT="/usr/local/share/android-sdk/"
+# export ANDROID_HOME=/usr/local/share/android-sdk/
+# export ANT_HOME=/usr/local/opt/ant
+# export MAVEN_HOME=/usr/local/opt/maven
+# export GRADLE_HOME=/usr/local/opt/gradle
+# export ANDROID_NDK_HOME=/usr/local/opt/android-ndk
+
+
+# export PATH=$ANT_HOME/bin:$PATH
+# export PATH=$MAVEN_HOME/bin:$PATH
+# export PATH=$GRADLE_HOME/bin:$PATH
+# export PATH=$ANDROID_HOME/tools:$PATH
+# export PATH=$ANDROID_HOME/platform-tools:$PATH
+# export PATH=$ANDROID_HOME/build-tools/19.1.0:$PATH
+
+# BEGIN ZDI
+source /Users/pmotard/Code/zendesk/zdi/dockmaster/zdi.sh
+# END ZDI
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
