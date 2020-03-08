@@ -6,6 +6,6 @@
 	name = patrick-motard
 	email = motard19@gmail.com
 [core]
-	editor = vim
+	editor = nvim
 [alias]
 	tagcommit = rev-list -n 1
