@@ -22,33 +22,34 @@
 			 ("marmalade" . "http://marmalade-repo.org/packages/")))
 (require 'package)
 (package-initialize)
-
-;;(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(org-babel-load-file "~/.emacs.d.han/emacs.org")
+;; ;;(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
 ;; disable menu and tool bar
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
+;; (menu-bar-mode -1)
+;; (tool-bar-mode -1)
+;; (scroll-bar-mode -1)
 ;; (add-hook 'before-save-hook 'whitespace-cleanup)
 ;; configure file backups
-(setq backup-directory-alist `(("." . "~/.saves")))
-(setq backup-by-copying t)
-(setq delete-old-versions t
-  kept-new-versions 6
-  kept-old-versions 2
-  version-control t)
-;; activate shell mode for AUR PKGBUILD files
-(add-to-list 'auto-mode-alist'("PKGBUILD\\'" . shell-script-mode))
-(global-set-key (kbd "RET") 'newline-and-indent)
+;; (setq backup-directory-alist `(("." . "~/.saves")))
+;; (setq backup-by-copying t)
+;; (setq delete-old-versions t
+;;   kept-new-versions 6
+;;   kept-old-versions 2
+;;   version-control t)
 
-;; The value is in 1/10pt, so 100 will give you 10pt, etc.
-;; This doesn't seem to be necessary if the font size is specified with the font name.
-;; I'll leave it here for reference.
-;;(set-face-attribute 'default (selected-frame) :height 180)
-(add-to-list 'default-frame-alist '(font . "Inconsolata-18"))
-(global-display-line-numbers-mode)
+;; ;; activate shell mode for AUR PKGBUILD files
+;; (add-to-list 'auto-mode-alist'("PKGBUILD\\'" . shell-script-mode))
+;; (global-set-key (kbd "RET") 'newline-and-indent)
 
-;; Bootstrap `use-package'
+;; ;; The value is in 1/10pt, so 100 will give you 10pt, etc.
+;; ;; This doesn't seem to be necessary if the font size is specified with the font name.
+;; ;; I'll leave it here for reference.
+;; ;;(set-face-attribute 'default (selected-frame) :height 180)
+;; (add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline-18"))
+;; (global-display-line-numbers-mode)
+
+;; ;; Bootstrap `use-package'
 (unless (package-installed-p 'use-package) ; unless it is already installed
   (package-refresh-contents) ; updage packages archive
   (package-install 'use-package)) ; and install the most recent version of use-package
@@ -85,22 +86,22 @@
 (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
   (add-hook hook #'elisp-def-mode))
 
-(use-package helm :ensure t)
-(require 'helm-config)
-(helm-mode 1)
-;;(setq helm-mode-fuzzy-match t)
-;;(setq helm-completion-in-region-fuzzy-match t)
-(setq-default helm-M-x-fuzzy-match t)
-;; Rebind tab in helm-find-files to complete the selection (instead of enter).
-(define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
-(define-key helm-map (kbd "<tab>") #'helm-execute-persistent-action)
-;; Since tab is 'helm-select-action', switch that to C-z so we can still call it.
-(define-key helm-map (kbd "C-z") #'helm-select-action)
+;; (use-package helm :ensure t)
+;; (require 'helm-config)
+;; (helm-mode 1)
+;; ;;(setq helm-mode-fuzzy-match t)
+;; ;;(setq helm-completion-in-region-fuzzy-match t)
+;; (setq-default helm-M-x-fuzzy-match t)
+;; ;; Rebind tab in helm-find-files to complete the selection (instead of enter).
+;; (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
+;; (define-key helm-map (kbd "<tab>") #'helm-execute-persistent-action)
+;; ;; Since tab is 'helm-select-action', switch that to C-z so we can still call it.
+;; (define-key helm-map (kbd "C-z") #'helm-select-action)
 
-(use-package helm-git-grep :ensure t :defer t)
-(use-package helm-swoop :ensure t :defer t)
+;; (use-package helm-git-grep :ensure t :defer t)
+;; (use-package helm-swoop :ensure t :defer t)
 
-;; (require 'mu4e)
+;; ;; (require 'mu4e)
 ;; ;; use mu4e for email in emacs
 ;; (setq mail-user-agent 'mu4e-user-agent)
 ;; ;;default
@@ -296,10 +297,10 @@
 			     (visual-line-mode)
 			     (org-indent-mode)))
 ;; Company - Complete anything. Auto-completion library.
-(use-package company
-  :ensure t
-  :config
-  (progn (add-hook 'after-init-hook 'global-company-mode)))
+;; (use-package company
+;;   :ensure t
+;;   :config
+;;   (progn (add-hook 'after-init-hook 'global-company-mode)))
 
 
 (defun org-update-cookies-after-save()
@@ -334,104 +335,106 @@
 (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 (use-package all-the-icons :ensure t)
 
-(require 'which-key)
+(use-package which-key :ensure t)
 (which-key-mode)
 ;; How quickly which-key's popup pops up. Setting to 0.0 is bad. Smaller = faster.
 (setq which-key-idle-delay 0.1)
 
 
 
-;; "ensure t" makes sure the package is accessible and downloads it if it's not.
- (use-package general :ensure t
-  :config
-  (general-define-key
-    :states '(normal visual emacs)
-   "," (general-simulate-key "C-c"))
-  (general-define-key
-    :states '(normal visual insert emacs)
-   "C-," (general-simulate-key "M-x"))
-  (general-define-key
-   :keymaps '(normal visual insert emacs dired-mode-map)
-   :prefix "SPC"
-   ;; :states '(normal)
-   :non-normal-prefix "C-SPC"
-   "" nil
-   ;; TODO: fiture out how to make tab switch between current and previous buffer
-   ;; with switch-to-prev-buffer it just rotates backwards
-   "TAB" '(switch-to-prev-buffer :which-key "prev buffer")
-   "," (general-simulate-key "C-c")
-   "SPC" '(helm-M-x :which-key "helm-M-x")
-   "1" '(winum-select-window-1 :which-key "window #1")
-   "2" '(winum-select-window-2 :which-key "window #2")
-   "3" '(winum-select-window-3 :which-key "window #3")
-   "4" '(winum-select-window-4 :which-key "window #4")
-   "5" '(winum-select-window-5 :which-key "window #5")
-   "6" '(winum-select-window-6 :which-key "window #6")
-   "7" '(winum-select-window-7 :which-key "window #7")
-   "8" '(winum-select-window-8 :which-key "window #8")
-   "9" '(winum-select-window-9 :which-key "window #9")
-   "0" '(neotree-show :which-key "neotree")
+;; ;; "ensure t" makes sure the package is accessible and downloads it if it's not.
+;;  (use-package general :ensure t
+;;   :config
+;;   (general-define-key
+;;     :states '(normal visual emacs)
+;;    "," (general-simulate-key "C-c"))
+;;   (general-define-key
+;;     :states '(normal visual insert emacs)
+;;    "C-," (general-simulate-key "M-x"))
+;;   (general-define-key
+;;    :keymaps '(normal visual insert emacs dired-mode-map)
+;;    :prefix "SPC"
+;;    ;; :states '(normal)
+;;    :non-normal-prefix "C-SPC"
+;;    "" nil
+;;    ;; TODO: fiture out how to make tab switch between current and previous buffer
+;;    ;; with switch-to-prev-buffer it just rotates backwards
+;;    "TAB" '(switch-to-prev-buffer :which-key "prev buffer")
+;;    "," (general-simulate-key "C-c")
+;;    "SPC" '(helm-M-x :which-key "helm-M-x")
+;;    "1" '(winum-select-window-1 :which-key "window #1")
+;;    "2" '(winum-select-window-2 :which-key "window #2")
+;;    "3" '(winum-select-window-3 :which-key "window #3")
+;;    "4" '(winum-select-window-4 :which-key "window #4")
+;;    "5" '(winum-select-window-5 :which-key "window #5")
+;;    "6" '(winum-select-window-6 :which-key "window #6")
+;;    "7" '(winum-select-window-7 :which-key "window #7")
+;;    "8" '(winum-select-window-8 :which-key "window #8")
+;;    "9" '(winum-select-window-9 :which-key "window #9")
+;;    "0" '(neotree-show :which-key "neotree")
 
 
-   "b" '(:which-key "buffer")
-   "b b" '(helm-mini :which-key "helm-mini")
-   "b n" '(switch-to-next-buffer :which-key "next buffer")
-   "b p" '(switch-to-prev-buffer :which-key "previous buffer")
-   "b d" '(kill-this-buffer :which-key "delete buffer")
+;;    "b" '(:which-key "buffer")
+;;    "b b" '(helm-mini :which-key "helm-mini")
+;;    "b n" '(switch-to-next-buffer :which-key "next buffer")
+;;    "b p" '(switch-to-prev-buffer :which-key "previous buffer")
+;;    "b d" '(kill-this-buffer :which-key "delete buffer")
 
-   "b m" '((lambda () (interactive) (switch-to-buffer "Messages") (evil-motion-state)) :which-key "messages buffer")
+;;    "b m" '((lambda () (interactive) (switch-to-buffer "Messages") (evil-motion-state)) :which-key "messages buffer")
 
-   "c l" '(comment-line :which "comment line")
-   "c r" '(comment-region :which "comment region")
-   "j" '(:which "jira")
-   "j i" '(org-jira-get-issues :which "get issues")
+;;    "c l" '(comment-line :which "comment line")
+;;    "c r" '(comment-region :which "comment region")
+;;    "j" '(:which "jira")
+;;    "j i" '(org-jira-get-issues :which "get issues")
 
-   "e" '(:which-key "emacs misc")
-   "e d" '(elisp-def :which-key "elisp-def (go to function)")
-   "e i" '((lambda () (interactive) (find-file user-init-file)) :which-key "edit init.el")
-   "e l" '((lambda () (interactive) (load-file user-init-file)) :which-key "load init.el")
-   "e t" '(:which-key "theme")
-   "e t n" '(cycle-themes :which-key "next theme")
-   "e p" '(:which-key "package")
-   "e p i" '(package-install :which-key "install")
-   "e p d" '(package-delete :which-key "delete")
-   "e p r" '(package-refresh-contents :which-key "refresh-contents")
-   "e n" '((lambda () (interactive) (find-file "~/Dropbox/documents/notes/emacs.org")) :which-key "open notes")
-   "e e" '(mu4e :which-key "email")
+;;    "e" '(:which-key "emacs misc")
+;;    "e d" '(elisp-def :which-key "elisp-def (go to function)")
+;;    "e i" '((lambda () (interactive) (find-file user-init-file)) :which-key "edit init.el")
+;;    "e l" '((lambda () (interactive) (load-file user-init-file)) :which-key "load init.el")
+;;    "e t" '(:which-key "theme")
+;;    "e t n" '(cycle-themes :which-key "next theme")
+;;    "e p" '(:which-key "package")
+;;    "e p i" '(package-install :which-key "install")
+;;    "e p d" '(package-delete :which-key "delete")
+;;    "e p r" '(package-refresh-contents :which-key "refresh-contents")
+;;    "e n" '((lambda () (interactive) (find-file "~/Dropbox/documents/notes/emacs.org")) :which-key "open notes")
+;;    "e e" '(mu4e :which-key "email")
 
-   "f" '(:which-key "file")
-   "f l" '(load-file :which-key "load file")
-   "f f" '(helm-find-files :which-key "find-file")
-   "f s" '(save-buffer :which-key "save file")
+;;    "f" '(:which-key "file")
+;;    "f l" '(load-file :which-key "load file")
+;;    "f f" '(helm-find-files :which-key "find-file")
+;;    "f s" '(save-buffer :which-key "save file")
 
-   "g" '(:which-key "git")
-   "g /" '(helm-git-grep :which-key "git-grep")
-   "g s" '(magit-status :which-key "status")
-   "g m" '(magit-dispatch :which-key "dispatch popup")
+;;    "g" '(:which-key "git")
+;;    "g /" '(helm-git-grep :which-key "git-grep")
+;;    "g s" '(magit-status :which-key "status")
+;;    "g m" '(magit-dispatch :which-key "dispatch popup")
 
-   "h" '(:which-key "help")
-   "h a" '(ansible-doc :which-key "ansible-doc")
+;;    "h" '(:which-key "help")
+;;    "h a" '(ansible-doc :which-key "ansible-doc")
 
-   "o" '(:which-key "org")
-   "o c" '(:which-key "checkbox")
-   "o c a" '(org-insert-todo-heading :which-key "add")
-   "o c t" '(org-toggle-checkbox :which-key "toggle")
-   "o t" '(org-todo :which-key "todo")
+;;    "o" '(:which-key "org")
+;;    "o d" '(org-do-demote :which-key "demote")
+;;    "o p" '(org-do-promote :which-key "promote")
+;;    "o c" '(:which-key "checkbox")
+;;    "o c a" '(org-insert-todo-heading :which-key "add")
+;;    "o c t" '(org-toggle-checkbox :which-key "toggle")
+;;    "o t" '(org-todo :which-key "todo")
 
-   "s" '(:which-key "search")
-   "s s" '(helm-swoop :which-key "helm-swoop")
+;;    "s" '(:which-key "search")
+;;    "s s" '(helm-swoop :which-key "helm-swoop")
 
-   "w" '(:which-key "window")
-   "w d" '(delete-window :which-key "delete window")
-   "w ;" '(evil-window-right :which-key "select window right")
-   "w l" '(evil-window-up :which-key "select window up")
-   "w k" '(evil-window-down :which-key "select window down")
-   "w j" '(evil-window-left :which-key "select window left")
-   "w s" '(split-window-vertically :which-key "split window vert")
-   "w /" '(split-window-horizontally :which-key "split window horizontally")
-   )
-  )
- ;; custom-set-variables was added by Custom.
+;;    "w" '(:which-key "window")
+;;    "w d" '(delete-window :which-key "delete window")
+;;    "w ;" '(evil-window-right :which-key "select window right")
+;;    "w l" '(evil-window-up :which-key "select window up")
+;;    "w k" '(evil-window-down :which-key "select window down")
+;;    "w j" '(evil-window-left :which-key "select window left")
+;;    "w s" '(split-window-vertically :which-key "split window vert")
+;;    "w /" '(split-window-horizontally :which-key "split window horizontally")
+;;    )
+;;   )
+;;  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
@@ -456,15 +459,25 @@
    ["#2E3440" "#C16069" "#A2BF8A" "#ECCC87" "#80A0C2" "#B58DAE" "#86C0D1" "#ECEFF4"])
  '(custom-safe-themes
    (quote
-    ("2277b74ae6f5aa018aa0057ef89752163e34fcb09ab6242f169c1740a72ca27a" "34c99997eaa73d64b1aaa95caca9f0d64229871c200c5254526d0062f8074693" "e3c87e869f94af65d358aa279945a3daf46f8185f1a5756ca1c90759024593dd" default)))
+    ("7f791f743870983b9bb90c8285e1e0ba1bf1ea6e9c9a02c60335899ba20f3c94" "2277b74ae6f5aa018aa0057ef89752163e34fcb09ab6242f169c1740a72ca27a" "34c99997eaa73d64b1aaa95caca9f0d64229871c200c5254526d0062f8074693" "e3c87e869f94af65d358aa279945a3daf46f8185f1a5756ca1c90759024593dd" default)))
  '(fci-rule-color "#4C566A")
  '(jdee-db-active-breakpoint-face-colors (cons "#191C25" "#80A0C2"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#191C25" "#A2BF8A"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#191C25" "#434C5E"))
  '(objed-cursor-color "#C16069")
+ '(org-link-frame-setup
+   (quote
+    ((vm . vm-visit-folder-other-frame)
+     (vm-imap . vm-visit-imap-folder-other-frame)
+     (gnus . org-gnus-no-new-news)
+     (file . find-file)
+     (wl . wl-other-frame))))
  '(package-selected-packages
    (quote
-    (go-guru go-autocomplete company highlight-parentheses helm-config elisp-def all-the-icons neotree helm-git-grep mu4e-alert chocolate-theme ansible-doc ansibe-doc winum evil-collection evil-mu4e ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
+    (robe ruby-test-mode projectile helm-ag helm-projectile seeing-is-believing rbenv ruby-electric go-guru go-autocomplete company highlight-parentheses helm-config elisp-def all-the-icons neotree helm-git-grep mu4e-alert chocolate-theme ansible-doc ansibe-doc winum evil-collection evil-mu4e ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
+ '(pdf-view-midnight-colors (cons "#ECEFF4" "#2E3440"))
+ '(rustic-ansi-faces
+   ["#2E3440" "#BF616A" "#A3BE8C" "#EBCB8B" "#81A1C1" "#B48EAD" "#88C0D0" "#ECEFF4"])
  '(send-mail-function (quote mailclient-send-it))
  '(vc-annotate-background "#2E3440")
  '(vc-annotate-color-map

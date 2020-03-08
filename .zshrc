@@ -1,3 +1,4 @@
+PROMPT_EOL_MARK=''
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -285,8 +286,8 @@ export PATH=$PATH:~/Downloads/flutter/bin
 # export PATH=$ANDROID_HOME/platform-tools:$PATH
 # export PATH=$ANDROID_HOME/build-tools/19.1.0:$PATH
 
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # BEGIN ZDI
 source /Users/pmotard/Code/zendesk/zdi/dockmaster/zdi.sh
 # END ZDI
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
