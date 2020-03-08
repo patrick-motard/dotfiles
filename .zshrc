@@ -241,6 +241,12 @@ function generate_password() {
 }
 alias passgen=generate_password
 
+
+# Use 'bashman` alias to view man page for shell builtins.
+# Example: bashman set
+# https://unix.stackexchange.com/a/18092/104661
+bashman () { man bash | less -p "^       $1 "; }
+
 #function _update-aur-pkglist() {
 #    trizen -Qeqm > ~/code/dot-ansible/roles/pacman/files/aur-pkgs \
 #            && yadm diff ~/.config/dotfiles/arch-packages/aur
