@@ -1,0 +1,233 @@
+#+TITLE: My Emacs Configuration
+#+AUTHOR: Patrick Motard
+#+EMAIL: motard19@gmail.com
+
+* Global Settings
+#+BEGIN_SRC emacs-lisp -n
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+;; auto indent
+(global-set-key (kbd "RET") 'newline-and-indent)
+#+END_SRC
+** Fonts
+The value is in 1/10pt, so 100 will give you 10pt, etc.
+This doesn't seem to be necessary if the font size is specified with the font name.
+I'll leave it here for reference.
+;;(set-face-attribute 'default (selected-frame) :height 180)
+
+#+BEGIN_SRC emacs-lisp
+  ;; (add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline-20"))
+  (set-face-font 'default "Inconsolata for Powerline-25")
+  (global-display-line-numbers-mode)
+#+END_SRC
+
+** Buffer backups.
+#+BEGIN_SRC emacs-lisp
+(setq backup-directory-alist `(("." . "~/.saves")))
+(setq backup-by-copying t)
+(setq delete-old-versions t
+  kept-new-versions 6
+  kept-old-versions 2
+  version-control t)
+#+END_SRC
+
+** Ansi-Term
+Set default shell executable.
+#+BEGIN_SRC emacs-lisp
+  (setq explicit-shell-file-name "/usr/local/bin/zsh")
+#+END_SRC
+* mode settings
+** AUR pkgbuild files
+Activate shell mode for AUR PKGBUILD files.
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'auto-mode-alist'("PKGBUILD\\'" . shell-script-mode))
+#+END_SRC
+* Packages  
+** Projectile 
+#+BEGIN_SRC emacs-lisp
+(use-package projectile
+  :ensure t
+  :config
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (projectile-mode +1))
+#+END_SRC
+
+** Helm
+#+BEGIN_SRC emacs-lisp
+  (use-package helm :ensure t)
+  (require 'helm-config)
+  (helm-mode 1)
+  ;;(setq helm-mode-fuzzy-match t)
+  ;;(setq helm-completion-in-region-fuzzy-match t)
+  (setq-default helm-M-x-fuzzy-match t)
+  ;; Rebind tab in helm-find-files to complete the selection (instead of enter).
+  (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
+  (define-key helm-map (kbd "<tab>") #'helm-execute-persistent-action)
+  ;; Since tab is 'helm-select-action', switch that to C-z so we can still call it.
+  (define-key helm-map (kbd "C-z") #'helm-select-action)
+
+  (use-package helm-git-grep :ensure t :defer t)
+  (use-package helm-swoop :ensure t :defer t)
+  (use-package helm-projectile :ensure t :defer t)
+  (use-package helm-ag :ensure t :defer t)
+#+END_SRC
+
+** Autocompletion (company)
+#+BEGIN_SRC emacs-lisp
+(use-package company :ensure t :defer t
+:config (progn (add-hook 'after-init-hook 'global-company-mode)))
+#+END_SRC
+
+* Languages
+** Ruby
+*** Packages
+Ruby Electric: Auto-matching for paired characters (parens, quotes, def/class/if-end, etc).
+#+BEGIN_SRC emacs-lisp
+(use-package ruby-electric :ensure t :defer t)
+(add-hook 'ruby-mode-hook 'ruby-electric-mode)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package rbenv :ensure t :defer t)
+(global-rbenv-mode)
+(rbenv-use-global)
+#+END_SRC
+
+Code inspection via Robe
+#+BEGIN_SRC emacs-lisp
+(use-package robe :ensure t :defer t)
+(add-hook 'ruby-mode-hook 'robe-mode)
+#+END_SRC
+
+Tests! 
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ruby-test-mode :ensure t :defer t)
+  (add-hook 'ruby-mode-hook 'ruby-test-mode)
+  ;; This hook auto selects the test buffer and scrolls to the bottom, whenver tests
+  ;; are run. You can close the test buffer by typing 'q'.
+  (add-hook 'compilation-finish-functions
+            (lambda (buf strg)
+              (switch-to-buffer-other-window "*compilation*")
+              (read-only-mode)
+              (goto-char (point-max))
+              (local-set-key (kbd "q")
+                             (lambda () (interactive) (quit-restore-window)))))
+#+END_SRC
+
+This package isn't found for some reason.
+# #+BEGIN_SRC emacs-lisp
+# (use-package seeing-is-believing :ensure t :defer t)
+# (setq seeing-is-believing-prefix "C-.")
+# (add-hook 'ruby-mode-hook 'seeing-is-believing)
+# #+END_SRC
+*** Settings
+Use ruby mode for files containing ruby code that aren't '.rb' files.
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'auto-mode-alist
+             '("\\.\\(?:cap\\|gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist
+             '("\\(?:Brewfile\\|Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode))
+#+END_SRC
+
+* Keybinds 
+#+BEGIN_SRC emacs-lisp
+  ;; "ensure t" makes sure the package is accessible and downloads it if it's not.
+   (use-package general :ensure t
+    :config
+    (general-define-key
+      :states '(normal visual emacs)
+     "," (general-simulate-key "C-c"))
+    (general-define-key
+      :states '(normal visual insert emacs)
+     "C-," (general-simulate-key "M-x"))
+    (general-define-key
+     :keymaps '(normal visual insert emacs dired-mode-map)
+     :prefix "SPC"
+     ;; :states '(normal)
+     :non-normal-prefix "C-SPC"
+     "" nil
+     ;; TODO: fiture out how to make tab switch between current and previous buffer
+     ;; with switch-to-prev-buffer it just rotates backwards
+     "TAB" '(switch-to-prev-buffer :which-key "prev buffer")
+     "," (general-simulate-key "C-c")
+     "SPC" '(helm-M-x :which-key "helm-M-x")
+     "1" '(winum-select-window-1 :which-key "window #1")
+     "2" '(winum-select-window-2 :which-key "window #2")
+     "3" '(winum-select-window-3 :which-key "window #3")
+     "4" '(winum-select-window-4 :which-key "window #4")
+     "5" '(winum-select-window-5 :which-key "window #5")
+     "6" '(winum-select-window-6 :which-key "window #6")
+     "7" '(winum-select-window-7 :which-key "window #7")
+     "8" '(winum-select-window-8 :which-key "window #8")
+     "9" '(winum-select-window-9 :which-key "window #9")
+     "0" '(neotree-show :which-key "neotree")
+
+
+     "b" '(:which-key "buffer")
+     "b b" '(helm-mini :which-key "helm-mini")
+     "b n" '(switch-to-next-buffer :which-key "next buffer")
+     "b p" '(switch-to-prev-buffer :which-key "previous buffer")
+     "b d" '(kill-this-buffer :which-key "delete buffer")
+
+     "b m" '((lambda () (interactive) (switch-to-buffer "Messages") (evil-motion-state)) :which-key "messages buffer")
+
+     "c l" '(comment-line :which "comment line")
+     "c r" '(comment-region :which "comment region")
+     "j" '(:which "jira")
+     "j i" '(org-jira-get-issues :which "get issues")
+
+     "e" '(:which-key "emacs misc")
+     "e d" '(elisp-def :which-key "elisp-def (go to function)")
+     "e i" '((lambda () (interactive) (find-file user-init-file)) :which-key "edit init.el")
+     "e l" '((lambda () (interactive) (load-file user-init-file)) :which-key "load init.el")
+     "e t" '(:which-key "theme")
+     "e t n" '(cycle-themes :which-key "next theme")
+     "e p" '(:which-key "package")
+     "e p i" '(package-install :which-key "install")
+     "e p d" '(package-delete :which-key "delete")
+     "e p r" '(package-refresh-contents :which-key "refresh-contents")
+     "e n" '((lambda () (interactive) (find-file "~/Dropbox/documents/notes/emacs.org")) :which-key "open notes")
+     "e e" '(mu4e :which-key "email")
+
+     "f" '(:which-key "file")
+     "f l" '(load-file :which-key "load file")
+     "f f" '(helm-find-files :which-key "find-file")
+     "f s" '(save-buffer :which-key "save file")
+
+     "g" '(:which-key "git")
+     "g /" '(helm-git-grep :which-key "git-grep")
+     "g s" '(magit-status :which-key "status")
+     "g m" '(magit-dispatch :which-key "dispatch popup")
+
+     "h" '(:which-key "help")
+     "h a" '(ansible-doc :which-key "ansible-doc")
+
+     "o" '(:which-key "org")
+     "o d" '(org-do-demote :which-key "demote")
+     "o p" '(org-do-promote :which-key "promote")
+     "o c" '(:which-key "checkbox")
+     "o c a" '(org-insert-todo-heading :which-key "add")
+     "o c t" '(org-toggle-checkbox :which-key "toggle")
+     "o t" '(org-todo :which-key "todo")
+
+     "p" '(:which-key "projects")
+     "p p" '(projectile-switch-project :which-key "switch project")
+     "p f" '(helm-projectile-find-file-dwim :which-key "find file")
+
+     "s" '(:which-key "search")
+     "s s" '(helm-swoop :which-key "helm-swoop")
+
+     "w" '(:which-key "window")
+     "w d" '(delete-window :which-key "delete window")
+     "w ;" '(evil-window-right :which-key "select window right")
+     "w l" '(evil-window-up :which-key "select window up")
+     "w k" '(evil-window-down :which-key "select window down")
+     "w j" '(evil-window-left :which-key "select window left")
+     "w s" '(split-window-vertically :which-key "split window vert")
+     "w /" '(split-window-horizontally :which-key "split window horizontally")
+     )
+    )
+#+END_SRC
