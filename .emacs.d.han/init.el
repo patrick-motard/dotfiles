@@ -22,7 +22,7 @@
 			 ("marmalade" . "http://marmalade-repo.org/packages/")))
 (require 'package)
 (package-initialize)
-(org-babel-load-file "~/.emacs.d.han/emacs.org")
+(org-babel-load-file "~/.emacs.d.han/settings.org")
 ;; ;;(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
 ;; disable menu and tool bar
@@ -331,7 +331,6 @@
 	 ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-(use-package neotree :ensure t :defer t)
 (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 (use-package all-the-icons :ensure t)
 

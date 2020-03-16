@@ -22,7 +22,47 @@ I'll leave it here for reference.
   (global-display-line-numbers-mode)
 #+END_SRC
 
-** Buffer backups.
+** Buffers.
+*** Switching (Next/Previous)
+#+BEGIN_SRC emacs-lisp
+  (defun my-next-user-buffer ()
+    "Switch to the next user buffer.
+  “user buffer” is determined by `xah-user-buffer-q'.
+  URL `http://ergoemacs.org/emacs/elisp_next_prev_user_buffer.html'
+  Version 2016-06-19"
+    (interactive)
+    (next-buffer)
+    (let ((i 0))
+      (while (< i 20)
+        (if (not (my-user-buffer-q))
+            (progn (next-buffer)
+                   (setq i (1+ i)))
+          (progn (setq i 100))))))
+
+  (defun my-previous-user-buffer ()
+    "Switch to the previous user buffer.
+  “user buffer” is determined by `xah-user-buffer-q'.
+  URL `http://ergoemacs.org/emacs/elisp_next_prev_user_buffer.html'
+  Version 2016-06-19"
+    (interactive)
+    (previous-buffer)
+    (let ((i 0))
+      (while (< i 20)
+        (if (not (my-user-buffer-q))
+            (progn (previous-buffer)
+                   (setq i (1+ i)))
+          (progn (setq i 100))))))
+
+  (defun my-user-buffer-q ()
+    (interactive)
+    (if (string-equal "*" (substring (buffer-name) 0 1))
+        nil
+      (if (string-equal major-mode "dired-mode")
+          nil
+        t
+        )))
+#+END_SRC
+*** Backups
 #+BEGIN_SRC emacs-lisp
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq backup-by-copying t)
@@ -31,7 +71,6 @@ I'll leave it here for reference.
   kept-old-versions 2
   version-control t)
 #+END_SRC
-
 ** Ansi-Term
 Set default shell executable.
 #+BEGIN_SRC emacs-lisp
@@ -80,6 +119,10 @@ Activate shell mode for AUR PKGBUILD files.
 :config (progn (add-hook 'after-init-hook 'global-company-mode)))
 #+END_SRC
 
+** Neotree
+#+BEGIN_SRC emacs-lisp
+(use-package neotree :ensure t :defer t)
+#+END_SRC
 * Languages
 ** Ruby
 *** Packages
@@ -133,13 +176,16 @@ Use ruby mode for files containing ruby code that aren't '.rb' files.
 #+END_SRC
 
 * Keybinds 
+** which-key
 #+BEGIN_SRC emacs-lisp
   (use-package which-key :ensure t)
   (which-key-mode)
   ;; How quickly which-key's popup pops up. Setting to 0.0 is bad. Smaller = faster.
   (setq which-key-idle-delay 0.1)
-
-  ;; "ensure t" makes sure the package is accessible and downloads it if it's not.
+#+END_SRC
+** general.el
+"ensure t" makes sure the package is accessible and downloads it if it's not.
+#+BEGIN_SRC emacs-lisp
    (use-package general :ensure t
     :config
     (general-define-key
@@ -171,28 +217,28 @@ Use ruby mode for files containing ruby code that aren't '.rb' files.
      "0" '(neotree-show :which-key "neotree")
 
 
-     "b" '(:which-key "buffer")
-     "b b" '(helm-mini :which-key "helm-mini")
-     "b n" '(switch-to-next-buffer :which-key "next buffer")
-     "b p" '(switch-to-prev-buffer :which-key "previous buffer")
-     "b d" '(kill-this-buffer :which-key "delete buffer")
+     "b"   '(                        :which-key "buffer")
+     "b b" '(helm-mini               :which-key "helm-mini")
+     "b n" '(my-next-user-buffer     :which-key "next buffer")
+     "b p" '(my-previous-user-buffer :which-key "previous buffer")
+     "b d" '(kill-this-buffer        :which-key "delete buffer")
 
      "b m" '((lambda () (interactive) (switch-to-buffer "Messages") (evil-motion-state)) :which-key "messages buffer")
 
-     "c l" '(comment-line :which "comment line")
-     "c r" '(comment-region :which "comment region")
+     "c l" '(comment-line          :which     "comment line")
+     "c r" '(comment-region        :which     "comment region")
      "j" '(:which "jira")
-     "j i" '(org-jira-get-issues :which "get issues")
+     "j i" '(org-jira-get-issues   :which     "get issues")
 
-     "e" '(:which-key "emacs misc")
-     "e d" '(elisp-def :which-key "elisp-def (go to function)")
+     "e" '(                        :which-key "emacs misc")
+     "e d" '(elisp-def             :which-key "elisp-def (go to function)")
      "e i" '((lambda () (interactive) (find-file user-init-file)) :which-key "edit init.el")
      "e l" '((lambda () (interactive) (load-file user-init-file)) :which-key "load init.el")
-     "e t" '(:which-key "theme")
-     "e t n" '(cycle-themes :which-key "next theme")
-     "e p" '(:which-key "package")
-     "e p i" '(package-install :which-key "install")
-     "e p d" '(package-delete :which-key "delete")
+     "e t" '(                      :which-key "theme")
+     "e t n" '(cycle-themes        :which-key "next theme")
+     "e p" '(                      :which-key "package")
+     "e p i" '(package-install     :which-key "install")
+     "e p d" '(package-delete      :which-key "delete")
      "e p r" '(package-refresh-contents :which-key "refresh-contents")
      "e n" '((lambda () (interactive) (find-file "~/Nextcloud/Documents/notes/notes.org")) :which-key "open notes")
      "e e" '(mu4e :which-key "email")
@@ -219,7 +265,7 @@ Use ruby mode for files containing ruby code that aren't '.rb' files.
      "o t" '(org-todo :which-key "todo")
 
      "p" '(:which-key "projects")
-     "p p" '(projectile-switch-project :which-key "switch project")
+     "p p" '(helm-projectile :which-key "switch project")
      "p f" '(helm-projectile-find-file-dwim :which-key "find file")
 
      "s" '(:which-key "search")
@@ -235,7 +281,13 @@ Use ruby mode for files containing ruby code that aren't '.rb' files.
      "w /" '(split-window-horizontally :which-key "split window horizontally")
      )
     )
+#+END_SRC
+
+** post keybind steps
+Group all the winum-select-window keybinds under one heading. This solution comes from [[https://emacs.stackexchange.com/a/36720/15876][this stack overflow post]]. Documentation for this method can be found on the [[https://github.com/justbur/emacs-which-key#key-and-description-replacement][which-key readme]].
+#+BEGIN_SRC emacs-lisp
   (push '(("\\(.*\\) 1" . "winum-select-window-1") . ("\\1 0..9" . "window 0..9"))
       which-key-replacement-alist)
   (push '((nil . "winum-select-window-[2-9]") . t) which-key-replacement-alist)
 #+END_SRC
+
