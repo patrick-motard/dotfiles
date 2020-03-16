@@ -134,6 +134,11 @@ Use ruby mode for files containing ruby code that aren't '.rb' files.
 
 * Keybinds 
 #+BEGIN_SRC emacs-lisp
+  (use-package which-key :ensure t)
+  (which-key-mode)
+  ;; How quickly which-key's popup pops up. Setting to 0.0 is bad. Smaller = faster.
+  (setq which-key-idle-delay 0.1)
+
   ;; "ensure t" makes sure the package is accessible and downloads it if it's not.
    (use-package general :ensure t
     :config
@@ -230,4 +235,7 @@ Use ruby mode for files containing ruby code that aren't '.rb' files.
      "w /" '(split-window-horizontally :which-key "split window horizontally")
      )
     )
+  (push '(("\\(.*\\) 1" . "winum-select-window-1") . ("\\1 0..9" . "window 0..9"))
+      which-key-replacement-alist)
+  (push '((nil . "winum-select-window-[2-9]") . t) which-key-replacement-alist)
 #+END_SRC
