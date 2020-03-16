@@ -335,10 +335,10 @@
 (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 (use-package all-the-icons :ensure t)
 
-(use-package which-key :ensure t)
-(which-key-mode)
-;; How quickly which-key's popup pops up. Setting to 0.0 is bad. Smaller = faster.
-(setq which-key-idle-delay 0.1)
+;; (use-package which-key :ensure t)
+;; (which-key-mode)
+;; ;; How quickly which-key's popup pops up. Setting to 0.0 is bad. Smaller = faster.
+;; (setq which-key-idle-delay 0.1)
 
 
 
