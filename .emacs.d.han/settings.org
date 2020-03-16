@@ -109,6 +109,8 @@ Activate shell mode for AUR PKGBUILD files.
 
   (use-package helm-git-grep :ensure t :defer t)
   (use-package helm-swoop :ensure t :defer t)
+  ;; fuzzy search is a little too liberal, disabling for now
+  ;; (setq helm-swoop-use-fuzzy-match t)
   (use-package helm-projectile :ensure t :defer t)
   (use-package helm-ag :ensure t :defer t)
 #+END_SRC
@@ -269,7 +271,8 @@ Use ruby mode for files containing ruby code that aren't '.rb' files.
      "p f" '(helm-projectile-find-file-dwim :which-key "find file")
 
      "s" '(:which-key "search")
-     "s s" '(helm-swoop :which-key "helm-swoop")
+     "s s" '(helm-swoop-without-pre-input :which-key "helm-swoop")
+     "s S" '(helm-swoop :which-key "helm-swoop-cursor")
 
      "w" '(:which-key "window")
      "w d" '(delete-window :which-key "delete window")
