@@ -292,8 +292,10 @@ export PATH=$PATH:~/Downloads/flutter/bin
 # export PATH=$ANDROID_HOME/platform-tools:$PATH
 # export PATH=$ANDROID_HOME/build-tools/19.1.0:$PATH
 
-
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # BEGIN ZDI
 source /Users/pmotard/Code/zendesk/zdi/dockmaster/zdi.sh
+alias zas='zdi apps status'
+alias zws='zdi world start'
+alias zwst='zdi world stop'
 # END ZDI

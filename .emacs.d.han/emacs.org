@@ -189,7 +189,7 @@ Use ruby mode for files containing ruby code that aren't '.rb' files.
      "e p i" '(package-install :which-key "install")
      "e p d" '(package-delete :which-key "delete")
      "e p r" '(package-refresh-contents :which-key "refresh-contents")
-     "e n" '((lambda () (interactive) (find-file "~/Dropbox/documents/notes/emacs.org")) :which-key "open notes")
+     "e n" '((lambda () (interactive) (find-file "~/Nextcloud/Documents/notes/notes.org")) :which-key "open notes")
      "e e" '(mu4e :which-key "email")
 
      "f" '(:which-key "file")
