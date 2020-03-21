@@ -473,7 +473,7 @@
      (wl . wl-other-frame))))
  '(package-selected-packages
    (quote
-    (robe ruby-test-mode projectile helm-ag helm-projectile seeing-is-believing rbenv ruby-electric go-guru go-autocomplete company highlight-parentheses helm-config elisp-def all-the-icons neotree helm-git-grep mu4e-alert chocolate-theme ansible-doc ansibe-doc winum evil-collection evil-mu4e ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
+    (treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs robe ruby-test-mode projectile helm-ag helm-projectile seeing-is-believing rbenv ruby-electric go-guru go-autocomplete company highlight-parentheses helm-config elisp-def all-the-icons neotree helm-git-grep mu4e-alert chocolate-theme ansible-doc ansibe-doc winum evil-collection evil-mu4e ansible yasnippet-snippets auto-complete markdown-mode org-jira circe evil-magit yaml-mode magit go-mode dash spaceline use-package which-key-posframe key-chord helm evil doom-themes cycle-themes)))
  '(pdf-view-midnight-colors (cons "#ECEFF4" "#2E3440"))
  '(rustic-ansi-faces
    ["#2E3440" "#BF616A" "#A3BE8C" "#EBCB8B" "#81A1C1" "#B48EAD" "#88C0D0" "#ECEFF4"])
