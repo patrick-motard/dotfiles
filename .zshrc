@@ -240,11 +240,18 @@ alias homelab-up="docker stack deploy -c ~/code/homelab/docker-compose.yml homel
 alias homelab-down="docker stack rm homelab"
 alias homelab-status="docker service ls | grep homelab"
 
+
 function generate_password() {
-    password=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c 32; echo;)
+    if [[ $isLinux == 0 ]]; then
+       password=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c 32; echo;)
+    else
+        password=$(env LC_CTYPE=C tr -dc "a-zA-Z0-9-_\$\?" < /dev/urandom | head -c 32)
+    fi
+
     echo $password | pbcopy
     echo "New password copied to clipboard."
 }
+
 alias passgen=generate_password
 
 
