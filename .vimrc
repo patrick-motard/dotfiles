@@ -3,8 +3,12 @@ inoremap fd <Esc>
 set laststatus=2
 set clipboard=unnamedplus
 let mapleader=" "
-" " Copy to clipboard
 
+" Stay in visual mode when indenting
+vnoremap < <gv
+vnoremap > >gv
+
+" " Copy to clipboard
 vnoremap  <leader>y  "+y
 nnoremap  <leader>Y  "+yg_
 nnoremap  <leader>y  "+y
