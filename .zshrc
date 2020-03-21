@@ -16,14 +16,20 @@ export DEFAULT_USER=$USER
 
 [[ "uname 2> /dev/null)" == "Linux" ]] && isLinux=0 || isLinux=1
 
+# plugins=(
+#     git
+#     docker
+#     vi-mode
+#     zsh-autosuggestions
+#     # custom plugins #
+#     # https://github.com/lukechilds/zsh-nvm
+#     zsh-nvm
+#     z)
 plugins=(
-    git
-    docker
     vi-mode
     zsh-autosuggestions
-    # custom plugins #
-    # https://github.com/lukechilds/zsh-nvm
-    zsh-nvm)
+    z
+    )
 
 # include linux plugins
 [[ $isLinux == 0 ]] && plugins+=(archlinux)
@@ -87,7 +93,7 @@ function grep_i3_keybinds {
 #        start-emacs {name of your configuration}
 function start-emacs {
     [[ -d ~/.emacs.d && ! -L ~/.emacs.d ]] && {
-        echo -e "ERROR: ~/.emacs.d already exists and is a directory.\nCopy it to ~/.emacs.d.{name} before calling this command." 
+        echo -e "ERROR: ~/.emacs.d already exists and is a directory.\nCopy it to ~/.emacs.d.{name} before calling this command."
         return 1
     }
     # remove any existing symlink
@@ -293,9 +299,10 @@ export PATH=$PATH:~/Downloads/flutter/bin
 # export PATH=$ANDROID_HOME/build-tools/19.1.0:$PATH
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+## BEGIN -- managed by dot-ansible:zendesk -- ##
+# export PLUGINS=$plugins
+[[ -f ~/.local/bin/zendesk_zshrc.sh ]] && source ~/.local/bin/zendesk_zshrc.sh
+## END -- managed by dot-ansible:zendesk -- ##
 # BEGIN ZDI
 source /Users/pmotard/Code/zendesk/zdi/dockmaster/zdi.sh
-alias zas='zdi apps status'
-alias zws='zdi world start'
-alias zwst='zdi world stop'
 # END ZDI
