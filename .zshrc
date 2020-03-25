@@ -38,6 +38,11 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+## BEGIN -- managed by dot-ansible:zendesk -- ##
+# export PLUGINS=$plugins
+[[ -f ~/.local/bin/zendesk_zshrc.sh ]] && source ~/.local/bin/zendesk_zshrc.sh
+## END -- managed by dot-ansible:zendesk -- ##
+
 #############################
 #     USER CONFIGURATION    #
 #############################
@@ -260,6 +265,12 @@ alias passgen=generate_password
 # https://unix.stackexchange.com/a/18092/104661
 bashman () { man bash | less -p "^       $1 "; }
 
+function file_count() {
+    echo $0
+    ##ls -1q $1 | wc  -l   
+}
+autoload file_count
+
 #function _update-aur-pkglist() {
 #    trizen -Qeqm > ~/code/dot-ansible/roles/pacman/files/aur-pkgs \
 #            && yadm diff ~/.config/dotfiles/arch-packages/aur
@@ -306,10 +317,6 @@ export PATH=$PATH:~/Downloads/flutter/bin
 # export PATH=$ANDROID_HOME/build-tools/19.1.0:$PATH
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-## BEGIN -- managed by dot-ansible:zendesk -- ##
-# export PLUGINS=$plugins
-[[ -f ~/.local/bin/zendesk_zshrc.sh ]] && source ~/.local/bin/zendesk_zshrc.sh
-## END -- managed by dot-ansible:zendesk -- ##
 # BEGIN ZDI
 source /Users/pmotard/Code/zendesk/zdi/dockmaster/zdi.sh
 # END ZDI
