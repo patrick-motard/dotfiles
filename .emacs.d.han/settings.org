@@ -10,6 +10,12 @@
 ;; auto indent
 (global-set-key (kbd "RET") 'newline-and-indent)
 #+END_SRC
+
+Disabled confirm close because its buggy as hell on OSX when restarting OS.
+# User must confirm before closing Emacs
+# #+BEGIN_SRC emacs-lisp
+# (setq confirm-kill-emacs 'y-or-n-p)
+# #+END_SRC
 ** Fonts
 The value is in 1/10pt, so 100 will give you 10pt, etc.
 This doesn't seem to be necessary if the font size is specified with the font name.
@@ -18,7 +24,7 @@ I'll leave it here for reference.
 
 #+BEGIN_SRC emacs-lisp
   ;; (add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline-20"))
-  (set-face-font 'default "Inconsolata for Powerline-25")
+  (set-face-font 'default "Inconsolata for Powerline-18")
   (global-display-line-numbers-mode)
 #+END_SRC
 
@@ -82,8 +88,33 @@ Activate shell mode for AUR PKGBUILD files.
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'auto-mode-alist'("PKGBUILD\\'" . shell-script-mode))
 #+END_SRC
-* Packages  
-** Projectile 
+* Packages
+** Org
+#+BEGIN_SRC emacs-lisp
+  (use-package org :ensure t
+    :defer t
+    :config
+    '(org-return-follows-link t)
+
+    ;; # is shorthand for function
+    (add-hook 'org-mode-hook #'toggle-word-wrap)
+    (add-hook 'org-mode-hook #'(lambda ()
+                               ;; make the lines in the buffer wrap around the edges of the screen.
+                               ;; to press C-c q  or fill-paragraph ever again!
+                               (visual-line-mode)
+                               (org-indent-mode)))
+    )
+  (defun org-update-cookies-after-save()
+    (interactive)
+    ;; This (4) is a "universal arguement". Still don't know what that means, but org-update-statistics-cookies
+    ;; expects it to be set if you want to update all cookies in the whole file.
+    (let ((current-prefix-arg '(4)))
+    (org-update-statistics-cookies "ALL")))
+  ;; Automatically update all cookies when saving the file. This makes sure that any checkboxes added,
+  ;; removed, or finished, are counted/summed together on each todo (example: [ 1/12 ].
+  (add-hook 'org-mode-hook (lambda () (add-hook 'before-save-hook 'org-update-cookies-after-save)))
+#+END_SRC
+** Projectile
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
   :ensure t
@@ -114,7 +145,6 @@ Activate shell mode for AUR PKGBUILD files.
   (use-package helm-projectile :ensure t :defer t)
   (use-package helm-ag :ensure t :defer t)
 #+END_SRC
-
 ** Autocompletion (company)
 #+BEGIN_SRC emacs-lisp
 (use-package company :ensure t :defer t
@@ -234,7 +264,7 @@ Code inspection via Robe
 (add-hook 'ruby-mode-hook 'robe-mode)
 #+END_SRC
 
-Tests! 
+Tests!
 
 #+BEGIN_SRC emacs-lisp
   (use-package ruby-test-mode :ensure t :defer t)
@@ -265,13 +295,18 @@ Use ruby mode for files containing ruby code that aren't '.rb' files.
              '("\\(?:Brewfile\\|Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode))
 #+END_SRC
 
-* Keybinds 
+* Keybinds
 ** which-key
 #+BEGIN_SRC emacs-lisp
   (use-package which-key :ensure t)
   (which-key-mode)
+
   ;; How quickly which-key's popup pops up. Setting to 0.0 is bad. Smaller = faster.
   (setq which-key-idle-delay 0.1)
+#+END_SRC
+*** Position on screen.
+#+BEGIN_SRC emacs-lisp
+  ;; (which-key-setup-side-window-right)
 #+END_SRC
 ** general.el
 "ensure t" makes sure the package is accessible and downloads it if it's not.
