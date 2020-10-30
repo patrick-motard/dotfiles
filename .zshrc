@@ -43,6 +43,11 @@ source $ZSH/oh-my-zsh.sh
 [[ -f ~/.local/bin/zendesk_zshrc.sh ]] && source ~/.local/bin/zendesk_zshrc.sh
 ## END -- managed by dot-ansible:zendesk -- ##
 
+# aliases i may want to add to workstation
+zen_code="~/code/zendesk"
+alias billing="cd ${zen_code}/billing"
+alias bill=billing
+
 #############################
 #     USER CONFIGURATION    #
 #############################
@@ -134,7 +139,9 @@ alias h="cd ~"
 alias ec="edit-config"
 alias ez="vim ~/.zshrc"
 alias vz="vim ~/.zshrc"
+alias vzenv="vim ~/.zshenv"
 alias sz="source ~/.zshrc"
+alias szenv="source ~/.zshenv"
 alias gs="git status"
 alias gau="git add -u" # git add unstaged only
 alias gaa="git add -A" # git add all
@@ -245,6 +252,8 @@ alias homelab-up="docker stack deploy -c ~/code/homelab/docker-compose.yml homel
 alias homelab-down="docker stack rm homelab"
 alias homelab-status="docker service ls | grep homelab"
 
+alias docker_clean_images='docker rmi $(docker images -a --filter=dangling=true -q)'
+alias docker_clean_ps='docker rm $(docker ps --filter=status=exited --filter=status=created -q)'
 
 function generate_password() {
     if [[ $isLinux == 0 ]]; then
@@ -267,9 +276,23 @@ bashman () { man bash | less -p "^       $1 "; }
 
 function file_count() {
     echo $0
-    ##ls -1q $1 | wc  -l   
+    ##ls -1q $1 | wc  -l
 }
 autoload file_count
+
+function brew_search() {
+    brew list | grep $1
+}
+function history_search() {
+    history | grep $1
+}
+function alias_search() {
+    alias | grep $1
+}
+
+alias brews=brew_search
+alias historys=history_search
+alias aliass=alias_search
 
 #function _update-aur-pkglist() {
 #    trizen -Qeqm > ~/code/dot-ansible/roles/pacman/files/aur-pkgs \
@@ -289,6 +312,9 @@ autoload file_count
 # remaps ESC to fd
 bindkey -M viins 'fd' vi-cmd-mode
 bindkey 'lk' autosuggest-accept
+bindkey 'lc' autosuggest-clear
+bindkey 'ln' autosuggest-toggle
+
 
 ## VIM POWERLINE
 if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
@@ -317,6 +343,26 @@ export PATH=$PATH:~/Downloads/flutter/bin
 # export PATH=$ANDROID_HOME/build-tools/19.1.0:$PATH
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+#
+#From: https://github.com/AdoptOpenJDK/homebrew-openjdk
+jdk() {
+    version=$1
+    export JAVA_HOME=$(/usr/libexec/java_home -v"$version");
+    java -version
+ }
+
+# tabtab source for electron-forge package
+# uninstall by removing these lines or running `tabtab uninstall electron-forge`
+[[ -f /Users/pmotard/Code/snap/node_modules/tabtab/.completions/electron-forge.zsh ]] && . /Users/pmotard/Code/snap/node_modules/tabtab/.completions/electron-forge.zsh
 # BEGIN ZDI
 source /Users/pmotard/Code/zendesk/zdi/dockmaster/zdi.sh
 # END ZDI
+alias fancy-reset='git reset --soft $(git rev-parse origin/master)'
+alias awswhoami='aws sts get-caller-identity'
+## BEGIN -- managed by dot-ansible, role: aws_cli -- ##
+alias awswhoami='aws sts get-caller-identity'
+function awscreds {
+    aws-work.sh $1
+    export AWS_PROFILE=$1
+}
+## END -- managed by dot-ansible, role: aws_cli -- ##
