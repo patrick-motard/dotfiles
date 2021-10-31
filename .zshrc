@@ -31,6 +31,11 @@ plugins=(
     z
     )
 
+## BEGIN -- managed by dot-ansible:zendesk -- ##
+# export PLUGINS=$plugins
+[[ -f ~/.local/bin/zendesk_zshrc.sh ]] && source ~/.local/bin/zendesk_zshrc.sh
+## END -- managed by dot-ansible:zendesk -- ##
+
 # include linux plugins
 [[ $isLinux == 0 ]] && plugins+=(archlinux)
 # include mac plugins
@@ -38,13 +43,9 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-## BEGIN -- managed by dot-ansible:zendesk -- ##
-# export PLUGINS=$plugins
-[[ -f ~/.local/bin/zendesk_zshrc.sh ]] && source ~/.local/bin/zendesk_zshrc.sh
-## END -- managed by dot-ansible:zendesk -- ##
-
 # aliases i may want to add to workstation
 zen_code="~/code/zendesk"
+alias zen="cd ${zen_code}"
 alias billing="cd ${zen_code}/billing"
 alias bill=billing
 
@@ -292,6 +293,8 @@ function alias_search() {
 
 alias brews=brew_search
 alias historys=history_search
+alias ghistory=history_search
+alias ghist=history_search
 alias aliass=alias_search
 
 #function _update-aur-pkglist() {
@@ -358,7 +361,6 @@ jdk() {
 source /Users/pmotard/Code/zendesk/zdi/dockmaster/zdi.sh
 # END ZDI
 alias fancy-reset='git reset --soft $(git rev-parse origin/master)'
-alias awswhoami='aws sts get-caller-identity'
 ## BEGIN -- managed by dot-ansible, role: aws_cli -- ##
 alias awswhoami='aws sts get-caller-identity'
 function awscreds {
@@ -366,3 +368,19 @@ function awscreds {
     export AWS_PROFILE=$1
 }
 ## END -- managed by dot-ansible, role: aws_cli -- ##
+export PATH="$(brew --prefix qt@5.5)/bin:$PATH"
+
+
+# https://rakhesh.com/virtualization/attributeerror-module-importlib-has-no-attribute-util-when-install-google-cloud-sdk-on-macos/
+CLOUDSDK=python3.8
+
+export HUSKY=0
+alias localbin="cd ~/.local/bin"
+function start_able_dev {
+    pkill Able
+    pushd ~/code/able
+    npm run electron:serve
+    popd
+}
+alias abledev=start_able_dev
+

@@ -44,3 +44,5 @@ export WIFI_PROFILE="wts-wifi"
 # BEGIN managed by dot-ansible in ~/code/dot-ansible
 source ~/code/dot-ansible/shell-imports.sh
 # END managed by dot-ansible in ~/code/dot-ansible
+
+. "$HOME/.cargo/env"
