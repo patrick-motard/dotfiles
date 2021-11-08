@@ -1,3 +1,5 @@
+zmodload zsh/zprof
+
 PROMPT_EOL_MARK=''
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -63,6 +65,7 @@ alias bill=billing
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
+#  export EDITOR='nvim'
   export EDITOR='nvim'
 fi
 
@@ -384,3 +387,4 @@ function start_able_dev {
 }
 alias abledev=start_able_dev
 
+export PATH="$HOME/.local/bin/ssh-create:$PATH"
