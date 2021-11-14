@@ -1,0 +1,5 @@
+[user]
+	email = motard19@gmail.com
+	name = Patrick Motard
+[core]
+	editor = code -w
