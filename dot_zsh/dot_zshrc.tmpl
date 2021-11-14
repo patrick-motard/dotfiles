@@ -1,0 +1,53 @@
+export HISTSIZE=100000 # max events for internal history
+export SAVEHIST=100000 # max events in history file
+export HISTFILE="${ZDOTDIR}/.zhistory"
+
+setopt SHARE_HISTORY
+
+autoload -U compinit; compinit
+
+source $ZDOTDIR/aliases.zsh
+
+autoload -Uz vcs_info
+precmd() {
+    vcs_info
+    if [[ -n ${vcs_info_msg_0_} ]]; then
+        RPROMPT=${vcs_info_msg_0_}
+    else
+        RPROMPT=""
+    fi
+}
+
+# https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html#Prompt-Expansion
+export PROMPT="%~ $ "
+
+eval "$(ssh-agent -s)" &> /dev/null
+[[ -f ~/.ssh/github ]] && ssh-add -q ~/.ssh/github
+[[ -f ~/.ssh/lahey ]] && ssh-add -q ~/.ssh/lahey
+
+# OSX specific
+{{ if eq .chezmoi.os "linux" -}}
+# rbenv setup instructions:
+# https://developer.fedoraproject.org/start/sw/web-app/rails.html
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+export PATH="$PATH:$HOME/.rbenv/plugins/ruby-build/bin"
+{{ end -}}
+
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.local/bin/ssh-create"
+
+{{ if eq .chezmoi.os "darwin" -}}
+
+# BEGIN ZDI
+source /Users/pmotard/Code/zendesk/zdi/dockmaster/zdi.sh
+# END ZDI
+
+## BEGIN -- managed by dot-ansible:zendesk -- ##
+# export PLUGINS=$plugins
+[[ -f ~/.local/bin/zendesk_zshrc.sh ]] && source ~/.local/bin/zendesk_zshrc.sh
+## END -- managed by dot-ansible:zendesk -- ##
+
+# for the billing repo
+export HUSKY=0
+{{end -}}

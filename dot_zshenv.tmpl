@@ -1,0 +1,11 @@
+
+export ZDOTDIR="$HOME/.zsh"
+code_dir="$(which code)"
+export EDITOR="${code_dir}"
+export VISUAL="${code_dir}"
+
+{{ if eq .chezmoi.os "darwin" -}}
+## BEGIN -- managed by dot-ansible:zendesk -- ##
+[[ -f ~/.local/bin/zendesk_zshenv.sh ]] && source ~/.local/bin/zendesk_zshenv.sh
+## END -- managed by dot-ansible:zendesk -- ##
+{{end -}}
