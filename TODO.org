@@ -1,8 +1,0 @@
-* Tasks
-** TODO learn Org Mode basics
-** TODO configure polybar
-** TODO setup weechat to auto-join server/channels
-** TODO checkout py-wal
-** TODO make website
-** TODO learn qutebrowser
-** TODO learn ranger

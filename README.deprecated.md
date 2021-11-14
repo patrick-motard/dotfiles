@@ -1,17 +1,17 @@
 ```
-              ▄▄                         ▄▄▄▄      ██     ▄▄▄▄                         
-              ██              ██        ██▀▀▀      ▀▀     ▀▀██                         
-         ▄███▄██   ▄████▄   ███████   ███████    ████       ██       ▄████▄   ▄▄█████▄ 
-        ██▀  ▀██  ██▀  ▀██    ██        ██         ██       ██      ██▄▄▄▄██  ██▄▄▄▄ ▀ 
-        ██    ██  ██    ██    ██        ██         ██       ██      ██▀▀▀▀▀▀   ▀▀▀▀██▄ 
-        ▀██▄▄███  ▀██▄▄██▀    ██▄▄▄     ██      ▄▄▄██▄▄▄    ██▄▄▄   ▀██▄▄▄▄█  █▄▄▄▄▄██ 
-          ▀▀▀ ▀▀    ▀▀▀▀       ▀▀▀▀     ▀▀      ▀▀▀▀▀▀▀▀     ▀▀▀▀     ▀▀▀▀▀    ▀▀▀▀▀▀  
+              ▄▄                         ▄▄▄▄      ██     ▄▄▄▄
+              ██              ██        ██▀▀▀      ▀▀     ▀▀██
+         ▄███▄██   ▄████▄   ███████   ███████    ████       ██       ▄████▄   ▄▄█████▄
+        ██▀  ▀██  ██▀  ▀██    ██        ██         ██       ██      ██▄▄▄▄██  ██▄▄▄▄ ▀
+        ██    ██  ██    ██    ██        ██         ██       ██      ██▀▀▀▀▀▀   ▀▀▀▀██▄
+        ▀██▄▄███  ▀██▄▄██▀    ██▄▄▄     ██      ▄▄▄██▄▄▄    ██▄▄▄   ▀██▄▄▄▄█  █▄▄▄▄▄██
+          ▀▀▀ ▀▀    ▀▀▀▀       ▀▀▀▀     ▀▀      ▀▀▀▀▀▀▀▀     ▀▀▀▀     ▀▀▀▀▀    ▀▀▀▀▀▀
 ```
 ![desktop-screenshot3](https://i.imgur.com/muFsylw.png)
 ![desktop-screenshot2](https://i.imgur.com/VyHzgFz.png)
 ![desktop-screenshot](https://i.imgur.com/mTvqTcQ.png)
 
-Please see [the wiki](https://github.com/patrick-motard/dotfiles/wiki) for documentation on specific features. 
+Please see [the wiki](https://github.com/patrick-motard/dotfiles/wiki) for documentation on specific features.
 
 # Description
 
@@ -22,7 +22,7 @@ A keyboard based desktop environment that features:
 
 # Installation
 
-This project uses [YADM](https://thelocehiliosan.github.io/yadm/), a dotfile manager that employs git. With YADM you can start with a new repo, or clone an existing repo. Both approachs are explained in depth on the YADM website's [getting started](https://thelocehiliosan.github.io/yadm/docs/getting_started) section. 
+This project uses [YADM](https://thelocehiliosan.github.io/yadm/), a dotfile manager that employs git. With YADM you can start with a new repo, or clone an existing repo. Both approachs are explained in depth on the YADM website's [getting started](https://thelocehiliosan.github.io/yadm/docs/getting_started) section.
 
 **NOTICE:** Antergos was previously recommended as the easiest base install of Arch linux for this project. Antergos is no longer being maintained. For now, installing Arch from scratch is recommend. It's not that bad. :)
 
@@ -43,7 +43,7 @@ This project uses [YADM](https://thelocehiliosan.github.io/yadm/), a dotfile man
 ### dotfile repositories
  - [unixporn](https://www.reddit.com/r/unixporn)
  - [dotshareit](http://dotshare.it/)
- 
+
 ### other people's dotfiles
  - [demure](https://notabug.org/demure/dotfiles/src/master/i3/config)
  - [noctuid](https://github.com/noctuid/dotfiles) Includes a more thorough explanation to all of this than I provide.
@@ -60,8 +60,8 @@ This project uses [YADM](https://thelocehiliosan.github.io/yadm/), a dotfile man
 # Future Ideas
 
 1. rust lib for creating rules for windows and workspaces in i3
-    * when opening a terminal, make it open with a fixed or relative height and width 
-    * configure and restore workspace layouts, beyond the functionality of i3 
+    * when opening a terminal, make it open with a fixed or relative height and width
+    * configure and restore workspace layouts, beyond the functionality of i3
 
 2. a polybar extension or stand alone application like rofi that provides a gui with functionality like emacs helm (spacemacs variety), to make common tasks, scripts, and functions discoverable and callable using symantic keybinds. (would love to use rust for the engine and maybe a language like lua, lisp, or python for scripting it)
 
@@ -71,7 +71,7 @@ This project uses [YADM](https://thelocehiliosan.github.io/yadm/), a dotfile man
 
 5. look into using oh-my-zsh custom plugins for better management of .zshrc [oh-my-zsh wiki "Customization" section](https://github.com/robbyrussell/oh-my-zsh/wiki/Customization)
 
-6. +1 script to create issues in github repo for dotfiles from commandline using vim buffer (or maybe emacs plugin if i'm feeling ambitious.) 
+6. +1 script to create issues in github repo for dotfiles from commandline using vim buffer (or maybe emacs plugin if i'm feeling ambitious.)
 
 7. rofi menu for selecting screen layout. Or maybe something other than rofi. My current i3 method is starting to reach it's limits.
 
@@ -113,10 +113,21 @@ the entire tree
 
 - script for adding and removing packages from ~/.config/dotfiles/arch-packages/pacman
 
- 
+
 Some things I'd like snippets for:
 
   - Javascript console logs (figured this out once then promptly forgot how i did it)
   - argument parsing template for bash scripts (i always end up copy pasting from other scripts)
   - documentation templates for bash scripts (they're inconsistent between my scripts right now)
-    
+
+
+## TODO
+
+* Tasks
+** TODO learn Org Mode basics
+** TODO configure polybar
+** TODO setup weechat to auto-join server/channels
+** TODO checkout py-wal
+** TODO make website
+** TODO learn qutebrowser
+** TODO learn ranger

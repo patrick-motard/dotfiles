@@ -1,1 +1,0 @@
-*/5 * * * * env DISPLAY=:0 /home/$USER/.local/bin/tools/update_background 2>&1 |logger
