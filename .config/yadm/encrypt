@@ -1,6 +1,0 @@
-.aws/**
-.ssh/**
-.zshenv
-.mysql/workbench/connections.xml
-.cobra.yaml
-.pypirc

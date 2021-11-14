@@ -1,5 +1,0 @@
-emacs - spacemacs,"emacs --with-profile spacemacs"
-emacs - user,"emacs"
-screenshot,"screenshot -s"
-screenshot (silent),"screenshot -s"
-reload polybar,"dot polybar"
