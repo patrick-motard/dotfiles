@@ -1,8 +1,10 @@
 
 export ZDOTDIR="$HOME/.zsh"
-code_dir="$(which code)"
-export EDITOR="${code_dir}"
-export VISUAL="${code_dir}"
+# code_dir="$(which code)"
+# export EDITOR="${code_dir}"
+# export VISUAL="${code_dir}"
+export EDITOR=nvim
+export VISUAL=nvim
 
 {{ if eq .chezmoi.os "darwin" -}}
 ## BEGIN -- managed by dot-ansible:zendesk -- ##
