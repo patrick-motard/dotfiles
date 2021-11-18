@@ -42,6 +42,7 @@ export PATH="$PATH:$HOME/.local/bin/ssh-create"
 
 {{ if eq .chezmoi.os "darwin" -}}
 
+[[ -f ~/.ssh/zendesk-company ]] && ssh-add -qK ~/.ssh/zendesk-company
 # BEGIN ZDI
 source /Users/pmotard/Code/zendesk/zdi/dockmaster/zdi.sh
 # END ZDI
