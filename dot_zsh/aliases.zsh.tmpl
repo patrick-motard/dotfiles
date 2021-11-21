@@ -21,6 +21,9 @@ alias l="ls -l"
 alias ll="ls -al"
 alias localbin="cd ~/.local/bin"
 
+# Files
+alias x="chmod +x"
+
 # Git
 # nice shorthand,plus it gets rid of annoyingly launching ghostscript on accident.
 alias ga="git add"
@@ -50,6 +53,13 @@ alias gs="git status"
 ## Chezmoi
 alias moi="chezmoi"
 alias gmoi="git -C ~/.local/share/chezmoi"
+function start_able_dev {
+    pkill Able
+    pushd ~/code/able
+    npm run electron:serve
+    popd
+}
+alias abledev=start_able_dev
 
 # OSX Specific Configuration
 {{ if eq .chezmoi.os "darwin" -}}

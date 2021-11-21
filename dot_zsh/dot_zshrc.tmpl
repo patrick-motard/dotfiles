@@ -1,16 +1,17 @@
+#region History
 export HISTSIZE=100000 # max events for internal history
 export SAVEHIST=100000 # max events in history file
 export HISTFILE="${ZDOTDIR}/.zhistory"
-
 # immediately append to history instead of on terminal close
 setopt HIST_FIND_NO_DUPS
 setopt extended_history
 setopt SHARE_HISTORY
-
 bindkey '^R' history-incremental-search-backward
+#endregion History
 
 autoload -U compinit; compinit
 
+#region: Prompt
 autoload -Uz vcs_info
 precmd() {
     vcs_info
@@ -20,15 +21,17 @@ precmd() {
         RPROMPT=""
     fi
 }
-
 # https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html#Prompt-Expansion
 export PROMPT="%~ $ "
+#endregion: Prompt
 
+#region SSH
 eval "$(ssh-agent -s)" &> /dev/null
 [[ -f ~/.ssh/github ]] && ssh-add -q ~/.ssh/github
 [[ -f ~/.ssh/lahey ]] && ssh-add -q ~/.ssh/lahey
+#endregion SSH
 
-# OSX specific
+#region OSX specific
 {{ if eq .chezmoi.os "linux" -}}
 # rbenv setup instructions:
 # https://developer.fedoraproject.org/start/sw/web-app/rails.html
@@ -55,6 +58,16 @@ source /Users/pmotard/Code/zendesk/zdi/dockmaster/zdi.sh
 # for the billing repo
 export HUSKY=0
 {{end -}}
+#endregion OSX specific
+
+#region Directories
+setopt AUTO_CD           # Auto-change directory without typing cd.
+setopt AUTO_PUSHD        # Push dirs to the stack when cd'ing.
+setopt PUSHD_IGNORE_DUPS # Don't push duplicates to the stack.
+
+alias d='dirs -v'
+for index ({1..9}) alias "$index"="cd +${index}"; unset index
+#endregion Directories
 
 # Load aliases at the end to ensure they aren't clobbered.
 source $ZDOTDIR/aliases.zsh
