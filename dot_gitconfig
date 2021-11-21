@@ -1,8 +1,6 @@
 [user]
 	email = motard19@gmail.com
 	name = Patrick Motard
-[core]
-	editor = code -w
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
