@@ -63,7 +63,9 @@ export HUSKY=0
 #region Directories
 setopt AUTO_CD           # Auto-change directory without typing cd.
 setopt AUTO_PUSHD        # Push dirs to the stack when cd'ing.
+setopt EXTENDED_GLOB     # Use extended globbing syntax.
 setopt PUSHD_IGNORE_DUPS # Don't push duplicates to the stack.
+setopt PUSHD_SILENT      # Do not print the directory stack after pushd or popd.
 
 alias d='dirs -v'
 for index ({1..9}) alias "$index"="cd +${index}"; unset index
