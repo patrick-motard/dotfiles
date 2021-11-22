@@ -69,5 +69,10 @@ alias d='dirs -v'
 for index ({1..9}) alias "$index"="cd +${index}"; unset index
 #endregion Directories
 
+#region Nodenv
+path+=($HOME/.nodenv/bin)
+eval "$(nodenv init - zsh)"
+#endregion Nodenv
+
 # Load aliases at the end to ensure they aren't clobbered.
 source $ZDOTDIR/aliases.zsh
