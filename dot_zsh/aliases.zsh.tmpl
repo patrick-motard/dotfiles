@@ -58,6 +58,8 @@ alias moi="chezmoi"
 alias gmoi="git -C $MOIDIR"
 # Open dotfiles repo in editor.
 alias edit="code $MOIDIR"
+# Apply and source changes.
+alias ma="chezmoi apply && sz"
 
 ## Nodenv
 alias update_nodenv_build="git -C ~/.nodenv/plugins/node-build pull"
@@ -70,10 +72,12 @@ function start_able_dev {
     popd
 }
 alias abledev=start_able_dev
+
 #endregion Programs
 
-# OSX Specific Configuration
+#region OSX Specific Configuration
 {{ if eq .chezmoi.os "darwin" -}}
 # Directories
 alias zen="cd ~/code/zendesk"
 {{end -}}
+#endregion OSX Specific Configuration
