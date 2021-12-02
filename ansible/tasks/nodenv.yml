@@ -1,0 +1,12 @@
+---
+- name: Clone Nodenv.
+  git:
+    repo: "https://github.com/nodenv/nodenv.git"
+    dest: "{{home}}/.nodenv"
+- file:
+    path: "{{home}}/.nodenv/plugins"
+    state: directory
+- name: Clone Nodenv.
+  git:
+    repo: "https://github.com/nodenv/node-build.git"
+    dest: "{{home}}/.nodenv/plugins/node-build"

@@ -1,0 +1,12 @@
+---
+- name: Install soundcloud downloader.
+  shell: go get -u github.com/bogem/nehm
+- name: Create music folder if it doesn't already exist.
+  file: 
+    path: "{{soundcloud_download_folder}}"
+    recurse: yes
+    state: directory
+- name: Set up nehm configuration.
+  template:
+    src: .nemconfig.j2
+    dest: "{{ansible_user_dir}}/.nehmconfig"

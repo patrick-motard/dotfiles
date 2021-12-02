@@ -1,0 +1,16 @@
+---
+- name: Install dependencies
+  become: true
+  pacman:
+    name: lastpass-cli
+    state: present
+
+- name: Install rofi-lpass
+  git:
+    repo: https://github.com/patrick-motard/rofi-lpass.git
+    dest: "{{ansible_user_dir}}/.local/bin/tools/rofi-lpass-repo"
+- name: Symlink the rofipass script to PATH
+  file:
+    src: "{{ansible_user_dir}}/.local/bin/tools/rofi-lpass-repo/rofi-lpass"
+    dest: "{{ansible_user_dir}}/.local/bin/tools/rofi-lpass"
+    state: link

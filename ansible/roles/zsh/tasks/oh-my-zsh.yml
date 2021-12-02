@@ -1,0 +1,36 @@
+# Installs:
+# - zsh
+# - oh-my-zsh
+# zsh plugins:
+# - zsh-autosuggestions
+# - zsh-nvm
+---
+- name: install zsh
+  when: ansible_os_family != "Darwin"
+  become: yes
+  pacman:
+    name: zsh
+    state: present
+- name: Set default shell
+  when: ansible_os_family != "Darwin"
+  become: yes
+  shell: "usermod --shell $(which zsh) {{local_user}}"
+- name: Install oh-my-zsh
+  become: false
+  when: lookup('env', 'ZSH') == ''
+  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+# - name: Clone oh-my-zsh
+#   become: false
+#   git:
+#     repo: "https://github.com/robbyrussell/oh-my-zsh"
+#     dest: "/home/{{local_user}}/.oh-my-zsh"
+- name: Install oh-my-zsh plugin zsh-nvm
+  become: false
+  git:
+    repo: "https://github.com/lukechilds/zsh-nvm"
+    dest: "{{ansible_env.HOME}}/.oh-my-zsh/custom/plugins/zsh-nvm"
+- name: Install oh-my-zsh plugin zsh-autosuggestions
+  become: false
+  git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions
+    dest: "{{ansible_env.HOME}}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"

@@ -1,0 +1,99 @@
+- name: Initial System Setup
+  when: new_install == true
+  block:
+    # git is needed on a new install of the system
+    - name: Install Git
+      become: true
+      pacman:
+        name: git
+    - name: Make code dir
+      become: false
+      file:
+        path: "/home/{{local_user}}/code"
+        state: directory
+    - name: Clone Trizen (AUR)
+      git:
+        repo: "https://aur.archlinux.org/trizen.git"
+        dest: "/home/{{local_user}}/code/trizen"
+    - name: Install Trizen
+      shell: makepkg -si --noconfirm
+      args:
+        chdir: "/home/{{local_user}}/code/trizen"
+    - name: Install ansible-aur-git so Ansible can install Aur packages
+      git:
+        repo: "https://github.com/kewlfft/ansible-aur.git"
+        dest: "/home/{{local_user}}/.ansible/plugins/modules/aur"
+    - name: Install YADM
+      aur:
+        use: trizen
+        name: yadm-git
+
+- name: Pacman
+  become: true
+  tags:
+    - pacman
+  block:
+    - name: Update pacman packages and cache.
+      pacman:
+        update_cache: yes
+        upgrade: yes
+
+    - name: Install Arch packages
+      pacman:
+        name: "{{ query('lines', 'cat /home/{{local_user}}/code/dot-ansible/roles/pacman/files/pacman-pkgs-core') }}"
+        state: present
+    - name: Install optional Arch packages
+      pacman:
+        name: "{{ query('lines', 'cat /home/{{local_user}}/code/dot-ansible/roles/pacman/files/pacman-pkgs') }}"
+        state: present
+      when: optional_pacman_packages == true
+
+    - name: Remove deprecated pacman packages
+      pacman:
+        name: "{{ query('lines', 'cat /home/{{local_user}}/code/dot-ansible/roles/pacman/files/pacman-pkgs-remove') }}"
+        state: absent
+
+# Some aur packages require compiling rust code
+# so this intializes rust before aur packages are installed.
+# Currently exa-git is the only package that needs rust. exa-git
+# a colorized replacement of ls.
+- name: Rust
+  block:
+    - name: Rust - Install stable.
+      command:
+        rustup install stable
+    - name: Rust - Set stable as default.
+      command: 
+        rustup default stable
+
+- name: AUR
+  tags:
+    - aur
+  block:
+    - name: Add GPG signature for Spotify
+      command: "gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90"
+    # - name: Add GPG signature for libc++ (for discord)
+    #   command: "gpg --recv-keys --keyserver hkp://pgp.mit.edu 0FC3042E345AD05D"
+    - name: Add GPG signature for Dropbox
+      command: "gpg --recv-keys 1C61A2656FB57B7E4DE0F4C1FC918B335044912E"
+    - name: Update AUR packages
+      aur:
+        use: trizen
+        upgrade: yes
+
+    - name: Remove deprecated aur packages
+      pacman:
+        name: "{{ query('lines', 'cat /home/{{local_user}}/code/dot-ansible/roles/pacman/files/aur-pkgs-remove') }}"
+        state: absent
+
+    - name: Install packages
+      aur:
+        use: trizen
+        name: "{{item}}"
+      with_lines: "cat /home/{{local_user}}/code/dot-ansible/roles/pacman/files/aur-pkgs-core"
+    - name: Install optional packages
+      aur:
+        use: trizen
+        name: "{{item}}"
+      with_lines: "cat /home/{{local_user}}/code/dot-ansible/roles/pacman/files/aur-pkgs"
+      when: optional_aur_packages == true

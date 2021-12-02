@@ -1,0 +1,31 @@
+---
+# chemacs adds a flag to emacs that allows setting which dir to load
+# emacs configuration from. This is called via a script launched from
+# mod+i in i3wm, which loads scripts defined in ~/.config/rofi/cmd.csv
+- name: Download chemacs
+  # when: ansible_os_family != "Darwin"
+  git:
+    repo: "https://github.com/plexus/chemacs.git"
+    dest: "{{ansible_user_dir}}/code/chemacs"
+- name: Install chemacs
+  # when: ansible_os_family != "Darwin"
+  shell: ./install.sh
+  args:
+    chdir: "{{ansible_user_dir}}/code/chemacs"
+# - name: See if spacemacs is installed.
+#   stat:
+#     path: "{{ansible_user_dir}}/.emacs.d"
+#   register: spacemacs_repo
+# TODO: We shouldn't remove peoples ~/.emacs.d, we should move it to a backup folder
+# - name: Remove ~/.emacs.d
+#   become: false
+#   file:
+#     path: "{{ansible_user_dir}}/.emacs.d"
+#     state: absent
+#   when: spacemacs_repo.stat.exists == false
+- name: Install Spacemacs
+  become: false
+  git:
+    repo: "https://github.com/syl20bnr/spacemacs"
+    dest: "{{ansible_user_dir}}/.emacs.d"
+    version: develop

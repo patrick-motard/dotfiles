@@ -1,0 +1,10 @@
+---
+all:
+  hosts:
+    localhost
+  vars:
+    ansible_connection: local
+    dirs:
+      home: "{{ansible_user_dir}}"
+      code: "{{ansible_user_dir}}/code"
+      bin: "{{ansible_user_dir}}/.local/bin"

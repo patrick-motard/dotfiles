@@ -1,0 +1,15 @@
+# include oh-my-zsh if specified
+- name: oh-my-zsh
+  when: oh_my_zsh == true
+  import_tasks: oh-my-zsh.yml
+- name: Set up ZSH using plugins.
+  when: oh_my_zsh == false
+  block:
+    - name: Check if zplug is installed
+      ignore_errors: true
+      no_log: true
+      shell: which zplug &> /dev/null
+      register: zplug_installed
+    - name: Install the zplug zsh plugin manager
+      when: zplug_installed.stdout == "1"
+      shell: curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
