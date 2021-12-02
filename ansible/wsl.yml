@@ -1,0 +1,9 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  tasks:
+    - name: Install Vundle
+      become: false
+      git:
+        repo: "https://github.com/VundleVim/Vundle.vim.git"
+        dest: "{{ansible_user_dir}}/.vim/bundle/Vundle.vim"

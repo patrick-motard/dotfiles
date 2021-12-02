@@ -1,0 +1,21 @@
+# This is an example file for configuration that can be set per
+# machine.
+
+all:
+  hosts:
+    localhost
+  vars:
+    ansible_connection: local
+    home: "{{ansible_user_dir}}"
+    dirs:
+      home: "{{home}}"
+      code: "{{home}}/code"
+      bin: "{{home}}/.local/bin"
+    # ZSH ROLE
+    # oh_my_zsh: whether or not to set up zsh using oh-my-zsh
+    # when set to false, zplug will be used.
+    # boolean (default false)
+    oh_my_zsh: false
+
+
+

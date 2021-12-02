@@ -1,0 +1,20 @@
+---
+# This file includes all the tasks needed to enable thumbnails in Thunar (the file explorer/manager) for images and videos.
+- name: Install required packages.
+  become: true
+  pacman:
+    name: [
+    'tumbler',
+    'ffmpegthumbnailer',
+    'gstreamer'
+    ]
+
+- name: Make sure ~/.thumbnails/ exists.
+  become: false
+  file:
+    path: "{{ansible_user_dir}}/.thumbnails"
+    state: directory
+
+- name: Update your mime database, whatever that means. 
+  become: true
+  shell: update-mime-database /usr/share/mime

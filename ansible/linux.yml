@@ -1,0 +1,9 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  roles:
+  tasks:
+  - import_tasks: tasks/vundle.yml
+  - import_tasks: tasks/repos.yml
+  - import_tasks: tasks/nodenv.yml
+

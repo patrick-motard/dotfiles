@@ -1,0 +1,3 @@
+update_background_script_path: "/home/{{local_user}}/.local/bin/update-background.sh"
+cron_files_location: "/home/{{local_user}}/.config/fcron"
+desktop_background_schedule: "*/1 * * * *"

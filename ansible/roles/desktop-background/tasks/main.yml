@@ -1,0 +1,54 @@
+---
+- name: Desktop background images
+  tags:
+    - desktop-background
+  block:
+
+    - file:
+        path: "{{item}}"
+        state: directory
+      with_items:
+        - "/home/{{local_user}}/.config/fcron"
+        - "/home/{{local_user}}/.local/bin/tools/"
+
+    - template:
+        src: update-background.sh
+        dest: "{{update_background_script_path}}"
+        mode: "u=rwx,g=rwx,o=r"
+
+    - template:
+        src:  desktop-background-cron
+        dest: "{{cron_files_location}}/update-background-cron"
+
+    - shell: "fcrontab {{cron_files_location}}/update-background-cron"
+    - systemd:
+        name: fcron
+        state: started
+        enabled: yes
+      become: true
+
+- name: Download images
+  tags:
+    - never
+    - download-images
+  block:
+    - shell: |
+        wget https://uc387df0fa4e58421dfa0e856f6.dl.dropboxusercontent.com/zip_by_token_key\?_download_id\=2992192805736753524462254250738446935546874747014611087677633542\&_notify_domain\=www.dropbox.com\&dl\=1\&key\=AfF7b5nL8BDK76Jy3aEDW-jRdcuxof0530x0Y8dqcWD2kriyDr-l1UhEIwwHRz5zX_uhdTkbtogyukU03PE3NTQ6vz9w-HrHVXNwoOUnBNhkCyx8_2p0wRcyE236PKcu2xEAj-ISrdI3XigbGqWnLWWO86HGKejEoBZPPL_yBaquDQqZoHNIpXCXHPIIS8Tpi5QiQnUKCBjnaCSOfUHP3WvIOhTgE1yRU4Dyq6xrO1Mbpbu1S-6F2dFlgXuaASxi_HA -O dropbox-images.zip
+
+    - file:
+        path: "{{item}}"
+        state: directory
+      with_items:
+        - "{{background_images_dir}}"
+
+    - unarchive:
+        src: dropbox-images.zip
+        dest: "{{background_images_dir}}"
+      ignore_errors: true
+
+    - file:
+        path: dropbox-images.zip
+        state: absent
+
+
+

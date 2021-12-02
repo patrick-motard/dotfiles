@@ -1,0 +1,16 @@
+---
+# for cloning all my repos to thier prospective location
+- name: go get my scripts repo!
+  tags: [ repos ]
+  block:
+    - name: clone the repo
+      git:
+        repo: git@github.com:patrick-motard/scripts.git
+        dest: "{{dirs.code}}/scripts"
+    - name: symlink to $TOOLS
+      file:
+        src: "{{dirs.code}}/scripts"
+        dest: "{{dirs.bin}}/tools"
+        state: link
+# - name: clone repos
+  # git:

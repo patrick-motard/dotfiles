@@ -1,0 +1,16 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  # gather_facts: no
+  # pre_tasks:
+  #   - setup:
+  #       gather_subset:
+  #         - user_dir
+  #     tags: [ always ]
+  roles:
+    - zsh
+  tasks:
+    - import_tasks: tasks/vundle.yml
+    - import_tasks: tasks/homebrew.yml
+    - import_tasks: tasks/repos.yml
+    - import_tasks: tasks/nodenv.yml

@@ -1,0 +1,19 @@
+---
+all:
+  hosts:
+    localhost
+  vars:
+    ansible_connection: local
+    soundcloud_permalink: patrick-motard
+    soundcloud_download_folder: /home/han/music
+    local_user: "han"
+    github_user: "patrick-motard"
+    new_install: false
+    background_images_dir: "{{ansible_user_dir}}/Dropbox/photos/backgrounds/2017/selected"
+    dot_ansible_path: "{{ansible_user_dir}}/code/dot-ansible"
+    desktop_background_schedule: "*/1 * * * *"
+    # install packages from pacman_pkgs
+    optional_pacman_packages: true
+    # install packages from aur_pkgs
+    optional_aur_packages: true
+    install_ckb: false

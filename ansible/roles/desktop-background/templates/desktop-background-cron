@@ -1,0 +1,1 @@
+{{desktop_background_schedule}} env DISPLAY=:0 {{update_background_script_path}} &> /tmp/update-background

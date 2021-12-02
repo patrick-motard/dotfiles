@@ -1,0 +1,21 @@
+---
+- homebrew:
+    name:
+      - python3
+      - zsh
+      - neovim
+      - emacs-plus
+      - mysql
+      - watch
+      - antigen # zsh plugin manager
+      - chezmoi # dotfile manager
+    state: present
+- homebrew_cask:
+    state: present
+    name:
+      - discord
+      - iterm2
+      - visual-studio-code
+      - dropbox
+      - spotify
+      - sequel-pro
