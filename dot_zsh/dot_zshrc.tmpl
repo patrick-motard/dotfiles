@@ -76,25 +76,27 @@ path+=($HOME/.nodenv/bin)
 eval "$(nodenv init - zsh)"
 #endregion Nodenv
 
+# Load aliases at the end to ensure they aren't clobbered.
+source $ZDOTDIR/aliases.zsh
+
 #region Zplug
 source ~/.zplug/init.zsh
 # vi mode
-# export ZVM_VI_ESCAPE_BINDKEY="fd"
-# zplug "jeffreytse/zsh-vi-mode"
-zplug "plugins/git", from:oh-my-zsh
-
+export ZVM_VI_ESCAPE_BINDKEY="fd"
+zplug "jeffreytse/zsh-vi-mode"
+# zplug "plugins/git", from:oh-my-zsh
+zplug "zsh-users/zsh-autosuggestions"
 # syntax highlighting must be the last plugin sourced
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
+
+zplug load
 #endregion Zplug
 
 #region custom key bindings
-## zsh vi-mode settings
-# remaps ESC to fd
-bindkey -M viins 'fd' vi-cmd-mode
+# this is for the zsh-autosuggetions plugin
 bindkey 'lk' autosuggest-accept
 bindkey 'lc' autosuggest-clear
 bindkey 'ln' autosuggest-toggle
 #endregion custom key bindings
 
-# Load aliases at the end to ensure they aren't clobbered.
-source $ZDOTDIR/aliases.zsh
+
