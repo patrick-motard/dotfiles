@@ -1,0 +1,28 @@
+{
+    "0": {
+        "date": "Saturday, October 31",
+        "events": [
+            {
+                "date_str": "Saturday, October 31",
+                "title": "Baraboo trick or treat 3-7pm",
+                "time": "2:00 PM",
+                "color": "#5484ed",
+                "colorId": "9",
+                "id": "6hi3ep9jc4rj2bb2cks3ib9kcph30bb264qm8b9nckqj4p9m60sjap33cc"
+            }
+        ]
+    },
+    "1": {
+        "date": "Monday, November 02",
+        "events": [
+            {
+                "date_str": "Monday, November 02",
+                "title": "Call KB Cleaning / Tammy",
+                "time": "9:30 AM",
+                "color": "#5484ed",
+                "colorId": "9",
+                "id": "c9h30chncgqjabb46oqj0b9k6hgjabb16srjgbb36cr3ic1lcgqjep1l70"
+            }
+        ]
+    }
+}

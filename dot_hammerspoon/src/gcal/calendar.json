@@ -1,0 +1,9 @@
+{
+    "calendars": {
+        "active": {
+        },
+        "inactive": {
+            "Holidays in United States": "en.usa#holiday@group.v.calendar.google.com"
+        }
+    }
+}
