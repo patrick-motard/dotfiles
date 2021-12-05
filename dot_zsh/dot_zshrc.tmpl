@@ -1,3 +1,12 @@
+#region Notes
+
+# What are these 'region' and 'endregion' sections?
+# 'region' and 'endregion' are used throughout this file to
+# provide folding in vscode, so that I can expand/collapse
+# whole sections of this file for easier editing.
+
+#endregion Notes
+
 #region History
 export HISTSIZE=100000 # max events for internal history
 export SAVEHIST=100000 # max events in history file
@@ -10,20 +19,6 @@ bindkey '^R' history-incremental-search-backward
 #endregion History
 
 autoload -U compinit; compinit
-
-#region: Prompt
-autoload -Uz vcs_info
-precmd() {
-    vcs_info
-    if [[ -n ${vcs_info_msg_0_} ]]; then
-        RPROMPT=${vcs_info_msg_0_}
-    else
-        RPROMPT=""
-    fi
-}
-# https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html#Prompt-Expansion
-export PROMPT="%~ $ "
-#endregion: Prompt
 
 #region SSH
 eval "$(ssh-agent -s)" &> /dev/null
@@ -80,23 +75,33 @@ eval "$(nodenv init - zsh)"
 source $ZDOTDIR/aliases.zsh
 
 #region Zplug
+# zplug is a plugin manager for zsh. I install it initially
+# using ansible. Specifically ansible/roles/zsh
 source ~/.zplug/init.zsh
 # vi mode
-export ZVM_VI_ESCAPE_BINDKEY="fd"
-zplug "jeffreytse/zsh-vi-mode"
+zplug "plugins/vi-mode", from:oh-my-zsh
+
+AGKOZAK_USER_HOST_DISPLAY=0
+AGKOZAK_PROMPT_CHAR=( '%F{magenta}❯%f' '%F{red}❯%f' '%F{magenta}❮%f' )
+zplug "agkozak/agkozak-zsh-prompt"
 # zplug "plugins/git", from:oh-my-zsh
 zplug "zsh-users/zsh-autosuggestions"
+# Don't use the zsh-vi-mode plugin. It breaks the keybindings
+# in zsh-autosuggestions like using 'lk' for "accept".
+# export ZVM_VI_ESCAPE_BINDKEY="fd"
+# zplug "jeffreytse/zsh-vi-mode"
 # syntax highlighting must be the last plugin sourced
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
 zplug load
 #endregion Zplug
 
-#region custom key bindings
+
+#region Custom Key Bindings
+# rebind esc for vim mode
+bindkey -M viins 'fd' vi-cmd-mode
 # this is for the zsh-autosuggetions plugin
 bindkey 'lk' autosuggest-accept
 bindkey 'lc' autosuggest-clear
 bindkey 'ln' autosuggest-toggle
-#endregion custom key bindings
-
-
+#endregion Custom Key Bindings
