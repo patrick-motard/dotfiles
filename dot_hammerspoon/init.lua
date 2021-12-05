@@ -49,8 +49,8 @@ function notify(message, title)
 end
 
 hs.hotkey.bind(hyper, "r", 'Reload Hammerspoon', function()
+  notify('Reloading Hammerspoon.', 'Notice')
   hs.reload()
-  -- notify('Reloading Hammerspoon.', 'Notice')
 end)
 
 Install:andUse("Caffeine",

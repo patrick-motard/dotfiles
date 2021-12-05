@@ -50,3 +50,10 @@ hs.hotkey.bind('alt-shift','tab','Prev window',function()switcher:previous()end)
 -- hs.hotkey.bind('alt','tab','Next window',hs.window.switcher.nextWindow)
 -- -- you can also bind to `repeatFn` for faster traversing
 -- hs.hotkey.bind('alt-shift','tab','Prev window',hs.window.switcher.previousWindow,nil,hs.window.switcher.previousWindow)
+
+
+hs.hotkey.bind(hyper, "i", 'Hints', function()
+  hs.hints.showTitleThresh = 10
+  hs.hints.style = 'vimperator'
+  hs.hints.windowHints()
+end)
