@@ -46,6 +46,11 @@ alias glv="git log | vim -"
 
 alias gp="git push"
 alias gpf="git push --force-with-lease"
+# git push and set upstream to current branch
+function push_upstream () {
+    git push -u origin $(git branch | grep "*" | awk -F " " '{print $NF}')
+}
+alias gpu=push_upstream
 
 alias gs="git status"
 
