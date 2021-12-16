@@ -84,5 +84,9 @@ alias abledev=start_able_dev
 {{ if eq .chezmoi.os "darwin" -}}
 # Directories
 alias zen="cd ~/code/zendesk"
+function start_bill() {
+    pushd ~/code/zendesk
+    zdi zendesk_billing -d restart -e UNICORN_TIMEOUT=600000
+}
 {{end -}}
 #endregion OSX Specific Configuration
