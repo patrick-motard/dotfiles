@@ -4,7 +4,7 @@
   shell: which zplug &> /dev/null
   register: zplug_installed
 - name: Install the zplug zsh plugin manager
-  when: zplug_installed.rc == 1
+  when: zplug_installed.rc == "1"
   shell: curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
 - name: Check if oh-my-zsh is installed
   stat:
