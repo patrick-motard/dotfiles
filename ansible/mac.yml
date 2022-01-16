@@ -12,5 +12,6 @@
   tasks:
     - import_tasks: tasks/vundle.yml
     - import_tasks: tasks/homebrew.yml
+      when: ansible_os_family == "Darwin"
     - import_tasks: tasks/repos.yml
     - import_tasks: tasks/nodenv.yml
