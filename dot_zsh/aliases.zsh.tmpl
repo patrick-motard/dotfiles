@@ -78,6 +78,9 @@ function start_able_dev {
 }
 alias abledev=start_able_dev
 
+## Vim
+alias vim="nvim"
+
 #endregion Programs
 
 #region OSX Specific Configuration
@@ -85,7 +88,7 @@ alias abledev=start_able_dev
 # Directories
 alias zen="cd ~/code/zendesk"
 function start_bill() {
-    pushd ~/code/zendesk
+    pushd ~/code/zendesk/billing
     zdi zendesk_billing -d restart -e UNICORN_TIMEOUT=600000
 }
 {{end -}}
