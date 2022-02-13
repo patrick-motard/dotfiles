@@ -1,4 +1,5 @@
 -- Globals
+ergo_hyper = { "alt", "shift", "ctrl", "cmd" }
 hyper = { "cmd", "alt" }
 meh = { "alt", "shift", "ctrl" }
 cmd = { "cmd" }
