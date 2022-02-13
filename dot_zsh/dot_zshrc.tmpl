@@ -105,3 +105,10 @@ bindkey 'lk' autosuggest-accept
 bindkey 'lc' autosuggest-clear
 bindkey 'ln' autosuggest-toggle
 #endregion Custom Key Bindings
+## BEGIN -- managed by dot-ansible, role: aws_cli -- ##
+alias awswhoami='aws sts get-caller-identity'
+function awscreds {
+    aws-work.sh $1
+    export AWS_PROFILE=$1
+}
+## END -- managed by dot-ansible, role: aws_cli -- ##
