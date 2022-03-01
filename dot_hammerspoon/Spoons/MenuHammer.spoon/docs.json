@@ -1,0 +1,41 @@
+[
+  {
+    "Constant" : [
+
+    ],
+    "submodules" : [
+
+    ],
+    "Function" : [
+
+    ],
+    "Variable" : [
+
+    ],
+    "stripped_doc" : [
+
+    ],
+    "type" : "Module",
+    "desc" : "Menuing system inspired by Spacemacs",
+    "Deprecated" : [
+
+    ],
+    "Constructor" : [
+
+    ],
+    "Field" : [
+
+    ],
+    "Method" : [
+
+    ],
+    "Command" : [
+
+    ],
+    "doc" : "Menuing system inspired by Spacemacs",
+    "items" : [
+
+    ],
+    "name" : "MenuHammer"
+  }
+]
