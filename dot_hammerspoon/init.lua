@@ -35,14 +35,6 @@ require 'src/application'
 require 'src/window'
 -- Keybind in 'help' enable help menus.
 require 'src/help'
--- Gcal adds a google calendar menubar
--- require 'src/gcal'
--- connect_to_vpn = require 'src/connect_to_vpn'
--- END OPTIONAL MODULES
-
-
--- TODO: Get VPN Connection working
--- require 'scripts/connect_to_vpn'
 
 -- title is optional
 function notify(message, title)
@@ -54,9 +46,19 @@ hs.hotkey.bind(hyper, "r", 'Reload Hammerspoon', function()
   hs.reload()
 end)
 
-Install:andUse("Caffeine",
-  { hotkeys = { toggle = { hyper, "c" }}, start = true}
-)
+-- This would be the preferred way to enable Caffeine, but the tooltip
+-- "Toggle Caffeine" doesn't show up in the help menu.
+-- Install:andUse("Caffeine",
+--   { hotkeys = { toggle = { hyper, "c", "Toggle Caffeine" }}, start = true}
+-- )
+
+Install:andUse("Caffeine", { start = true})
+caffeineOn = true
+hs.hotkey.bind(hyper, "c", 'Toggle Caffeine', function()
+  caffeineOn = not caffeineOn
+  spoon.Caffeine:setState(caffeineOn)
+end)
+spoon.Caffeine:setState(caffeineOn)
 
 -- START WORK IN PROGRESS
 -- hs.hotkey.bind(hyper, "r", 'wip', function()
@@ -91,7 +93,6 @@ end
 hs.hotkey.bind(meh, 'd', 'wip', function()
   main()
 end)
--- main()
 
 hs.hotkey.bind(hyper, 'w', 'wip', function()
   space_id = spaces.activeSpace()
@@ -99,8 +100,5 @@ hs.hotkey.bind(hyper, 'w', 'wip', function()
   for i in pairs(win) do print(win[i]:title()) end
 end)
 
--- hs.hotkey.bind(hyper, 'v', 'vpn', function()
---   notify('vpn called')
---   connectToVPN()
--- end)
-
+menuHammer = hs.loadSpoon("MenuHammer")
+menuHammer:enter()

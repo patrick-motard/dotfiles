@@ -110,6 +110,34 @@ function thirds(part)
   win:setFrame(f)
 end
 
+function thirds_expand(shrink)
+  local win = hs.window.focusedWindow();
+  if not win then return end
+  local f = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
+  local increase_by = max.w * .05
+  -- Case: Window is on the left.
+  if f.x == 0 then
+    if shrink then
+      f.w = f.w - increase_by
+    else
+      f.w = f.w + increase_by
+    end
+  end
+  win:setFrame(f)
+end
+
+hs.hotkey.bind(ergo_hyper, 's',
+  'Window 1/3 shrink -5% |← →|',
+  function() thirds_expand(true) end
+)
+
+hs.hotkey.bind(ergo_hyper, 'g',
+  'Window 1/3 expand +5% |← →|',
+  function() thirds_expand(false) end
+)
+
 hs.hotkey.bind(
   ergo_hyper,
   '1',
