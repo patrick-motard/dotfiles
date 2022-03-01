@@ -1,53 +1,35 @@
 -- This is used by menuHammer
 -- Menuhammer is loaded in init.lua
 -- https://github.com/FryJay/MenuHammer
+-- openTerminal = {cons.cat.action, '', 'T', "Terminal", {
+--     {cons.act.launcher, 'Terminal'}
+-- }}
+-- https://github.com/cldwalker/hammerspoon-files/blob/0bdeb21a4764bf8fafe9fb2b67de9fff7e902f94/menuHammerCustomConfig.lua
 menuHammerMenuList = {
     mainMenu = {
         parentMenu = nil,
-        menuHotkey = {{'alt'}, 'space'},
+        -- menuHotkey = {{'alt'}, 'space'},
+        menuHotkey = {hyper, 'F'},
         menuItems =  {
-            -- {cons.cat.submenu, '', 'A', 'Applications', {
-            --         {cons.act.menu, "applicationMenu"}
-            -- }},
-            {cons.cat.action, '', 'T', "Terminal", {
-                    {cons.act.launcher, 'Terminal'}
-            }},
-            -- {cons.cat.action, '', 'D', 'Desktop', {
-            --         {cons.act.launcher, 'Finder'},
-            --         {cons.act.keycombo, {'cmd', 'shift'}, 'd'},
-            -- }},
-            -- {cons.cat.action, '', 'E', "Split Safari/iTunes", {
-            --     {cons.act.func, function()
-            --             -- See Hammerspoon layout documentation for more info on this
-            --             local mainScreen = hs.screen{x=0,y=0}
-            --             hs.layout.apply({
-            --                     {"Safari", nil, mainScreen, hs.layout.left50, nil, nil},
-            --                     {"iTunes", nil, mainScreen, hs.layout.right50, nil, nil},
-            --             })
-            --     end }
-            -- }},
-            -- {cons.cat.action, '', 'H', "Hammerspoon Manual", {
-            --         {cons.act.func, function()
-            --             hs.doc.hsdocs.forceExternalBrowser(true)
-            --             hs.doc.hsdocs.moduleEntitiesInSidebar(true)
-            --             hs.doc.hsdocs.help()
-            --         end }
-            -- }},
-            -- {cons.cat.action, '', 'M', 'MenuHammer Default Config', {
-            --     {cons.act.openfile, "~/.hammerspoon/Spoons/MenuHammer.spoon/MenuConfigDefaults.lua"},
-            -- }},
-            -- {cons.cat.action, '', 'X', "Mute/Unmute", {
-            --         {cons.act.mediakey, "mute"}
-            -- }},
+            {cons.cat.submenu, '', 'O', 'Open', {{cons.act.menu, "openMenu"}}},
+            {cons.cat.action, '', '1', 'VSCode',  {{cons.act.launcher, 'Visual Studio Code'}}},
+            {cons.cat.action, '', '2', 'Iterm',   {{cons.act.launcher, 'Iterm'}}},
+            {cons.cat.action, '', '3', 'Firefox', {{cons.act.launcher, 'Firefox'}}},
+            {cons.cat.action, '', '4', 'Slack',   {{cons.act.launcher, 'Slack'}}},
+            {cons.cat.action, '', '0', 'Spotify', {{cons.act.launcher, 'Spotify'}}},
         }
     },
-    -- applicationMenu = {
-    --     parentMenu = "mainMenu",
-    --     menuHotkey = nil,
-    --     menuItems = {
-    --         {cons.cat.action, '', 'A', "App Store", {
-    --                 {cons.act.launcher, 'App Store'}
-    --         }},
-    --     }
-    -- },
+    openMenu = openMenu
 }
+
+openMenu = {cons.cat.action, '', 'T', 'Iterm', {{cons.act.launcher, 'Iterm'}}}
+
+-- -- Use to get name of application
+-- -- hs.hotkey.bind(hyper, '8', function()
+-- --   print(hs.application.find('code'))
+-- -- end)
+-- hs.hotkey.bind(hyper, 't', 'Tabs', function()
+--   app = hs.application.frontmostApplication()
+--   hs.tabs.enableForApp(app)
+-- end)
+

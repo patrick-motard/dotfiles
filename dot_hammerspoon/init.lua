@@ -102,3 +102,4 @@ end)
 
 menuHammer = hs.loadSpoon("MenuHammer")
 menuHammer:enter()
+
