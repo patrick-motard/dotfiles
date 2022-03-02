@@ -1,9 +1,6 @@
 -- This is used by menuHammer
 -- Menuhammer is loaded in init.lua
 -- https://github.com/FryJay/MenuHammer
--- openTerminal = {cons.cat.action, '', 'T', "Terminal", {
---     {cons.act.launcher, 'Terminal'}
--- }}
 -- https://github.com/cldwalker/hammerspoon-files/blob/0bdeb21a4764bf8fafe9fb2b67de9fff7e902f94/menuHammerCustomConfig.lua
 menuHammerMenuList = {
     mainMenu = {
@@ -19,10 +16,21 @@ menuHammerMenuList = {
             {cons.cat.action, '', '0', 'Spotify', {{cons.act.launcher, 'Spotify'}}},
         }
     },
-    openMenu = openMenu
+    openMenu = {
+        parentMenu = "mainMenu",
+        menuHotkey = nil,
+        menuItems = {
+            {cons.cat.action, '', 'T', 'Iterm', {{cons.act.launcher, 'Iterm'}}},
+            {cons.cat.action, '', 'H', 'Hints', {{cons.act.func, function() openHints() end}}},
+        }
+    }
 }
 
-openMenu = {cons.cat.action, '', 'T', 'Iterm', {{cons.act.launcher, 'Iterm'}}}
+openHints = function()
+    hs.hints.showTitleThresh = 10
+    -- hs.hints.style = 'vimperator'
+    hs.hints.windowHints()
+end
 
 -- -- Use to get name of application
 -- -- hs.hotkey.bind(hyper, '8', function()
