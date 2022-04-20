@@ -81,9 +81,10 @@ source ~/.zplug/init.zsh
 # vi mode
 zplug "plugins/vi-mode", from:oh-my-zsh
 
-AGKOZAK_USER_HOST_DISPLAY=0
-AGKOZAK_PROMPT_CHAR=( '%F{magenta}❯%f' '%F{red}❯%f' '%F{magenta}❮%f' )
-zplug "agkozak/agkozak-zsh-prompt"
+DEFAULT_USER=$USER
+prompt_context() {}
+zplug "themes/agnoster", from:oh-my-zsh
+
 # zplug "plugins/git", from:oh-my-zsh
 zplug "zsh-users/zsh-autosuggestions"
 # Don't use the zsh-vi-mode plugin. It breaks the keybindings
