@@ -7,6 +7,9 @@ export EDITOR=nvim
 export VISUAL=nvim
 
 {{ if eq .chezmoi.os "darwin" -}}
+
+export BROWSER=''
+
 [[ -f ~/.zendesk-zshenv ]] && source ~/.zendesk-zshenv
 ## BEGIN -- managed by dot-ansible:zendesk -- ##
 [[ -f ~/.local/bin/zendesk_zshenv.sh ]] && source ~/.local/bin/zendesk_zshenv.sh
