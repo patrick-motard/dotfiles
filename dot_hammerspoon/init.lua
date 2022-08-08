@@ -52,13 +52,14 @@ end)
 --   { hotkeys = { toggle = { hyper, "c", "Toggle Caffeine" }}, start = true}
 -- )
 
-Install:andUse("Caffeine", { start = true})
-caffeineOn = true
-hs.hotkey.bind(hyper, "c", 'Toggle Caffeine', function()
-  caffeineOn = not caffeineOn
-  spoon.Caffeine:setState(caffeineOn)
-end)
-spoon.Caffeine:setState(caffeineOn)
+-- Disabling caffeine for now.
+-- Install:andUse("Caffeine", { start = true})
+-- caffeineOn = true
+-- hs.hotkey.bind(hyper, "c", 'Toggle Caffeine', function()
+--   caffeineOn = not caffeineOn
+--   spoon.Caffeine:setState(caffeineOn)
+-- end)
+-- spoon.Caffeine:setState(caffeineOn)
 
 -- START WORK IN PROGRESS
 -- hs.hotkey.bind(hyper, "r", 'wip', function()
