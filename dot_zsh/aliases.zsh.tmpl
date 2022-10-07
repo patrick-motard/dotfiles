@@ -87,6 +87,18 @@ alias abledev=start_able_dev
 ## Vim
 alias vim="nvim"
 
+## Grep
+
+# Search through history.
+# Example:
+# $ hgrep ls
+# 17625  ls /usr/bin
+# 17626  ls /usr/bin | grep firefox
+# 17641  ls
+function hgrep() {
+    history 1 | grep "${1}"
+}
+
 #endregion Programs
 
 #region OSX Specific Configuration
