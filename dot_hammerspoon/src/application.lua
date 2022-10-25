@@ -18,6 +18,10 @@ hs.hotkey.bind(hyper, '0', 'Spotify', function()
   hs.application.launchOrFocus('Spotify')
 end)
 
+hs.hotkey.bind(hyper, 'o', 'Obsidian', function()
+  hs.application.launchOrFocus('Obsidian')
+end)
+
 -- Use to get name of application
 -- hs.hotkey.bind(hyper, '8', function()
 --   print(hs.application.find('code'))
