@@ -19,7 +19,7 @@ The dotfiles pertaining to the keyboard driven desktop environment have moved lo
 - [Chezmoi](https://www.chezmoi.io/) dotfile manager
 - [Ansible](https://www.ansible.com/) to automate setup
 - [Hammerspoon](https://www.hammerspoon.org/) on mac for desktop automation
-- [VsCode](https://code.visualstudio.com/) with vim keybinds is my main editor
+- [VsCode](https://code.visualstudio.com/) with vim keybinds is my main editor, I no longer use emacs.
 - [Neovim](https://neovim.io/) is my terminal editor
 - [Vundle](https://github.com/VundleVim/Vundle.vim) for vim plugin management
 - [ZSH](https://zsh.sourceforge.io/) for my shell
