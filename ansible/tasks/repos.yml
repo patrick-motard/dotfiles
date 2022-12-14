@@ -3,6 +3,10 @@
 - name: go get my scripts repo!
   tags: [ repos ]
   block:
+    - name: ensure local bin exists
+      file:
+        path: "{{dirs.bin}}"
+        state: directory
     - name: clone the repo
       git:
         repo: git@github.com:patrick-motard/scripts.git

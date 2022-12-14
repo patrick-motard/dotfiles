@@ -70,7 +70,7 @@ alias edit="code $MOIDIR"
 alias ma="chezmoi apply && sz"
 
 ## Ansible
-alias dotansible="ansible-playbook $MOIDIR/ansible/mac.yml -i ansible/inventory/mac.yml"
+alias dotansible="ansible-playbook -K $MOIDIR/ansible/mac.yml -i $MOIDIR/ansible/inventory/mac.yml"
 
 ## Nodenv
 alias update_nodenv_build="git -C ~/.nodenv/plugins/node-build pull"
