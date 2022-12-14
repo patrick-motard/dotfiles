@@ -10,6 +10,10 @@
   roles:
     - zsh
   tasks:
+    # - debug:
+    #     msg: "{{ansible_os_family}}"
+    - import_tasks: tasks/apt.yml
+      when: ansible_os_family == "Debian"
     - import_tasks: tasks/vundle.yml
     - import_tasks: tasks/homebrew.yml
       when: ansible_os_family == "Darwin"
