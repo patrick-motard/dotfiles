@@ -9,7 +9,8 @@
         state: directory
     - name: clone the repo
       git:
-        repo: git@github.com:patrick-motard/scripts.git
+        accept_hostkey: true
+        repo: "git@github.com:patrick-motard/scripts.git"
         dest: "{{dirs.code}}/scripts"
     - name: symlink to $TOOLS
       file:
