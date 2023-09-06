@@ -2,6 +2,10 @@
 [[ -f ~/.profile ]] && emulate sh -c '. ~/.profile'
 
 {{ if eq .chezmoi.os "darwin" -}}
+#region Homebrew
+export PATH=/opt/homebrew/bin:$PATH
+#endregion Homebrew
+
 ## BEGIN -- managed by zendesk:workstation -- ##
 [[ -f ~/.local/bin/zendesk_zprofile.sh ]] && source ~/.local/bin/zendesk_zprofile.sh
 ## END -- managed by zendesk:workstation -- ##
