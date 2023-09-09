@@ -13,7 +13,8 @@ hs.loadSpoon("ReloadConfiguration")
 hs.loadSpoon("KSheet")
 hs.loadSpoon("SpoonInstall")
 Install = spoon.SpoonInstall
-spaces = require("hs._asm.undocumented.spaces")
+-- I'll need to install the arm64 version of this before I can use it.
+-- spaces = require("hs._asm.undocumented.spaces")
 -- spoon.ReloadConfiguration:start()
 
 -- START OPTIONAL SETTINGS
@@ -79,27 +80,27 @@ Install:andUse("FadeLogo",
 )
 
 function main()
-  space_id = spaces.activeSpace()
-  space_name = spaces.spaceName(space_id)
-  text = space_id .. space_name
-  win = spaces.allWindowsForSpace(space_id)
+  -- -- space_id = spaces.activeSpace()
+  -- space_name = spaces.spaceName(space_id)
+  -- text = space_id .. space_name
+  -- win = spaces.allWindowsForSpace(space_id)
   -- for i in pairs(win) do print(win[i]) end
-  apps = hs.application.runningApplications()
-  for i in pairs(apps) do print(apps[i]) end
+  -- apps = hs.application.runningApplications()
+  -- for i in pairs(apps) do print(apps[i]) end
 
-  out = text
-  notify(out)
+  -- out = text
+  -- notify(out)
 end
 
-hs.hotkey.bind(meh, 'd', 'wip', function()
-  main()
-end)
+-- hs.hotkey.bind(meh, 'd', 'wip', function()
+--   main()
+-- end)
 
-hs.hotkey.bind(hyper, 'w', 'wip', function()
-  space_id = spaces.activeSpace()
-  win = spaces.allWindowsForSpace(space_id)
-  for i in pairs(win) do print(win[i]:title()) end
-end)
+-- hs.hotkey.bind(hyper, 'w', 'wip', function()
+--   space_id = spaces.activeSpace()
+--   win = spaces.allWindowsForSpace(space_id)
+--   for i in pairs(win) do print(win[i]:title()) end
+-- end)
 
 menuHammer = hs.loadSpoon("MenuHammer")
 menuHammer:enter()
