@@ -24,3 +24,29 @@ The dotfiles pertaining to the keyboard driven desktop environment have moved lo
 - [Vundle](https://github.com/VundleVim/Vundle.vim) for vim plugin management
 - [ZSH](https://zsh.sourceforge.io/) for my shell
 - [Zplug](https://github.com/zplug/zplug) for ZSH plugins
+
+## Usage
+
+Notes for myself because I forget a lot.
+
+### Chezmoi
+
+- edit = open chezmoi dir in editor
+- ma = chezmoi apply + source zsh files
+- moi = chezmoi
+- moi cd = go to chezmoi dir
+
+### Ansible
+
+Call from anywhere (osx only)
+
+```shell
+dotansible
+```
+
+### Hammerspoon
+
+- ansible
+  - os: osx
+  - role: hammerspoon
+- config files managed by chezmoi
