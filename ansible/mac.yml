@@ -9,6 +9,8 @@
   #     tags: [ always ]
   roles:
     - zsh
+    - name: hammerspoon
+      when: ansible_os_family == "Darwin"
   tasks:
     # - debug:
     #     msg: "{{ansible_os_family}}"

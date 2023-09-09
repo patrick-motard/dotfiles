@@ -1,0 +1,6 @@
+---
+- name: Install hammerspoon
+  homebrew_cask:
+    name: hammerspoon
+    state: present
+    update_homebrew: no
