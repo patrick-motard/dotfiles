@@ -7,6 +7,8 @@
       - watch
       - antigen # zsh plugin manager
       - chezmoi # dotfile manager
+      - fzf
+      - z
     state: present
 - homebrew_cask:
     state: present
