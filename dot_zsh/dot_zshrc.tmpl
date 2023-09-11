@@ -95,6 +95,11 @@ zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug load
 #endregion Zplug
 
+#region z
+# Fast zsh directory switching
+# https://github.com/rupa/z
+source "$(brew --prefix)/etc/profile.d/z.sh"
+#endregion z
 
 #region Custom Key Bindings
 # rebind esc for vim mode
@@ -111,3 +116,4 @@ function awscreds {
     export AWS_PROFILE=$1
 }
 ## END -- managed by workstation, role: aws_cli -- ##
+
