@@ -8,6 +8,7 @@
       - antigen # zsh plugin manager
       - chezmoi # dotfile manager
       - fzf
+      - tmux
       - z
     state: present
 - homebrew_cask:
