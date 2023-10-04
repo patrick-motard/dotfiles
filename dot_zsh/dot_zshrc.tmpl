@@ -18,6 +18,7 @@ setopt INC_APPEND_HISTORY_TIME  # append command to history file immediately aft
 setopt SHARE_HISTORY
 bindkey '^R' history-incremental-search-backward
 alias history="fc -l 1"         # Ensure all history is shown
+alias historytime="fc -f -l 1"    # Show all history, with timestamps
 #endregion History
 
 autoload -U compinit; compinit
