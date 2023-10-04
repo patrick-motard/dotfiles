@@ -42,7 +42,11 @@ alias gd="git diff"
 alias gds="git diff --staged"
 
 alias gl="git log"
-alias glv="git log | vim -"
+# fancy git
+alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias glogv="glog | vim -" # fancy git log opened in vim, useful for searching and copying
+alias glogp="glog -p" # fancy git log, show diff for each commit
+alias glv="git log | vim -" # git log opened in vim, useful for searching and copying
 
 alias gp="git push"
 alias gpf="git push --force-with-lease"
@@ -74,6 +78,19 @@ alias dotansible="ansible-playbook $MOIDIR/ansible/mac.yml -i $MOIDIR/ansible/in
 
 ## Nodenv
 alias update_nodenv_build="git -C ~/.nodenv/plugins/node-build pull"
+
+# FZF
+# function open_in_vscode {
+#     code $(fzf)
+# }
+
+# alias lfunctions="print -l ${(ok)functions[(I)[^_]*]}"
+# alias lfn=lfunctions
+# alias sfn="lfn | fzf"
+
+# function rfn {
+#     $(sfn)
+# }
 
 ## Able
 function start_able_dev {
