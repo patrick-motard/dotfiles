@@ -13,9 +13,11 @@ export SAVEHIST=100000 # max events in history file
 export HISTFILE="${ZDOTDIR}/.zhistory"
 # immediately append to history instead of on terminal close
 setopt HIST_FIND_NO_DUPS
-setopt extended_history
+setopt EXTENDED_HISTORY         # record command start time
+setopt INC_APPEND_HISTORY_TIME  # append command to history file immediately after execution
 setopt SHARE_HISTORY
 bindkey '^R' history-incremental-search-backward
+alias history="fc -l 1"         # Ensure all history is shown
 #endregion History
 
 autoload -U compinit; compinit
