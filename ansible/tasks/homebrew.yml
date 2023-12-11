@@ -10,6 +10,7 @@
       - fzf
       - tmux
       - z
+      - git-delta
     state: present
 - homebrew_cask:
     state: present
