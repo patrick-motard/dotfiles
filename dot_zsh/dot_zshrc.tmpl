@@ -103,11 +103,13 @@ zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug load
 #endregion Zplug
 
+{{ if eq .chezmoi.os "darwin" -}}
 #region z
 # Fast zsh directory switching
 # https://github.com/rupa/z
 source "$(brew --prefix)/etc/profile.d/z.sh"
 #endregion z
+{{end -}}
 
 #region Custom Key Bindings
 
