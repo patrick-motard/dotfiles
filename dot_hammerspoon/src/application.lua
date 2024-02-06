@@ -26,6 +26,11 @@ end)
 -- hs.hotkey.bind(hyper, '8', function()
 --   print(hs.application.find('code'))
 -- end)
+
+hs.hotkey.bind(hyper, '8', 'Feishin', function()
+  hs.application.launchOrFocus('Feishin')
+end)
+
 hs.hotkey.bind(hyper, 't', 'Tabs', function()
   app = hs.application.frontmostApplication()
   hs.tabs.enableForApp(app)
