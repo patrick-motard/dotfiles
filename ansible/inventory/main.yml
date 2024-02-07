@@ -9,4 +9,3 @@ all:
       home: "{{home}}"
       code: "{{home}}/code"
       bin: "{{home}}/.local/bin"
-

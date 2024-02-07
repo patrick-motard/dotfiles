@@ -1,158 +1,22 @@
 ---
 - hosts: 127.0.0.1
   connection: local
+  gather_facts: no
+  pre_tasks:
+    - setup:
+        gather_subset:
+          - user_dir
+      tags: [ always ]
   roles:
-    - music
-    - pacman
     - zsh
-    - desktop-background
-    - lock-screen
-    - lastpass
-    - emacs
+    - name: hammerspoon
+      when: ansible_os_family == "Darwin"
   tasks:
-    - name: Enable thumbnails for pictures and videos.
-      tags: thumbnails
-      import_tasks: tasks/thumbnails.yml
-    # For systems that may have installed ckb because it used to be
-    # in the list of aur packages, we uninstall if settings tell us to.
-    - name: ckb uninstall if not needed
-      # the aur module doesn't support uninstalling
-      when: install_ckb is false
-      shell: trizen -R --noconfirm ckb-next
-    - name: ckb (corsair keyboard)
-      when: install_ckb is true
-      block:
-        # ckb is the linux daemon for corsair keyboards
-        - name: Install ckb.
-          aur:
-            use: trizen
-            name: ckb-next
-        - name: See if ckb is installed
-          shell: "pacman -Qemq | grep -c ckb-next"
-          register: ckb-daemon
-        - name: ckb-next
-          when: ckb.stdout == "1"
-          systemd:
-            name: ckb-next-daemon
-            state: started
-            enabled: yes
-    - name: Docker
-      become: true
-      block:
-        - name: Create docker usergroup
-          group:
-            name: docker
-            state: present
-        - name: Add user to docker group
-          # so that we don't have to type sudo every time we use docker
-          user:
-            name: "{{local_user}}"
-            groups: docker
-            append: yes
-        - name: Start/Enable docker service
-          systemd:
-            name: docker
-            state: started
-            enabled: yes
-    - name: Python packages
-      become: false
-      pip:
-        name:
-          - pip
-          - awscli
-          - polybar-reload
-        extra_args: --user
-    - name: Install Vundle
-      become: false
-      git:
-        repo: "https://github.com/VundleVim/Vundle.vim.git"
-        dest: "{{ansible_user_dir}}/.vim/bundle/Vundle.vim"
-    - name: See if yadm has a repo cloned.
-      stat:
-        path: "{{ansible_user_dir}}/.yadm/repo.git"
-      register: yadm_repo
-    - name: Clone dotfiles repo with yadm.
-      become: false
-      shell: "yadm clone https://github.com/{{github_user}}/dotfiles.git"
-      ignore_errors: yes
-    - name: Set yadm remote to .ssh
-      become: false
-      shell: "yadm remote set-url origin git@github.com:{{github_user}}/dotfiles.git"
-      when: yadm_repo.stat.exists == false
-    - name: Set dot-ansible remote to .ssh
-      become: false
-      shell: "git remote set-url origin git@github.com:patrick-motard/dot-ansible.git"
-      args:
-        chdir: "{{ansible_user_dir}}/code/dot-ansible"
-    - name: Link dotfiles to dot-ansible
-      # The idea of this block of tasks is to make sure the user has all the aliases,
-      # exports, functions, etc that they need. If a new feature is introduced by
-      # dot-ansible, but it requires a user to add a line of code/configuration to their
-      # .*rc file, that sucks. Instead, this will make sure that their .*rc file imports
-      # all the settings required. We add a source line to their .*rc file (.profile is
-      # the best option as it's always loaded, no matter if you use zsh or bash), that
-      # will source a file from dot-ansible (the file is currently called 'shell-imports').
-      # That file will include all the needed aliases, exports, etc.
-      # It's somewhat similar to the approach that oh-my-zsh follows with their plugins.
-      # That's the end goal at least.
-      become: false
-      block:
-        - stat:
-            path: "{{ansible_user_dir}}/.profile"
-          register: profile_stat_result
-        - debug: var=profile_stat_result
-        - file:
-            path: "{{ansible_user_dir}}/.profile"
-            state: touch
-          when: profile_stat_result.stat.exists == false
-        - blockinfile:
-            path: "{{ansible_user_dir}}/.profile"
-            block: |
-              source ~/code/dot-ansible/shell-imports.sh
-            marker: "# {mark} managed by dot-ansible in ~/code/dot-ansible"
-      # TODO: installing nodejs through nvm isn't necessary, it's#  done automatically once
-      # you log in. The second task to install packages should be run only if node is installed.
-      # (will run on subsequent calls)
-      #    - name: NodeJS
-      #      become: false
-      #      block:
-      #        - name: install Node with NVM
-      #          shell: |
-      #            echo $USER
-      #            . {{ansible_user_dir}}/.nvm/nvm.sh
-      #            node_version=$(<{{ansible_user_dir}}/.nvmrc)
-      #            nvm install $node_version
-      #        - name: install npm packages
-      #          npm:
-      #            name: "{{item}}"
-      #            global: yes
-      #          with_items:
-      #            - tern
-    #TODO: This needs gopath to be set correctly before it can be run
-    - name: Install go packages
-      become: false
-      shell: "go get -u -v {{item}}"
-      ignore_errors: true
-      with_items:
-        # needed for spacemacs go layer
-        # https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Blang/go
-        - "github.com/nsf/gocode"
-        - "github.com/rogpeppe/godef"
-        - "golang.org/x/tools/cmd/guru"
-        - "golang.org/x/tools/cmd/gorename"
-        - "golang.org/x/tools/cmd/goimports"
-        # needed for guru -> import/add dependencies (spacemacs go layer)
-        - "github.com/uudashr/gopkgs/cmd/gopkgs"
-        # needed for dotfiles
-        - "github.com/itchyny/volume-go/cmd/volume"
-        - "github.com/patrick-motard/dot"
-    # - name: Update all existing golang packages
-    #   become: false
-    #   shell: go get -u all
-
-    - name: symlink weechat
-      tags: weechat
-      file:
-        src: "{{ansible_user_dir}}/Dropbox/.weechat/"
-        dest: "{{ansible_user_dir}}/.weechat"
-        state: link
+    - debug:
+        msg: "{{ansible_os_family}}"
+    - import_tasks: tasks/apt.yml
+      when: ansible_os_family == "Debian"
+    - import_tasks: tasks/vundle.yml
+    - import_tasks: tasks/homebrew.yml
+      when: ansible_os_family == "Darwin"
+    - import_tasks: tasks/nodenv.yml
