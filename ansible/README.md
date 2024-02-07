@@ -4,16 +4,22 @@ The installer and updater for [Dotfiles](https://github.com/patrick-motard/dotfi
 
 See the [dot-ansible wiki](https://github.com/patrick-motard/dot-ansible/wiki) for documentation and a user guide.
 
-# Usage
+Note: All commands in this page are run from the ansible folder.
 
-## Mac OS
+## Ansible.cfg
 
-### Setup
+Don't modify the `ansible.cfg` file. Setup scripts will copy their host specific `ansible.cfg` file to the root of the ansible folder.
 
-This should install ansible, and python3. Once those are installed, you can move on to "Commands".
+## Setup
+
+Some OS have setup scripts that install required programs. If applicable, run the setup script first one time.
 
 ```shell
 ./mac-setup.sh
+
+# or
+
+./fedora-setup.sh
 ```
 
 ### Commands
@@ -22,10 +28,10 @@ Runs the mac playbook that will configure your machine.
 See `mac.yml` for details on what it does. Comment out any roles or tasks that you don't want to run. For example, if you don't want emacs, comment out the emacs role.
 
 ```shell
-ansible-playbook mac.yml -i inventory/mac.yml
+ansible-playbook main.yml -i inventory/main.yml
 ```
 
-## Linux
+## Customization
 
 ### Create your own settings file
 
@@ -51,5 +57,3 @@ You can alias that command if you'd like. [Here's an example](https://github.com
 # put this in your ~/.zshrc file
 alias update="ansible-playbook ~/code/dot-ansible/main.yml -i ~/code/dot-ansible/inventory/$(hostname).yml --ask-become-pass"
 ```
-
-More instructions soon to come.
