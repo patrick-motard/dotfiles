@@ -16,3 +16,8 @@ export PATH="$PATH:$HOME/.local/bin/tools"
 [[ -f ~/.local/bin/zendesk_zshenv.sh ]] && source ~/.local/bin/zendesk_zshenv.sh
 ## END -- managed by dot-ansible:zendesk -- ##
 {{end -}}
+
+# For env vars not to be checked in.
+
+[[ -f ~/.local/bin/zshenv.sh ]] && source ~/.local/bin/zshenv.sh
+
