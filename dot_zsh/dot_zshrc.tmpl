@@ -130,6 +130,7 @@ bindkey 'lc' autosuggest-clear
 # bindkey 'ln' autosuggest-toggle
 #endregion Custom Key Bindings
 
+{{ if eq .chezmoi.os "darwin" -}}
 ## BEGIN -- managed by workstation, role: aws_cli -- ##
 alias awswhoami='aws sts get-caller-identity'
 function awscreds {
@@ -137,4 +138,4 @@ function awscreds {
     export AWS_PROFILE=$1
 }
 ## END -- managed by workstation, role: aws_cli -- ##
-
+{{end -}}
