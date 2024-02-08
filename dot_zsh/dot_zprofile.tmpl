@@ -1,6 +1,3 @@
-# emulate zsh
-[[ -f ~/.profile ]] && emulate sh -c '. ~/.profile'
-
 {{ if eq .chezmoi.os "darwin" -}}
 #region Homebrew
 export PATH=/opt/homebrew/bin:$PATH
