@@ -1,0 +1,28 @@
+syntax on
+inoremap fd <Esc>
+set laststatus=2
+set clipboard=unnamedplus
+let mapleader=" "
+
+" Stay in visual mode when indenting
+vnoremap < <gv
+vnoremap > >gv
+
+" " Copy to clipboard
+vnoremap  <leader>y  "+y
+nnoremap  <leader>Y  "+yg_
+nnoremap  <leader>y  "+y
+nnoremap  <leader>yy  "+yy
+
+" " Paste from clipboard
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap <leader>p "+p
+vnoremap <leader>P "+P
+
+set number
+set tabstop=4
+set shiftwidth=4
+set expandtab
+" highlight search matches
+set hlsearch
