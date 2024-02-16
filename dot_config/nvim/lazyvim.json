@@ -1,6 +1,7 @@
 {
   "extras": [
-    "lazyvim.plugins.extras.coding.copilot"
+    "lazyvim.plugins.extras.coding.copilot",
+    "lazyvim.plugins.extras.lang.ruby"
   ],
   "news": {
     "NEWS.md": "2123"
