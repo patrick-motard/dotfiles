@@ -1,2 +1,15 @@
+[font]
+size = 20.0
+
 [font.normal]
-family = "Iosevka"
+family = "IosevkaTerm Nerd Font Mono"
+style = "Regular"
+
+[font.italic]
+family = "IosevkaTerm Nerd Font Mono"
+style = "Italic"
+
+[font.bold]
+family = "IosevkaTerm Nerd Font Mono"
+style = "Bold"
+
