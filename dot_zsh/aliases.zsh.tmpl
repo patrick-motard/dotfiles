@@ -78,6 +78,7 @@ alias moi_add_nvim="chezmoi add ~/.config/nvim"
 
 ## Ansible
 alias dotansible="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR/ansible/inventory/main.yml"
+alias dotansible_wsl="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR/ansible/inventory/main.yml --ask-become"
 
 ## Nodenv
 alias update_nodenv_build="git -C ~/.nodenv/plugins/node-build pull"
