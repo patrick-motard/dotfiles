@@ -3,3 +3,5 @@
 -- Add any additional keymaps here
 --
 vim.keymap.set("i", "fd", "<ESC>", { silent = true })
+-- :nmap cp :let @" = expand("%")<cr>
+vim.keymap.set("n", "cp", ':let @+ = expand("%?")<cr>')
