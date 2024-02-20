@@ -8,3 +8,5 @@ local opt = vim.opt
 
 opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()"
+-- line wrapping
+opt.wrap = true
