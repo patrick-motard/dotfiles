@@ -2,8 +2,8 @@ hs.hotkey.bind(hyper, "1", "VSCode", function()
 	hs.application.launchOrFocus("Visual Studio Code")
 end)
 
-hs.hotkey.bind(hyper, "2", "Iterm", function()
-	hs.application.launchOrFocus("Iterm")
+hs.hotkey.bind(hyper, "2", "Alacritty", function()
+	hs.application.launchOrFocus("Alacritty")
 end)
 
 hs.hotkey.bind(hyper, "3", "Firefox", function()
@@ -20,6 +20,10 @@ end)
 
 hs.hotkey.bind(hyper, "o", "Obsidian", function()
 	hs.application.launchOrFocus("Obsidian")
+end)
+
+hs.hotkey.bind(hyper, "z", "Zoom", function()
+	hs.application.launchOrFocus("Zoom")
 end)
 
 -- Use to get name of application
