@@ -1,37 +1,37 @@
-hs.hotkey.bind(hyper, '1', 'VSCode', function()
-  hs.application.launchOrFocus('Visual Studio Code')
+hs.hotkey.bind(hyper, "1", "VSCode", function()
+	hs.application.launchOrFocus("Visual Studio Code")
 end)
 
-hs.hotkey.bind(hyper, '2', 'Iterm', function()
-  hs.application.launchOrFocus('Iterm')
+hs.hotkey.bind(hyper, "2", "Iterm", function()
+	hs.application.launchOrFocus("Iterm")
 end)
 
-hs.hotkey.bind(hyper, '3', 'Firefox', function()
-  hs.application.launchOrFocus('Firefox')
+hs.hotkey.bind(hyper, "3", "Firefox", function()
+	hs.application.launchOrFocus("Firefox")
 end)
 
-hs.hotkey.bind(hyper, '4', 'Slack', function()
-  hs.application.launchOrFocus('Slack')
+hs.hotkey.bind(hyper, "4", "Slack", function()
+	hs.application.launchOrFocus("Slack")
 end)
 
-hs.hotkey.bind(hyper, '0', 'Spotify', function()
-  hs.application.launchOrFocus('Spotify')
+hs.hotkey.bind(hyper, "0", "Spotify", function()
+	hs.application.launchOrFocus("Spotify")
 end)
 
-hs.hotkey.bind(hyper, 'o', 'Obsidian', function()
-  hs.application.launchOrFocus('Obsidian')
+hs.hotkey.bind(hyper, "o", "Obsidian", function()
+	hs.application.launchOrFocus("Obsidian")
 end)
 
 -- Use to get name of application
--- hs.hotkey.bind(hyper, '8', function()
---   print(hs.application.find('code'))
--- end)
-
-hs.hotkey.bind(hyper, '8', 'Feishin', function()
-  hs.application.launchOrFocus('Feishin')
+hs.hotkey.bind(hyper, "h", function()
+	print(hs.application.find("code"))
 end)
 
-hs.hotkey.bind(hyper, 't', 'Tabs', function()
-  app = hs.application.frontmostApplication()
-  hs.tabs.enableForApp(app)
+hs.hotkey.bind(hyper, "8", "Feishin", function()
+	hs.application.launchOrFocus("Feishin")
+end)
+
+hs.hotkey.bind(hyper, "t", "Tabs", function()
+	app = hs.application.frontmostApplication()
+	hs.tabs.enableForApp(app)
 end)
