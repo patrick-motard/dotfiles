@@ -1,0 +1,16 @@
+---
+# This playbook is responsible for setting up Alacritty on my machine
+
+tasks:
+# Make sure the alacritty dir exists. It exists when chezmoi
+# has run, but on new machines this would not be the case.
+
+  - name: alacritty homebrew dependencies
+    homebrew:
+      name:
+        - ripgrep
+        - lazyvim
+  - name: Make alacritty config directory
+    file:
+      path: "{{home}}/.config/alacritty"
+      state: directory
