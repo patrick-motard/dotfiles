@@ -72,7 +72,7 @@ alias moicd="cd $MOIDIR"
 # Run a git command on dotfiles repo from any dir.
 alias gmoi="git -C $MOIDIR"
 # Open dotfiles repo in editor.
-alias edit="$EDITOR $MOIDIR"
+alias edit="pushd $MOIDIR && $EDITOR $MOIDIR"
 # Apply and source changes.
 alias ma="chezmoi apply && sz"
 alias moi_add_nvim="chezmoi add ~/.config/nvim"
@@ -110,6 +110,7 @@ alias abledev=start_able_dev
 alias vim="nvim"
 alias v="nvim"
 alias vv="nvim ."
+alias vd="pushd $MOIDIR && nvim ."
 
 ## Grep
 # Colorize matches in grep output.
