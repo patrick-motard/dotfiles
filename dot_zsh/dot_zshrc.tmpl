@@ -44,6 +44,9 @@ export PATH="$PATH:$HOME/.local/bin/ssh-create"
 
 {{ if eq .chezmoi.os "darwin" -}}
 
+# homebrew installs some bins to /opt/homebrew/sbin
+export PATH="/opt/homebrew/sbin:$PATH"
+
 [[ -f ~/.ssh/zendesk-company ]] && ssh-add -qK ~/.ssh/zendesk-company
 
 # BEGIN ZDI

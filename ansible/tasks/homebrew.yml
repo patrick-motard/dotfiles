@@ -11,6 +11,7 @@
       - tmux
       - z
       - git-delta
+      - eza # colorized terminal ls
     state: present
 - homebrew_cask:
     state: present
