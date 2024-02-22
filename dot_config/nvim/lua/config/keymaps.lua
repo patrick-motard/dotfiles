@@ -5,3 +5,5 @@
 vim.keymap.set("i", "fd", "<ESC>", { silent = true })
 -- :nmap cp :let @" = expand("%")<cr>
 vim.keymap.set("n", "cp", ':let @+ = expand("%?")<cr>')
+
+vim.keymap.set("n", "<leader>bt", "<Cmd>BufferLineTogglePin<CR>")
