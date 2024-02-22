@@ -4,9 +4,17 @@
 --
 --
 local vim = vim
-local opt = vim.opt
+-- local opt = vim.opt
 
-opt.foldmethod = "expr"
-opt.foldexpr = "nvim_treesitter#foldexpr()"
--- line wrapping
-opt.wrap = true
+local options = {
+  -- colors
+  termguicolors = true,
+  foldmethod = "expr",
+  foldexpr = "nvim_treesitter#foldexpr()",
+  -- line wrapping
+  wrap = true,
+}
+
+for k, v in pairs(options) do
+  vim.opt[k] = v
+end

@@ -13,6 +13,9 @@ style = "Italic"
 family = "IosevkaTerm Nerd Font Mono"
 style = "Bold"
 
+[env]
+term = "xterm-256color"
+
 
 # Colors (Gruvbox dark)
 
