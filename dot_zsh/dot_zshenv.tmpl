@@ -19,5 +19,4 @@ export PATH="$PATH:$HOME/.local/bin/tools"
 {{end -}}
 
 # For env vars not to be checked in.
-[[ -f ~/.local/bin/zshenv.sh ]] && source ~/.local/bin/zshenv.sh
-
+[[ -f ~/.local/bin/zshenv.sh ]] && source ~/.local/bin/zshenv.sh || touch ~/.local/bin/zshenv.sh
