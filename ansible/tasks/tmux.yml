@@ -1,0 +1,5 @@
+---
+- name: Clone tmux package manager
+  git:
+    repo: "https://github.com/tmux-plugins/tpm"
+    dest: "{{home}}/.tmux/plugins/tpm"
