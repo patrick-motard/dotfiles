@@ -20,3 +20,4 @@
     - import_tasks: tasks/homebrew.yml
       when: ansible_os_family == "Darwin"
     - import_tasks: tasks/nodenv.yml
+    - import_tasks: tasks/tmux.yml
