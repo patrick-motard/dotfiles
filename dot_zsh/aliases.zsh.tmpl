@@ -160,7 +160,9 @@ alias nt="new_script --name"
 
 # Alacritty command line
 
+#
+# This function only applies to WSL. It opens the alacritty settings file in vim.
 function alacritty_settings() {
-  vim /mnt/c/Users/Patrick/AppData/Roaming/Alacritty/Alacritty.toml
+  $EDITOR /mnt/c/Users/Patrick/AppData/Roaming/Alacritty/Alacritty.toml
 }
 
