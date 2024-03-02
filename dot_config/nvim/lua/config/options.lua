@@ -13,6 +13,9 @@ local options = {
   foldexpr = "nvim_treesitter#foldexpr()",
   -- line wrapping
   wrap = true,
+  -- https://neovim.io/doc/user/options.html#'timeoutlen'
+  -- How quickly vim will respond to a mapped key
+  timeoutlen = 50,
 }
 
 for k, v in pairs(options) do
