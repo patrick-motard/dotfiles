@@ -20,3 +20,6 @@ export PATH="$PATH:$HOME/.local/bin/tools"
 
 # For env vars not to be checked in.
 [[ -f ~/.local/bin/zshenv.sh ]] && source ~/.local/bin/zshenv.sh || touch ~/.local/bin/zshenv.sh
+
+# Ensure Node's global packages are in the PATH
+export PATH="$PATH:$(npm get prefix -g)"
