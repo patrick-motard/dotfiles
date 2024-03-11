@@ -7,7 +7,13 @@ return {
     { "<leader>wj", "<C-w>j", desc = "Go ↓" },
     { "<leader>wk", "<C-w>k", desc = "Go ↑" },
     { "<leader><tab><tab>", "<cmd>Telescope buffers<cr>", desc = "buffers" },
-    -- { "<leader>cs", "<cmd>term ma<cr>", desc = "Source dotfiles" },
+
+    { "<leader>gu", "<cmd>GitBlameCopyCommitURL", desc = "Copy Commit URL" },
+    { "<leader>gU", "<cmd>GitBlameCopyFileURL", desc = "Copy File URL" },
+
+    { "<leader>go", "<cmd>GitBlameOpenCommitURL", desc = "Open Commit URL" },
+    { "<leader>gO", "<cmd>GitBlameOpenFileURL", desc = "Open File URL" },
+
     -- { "<leader>w/", "<Cmd>vsplit<CR>", desc = "Split Vertical" },
     -- { "<leader>w-", "<Cmd>split<CR>", desc = "Split Horizontal" },
   },
