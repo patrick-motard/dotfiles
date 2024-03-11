@@ -3,14 +3,12 @@ return {
   { "ellisonleao/gruvbox.nvim" },
   { "shaunsingh/nord.nvim" },
   { "sainnhe/gruvbox-material" },
-  { "sainnhe/edge" },
-  { "AlexvZyl/nordic.nvim" },
-  { "savq/melange-nvim" },
+  { "sainnhe/everforest" },
   -- Configure LazyVim to load gruvbox
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "nord",
+      colorscheme = "everforest",
     },
   },
 }
