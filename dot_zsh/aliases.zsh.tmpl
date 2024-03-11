@@ -160,10 +160,19 @@ alias nt="new_script --name"
 
 # Alacritty command line
 #
+{{ if eq .chezmoi.os "linux" -}}
+export ALACRITTY_SETTINGS_DIR="/mnt/c/Users/Patrick/AppData/Roaming/Alacritty/Alacritty.toml"
+
 # This function only applies to WSL. It opens the alacritty settings file in vim.
-function alacritty_settings() {
-  $EDITOR /mnt/c/Users/Patrick/AppData/Roaming/Alacritty/Alacritty.toml
+function alacritty_settings_open() {
+  $EDITOR $ALACRITTY_SETTINGS_DIR
 }
+
+function alacritty_settings_update() {
+  cp "$HOME/.local/share/chezmoi/dot_config/alacritty/alacritty.toml" $ALACRITTY_SETTINGS_DIR
+}
+
+{{end -}}
 
 # Tmux
 #
