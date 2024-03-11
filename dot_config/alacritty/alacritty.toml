@@ -40,9 +40,9 @@ style = "Italic"
 family = "IosevkaTerm Nerd Font Mono"
 style = "Regular"
 
-[window.padding]
-x = 10
-y = 10
+# [window.padding]
+# x = 10
+# y = 10
 
 [window]
 startup_mode = "Maximized"
