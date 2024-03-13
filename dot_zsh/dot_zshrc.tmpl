@@ -30,6 +30,7 @@ eval "$(ssh-agent -s)" &> /dev/null
 [[ -f ~/.ssh/lahey ]] && ssh-add -q ~/.ssh/lahey
 #endregion SSH
 
+#region Linux specific
 {{ if eq .chezmoi.os "linux" -}}
 # rbenv setup instructions:
 # https://developer.fedoraproject.org/start/sw/web-app/rails.html
@@ -37,6 +38,7 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 export PATH="$PATH:$HOME/.rbenv/plugins/ruby-build/bin"
 {{ end -}}
+#endregion Linux specific
 
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.local/bin/ssh-create"
