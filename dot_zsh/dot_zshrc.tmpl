@@ -30,7 +30,6 @@ eval "$(ssh-agent -s)" &> /dev/null
 [[ -f ~/.ssh/lahey ]] && ssh-add -q ~/.ssh/lahey
 #endregion SSH
 
-#region OSX specific
 {{ if eq .chezmoi.os "linux" -}}
 # rbenv setup instructions:
 # https://developer.fedoraproject.org/start/sw/web-app/rails.html
@@ -42,6 +41,7 @@ export PATH="$PATH:$HOME/.rbenv/plugins/ruby-build/bin"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.local/bin/ssh-create"
 
+#region OSX specific
 {{ if eq .chezmoi.os "darwin" -}}
 
 # homebrew installs some bins to /opt/homebrew/sbin
