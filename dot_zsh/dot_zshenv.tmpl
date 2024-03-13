@@ -16,6 +16,9 @@ export PATH="$PATH:$HOME/.local/bin/tools"
 ## BEGIN -- managed by dot-ansible:zendesk -- ##
 [[ -f ~/.local/bin/zendesk_zshenv.sh ]] && source ~/.local/bin/zendesk_zshenv.sh
 ## END -- managed by dot-ansible:zendesk -- ##
+
+# Needed to ensure Lazygit looks in this dir for it's config.
+export $XDG_CONFIG_HOME="$HOME/.config"
 {{end -}}
 
 # For env vars not to be checked in.
@@ -23,3 +26,4 @@ export PATH="$PATH:$HOME/.local/bin/tools"
 
 # Ensure Node's global packages are in the PATH
 export PATH="$PATH:$(npm get prefix -g)"
+
