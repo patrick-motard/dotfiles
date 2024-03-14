@@ -76,7 +76,7 @@ alias gmoi="git -C $MOIDIR"
 alias edit="pushd $MOIDIR && $EDITOR $MOIDIR"
 # Apply and source changes.
 alias ma="chezmoi apply && sz"
-alias moi_add_nvim="chezmoi add ~/.config/nvim"
+alias moi_add_nvim="chezmoi add ~/.config/nvim && rm $MOIDIR/dot_config/nvim/lazy-lock.json"
 
 ## Ansible
 alias dotansible="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR/ansible/inventory/main.yml"
