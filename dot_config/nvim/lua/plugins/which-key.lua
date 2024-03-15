@@ -8,11 +8,11 @@ return {
     { "<leader>wk", "<C-w>k", desc = "Go ↑" },
     { "<leader><tab><tab>", "<cmd>Telescope buffers<cr>", desc = "buffers" },
 
-    { "<leader>gu", "<cmd>GitBlameCopyCommitURL", desc = "Copy Commit URL" },
-    { "<leader>gU", "<cmd>GitBlameCopyFileURL", desc = "Copy File URL" },
+    { "<leader>gu", "<cmd>GitBlameCopyCommitURL<cr>", desc = "Copy Commit URL" },
+    { "<leader>gU", "<cmd>GitBlameCopyFileURL<cr>", desc = "Copy File URL" },
 
-    { "<leader>go", "<cmd>GitBlameOpenCommitURL", desc = "Open Commit URL" },
-    { "<leader>gO", "<cmd>GitBlameOpenFileURL", desc = "Open File URL" },
+    { "<leader>go", "<cmd>GitBlameOpenCommitURL<cr>", desc = "Open Commit URL" },
+    { "<leader>gO", "<cmd>GitBlameOpenFileURL<cr>", desc = "Open File URL" },
 
     -- { "<leader>w/", "<Cmd>vsplit<CR>", desc = "Split Vertical" },
     -- { "<leader>w-", "<Cmd>split<CR>", desc = "Split Horizontal" },
