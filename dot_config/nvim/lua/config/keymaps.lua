@@ -11,6 +11,10 @@ local function get_test_file(filename)
   vim.notify(filename)
 end
 
-vim.keymap.set("n", "<leader>o", function()
+vim.keymap.set("n", "<leader>ok", function()
   get_test_file(vim.fn.expand("%:t"))
-end, { silent = true, noremap = true })
+end, { silent = true, noremap = true, desc = "test file wip" })
+
+--
+-- chezmoi
+-- vim.keymap.set()
