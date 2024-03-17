@@ -3,7 +3,7 @@ return {
   dependencies = { "nvim-lua/plenary.nvim" },
   config = function()
     require("chezmoi").setup({
-      -- your configurations
+      watch = true,
     })
   end,
 }
