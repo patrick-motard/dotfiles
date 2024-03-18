@@ -18,3 +18,9 @@ end, { silent = true, noremap = true, desc = "test file wip" })
 --
 -- chezmoi
 -- vim.keymap.set()
+vim.keymap.set("n", "<leader>hhl", "<Cmd>Cheatsheet<CR>", { desc = "list", silent = true, noremap = true })
+vim.keymap.set("n", "<leader>hh", "+hotkeys", { silent = true, noremap = true })
+
+local k = vim.keymap
+
+k.set("n", "<leader>hhe", "<Cmd>CheatsheetEdit<CR>", { desc = "edit", silent = true, noremap = true })

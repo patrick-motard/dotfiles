@@ -14,6 +14,7 @@ return {
     { "<leader>go", "<cmd>GitBlameOpenCommitURL<cr>", desc = "Open Commit URL" },
     { "<leader>gO", "<cmd>GitBlameOpenFileURL<cr>", desc = "Open File URL" },
     { "<leader>o", "+super" },
+    { "<leader>h", "+help" },
     { "<leader>sd", "<cmd>Telescope chezmoi find_files<cr>", desc = "Dotfiles" },
     -- { "<leader>w/", "<Cmd>vsplit<CR>", desc = "Split Vertical" },
     -- { "<leader>w-", "<Cmd>split<CR>", desc = "Split Horizontal" },

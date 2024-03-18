@@ -1,0 +1,2 @@
+## Tmux 
+Open new window | `l` + `c`
