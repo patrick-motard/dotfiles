@@ -1,2 +1,17 @@
 ## Tmux 
 Open new window | `l` + `c`
+
+## Spectre
+Open spectre | `l-sr`
+Repeat previous search | `l-l`
+
+## Flash.nvim
+Forward to letter | `f{n}`
+Forward, next result | `f{n}`
+Motion: Backward | `F`
+
+
+
+## Vim
+Save | `C-s`
+Escape | `C-[`
