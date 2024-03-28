@@ -11,4 +11,5 @@ return {
       colorscheme = "everforest",
     },
   },
+  { "google/vim-jsonnet" },
 }
