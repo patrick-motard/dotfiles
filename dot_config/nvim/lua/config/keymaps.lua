@@ -8,12 +8,18 @@ vim.keymap.set("n", "<leader>bt", "<Cmd>BufferLineTogglePin<CR>")
 local home = os.getenv("HOME")
 
 local function get_test_file(filename)
-  vim.notify(filename)
+  -- vim.notify(filename)
+  -- spec/unit/app/controllers/api/base_controller_spec.rb
+  --domains/product_catalog/api.rb
+  local test_path = string.format("spec/unit/%s_spec.rb", filename)
+  -- vim.notify(test_path)
+  vim.cmd.edit(test_path)
 end
 
-vim.keymap.set("n", "<leader>ok", function()
-  get_test_file(vim.fn.expand("%:t"))
-end, { silent = true, noremap = true, desc = "test file wip" })
+vim.keymap.set("n", "<leader>ot", function()
+  get_test_file(vim.fn.expand("%:r"))
+  -- get_test_file(vim.fn.expand("%:t"))
+end, { silent = true, noremap = true, desc = "Open test for ruby file." })
 
 --
 -- chezmoi
