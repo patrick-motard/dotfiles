@@ -15,3 +15,10 @@ Motion: Backward | `F`
 ## Vim
 Save | `C-s`
 Escape | `C-[`
+Reselect last visual selection | `gv`
+Move Up a Page | `C-u`
+Move Down a Page | `C-d`
+Go back to previous location | `C-o`
+Go forward to next location | `C-i`
+Go to file under cursor | `gf`
+
