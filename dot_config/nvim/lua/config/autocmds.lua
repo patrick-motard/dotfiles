@@ -7,3 +7,10 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     vim.schedule(require("chezmoi.commands.__edit").watch)
   end,
 })
+
+-- vim.api.nvim_create_augroup("dotfile_cmds", { clear: true })
+-- vim.api.nvim_create_autocmd("BufWritePost", { "BufWritePost",
+--   group = "dotfile_cmds",
+--   pattern = os.getenv("HOME") .. "/.local/share/chezmoi/*",
+--
+--   cmd = "lua require('chezmoi.commands.__edit').edit()" }
