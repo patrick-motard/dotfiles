@@ -3,6 +3,7 @@
 - apt:
     pkg:
       - rbenv
+      - ripgrep # Needed for lazyvim.
   become: true
 - name: lazygit
   become: true
