@@ -28,4 +28,6 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export PATH="$PATH:$(npm get prefix -g)"
 
 # Rust
+if which rustc > /dev/null; then
 . "$HOME/.cargo/env"
+fi
