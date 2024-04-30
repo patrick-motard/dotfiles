@@ -2,7 +2,6 @@
 # Packages to install if Ubuntu
 - apt:
     pkg:
-      - neovim
       - rbenv
   become: true
 - name: lazygit
