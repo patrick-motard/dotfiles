@@ -363,3 +363,4 @@ mouse_mode true
 // Default: false
 //
 // disable_session_metadata true
+// vim:syntax=kdl
