@@ -46,6 +46,7 @@ style = "Regular"
 
 [window]
 startup_mode = "Maximized"
+option_as_alt = "Both"
 
 [scrolling]
 history = 100000
