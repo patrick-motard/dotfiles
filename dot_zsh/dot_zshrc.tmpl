@@ -125,6 +125,14 @@ source "$(brew --prefix)/etc/profile.d/z.sh"
 #endregion z
 {{end -}}
 
+#region fzf
+if command -v fzf >/dev/null 2>&1; then
+    source <(fzf --zsh)
+else
+    echo "fzf is not installed. Please install it to use its features."
+fi
+#endregion fzf
+
 #region Custom Key Bindings
 
 # ## Colemak-DH layout
