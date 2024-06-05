@@ -8,7 +8,7 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   end,
 })
 local function remove_trailing_whitespace()
-  vim.cmd([[ %s/\s/+$//e ]])
+  vim.cmd([[ %s/\s\+$//e ]])
 end
 
 vim.api.nvim_create_augroup("TrimWhitespaceGroup", { clear = true })
