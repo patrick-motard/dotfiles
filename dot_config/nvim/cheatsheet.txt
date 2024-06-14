@@ -1,4 +1,4 @@
-## Tmux 
+## Tmux
 Open new window | `l` + `c`
 Next Pane | `l + o`
 Most recent other window | `l + l`
@@ -22,3 +22,5 @@ Go back to previous location | `C-o`
 Go forward to next location | `C-i`
 Go to file under cursor | `gf`
 
+## Zellij
+Detach session | `C-o d`
