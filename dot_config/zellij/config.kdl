@@ -1,5 +1,6 @@
 // If you'd like to override the default keybindings completely, be sure to change "keybinds" to "keybinds clear-defaults=true"
-keybinds {
+// keybinds {
+keybinds clear-defaults=true {
     normal {
         // uncomment this and adjust key if using copy_on_select=false
         // bind "Alt c" { Copy; }
@@ -9,14 +10,14 @@ keybinds {
     }
     resize {
         bind "Ctrl n" { SwitchToMode "Normal"; }
-        bind "h" "Left" { Resize "Increase Left"; }
-        bind "j" "Down" { Resize "Increase Down"; }
-        bind "k" "Up" { Resize "Increase Up"; }
-        bind "l" "Right" { Resize "Increase Right"; }
-        bind "H" { Resize "Decrease Left"; }
-        bind "J" { Resize "Decrease Down"; }
-        bind "K" { Resize "Decrease Up"; }
-        bind "L" { Resize "Decrease Right"; }
+        bind "m" "Left" { Resize "Increase Left"; }
+        bind "n" "Down" { Resize "Increase Down"; }
+        bind "e" "Up" { Resize "Increase Up"; }
+        bind "i" "Right" { Resize "Increase Right"; }
+        bind "M" { Resize "Decrease Left"; }
+        bind "N" { Resize "Decrease Down"; }
+        bind "E" { Resize "Decrease Up"; }
+        bind "I" { Resize "Decrease Right"; }
         bind "=" "+" { Resize "Increase"; }
         bind "-" { Resize "Decrease"; }
     }
@@ -39,12 +40,14 @@ keybinds {
     }
     move {
         bind "Ctrl h" { SwitchToMode "Normal"; }
-        bind "n" "Tab" { MovePane; }
+        bind "Tab" { MovePane; }
         bind "p" { MovePaneBackwards; }
-        bind "h" "Left" { MovePane "Left"; }
-        bind "j" "Down" { MovePane "Down"; }
-        bind "k" "Up" { MovePane "Up"; }
-        bind "l" "Right" { MovePane "Right"; }
+        bind "m" { MovePane "Left"; }
+        bind "n" { MovePane "Down"; }
+        bind "e" { MovePane "Up"; }
+        bind "i" { MovePane "Right"; }
+        bind "M" { MoveTab "Left"; }
+        bind "I" { MoveTab "Right"; }
     }
     tab {
         bind "Ctrl t" { SwitchToMode "Normal"; }
@@ -147,13 +150,17 @@ keybinds {
     shared_except "locked" {
         bind "Ctrl g" { SwitchToMode "Locked"; }
         bind "Ctrl q" { Quit; }
-        bind "Alt n" { NewPane; }
-        bind "Alt i" { MoveTab "Left"; }
-        bind "Alt o" { MoveTab "Right"; }
-        bind "Alt m" "Alt Left" { MoveFocusOrTab "Left"; }
-        bind "Alt i" "Alt Right" { MoveFocusOrTab "Right"; }
-        bind "Alt n" "Alt Down" { MoveFocus "Down"; }
-        bind "Alt e" "Alt Up" { MoveFocus "Up"; }
+        // bind "Alt n" { NewPane; }
+        // bind "Alt i" { MoveTab "Left"; }
+        // bind "Alt o" { MoveTab "Right"; }
+        //bind "Alt m" "Alt Left" { MoveFocusOrTab "Left"; }
+        // bind "Alt i" "Alt Right" { MoveFocusOrTab "Right"; }
+        // bind "Alt n" "Alt Down" { MoveFocus "Down"; }
+        unbind "Alt i"
+        unbind "Alt n"
+        unbind "Alt o"
+        unbind "Alt Left" "Alt Right" "Alt h" "Alt j" "Alt k" "Alt l"
+        // bind "Alt e" "Alt Up" { MoveFocus "Up"; }
         bind "Alt =" "Alt +" { Resize "Increase"; }
         bind "Alt -" { Resize "Decrease"; }
         bind "Alt [" { PreviousSwapLayout; }
