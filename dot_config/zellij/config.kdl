@@ -3,7 +3,13 @@
 
 default_mode "locked"
 default_layout "compact"
+mouse_mode true
+pane_frames false
+scrollback_lines_to_serialize 10000
+scroll_buffer_size 10000
 theme "gruvbox-dark"
+
+
 keybinds clear-defaults=true {
     locked {
       bind "Ctrl g" { SwitchToMode "Normal"; }
@@ -34,6 +40,27 @@ keybinds clear-defaults=true {
         SwitchToMode "Session"
       }
     }
+
+    pane {
+        bind "c" { NewPane; SwitchToMode "Locked";}
+        bind "x" { CloseFocus; SwitchToMode "Locked";}
+        bind "m" { MoveFocus "Left";  SwitchToMode "Locked"; }
+        bind "n" { MoveFocus "Down";  SwitchToMode "Locked"; }
+        bind "e" { MoveFocus "Up";    SwitchToMode "Locked"; }
+        bind "i" { MoveFocus "Right"; SwitchToMode "Locked"; }
+
+        bind "h" {
+            // SwitchToMode "Locked";
+            LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
+                "Create New Pane"          "c"
+                "Close Pane"               "x"
+                "Select Pane ( ← ↓ ↑ → )"  "m n e i"
+                "LOAD_ZELLIJ_BINDINGS"     "false"
+                floating true
+            };
+        }
+    }
+
 }
 
 themes {
@@ -355,7 +382,7 @@ plugins {
 //   - true (default)
 //   - false
 //
-mouse_mode true
+// mouse_mode true
 
 // Configure the scroll back buffer size
 // This is the number of lines zellij stores for each pane in the scroll back
