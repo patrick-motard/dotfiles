@@ -1,7 +1,7 @@
 // If you'd like to override the default keybindings completely, be sure to change "keybinds" to "keybinds clear-defaults=true"
 // keybinds {
 
-default_mode "locked"
+default_mode "Locked"
 default_layout "compact"
 mouse_mode true
 pane_frames false
@@ -9,10 +9,15 @@ scrollback_lines_to_serialize 10000
 scroll_buffer_size 10000
 theme "gruvbox-dark"
 
-
 keybinds clear-defaults=true {
     locked {
-      bind "Ctrl g" { SwitchToMode "Normal"; }
+        bind "Ctrl g" { SwitchToMode "Normal"; }
+
+        bind "Alt m" { MoveFocus "Left"; }
+        bind "Alt n" { MoveFocus "Down"; }
+        bind "Alt e" { MoveFocus "Up";   }
+        bind "Alt i" { MoveFocus "Right"; }
+
     }
 
     shared_except "locked" {
@@ -21,24 +26,24 @@ keybinds clear-defaults=true {
     }
 
     normal {
-      bind "p" {
-        SwitchToMode "Pane"
-      }
-      bind "m" {
-        SwitchToMode "Move"
-      }
-      bind "t" {
-        SwitchToMode "Tab"
-      }
-      bind "r" {
-        SwitchToMode "Resize"
-      }
-      bind "s" {
-        SwitchToMode "Scroll"
-      }
-      bind "o" {
-        SwitchToMode "Session"
-      }
+        bind "p" {
+          SwitchToMode "Pane"
+        }
+        // bind "m" {
+        //   SwitchToMode "Move"
+        // }
+        bind "t" {
+          SwitchToMode "Tab"
+        }
+        bind "r" {
+          SwitchToMode "Resize"
+        }
+        bind "s" {
+          SwitchToMode "Scroll"
+        }
+        bind "o" {
+          SwitchToMode "Session"
+        }
     }
 
     pane {
@@ -56,6 +61,41 @@ keybinds clear-defaults=true {
                 "Close Pane"               "x"
                 "Select Pane ( ← ↓ ↑ → )"  "m n e i"
                 "LOAD_ZELLIJ_BINDINGS"     "false"
+                floating true
+            };
+        }
+    }
+
+    session {
+        bind "d" { Detach; }
+        bind "m" {
+            LaunchOrFocusPlugin "zellij:session-manager" {
+                floating true
+                move_to_focused_tab true
+            }
+            SwitchToMode "Normal"
+        }
+    }
+    tab {
+        bind "c" { NewTab; SwitchToMode "Locked"; }
+        bind "x" { CloseTab; SwitchToMode "Locked"; }
+        bind "r" { SwitchToMode "RenameTab"; SwitchToMode "Locked"; }
+        bind "m" "Left" { GoToPreviousTab; SwitchToMode "Locked"; }
+        bind "i" "Right" { GoToNextTab; SwitchToMode "Locked"; }
+        bind "M" { MoveTab "Left"; SwitchToMode "Locked"; }
+        bind "I" { MoveTab "Right"; SwitchToMode "Locked"; }
+
+        bind "h" {
+            // SwitchToMode "Locked";
+            LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
+                "Create New Tab"          "c"
+                "Close Tab"               "x"
+                "Rename Tab"              "r"
+                "Next Pane →"             "i"
+                "Previous Pane ←"         "m"
+                "Move Tab ←"              "M"
+                "Move Tab →"              "I"
+                "LOAD_ZELLIJ_BINDINGS"    "false"
                 floating true
             };
         }
