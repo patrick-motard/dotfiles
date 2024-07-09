@@ -18,6 +18,14 @@ keybinds clear-defaults=true {
         bind "Alt e" { MoveFocus "Up";   }
         bind "Alt i" { MoveFocus "Right"; }
 
+        bind "Alt h" {
+            LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
+                "Normal mode"              "Ctrl g"
+                "Select Pane ( ← ↓ ↑ → )"  "Alt + [m n e i]"
+                "LOAD_ZELLIJ_BINDINGS"     "false"
+                floating true
+            }
+        }
     }
 
     shared_except "locked" {
@@ -53,6 +61,13 @@ keybinds clear-defaults=true {
         bind "n" { MoveFocus "Down";  SwitchToMode "Locked"; }
         bind "e" { MoveFocus "Up";    SwitchToMode "Locked"; }
         bind "i" { MoveFocus "Right"; SwitchToMode "Locked"; }
+        bind "r" { SwitchToMode "RenamePane"; PaneNameInput 0; SwitchToMode "Locked"; }
+        bind "M" { MovePane "Left";  SwitchToMode "Locked"; }
+        bind "N" { MovePane "Down";  SwitchToMode "Locked"; }
+        bind "E" { MovePane "Up";    SwitchToMode "Locked"; }
+        bind "I" { MovePane "Right"; SwitchToMode "Locked"; }
+        bind "u" { HalfPageScrollUp; }
+        bind "d" { HalfPageScrollDown; }
 
         bind "h" {
             // SwitchToMode "Locked";
@@ -60,6 +75,27 @@ keybinds clear-defaults=true {
                 "Create New Pane"          "c"
                 "Close Pane"               "x"
                 "Select Pane ( ← ↓ ↑ → )"  "m n e i"
+                "LOAD_ZELLIJ_BINDINGS"     "false"
+                floating true
+            };
+        }
+    }
+
+    resize {
+        bind "m" { Resize "Increase Left"; }
+        bind "n" { Resize "Increase Down"; }
+        bind "e" { Resize "Increase Up"; }
+        bind "i" { Resize "Increase Right"; }
+
+        bind "M" { Resize "Decrease Left"; }
+        bind "N" { Resize "Decrease Down"; }
+        bind "E" { Resize "Decrease Up"; }
+        bind "I" { Resize "Decrease Right"; }
+
+        bind "h" {
+            // SwitchToMode "Locked";
+            LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
+                "Resize Pane ( ← ↓ ↑ → )"  "m n e i"
                 "LOAD_ZELLIJ_BINDINGS"     "false"
                 floating true
             };
@@ -75,11 +111,13 @@ keybinds clear-defaults=true {
             }
             SwitchToMode "Normal"
         }
+        bind "q" { Quit; }
     }
+
     tab {
         bind "c" { NewTab; SwitchToMode "Locked"; }
         bind "x" { CloseTab; SwitchToMode "Locked"; }
-        bind "r" { SwitchToMode "RenameTab"; SwitchToMode "Locked"; }
+        bind "r" { SwitchToMode "RenameTab"; PaneNameInput 0; }
         bind "m" "Left" { GoToPreviousTab; SwitchToMode "Locked"; }
         bind "i" "Right" { GoToNextTab; SwitchToMode "Locked"; }
         bind "M" { MoveTab "Left"; SwitchToMode "Locked"; }
