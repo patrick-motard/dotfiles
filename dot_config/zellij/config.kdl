@@ -13,15 +13,16 @@ keybinds clear-defaults=true {
     locked {
         bind "Ctrl g" { SwitchToMode "Normal"; }
 
-        bind "Alt m" { MoveFocus "Left"; }
-        bind "Alt n" { MoveFocus "Down"; }
-        bind "Alt e" { MoveFocus "Up";   }
-        bind "Alt i" { MoveFocus "Right"; }
+        bind "Alt m" { MoveFocusOrTab "Left"; }
+        bind "Alt n" { MoveFocusOrTab "Down"; }
+        bind "Alt e" { MoveFocusOrTab "Up";   }
+        bind "Alt i" { MoveFocusOrTab "Right"; }
 
         bind "Alt h" {
             LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
                 "Normal mode"              "Ctrl g"
                 "Select Pane ( ← ↓ ↑ → )"  "Alt + [m n e i]"
+                "Lock"                      "l or esc"
                 "LOAD_ZELLIJ_BINDINGS"     "false"
                 floating true
             }
@@ -46,11 +47,24 @@ keybinds clear-defaults=true {
         bind "r" {
           SwitchToMode "Resize"
         }
-        bind "s" {
-          SwitchToMode "Scroll"
-        }
+        // bind "s" {
+        //   SwitchToMode "Scroll"
+        // }
         bind "o" {
           SwitchToMode "Session"
+        }
+
+        bind "h" {
+            LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
+                "Pane Mode"                 "p"
+                "Move Mode"                 "m"
+                "Tab Mode"                  "t"
+                "Resize Mode"               "r"
+                "Session Mode"              "o"
+                "Lock"                      "l or esc"
+                "LOAD_ZELLIJ_BINDINGS"     "false"
+                floating true
+            }
         }
     }
 
@@ -61,20 +75,30 @@ keybinds clear-defaults=true {
         bind "n" { MoveFocus "Down";  SwitchToMode "Locked"; }
         bind "e" { MoveFocus "Up";    SwitchToMode "Locked"; }
         bind "i" { MoveFocus "Right"; SwitchToMode "Locked"; }
-        bind "r" { SwitchToMode "RenamePane"; PaneNameInput 0; SwitchToMode "Locked"; }
+        bind "r" { SwitchToMode "RenamePane"; PaneNameInput 0; }
         bind "M" { MovePane "Left";  SwitchToMode "Locked"; }
         bind "N" { MovePane "Down";  SwitchToMode "Locked"; }
         bind "E" { MovePane "Up";    SwitchToMode "Locked"; }
         bind "I" { MovePane "Right"; SwitchToMode "Locked"; }
         bind "u" { HalfPageScrollUp; }
+        bind "U" { PageScrollUp; }
         bind "d" { HalfPageScrollDown; }
+        bind "D" { PageScrollDown; }
+
 
         bind "h" {
             // SwitchToMode "Locked";
             LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
-                "Create New Pane"          "c"
-                "Close Pane"               "x"
-                "Select Pane ( ← ↓ ↑ → )"  "m n e i"
+                "Create"          "c"
+                "Close"               "x"
+                "Select ( ← ↓ ↑ → )"  "m n e i"
+                "Rename"                     "r"
+                "Move ( ← ↓ ↑ → )"      "M N E I"
+                "Scoll 1/2 Page Up"    "u"
+                "Scroll 1/2 Page Down" "d"
+                "Scroll Up"            "U"
+                "Scroll Down"          "D"
+                "Lock"                      "l or esc"
                 "LOAD_ZELLIJ_BINDINGS"     "false"
                 floating true
             };
@@ -95,7 +119,8 @@ keybinds clear-defaults=true {
         bind "h" {
             // SwitchToMode "Locked";
             LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
-                "Resize Pane ( ← ↓ ↑ → )"  "m n e i"
+                "Increase Size ( ← ↓ ↑ → )"  "m n e i"
+                "Dercrease Size ( ← ↓ ↑ → )"  "M N E I"
                 "LOAD_ZELLIJ_BINDINGS"     "false"
                 floating true
             };
