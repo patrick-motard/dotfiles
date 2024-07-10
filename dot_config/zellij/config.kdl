@@ -47,9 +47,9 @@ keybinds clear-defaults=true {
         bind "r" {
           SwitchToMode "Resize"
         }
-        // bind "s" {
-        //   SwitchToMode "Scroll"
-        // }
+        bind "s" {
+          SwitchToMode "Scroll"
+        }
         bind "o" {
           SwitchToMode "Session"
         }
@@ -80,11 +80,10 @@ keybinds clear-defaults=true {
         bind "N" { MovePane "Down";  SwitchToMode "Locked"; }
         bind "E" { MovePane "Up";    SwitchToMode "Locked"; }
         bind "I" { MovePane "Right"; SwitchToMode "Locked"; }
-        bind "u" { HalfPageScrollUp; }
-        bind "U" { PageScrollUp; }
-        bind "d" { HalfPageScrollDown; }
-        bind "D" { PageScrollDown; }
-
+        bind "Alt m" { NewPane "Left";  SwitchToMode "Locked"; }
+        bind "Alt n" { NewPane "Down";  SwitchToMode "Locked"; }
+        bind "Alt e" { NewPane "Up";    SwitchToMode "Locked"; }
+        bind "Alt i" { NewPane "Right"; SwitchToMode "Locked"; }
 
         bind "h" {
             // SwitchToMode "Locked";
@@ -94,11 +93,8 @@ keybinds clear-defaults=true {
                 "Select ( ← ↓ ↑ → )"  "m n e i"
                 "Rename"                     "r"
                 "Move ( ← ↓ ↑ → )"      "M N E I"
-                "Scoll 1/2 Page Up"    "u"
-                "Scroll 1/2 Page Down" "d"
-                "Scroll Up"            "U"
-                "Scroll Down"          "D"
                 "Lock"                      "l or esc"
+                "New Pane ( ← ↓ ↑ → )"  "Alt + [m n e i]"
                 "LOAD_ZELLIJ_BINDINGS"     "false"
                 floating true
             };
@@ -122,6 +118,23 @@ keybinds clear-defaults=true {
                 "Increase Size ( ← ↓ ↑ → )"  "m n e i"
                 "Dercrease Size ( ← ↓ ↑ → )"  "M N E I"
                 "LOAD_ZELLIJ_BINDINGS"     "false"
+                floating true
+            };
+        }
+    }
+
+    scroll {
+        bind "u" { HalfPageScrollUp; }
+        bind "U" { PageScrollUp; }
+        bind "d" { HalfPageScrollDown; }
+        bind "D" { PageScrollDown; }
+        bind "h" {
+            LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
+                "Scroll Up"            "U"
+                "Scroll Down"          "D"
+                "Scroll 1/2 Page Up"   "u"
+                "Scroll 1/2 Page Down" "d"
+                "LOAD_ZELLIJ_BINDINGS" "false"
                 floating true
             };
         }
