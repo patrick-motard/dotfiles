@@ -14,15 +14,15 @@ keybinds clear-defaults=true {
         bind "Ctrl g" { SwitchToMode "Normal"; }
 
         bind "Alt m" { MoveFocusOrTab "Left"; }
-        bind "Alt n" { MoveFocusOrTab "Down"; }
-        bind "Alt e" { MoveFocusOrTab "Up";   }
+        bind "Alt n" { MoveFocus "Down"; }
+        bind "Alt e" { MoveFocus "Up";   }
         bind "Alt i" { MoveFocusOrTab "Right"; }
 
         bind "Alt h" {
             LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
                 "Normal mode"              "Ctrl g"
                 "Select Pane ( ← ↓ ↑ → )"  "Alt + [m n e i]"
-                "Lock"                      "l or esc"
+                "Lock"                      "Ctrl l or esc"
                 "LOAD_ZELLIJ_BINDINGS"     "false"
                 floating true
             }
@@ -30,7 +30,7 @@ keybinds clear-defaults=true {
     }
 
     shared_except "locked" {
-        bind "l" "Esc" { SwitchToMode "Locked"; }
+        bind "Ctrl l" "Esc" { SwitchToMode "Locked"; }
         bind "Ctrl g" { SwitchToMode "Normal"; }
     }
 
@@ -61,7 +61,7 @@ keybinds clear-defaults=true {
                 "Tab Mode"                  "t"
                 "Resize Mode"               "r"
                 "Session Mode"              "o"
-                "Lock"                      "l or esc"
+                "Lock"                      "Ctrl l or esc"
                 "LOAD_ZELLIJ_BINDINGS"     "false"
                 floating true
             }
