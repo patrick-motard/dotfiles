@@ -84,6 +84,7 @@ keybinds clear-defaults=true {
         bind "Alt n" { NewPane "Down";  SwitchToMode "Locked"; }
         bind "Alt e" { NewPane "Up";    SwitchToMode "Locked"; }
         bind "Alt i" { NewPane "Right"; SwitchToMode "Locked"; }
+        bind "z" { ToggleFocusFullscreen; SwitchToMode "Locked"; }
 
         bind "h" {
             // SwitchToMode "Locked";
