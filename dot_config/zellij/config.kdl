@@ -164,7 +164,7 @@ keybinds clear-defaults=true {
 
     tab {
         bind "c" { NewTab; SwitchToMode "Locked"; }
-        bind "x" { CloseTab; SwitchToMode "Locked"; }
+        bind "X" { CloseTab; SwitchToMode "Locked"; }
         bind "r" { SwitchToMode "RenameTab"; PaneNameInput 0; }
         bind "m" "Left" { GoToPreviousTab; SwitchToMode "Locked"; }
         bind "i" "Right" { GoToNextTab; SwitchToMode "Locked"; }
@@ -175,7 +175,7 @@ keybinds clear-defaults=true {
             // SwitchToMode "Locked";
             LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
                 "Create New Tab"          "c"
-                "Close Tab"               "x"
+                "Close Tab"               "X"
                 "Rename Tab"              "r"
                 "Next Pane →"             "i"
                 "Previous Pane ←"         "m"
