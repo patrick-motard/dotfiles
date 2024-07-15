@@ -151,6 +151,15 @@ keybinds clear-defaults=true {
             SwitchToMode "Normal"
         }
         bind "q" { Quit; }
+        bind "h" {
+            LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
+                "Detach"          "d"
+                "Quit"            "q"
+                "Session Manager" "m"
+                "LOAD_ZELLIJ_BINDINGS" "false"
+                floating true
+            };
+        }
     }
 
     tab {
