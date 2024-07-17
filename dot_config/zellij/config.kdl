@@ -17,6 +17,9 @@ keybinds clear-defaults=true {
         bind "Alt n" { MoveFocus "Down"; }
         bind "Alt e" { MoveFocus "Up";   }
         bind "Alt i" { MoveFocusOrTab "Right"; }
+        bind "Alt O" { GoToNextTab; }
+        bind "Alt M" { GoToPreviousTab; }
+        bind "Alt t" { ToggleTab; }
 
         bind "Alt h" {
             LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
@@ -24,6 +27,8 @@ keybinds clear-defaults=true {
                 "Select Pane ( ← ↓ ↑ → )"  "Alt + [m n e i]"
                 "Lock"                      "Ctrl l or esc"
                 "LOAD_ZELLIJ_BINDINGS"     "false"
+                "Select Tab (← →)"         "Alt + [O M]"
+                "Toggle Tab"                "Alt + t"
                 floating true
             }
         }
