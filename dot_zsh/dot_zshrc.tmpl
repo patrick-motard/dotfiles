@@ -75,6 +75,9 @@ source /Users/pmotard/Code/zendesk/zdi/dockmaster/zdi.sh
 # for the billing repo
 export HUSKY=0
 
+# CICD
+source <(cicd completion zsh); compdef _cicd cicd
+
 ## BEGIN -- managed by workstation, role: aws_cli -- ##
 alias awswhoami='aws sts get-caller-identity'
 function awscreds {
