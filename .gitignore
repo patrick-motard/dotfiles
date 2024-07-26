@@ -4,3 +4,4 @@ ansible.cfg
 
 dot_config/nvim/lazy-lock.json
 tmux-client-*
+.DS_Store
