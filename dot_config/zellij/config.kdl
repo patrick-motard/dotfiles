@@ -21,7 +21,7 @@ keybinds clear-defaults=true {
         bind "Alt M" { GoToPreviousTab; }
         bind "Alt t" { ToggleTab; }
 
-        bind "Alt h" {
+        bind "Alt h" "Alt ?"{
             LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
                 "Normal mode"              "Ctrl g"
                 "Select Pane ( ← ↓ ↑ → )"  "Alt + [m n e i]"
@@ -59,7 +59,7 @@ keybinds clear-defaults=true {
           SwitchToMode "Session"
         }
 
-        bind "h" {
+        bind "h" "?" {
             LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
                 "Pane Mode"                 "p"
                 "Move Mode"                 "m"
@@ -91,7 +91,7 @@ keybinds clear-defaults=true {
         bind "Alt i" { NewPane "Right"; SwitchToMode "Locked"; }
         bind "z" { ToggleFocusFullscreen; SwitchToMode "Locked"; }
 
-        bind "h" {
+        bind "h" "?" {
             // SwitchToMode "Locked";
             LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
                 "Create"          "c"
@@ -118,7 +118,7 @@ keybinds clear-defaults=true {
         bind "E" { Resize "Decrease Up"; }
         bind "I" { Resize "Decrease Right"; }
 
-        bind "h" {
+        bind "h" "?" {
             // SwitchToMode "Locked";
             LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
                 "Increase Size ( ← ↓ ↑ → )"  "m n e i"
@@ -156,7 +156,7 @@ keybinds clear-defaults=true {
             SwitchToMode "Normal"
         }
         bind "q" { Quit; }
-        bind "h" {
+        bind "h" "?" {
             LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
                 "Detach"          "d"
                 "Quit"            "q"
@@ -176,7 +176,7 @@ keybinds clear-defaults=true {
         bind "M" { MoveTab "Left"; SwitchToMode "Locked"; }
         bind "I" { MoveTab "Right"; SwitchToMode "Locked"; }
 
-        bind "h" {
+        bind "h" "?" {
             // SwitchToMode "Locked";
             LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
                 "Create New Tab"          "c"
