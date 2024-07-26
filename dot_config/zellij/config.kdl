@@ -86,6 +86,7 @@ keybinds clear-defaults=true {
         bind "N" { MovePane "Down";  SwitchToMode "Locked"; }
         bind "E" { MovePane "Up";    SwitchToMode "Locked"; }
         bind "I" { MovePane "Right"; SwitchToMode "Locked"; }
+        bind "f" { TogglePaneFrames; SwitchToMode "Locked"; }
         bind "Alt m" { NewPane "Left";  SwitchToMode "Locked"; }
         bind "Alt n" { NewPane "Down";  SwitchToMode "Locked"; }
         bind "Alt e" { NewPane "Up";    SwitchToMode "Locked"; }
@@ -102,6 +103,8 @@ keybinds clear-defaults=true {
                 "Move ( ← ↓ ↑ → )"      "M N E I"
                 "Lock"                      "l or esc"
                 "New Pane ( ← ↓ ↑ → )"  "Alt + [m n e i]"
+                "Toggle Frames"            "f"
+                "Toggle Zoom"              "z"
                 "LOAD_ZELLIJ_BINDINGS"     "false"
                 floating true
             };
