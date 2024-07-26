@@ -65,6 +65,7 @@ keybinds clear-defaults=true {
                 "Move Mode"                 "m"
                 "Tab Mode"                  "t"
                 "Resize Mode"               "r"
+                "Scroll Mode"               "s"
                 "Session Mode"              "o"
                 "Lock"                      "Ctrl l or esc"
                 "LOAD_ZELLIJ_BINDINGS"     "false"
@@ -134,12 +135,14 @@ keybinds clear-defaults=true {
         bind "U" { PageScrollUp; }
         bind "d" { HalfPageScrollDown; }
         bind "D" { PageScrollDown; }
+        bind "e" { EditScrollback; SwitchToMode "Locked"; }
         bind "h" {
             LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
                 "Scroll Up"            "U"
                 "Scroll Down"          "D"
                 "Scroll 1/2 Page Up"   "u"
                 "Scroll 1/2 Page Down" "d"
+                "Edit Scrollback"      "e"
                 "LOAD_ZELLIJ_BINDINGS" "false"
                 floating true
             };
