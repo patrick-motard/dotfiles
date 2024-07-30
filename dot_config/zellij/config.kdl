@@ -2,7 +2,7 @@
 // keybinds {
 
 default_mode "Locked"
-default_layout "compact"
+default_layout "default"
 mouse_mode true
 pane_frames false
 scrollback_lines_to_serialize 10000
