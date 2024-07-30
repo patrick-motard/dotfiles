@@ -29,7 +29,9 @@ export XDG_CONFIG_HOME="$HOME/.config"
 [[ -f ~/.local/bin/zshenv.sh ]] && source ~/.local/bin/zshenv.sh || touch ~/.local/bin/zshenv.sh
 
 # Ensure Node's global packages are in the PATH
-export PATH="$PATH:$(npm get prefix -g)"
+if which npm > /dev/null; then
+  export PATH="$PATH:$(npm get prefix -g)"
+fi
 
 # Rust
 if which rustc > /dev/null; then
