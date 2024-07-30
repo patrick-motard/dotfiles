@@ -8,6 +8,10 @@ export EDITOR=nvim
 export VISUAL=nvim
 export PATH="$PATH:$HOME/.local/bin/tools"
 
+# Create ~/.local/bin, used in many places in my dotfiles
+[ ! -d ~/.local/bin ] && mkdir -p ~/.local/bin
+
+
 {{ if eq .chezmoi.os "darwin" -}}
 
 # export BROWSER=''
