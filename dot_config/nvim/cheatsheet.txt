@@ -23,6 +23,7 @@ Go forward to next location | `C-i`
 Go to file under cursor | `gf`
 Go to next empy line | `}`
 Paste above current line / `P`
+File Tree (navigate back and forth) / `l-w 0`
 
 ## Zellij
 Detach session | `C-o d`
