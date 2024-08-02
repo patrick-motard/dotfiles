@@ -21,9 +21,11 @@ Move Down a Page | `C-d`
 Go back to previous location | `C-o`
 Go forward to next location | `C-i`
 Go to file under cursor | `gf`
-Go to next empy line | `}`
+Go to next empty line | `}`
+Go to previous empty line | `{`
 Paste above current line / `P`
 File Tree (navigate back and forth) / `l-w 0`
+Mark - Delete / `:delmarks [mark]`
 
 ## Zellij
 Detach session | `C-o d`
