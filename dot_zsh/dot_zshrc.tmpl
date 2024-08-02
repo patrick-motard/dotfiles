@@ -37,6 +37,10 @@ eval "$(ssh-agent -s)" &> /dev/null
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 export PATH="$PATH:$HOME/.rbenv/plugins/ruby-build/bin"
+
+# This ensures neovim can access 'neovim-ruby-host' to execute ruby commands from neovim.
+# You can see if this is configured correctly by running :checkhealth
+export PATH="$PATH:$HOME/.rbenv/versions/3.3.4/bin"
 {{ end -}}
 #endregion Linux specific
 
