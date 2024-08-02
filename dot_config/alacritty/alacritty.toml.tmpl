@@ -31,6 +31,7 @@ size = 14.0
 offset.x = 0
 offset.y = 0
 
+{{- if index .chezmoi.osRelease }}
 {{ if eq .chezmoi.osRelease.name "Arch Linux" }}
 [font.bold]
 family = "Iosevka"
@@ -43,6 +44,7 @@ style = "Italic"
 [font.normal]
 family = "Iosevka"
 style = "Regular"
+{{- end}}
 
 {{ else }}
 
