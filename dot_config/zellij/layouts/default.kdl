@@ -31,6 +31,7 @@ layout {
                 format_right  "{command_git_branch} #[bg=$gb_bg1,fg=$gb_fg1]{session} "
                 format_space  ""
 
+// search for e0 https://www.nerdfonts.com/cheat-sheet
                 border_enabled  "false"
                 border_char     "─"
                 border_format   "#[fg=$gb_bg2]{char}"
@@ -53,9 +54,9 @@ layout {
                 mode_prompt        "#[bg=$gb_blue,fg=$gb_fg1] {name} "
                 mode_tmux          "#[bg=$gb_blue,fg=$gb_fg1] {name} "
 
-                tab_normal   "#[bg=$gb_bg1,fg=$gb_fg1] {name} "
-                tab_active   "#[bg=$gb_green,fg=$gb_fg1,bold,italic] {name} "
-                tab_active_fullscreen   "#[bg=$gb_purple,fg=$gb_fg1,bold,italic] {name} {fullscreen_indicator}"
+                tab_normal   "#[bg=$gb_bg,fg=$gb_bg2] #[bg=$gb_bg2,fg=$gb_fg1] {name} #[bg=$gb_bg,fg=$gb_bg2] "
+                tab_active   "#[bg=$gb_bg,fg=$gb_green] #[bg=$gb_green,fg=$gb_bg1,bold,italic] {name}#[bg=$gb_bg,fg=$gb_green] "
+                tab_active_fullscreen   "#[bg=$gb_purple,fg=$gb_fg1,bold,italic] {name} {fullscreen_indicator} "
 
                 tab_sync_indicator       "<> "
                 tab_fullscreen_indicator ""
