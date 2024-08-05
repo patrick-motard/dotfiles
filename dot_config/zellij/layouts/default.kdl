@@ -2,44 +2,73 @@ layout {
     default_tab_template {
         pane size=1 borderless=true {
             plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
-                format_left   "#[fg=#89B4FA,bold]{session}"
+                color_bg        "#3b4252"
+                color_fg        "#d8dee9"
+
+                //Gruvbox Dark Mode
+                color_gb_bg     "#282828"
+                color_gb_bg0_h  "#1d2021"
+                color_gb_bg1    "#3c3836"
+                color_gb_bg2    "#504945"
+
+                color_gb_fg0    "#fbf1c7"
+                color_gb_fg1    "#ebdbb2"
+                color_gb_fg2    "#dbc4a1"
+                color_gb_fg3    "#bdae93"
+                color_gb_fg4    "#a89984"
+
+                color_gb_red    "#cc241d"
+                color_gb_green  "#98971a"
+                color_gb_yellow "#d79921"
+                color_gb_blue   "#458588"
+                color_gb_purple "#b16286"
+                color_gb_aqua   "#689d6a"
+                color_gb_gray   "#a89984"
+                color_gb_orage  "#d65d0e"
+
+                format_left   "#[fg=#89B4FA]{tabs}"
                 format_center "{mode}"
-                format_right  "{command_git_branch} {datetime}"
+                format_right  "{command_git_branch} #[bg=$gb_bg1,fg=$gb_fg1]{session} "
                 format_space  ""
 
                 border_enabled  "false"
                 border_char     "─"
-                border_format   "#[fg=#6C7086]{char}"
+                border_format   "#[fg=$gb_bg2]{char}"
                 border_position "top"
 
                 hide_frame_for_single_pane "true"
 
-                mode_normal        "#[bg=#89B4FA] {name} "
-                mode_locked        "#[bg=#89B4FA] {name} "
-                mode_resize        "#[bg=#89B4FA] {name} "
-                mode_pane          "#[bg=#89B4FA] {name} "
-                mode_tab           "#[bg=#89B4FA] {name} "
-                mode_scroll        "#[bg=#89B4FA] {name} "
-                mode_enter_search  "#[bg=#89B4FA] {name} "
-                mode_search        "#[bg=#89B4FA] {name} "
-                mode_rename_tab    "#[bg=#89B4FA] {name} "
-                mode_rename_pane   "#[bg=#89B4FA] {name} "
-                mode_session       "#[bg=#89B4FA] {name} "
-                mode_move          "#[bg=#89B4FA] {name} "
-                mode_prompt        "#[bg=#89B4FA] {name} "
-                mode_tmux          "#[bg=#ffc387] {name} "
+                mode_normal        "#[bg=$gb_yellow,fg=$gb_fg1]  "
+                mode_locked        "#[bg=$gb_bg1,fg=$gb_fg1]  "
+                mode_resize        "#[bg=$gb_blue,fg=$gb_fg1] {name} "
+                mode_pane          "#[bg=$gb_blue,fg=$gb_fg1] {name} "
+                mode_tab           "#[bg=$gb_blue,fg=$gb_fg1] {name} "
+                mode_scroll        "#[bg=$gb_blue,fg=$gb_fg1] {name} "
+                mode_enter_search  "#[bg=$gb_blue,fg=$gb_fg1] {name} "
+                mode_search        "#[bg=$gb_blue,fg=$gb_fg1] {name} "
+                mode_rename_tab    "#[bg=$gb_blue,fg=$gb_fg1] {name} "
+                mode_rename_pane   "#[bg=$gb_blue,fg=$gb_fg1] {name} "
+                mode_session       "#[bg=$gb_blue,fg=$gb_fg1] {name} "
+                mode_move          "#[bg=$gb_blue,fg=$gb_fg1] {name} "
+                mode_prompt        "#[bg=$gb_blue,fg=$gb_fg1] {name} "
+                mode_tmux          "#[bg=$gb_blue,fg=$gb_fg1] {name} "
 
-                tab_normal   "#[fg=#6C7086] {name} "
-                tab_active   "#[fg=#9399B2,bold,italic] {name} "
+                tab_normal   "#[bg=$gb_bg1,fg=$gb_fg1] {name} "
+                tab_active   "#[bg=$gb_green,fg=$gb_fg1,bold,italic] {name} "
+                tab_active_fullscreen   "#[bg=$gb_purple,fg=$gb_fg1,bold,italic] {name} {fullscreen_indicator}"
+
+                tab_sync_indicator       "<> "
+                tab_fullscreen_indicator ""
+                tab_floating_indicator   "⬚ "
 
                 command_git_branch_command     "git rev-parse --abbrev-ref HEAD"
-                command_git_branch_format      "#[fg=blue] {stdout} "
+                command_git_branch_format      "#[bg=$gb_bg1,fg=$gb_fg1] {stdout} "
                 command_git_branch_interval    "10"
                 command_git_branch_rendermode  "static"
 
-                datetime        "#[fg=#6C7086,bold] {format} "
-                datetime_format "%A, %d %b %Y %H:%M"
-                datetime_timezone "Europe/Berlin"
+                // datetime        "#[fg=#6C7086,bold] {format} "
+                // datetime_format "%A, %d %b %Y %H:%M"
+                // datetime_timezone "europe/berlin"
             }
         }
         children
