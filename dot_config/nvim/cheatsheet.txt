@@ -23,9 +23,13 @@ Go forward to next location | `C-i`
 Go to file under cursor | `gf`
 Go to next empty line | `}`
 Go to previous empty line | `{`
-Paste above current line / `P`
-File Tree (navigate back and forth) / `l-w 0`
-Mark - Delete / `:delmarks [mark]`
+Paste above current line | `P`
+File Tree (navigate back and forth) | `l-w 0`
+Mark - Delete | `:delmarks [mark]`
+Repeat f search | `;`
+Repeat t search | `;`
+Replace in quotes with register | `vi"P`
+Paste without overwriting register | `P`
 
 ## Zellij
 Detach session | `C-o d`
