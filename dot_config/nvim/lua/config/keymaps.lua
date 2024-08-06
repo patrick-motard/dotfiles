@@ -20,8 +20,8 @@ end, { silent = true, noremap = true, desc = "Open test for ruby file." })
 -- Cheatsheet Plugin Related
 ------------------------------------------------------------------------------------------------------------
 -- Open Cheatsheet
-vim.keymap.set("n", "<leader>hhl", "<Cmd>Cheatsheet<CR>", { desc = "list", silent = true, noremap = true })
+vim.keymap.set("n", "<leader>hh", "<Cmd>Cheatsheet<CR>", { desc = "Search Cheatsheet", silent = true, noremap = true })
 -- Edit Cheatsheet
-vim.keymap.set("n", "<leader>h", function()
+vim.keymap.set("n", "<leader>he", function()
   vim.cmd.edit(os.getenv("MOIDIR") .. "/dot_config/nvim/cheatsheet.txt")
 end, { silent = true, noremap = true, desc = "Edit Cheatsheet" })
