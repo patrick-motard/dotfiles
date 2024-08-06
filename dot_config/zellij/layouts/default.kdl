@@ -35,12 +35,12 @@ layout {
                 border_enabled  "false"
                 border_char     "─"
                 border_format   "#[fg=$gb_bg2]{char}"
-                border_position "top"
+                border_position "bottom"
 
                 hide_frame_for_single_pane "true"
 
-                mode_normal        "#[bg=$gb_yellow,fg=$gb_fg1]  "
-                mode_locked        "#[bg=$gb_bg1,fg=$gb_fg1]  "
+                mode_normal        "#[bg=$gb_yellow,fg=$gb_fg1]   Leader"
+                mode_locked        "#[bg=$gb_bg,fg=$gb_fg1]   Locked "
                 mode_resize        "#[bg=$gb_blue,fg=$gb_fg1] {name} "
                 mode_pane          "#[bg=$gb_blue,fg=$gb_fg1] {name} "
                 mode_tab           "#[bg=$gb_blue,fg=$gb_fg1] {name} "
@@ -59,7 +59,7 @@ layout {
                 tab_active_fullscreen   "#[bg=$gb_purple,fg=$gb_fg1,bold,italic] {name} {fullscreen_indicator} "
 
                 tab_sync_indicator       "<> "
-                tab_fullscreen_indicator ""
+                tab_fullscreen_indicator "󱡴"
                 tab_floating_indicator   "⬚ "
 
                 command_git_branch_command     "git rev-parse --abbrev-ref HEAD"
