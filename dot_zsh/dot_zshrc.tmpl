@@ -66,11 +66,6 @@ export TERM=tmux-256color
 
 [[ -f ~/.ssh/zendesk-company ]] && ssh-add -qK ~/.ssh/zendesk-company
 
-# BEGIN ZDI
-export DOCKER_FOR_MAC_ENABLED=true
-source /Users/pmotard/Code/zendesk/zdi/dockmaster/zdi.sh
-# END ZDI
-
 ## BEGIN -- managed by dot-ansible:zendesk -- ##
 # export PLUGINS=$plugins
 [[ -f ~/.local/bin/zendesk_zshrc.sh ]] && source ~/.local/bin/zendesk_zshrc.sh
