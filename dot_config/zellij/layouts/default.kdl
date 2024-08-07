@@ -37,7 +37,10 @@ layout {
                 border_format   "#[fg=$bg2]{char}"
                 border_position "bottom"
 
-                hide_frame_for_single_pane "true"
+                // When moving from one tab to another, the tabs with multiple panes show the pane frames
+                // after a delay. It's disorienting because the pane pushes the text inward once the frame
+                // renders. So I'm choosing to always or never have frames.
+                hide_frame_for_single_pane "false"
 
                 mode_normal        "#[bg=$yellow,fg=$fg1]   Leader"
                 mode_locked        "#[bg=$bg,fg=$fg1]   Locked "
