@@ -76,7 +76,7 @@ keybinds clear-defaults=true {
 
     pane {
         bind "c" { NewPane; SwitchToMode "Locked";}
-        bind "x" { CloseFocus; SwitchToMode "Locked";}
+        bind "X" { CloseFocus; SwitchToMode "Locked";}
         bind "m" { MoveFocus "Left";  SwitchToMode "Locked"; }
         bind "n" { MoveFocus "Down";  SwitchToMode "Locked"; }
         bind "e" { MoveFocus "Up";    SwitchToMode "Locked"; }
@@ -97,7 +97,7 @@ keybinds clear-defaults=true {
             // SwitchToMode "Locked";
             LaunchOrFocusPlugin "file:~/.config/zellij/plugins/zellij_forgot.wasm" {
                 "Create"          "c"
-                "Close"               "x"
+                "Close"               "X"
                 "Select ( ← ↓ ↑ → )"  "m n e i"
                 "Rename"                     "r"
                 "Move ( ← ↓ ↑ → )"      "M N E I"
