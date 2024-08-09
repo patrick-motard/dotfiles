@@ -22,3 +22,6 @@ local options = {
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
+
+vim.g.lazyvim_ruby_lsp = "solargraph"
+vim.g.lazyvim_ruby_formatter = "rubocop"
