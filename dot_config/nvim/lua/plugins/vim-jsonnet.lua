@@ -1,3 +1,0 @@
-return {
-  "google/vim-jsonnet",
-}
