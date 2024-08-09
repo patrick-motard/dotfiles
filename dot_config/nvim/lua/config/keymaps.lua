@@ -25,3 +25,6 @@ vim.keymap.set("n", "<leader>hh", "<Cmd>Cheatsheet<CR>", { desc = "Search Cheats
 vim.keymap.set("n", "<leader>he", function()
   vim.cmd.edit(os.getenv("MOIDIR") .. "/dot_config/nvim/cheatsheet.txt")
 end, { silent = true, noremap = true, desc = "Edit Cheatsheet" })
+
+vim.keymap.set("n", "<c-w>m", "<c-w>h", { noremap = true })
+vim.keymap.set("n", "<c-w>i", "<c-w>l", { noremap = true })
