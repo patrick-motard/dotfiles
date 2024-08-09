@@ -57,9 +57,9 @@ layout {
                 mode_prompt        "#[bg=$blue,fg=$fg1] {name} "
                 mode_tmux          "#[bg=$blue,fg=$fg1] {name} "
 
-                tab_normal   "#[fg=$bg,bg=$bg1]{index}{name}"
-                tab_active   "#[bg=$bg,fg=$green] #[bg=$green,fg=$bg1,bold,italic] {name}#[bg=$bg,fg=$green] "
-                tab_active_fullscreen   "#[bg=$purple,fg=$fg1,bold,italic] {name} {fullscreen_indicator} "
+                tab_normal   "#[fg=$bg,bg=$fg1]{index} {name}"
+                tab_active   "#[bg=$bg,fg=$green] #[bg=$green,fg=$bg1,bold,italic] {name}#[bg=$bg,fg=$green]"
+                tab_active_fullscreen   "#[bg=$purple,fg=$fg1,bold,italic] {name} {fullscreen_indicator} "
 
                 // tab_normal   "#[bg=$bg,fg=$bg2] #[bg=$bg2,fg=$fg1] {name} #[bg=$bg,fg=$bg2] "
                 // tab_active   "#[bg=$bg,fg=$green] #[bg=$green,fg=$bg1,bold,italic] {name}#[bg=$bg,fg=$green] "
