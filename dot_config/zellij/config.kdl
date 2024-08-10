@@ -2,7 +2,7 @@
 // keybinds {
 
 default_mode "Locked"
-default_layout "default"
+default_layout "main"
 mouse_mode true
 pane_frames true
 scrollback_lines_to_serialize 10000
@@ -12,7 +12,7 @@ theme "gruvbox-dark"
 keybinds clear-defaults=true {
     locked {
         bind "Ctrl g" { SwitchToMode "Normal"; }
-
+        bind "Alt j" { NextSwapLayout; }
         bind "Alt m" { MoveFocusOrTab "Left"; }
         bind "Alt n" { MoveFocus "Down"; }
         bind "Alt e" { MoveFocus "Up";   }
