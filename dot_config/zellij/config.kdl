@@ -75,6 +75,7 @@ keybinds clear-defaults=true {
     }
 
     pane {
+        bind "t" { ToggleFloatingPanes; SwitchToMode "Locked"; }
         bind "c" { NewPane; SwitchToMode "Locked";}
         bind "X" { CloseFocus; SwitchToMode "Locked";}
         bind "m" { MoveFocus "Left";  SwitchToMode "Locked"; }
@@ -105,7 +106,8 @@ keybinds clear-defaults=true {
                 "New Pane ( ← ↓ ↑ → )"  "Alt + [m n e i]"
                 "Toggle Frames"            "f"
                 "Toggle Zoom"              "z"
-                "LOAD_ZELLIJ_BINDINGS"     "false"
+                "ToggleFloatingPanes"       "t"
+                "LOAD_ZELLIJ_BINDINGS"      "false"
                 floating true
             };
         }
