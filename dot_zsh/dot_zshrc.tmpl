@@ -52,9 +52,9 @@ export PATH="$PATH:$HOME/.local/bin/ssh-create"
 
 # Oh My Posh setup
 # OMP doesn't work with the default terminal on macOS.
-if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
-  eval "$(oh-my-posh init zsh --config ~/.local/share/chezmoi/dot_config/oh_my_posh/themes/bubbles.omp.json)"
-fi
+# if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
+#   eval "$(oh-my-posh init zsh --config ~/.local/share/chezmoi/dot_config/oh_my_posh/themes/bubbles.omp.json)"
+# fi
 
 # homebrew installs some bins to /opt/homebrew/sbin
 export PATH="/opt/homebrew/sbin:$PATH"
