@@ -34,6 +34,4 @@ if which npm > /dev/null; then
 fi
 
 # Rust
-if which rustc > /dev/null; then
-. "$HOME/.cargo/env"
-fi
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
