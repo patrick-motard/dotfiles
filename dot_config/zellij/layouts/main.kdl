@@ -115,19 +115,19 @@ layout {
         }
     }
 
-// swap_tiled_layout name="centered" {
-//     tab split_direction="vertical" {
-//         pane size="20%" {
-//             pane stacked=true {
-//                 children
-//             }
-//         }
-//         pane size="60%"
-//         pane size="20%" {
-//
-//         }
-//     }
-// }
+    swap_tiled_layout name="centered" {
+        tab split_direction="vertical" {
+            pane size="20%" {
+                pane stacked=true {
+                    children
+                }
+            }
+            pane size="60%"
+            pane size="20%" {
+            }
+        }
+    }
+
 
     tab name="Dotfiles" cwd="~/.local/share/chezmoi" split_direction="vertical" focus=true {
         pane size="20%"
