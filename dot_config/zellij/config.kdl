@@ -161,7 +161,6 @@ keybinds clear-defaults=true {
                 floating true
                 move_to_focused_tab true
             }
-            SwitchToMode "Normal"
         }
         bind "q" { Quit; }
         bind "h" "?" {
