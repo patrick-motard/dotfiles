@@ -107,7 +107,7 @@ keybinds clear-defaults=true {
                 "Toggle Frames"            "f"
                 "Toggle Zoom"              "z"
                 "ToggleFloatingPanes"       "t"
-                "LOAD_ZELLIJ_BINDINGS"      "false"
+                "LOAD_ZELLIJ_BINDINGS"     "false"
                 floating true
             };
         }
@@ -161,6 +161,7 @@ keybinds clear-defaults=true {
                 floating true
                 move_to_focused_tab true
             }
+            SwitchToMode "Locked"
         }
         bind "q" { Quit; }
         bind "h" "?" {
