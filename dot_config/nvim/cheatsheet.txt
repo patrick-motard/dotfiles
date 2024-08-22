@@ -30,6 +30,8 @@ Repeat f search | `;`
 Repeat t search | `;`
 Replace in quotes with register | `vi"P`
 Paste without overwriting register | `P`
+Paste below current line | `:pu`
+Open link in browser | `gx`
 Increment number | `3 C-a`
 Decrement number | `3 C-x`
 ## Zellij
