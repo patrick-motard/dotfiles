@@ -138,11 +138,10 @@ zplug load
 #endregion Zplug
 
 {{ if eq .chezmoi.os "darwin" -}}
-#region z
+#region zoxide
 # Fast zsh directory switching
-# https://github.com/rupa/z
-source "$(brew --prefix)/etc/profile.d/z.sh"
-#endregion z
+eval "$(zoxide init zsh)"
+#endregion zoxide
 {{end -}}
 
 #region fzf
