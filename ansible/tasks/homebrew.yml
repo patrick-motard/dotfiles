@@ -9,7 +9,7 @@
       - chezmoi # dotfile manager
       - fzf
       - tmux
-      - z
+      - zoxide
       - git-delta
       - eza # colorized terminal ls
     state: present
@@ -22,3 +22,8 @@
       - spotify
       - keycastr
       - dbeaver-community
+- name: Remove unwanted brew packages.
+  homebrew:
+    name:
+      - z
+    state: absent
