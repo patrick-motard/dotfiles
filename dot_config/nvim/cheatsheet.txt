@@ -34,5 +34,7 @@ Paste below current line | `:pu`
 Open link in browser | `gx`
 Increment number | `3 C-a`
 Decrement number | `3 C-x`
+Redo | `C-r`
+
 ## Zellij
 Detach session | `C-o d`
