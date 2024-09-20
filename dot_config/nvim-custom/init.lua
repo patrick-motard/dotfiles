@@ -602,6 +602,7 @@ require('lazy').setup({
       --  By default, Neovim doesn't support everything that is in the LSP specification.
       --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
       --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
+      --
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
@@ -627,6 +628,32 @@ require('lazy').setup({
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
         --
+        -- Overriding mason since Mason always uses the global Ruby version, but we want to
+        -- use the local version.
+        -- See the following bug report:
+        -- https://github.com/williamboman/mason.nvim/issues/1777#issue-2486588542
+        -- Make sure to install rubocop and ruby-lsp using gem install in the project directory.
+        -- This will install the gems to the shims dir.
+        -- This needs to be done whenever the ruby version of a project is updated.
+        -- ruby_lsp = {
+        --   mason = false,
+        --   cmd = { vim.fn.expand '~/.rbenv/shims/ruby-lsp' },
+        --   capabilities = {
+        --     'documentReferences',
+        --     'documentHighlights',
+        --     'documentSymbols',
+        --     'foldingRanges',
+        --     'selectionRanges',
+        --     -- "semanticHighlighting",
+        --     'formatting',
+        --     'codeActions',
+        --   },
+        -- },
+        solargraph = {},
+        rubocop = {
+          mason = false,
+          cmd = { vim.fn.expand '~/.rbenv/shims/rubocop', '--lsp' },
+        },
 
         lua_ls = {
           -- cmd = {...},
