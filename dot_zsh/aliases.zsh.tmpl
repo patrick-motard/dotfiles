@@ -111,7 +111,7 @@ alias abledev=start_able_dev
 ## Vim
 alias vim="nvim"
 alias v="nvim"
-alias vv="nvim ."
+# alias vv="nvim ."
 alias vd="pushd $MOIDIR && nvim ."
 alias nvimcd="cd ~/.config/nvim"
 
@@ -179,3 +179,17 @@ function alacritty_settings_update() {
 # Tmux
 #
 alias tmux_uninstall_plugins="~/.tmux/plugins/tpm/bin/clean_plugins"
+
+
+# List all nvim configurations and launch nvim with the configuration you choose.
+# Source: https://michaeluloth.com/neovim-switch-configs/
+vv() {
+  # Assumes all configs exist in directories named ~/.config/nvim-*
+  local config=$(fd --max-depth 1 --glob 'nvim-*' ~/.config | fzf --prompt="Neovim Configs > " --height=~50% --layout=reverse --border --exit-0)
+
+  # If I exit fzf without selecting a config, don't open Neovim
+  [[ -z $config ]] && echo "No config selected" && return
+
+  # Open Neovim with the selected config
+  NVIM_APPNAME=$(basename $config) nvim $@
+}
