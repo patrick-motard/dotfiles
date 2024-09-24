@@ -36,3 +36,9 @@ local nmap = function(keys, cmd, desc)
 end
 
 nmap('bb', '<cmd>e #<cr>', 'Previous Buffer')
+nmap('qq', '<cmd>q<cr>', 'Quit')
+
+nmap('gu', '<cmd>GitBlameCopyCommitURL<cr>', 'Copy Commit URL')
+nmap('gU', '<cmd>GitBlameCopyFileURL<cr>', 'Copy File URL')
+nmap('go', '<cmd>GitBlameOpenCommitURL<cr>', 'Open Commit URL')
+nmap('gO', '<cmd>GitBlameOpenFileURL<cr>', 'Open File URL')
