@@ -37,6 +37,8 @@ end
 
 nmap('bb', '<cmd>e #<cr>', 'Previous Buffer')
 nmap('qq', '<cmd>q<cr>', 'Quit')
+nmap('Q', '<cmd>q!<cr>', 'Quit no save')
+nmap('wq', '<cmd>wq<cr>', 'Write Quit')
 
 nmap('gu', '<cmd>GitBlameCopyCommitURL<cr>', 'Copy Commit URL')
 nmap('gU', '<cmd>GitBlameCopyFileURL<cr>', 'Copy File URL')
