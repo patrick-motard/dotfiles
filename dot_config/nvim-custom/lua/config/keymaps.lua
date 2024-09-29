@@ -31,6 +31,11 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- { '<leader>wh', '<C-w>h', desc = 'Go ←' },
+-- { '<leader>wl', '<C-w>l', desc = 'Go →' },
+-- { '<leader>wj', '<C-w>j', desc = 'Go ↓' },
+-- { '<leader>wk', '<C-w>k', desc = 'Go ↑' },
+
 local nmap = function(keys, cmd, desc)
   vim.keymap.set('n', '<leader>' .. keys, cmd, { desc = desc, noremap = true })
 end

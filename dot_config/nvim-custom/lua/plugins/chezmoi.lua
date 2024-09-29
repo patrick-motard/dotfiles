@@ -6,6 +6,6 @@ return {
       watch = true,
     }
 
-    vim.keymap.set('n', '<leader>sd', '<cmd>Telescope chezmoi find_files<cr>', { desc = 'Dotfiles' })
+    vim.keymap.set('n', '<leader>sd', '<cmd>Telescope chezmoi find_files<cr>', { desc = '[D]otfiles' })
   end,
 }
