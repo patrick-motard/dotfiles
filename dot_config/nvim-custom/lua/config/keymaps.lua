@@ -40,7 +40,13 @@ local nmap = function(keys, cmd, desc)
   vim.keymap.set('n', '<leader>' .. keys, cmd, { desc = desc, noremap = true })
 end
 
-nmap('bb', '<cmd>e #<cr>', 'Previous Buffer')
+nmap('bb', '<cmd>e #<cr>', '[B]ack to Previous Buffer')
+nmap('bd', '<cmd>bd<cr>', '[B]uffer [D]elete')
+nmap('by', 'gg"+yG', '[B]uffer [Y]ank')
+-- Select buffer and switch to select mode. From there you can type and the selected
+-- text will be replaced.
+nmap('br', 'ggVG<C-g>', '[B]uffer [R]eplace')
+
 nmap('qq', '<cmd>q<cr>', 'Quit')
 nmap('Q', '<cmd>q!<cr>', 'Quit no save')
 nmap('wq', '<cmd>wq<cr>', 'Write Quit')
@@ -49,4 +55,5 @@ nmap('gu', '<cmd>GitBlameCopyCommitURL<cr>', 'Copy Commit URL')
 nmap('gU', '<cmd>GitBlameCopyFileURL<cr>', 'Copy File URL')
 nmap('go', '<cmd>GitBlameOpenCommitURL<cr>', 'Open Commit URL')
 nmap('gO', '<cmd>GitBlameOpenFileURL<cr>', 'Open File URL')
+
 nmap('cf', ':let @+ = expand("%?")<cr>', 'Copy file path')
