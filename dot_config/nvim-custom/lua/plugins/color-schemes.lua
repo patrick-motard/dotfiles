@@ -24,4 +24,9 @@ return {
       vim.cmd 'colorscheme gruvbox'
     end,
   },
+  { 'shaunsingh/nord.nvim' },
+  { 'AlexvZyl/nordic.nvim' },
+  { 'sainnhe/gruvbox-material' },
+  { 'sainnhe/everforest' },
+  { 'ptdewey/darkearth-nvim', priority = 1000 },
 }
