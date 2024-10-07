@@ -47,8 +47,8 @@ nmap('by', 'gg"+yG', '[B]uffer [Y]ank')
 -- text will be replaced.
 nmap('br', 'ggVG<C-g>', '[B]uffer [R]eplace')
 
-nmap('qq', '<cmd>q<cr>', 'Quit')
-nmap('Q', '<cmd>q!<cr>', 'Quit no save')
+nmap('qq', '<cmd>q<cr>', '[Q]uit')
+nmap('Q', '<cmd>q!<cr>', '[Q]uit no save')
 nmap('wq', '<cmd>wq<cr>', 'Write Quit')
 
 nmap('gu', '<cmd>GitBlameCopyCommitURL<cr>', 'Copy Commit URL')
@@ -56,4 +56,4 @@ nmap('gU', '<cmd>GitBlameCopyFileURL<cr>', 'Copy File URL')
 nmap('go', '<cmd>GitBlameOpenCommitURL<cr>', 'Open Commit URL')
 nmap('gO', '<cmd>GitBlameOpenFileURL<cr>', 'Open File URL')
 
-nmap('cf', ':let @+ = expand("%?")<cr>', 'Copy file path')
+nmap('bf', ':let @+ = expand("%?")<cr>', '[B]uffer Yank [F]ilepath')
