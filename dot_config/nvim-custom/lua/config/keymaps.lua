@@ -5,9 +5,6 @@
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
--- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
@@ -50,6 +47,7 @@ nmap('br', 'ggVG<C-g>', '[B]uffer [R]eplace')
 nmap('qq', '<cmd>q<cr>', '[Q]uit')
 nmap('Q', '<cmd>q!<cr>', '[Q]uit no save')
 nmap('wq', '<cmd>wq<cr>', 'Write Quit')
+nmap('ww', '<cmd>w<cr>', '[W]rite')
 
 nmap('gu', '<cmd>GitBlameCopyCommitURL<cr>', 'Copy Commit URL')
 nmap('gU', '<cmd>GitBlameCopyFileURL<cr>', 'Copy File URL')
@@ -57,3 +55,5 @@ nmap('go', '<cmd>GitBlameOpenCommitURL<cr>', 'Open Commit URL')
 nmap('gO', '<cmd>GitBlameOpenFileURL<cr>', 'Open File URL')
 
 nmap('bf', ':let @+ = expand("%?")<cr>', '[B]uffer Yank [F]ilepath')
+
+nmap('cd', vim.diagnostic.setloclist, '[C]ode [D]iagnostic Quickfix')
