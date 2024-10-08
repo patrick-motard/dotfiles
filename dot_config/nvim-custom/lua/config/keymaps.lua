@@ -13,6 +13,10 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
+-- q in normal mode starts a macro. I often misfire this when typing :q. It is difficult to
+-- exit macro mode so I am rebinding it to gq.
+vim.keymap.set('n', 'q', '<Nop>', { noremap = true, silent = true })
+vim.keymap.set('n', 'gq', 'q', { desc = 'Start/Stop Macro', noremap = true, silent = true })
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
