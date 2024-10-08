@@ -1,17 +1,18 @@
+-- https://www.josean.com/posts/nvim-treesitter-and-textobjects
 return {
-  -- for typescript, LazyVim also includes extra specs to properly setup lspconfig,
-  -- treesitter, mason and typescript.nvim. So instead of the above, you can use:
-  -- { import = 'lazyvim.plugins.extras.lang.typescript' },
+  'nvim-treesitter/nvim-treesitter',
+  build = ':TSUpdate',
+  event = { 'BufReadPre', 'BufNewFile' },
+  dependencies = {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+  },
+  config = function()
+    local treesitter = require 'nvim-treesitter.configs'
 
-  -- since `vim.tbl_deep_extend`, can only merge tables and not lists, the code above
-  -- would overwrite `ensure_installed` with the new value.
-  -- If you'd rather extend the default config, use the code below instead:
-  {
-    'nvim-treesitter/nvim-treesitter',
-    opts = function(_, opts)
-      opts.endwise = { enable = true }
-      opts.indent = { enable = true, disable = { 'yaml', 'ruby' } }
-      opts.ensure_installed = {
+    treesitter.setup {
+      highlight = { enable = true },
+      indent = { enable = true },
+      ensure_installed = {
         'bash',
         'html',
         'javascript',
@@ -27,7 +28,16 @@ return {
         'typescript',
         'vim',
         'yaml',
-      }
-    end,
-  },
+      },
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = '<C-space>',
+          node_incremental = '<C-space>',
+          scope_incremental = false,
+          node_decremental = '<bs>',
+        },
+      },
+    }
+  end,
 }
