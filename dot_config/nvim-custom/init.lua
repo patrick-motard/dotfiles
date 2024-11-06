@@ -184,7 +184,6 @@ require('lazy').setup({
   --
   -- Use the `dependencies` key to specify the dependencies of a particular plugin
 
-
   -- LSP Plugins
   {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
@@ -343,7 +342,7 @@ require('lazy').setup({
       --
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-
+      local nvim_lsp = require 'lspconfig'
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
       --
@@ -387,10 +386,14 @@ require('lazy').setup({
         --     'codeActions',
         --   },
         -- },
-        solargraph = {},
+        solargraph = {
+          cmd = { os.getenv 'HOME' .. '/.rbenv/shims/solargraph', 'stdio' },
+          root_dir = nvim_lsp.util.root_pattern('Gemfile', '.git', '.'),
+        },
         rubocop = {
-          mason = false,
-          cmd = { vim.fn.expand '~/.rbenv/shims/rubocop', '--lsp' },
+          -- mason = false,
+          -- cmd = { vim.fn.expand '~/.rbenv/shims/rubocop', '--lsp' },
+          -- cmd = { 'bundle', 'exec', 'rubocop', '--lsp' },
         },
 
         lua_ls = {
