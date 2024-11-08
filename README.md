@@ -21,7 +21,9 @@ The dotfiles pertaining to the keyboard driven desktop environment have moved lo
 - [Hammerspoon](https://www.hammerspoon.org/) on mac for desktop automation
 - [VsCode](https://code.visualstudio.com/) with vim keybinds is my main editor, I no longer use emacs.
 - [Neovim](https://neovim.io/) is my terminal editor
-- [Vundle](https://github.com/VundleVim/Vundle.vim) for vim plugin management
+- [lazy.nvim](https://github.com/folke/lazy.nvim) for vim plugin management
+- [tmux]() for terminal multiplexing
+  - [tmux-tea]() for tmux session management
 - [ZSH](https://zsh.sourceforge.io/) for my shell
 - [Zplug](https://github.com/zplug/zplug) for ZSH plugins
 

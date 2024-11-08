@@ -55,3 +55,14 @@ nmap('gO', '<cmd>GitBlameOpenFileURL<cr>', 'Open File URL')
 nmap('bf', ':let @+ = expand("%?")<cr>', '[B]uffer Yank [F]ilepath')
 
 nmap('cd', vim.diagnostic.setloclist, '[C]ode [D]iagnostic Quickfix')
+
+vim.api.nvim_create_user_command('FormatDisable', function(args)
+  if args.bang then
+    vim.b.disable_autoformat = true
+  else
+    vim.g.disable_autoformat = true
+  end
+end, {
+  desc = 'Disable autoformat-on-save',
+  bang = true,
+})

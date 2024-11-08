@@ -444,6 +444,8 @@ require('lazy').setup({
   },
 
   { -- Autoformat
+    -- conform.nvim recipes https://github.com/stevearc/conform.nvim/blob/master/doc/recipes.md
+    -- The recipes above are written by the author of conform and provide useful usage information.
     'stevearc/conform.nvim',
     event = { 'BufWritePre' },
     cmd = { 'ConformInfo' },
