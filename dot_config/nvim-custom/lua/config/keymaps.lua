@@ -61,7 +61,14 @@ nmap('cd', vim.diagnostic.setloclist, '[C]ode [D]iagnostic Quickfix')
 -- The variables set are used by conform.nvim. See init.lua.
 local fidget = require 'fidget'
 vim.api.nvim_create_user_command('FormatToggle', function(args)
-  vim.api.nvim_echo({ { 'hello world' } }, true, {})
+  if vim.g.disable_autoformat == nil then
+    vim.g.disable_autoformat = false
+  end
+
+  if vim.b.disable_autoformat == nil then
+    vim.b.disable_autoformat = false
+  end
+
   if args.bang then
     if vim.g.disable_autoformat == true then
       vim.g.disable_autoformat = false
@@ -71,7 +78,7 @@ vim.api.nvim_create_user_command('FormatToggle', function(args)
     local g_fmt = vim.g.disable_autoformat == true and ' ' or 'X'
     fidget.notify('Global Autoformat [' .. g_fmt .. ']')
   else
-    if vim.b.disable_autoformat == true then
+    if vim.b.disable_autoformat == true or vim.g.disable_autoformat == nil then
       vim.b.disable_autoformat = false
     else
       vim.b.disable_autoformat = true
