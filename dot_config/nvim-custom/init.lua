@@ -472,6 +472,10 @@ require('lazy').setup({
         else
           lsp_format_opt = 'fallback'
         end
+
+        if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+          return
+        end
         return {
           timeout_ms = 500,
           lsp_format = lsp_format_opt,
