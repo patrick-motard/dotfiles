@@ -68,7 +68,7 @@ vim.api.nvim_create_user_command('FormatToggle', function(args)
     else
       vim.g.disable_autoformat = true
     end
-    local g_fmt = vim.g.disable_autoformat == true and 'X' or ' '
+    local g_fmt = vim.g.disable_autoformat == true and ' ' or 'X'
     fidget.notify('Global Autoformat [' .. g_fmt .. ']')
   else
     if vim.b.disable_autoformat == true then
@@ -76,28 +76,12 @@ vim.api.nvim_create_user_command('FormatToggle', function(args)
     else
       vim.b.disable_autoformat = true
     end
-    local b_fmt = vim.b.disable_autoformat == true and 'X' or ' '
+    local b_fmt = vim.b.disable_autoformat == true and ' ' or 'X'
     fidget.notify('Buffer Autoformat [' .. b_fmt .. ']')
   end
 end, { bang = true, desc = 'Toggle autoformatting. ! for global.' })
 
-vim.api.nvim_create_user_command('FormatDisable', function(args)
-  if args.bang then
-    vim.b.disable_autoformat = true
-  else
-    vim.g.disable_autoformat = true
-  end
-end, {
-  desc = 'Disable autoformat-on-save',
-  bang = true,
-})
-vim.api.nvim_create_user_command('FormatEnable', function()
-  vim.b.disable_autoformat = false
-  vim.g.disable_autoformat = false
-end, {
-  desc = 'Re-enable autoformat-on-save',
-})
-nmap('tf', '<cmd>FormatEnable<cr>', '[t]oggle auto [f]ormat buffer')
-nmap('tF', '<cmd>FormatEnable!<cr>', '[t]oggle auto [F]ormat globally')
+nmap('tf', '<cmd>FormatToggle<cr>', '[t]oggle buffer auto-[f]ormat')
+nmap('tF', '<cmd>FormatToggle!<cr>', '[t]oggle buffer auto-[F]ormat')
 -- End Autoformat
 -----------------------------------------------------------------------------
