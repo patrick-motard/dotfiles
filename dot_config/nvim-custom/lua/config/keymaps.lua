@@ -59,6 +59,28 @@ nmap('cd', vim.diagnostic.setloclist, '[C]ode [D]iagnostic Quickfix')
 -- Start Autoformat
 -- These two use commands can be used to enable or disable auto formatting.
 -- The variables set are used by conform.nvim. See init.lua.
+local fidget = require 'fidget'
+vim.api.nvim_create_user_command('FormatToggle', function(args)
+  vim.api.nvim_echo({ { 'hello world' } }, true, {})
+  if args.bang then
+    if vim.g.disable_autoformat == true then
+      vim.g.disable_autoformat = false
+    else
+      vim.g.disable_autoformat = true
+    end
+    local g_fmt = vim.g.disable_autoformat == true and 'X' or ' '
+    fidget.notify('Global Autoformat [' .. g_fmt .. ']')
+  else
+    if vim.b.disable_autoformat == true then
+      vim.b.disable_autoformat = false
+    else
+      vim.b.disable_autoformat = true
+    end
+    local b_fmt = vim.b.disable_autoformat == true and 'X' or ' '
+    fidget.notify('Buffer Autoformat [' .. b_fmt .. ']')
+  end
+end, { bang = true, desc = 'Toggle autoformatting. ! for global.' })
+
 vim.api.nvim_create_user_command('FormatDisable', function(args)
   if args.bang then
     vim.b.disable_autoformat = true
