@@ -55,7 +55,10 @@ nmap('gO', '<cmd>GitBlameOpenFileURL<cr>', 'Open File URL')
 nmap('bf', ':let @+ = expand("%?")<cr>', '[B]uffer Yank [F]ilepath')
 
 nmap('cd', vim.diagnostic.setloclist, '[C]ode [D]iagnostic Quickfix')
-
+-----------------------------------------------------------------------------
+-- Start Autoformat
+-- These two use commands can be used to enable or disable auto formatting.
+-- The variables set are used by conform.nvim. See init.lua.
 vim.api.nvim_create_user_command('FormatDisable', function(args)
   if args.bang then
     vim.b.disable_autoformat = true
@@ -66,3 +69,13 @@ end, {
   desc = 'Disable autoformat-on-save',
   bang = true,
 })
+vim.api.nvim_create_user_command('FormatEnable', function()
+  vim.b.disable_autoformat = false
+  vim.g.disable_autoformat = false
+end, {
+  desc = 'Re-enable autoformat-on-save',
+})
+nmap('tf', '<cmd>FormatEnable<cr>', '[t]oggle auto [f]ormat buffer')
+nmap('tF', '<cmd>FormatEnable!<cr>', '[t]oggle auto [F]ormat globally')
+-- End Autoformat
+-----------------------------------------------------------------------------
