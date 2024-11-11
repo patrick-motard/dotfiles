@@ -8,7 +8,7 @@ return {
   ---@type AutoSession.Config
   opts = {
     -- suppressed_dirs = { '~/' },
-    allowed_dirs = { '~/code/**', '~/.local/share/chezmoi/**', '~/.config/', '~/.ssh/' },
-    -- log_level = 'debug',
+    allowed_dirs = { '~/code/*', '~/.local/share/chezmoi/*', '~/.config/', '~/.ssh/' },
+    log_level = 'debug',
   },
 }
