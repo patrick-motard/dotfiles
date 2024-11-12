@@ -89,6 +89,6 @@ vim.api.nvim_create_user_command('FormatToggle', function(args)
 end, { bang = true, desc = 'Toggle autoformatting. ! for global.' })
 
 nmap('tf', '<cmd>FormatToggle<cr>', '[t]oggle buffer auto-[f]ormat')
-nmap('tF', '<cmd>FormatToggle!<cr>', '[t]oggle buffer auto-[F]ormat')
+nmap('tF', '<cmd>FormatToggle!<cr>', '[t]oggle global auto-[F]ormat')
 -- End Autoformat
 -----------------------------------------------------------------------------
