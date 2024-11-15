@@ -9,4 +9,8 @@ return {
     { 'stevearc/dressing.nvim', opts = {} }, -- Optional: Improves `vim.ui.select`
   },
   config = true,
+  keys = {
+    { '<leader>cA', '<cmd>CodeCompanionActions<cr>', mode = 'n', desc = 'CodeCompanion Action' },
+    { '<leader>ct', '<cmd>CodeCompanionChat Toggle<cr>', mode = { 'n', 'v' }, desc = 'CodeCompanion Chat Toggle' },
+  },
 }
