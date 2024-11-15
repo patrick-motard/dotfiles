@@ -8,7 +8,14 @@ return {
   ---@type AutoSession.Config
   opts = {
     -- suppressed_dirs = { '~/' },
-    allowed_dirs = { '~/code/*', '~/code/zendesk/*', '~/.local/share/chezmoi/*', '~/.config/', '~/.ssh/' },
+    allowed_dirs = {
+      '~/code/*',
+      '~/code/zendesk/*',
+      '~/.local/share/chezmoi/*',
+      '~/.local/share/chezmoi/dot_config/nvim-custom/*',
+      '~/.config/',
+      '~/.ssh/',
+    },
     -- log_level = 'debug',
   },
 }

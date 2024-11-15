@@ -35,12 +35,14 @@ local nmap = function(keys, cmd, desc)
   vim.keymap.set('n', '<leader>' .. keys, cmd, { desc = desc, noremap = true, silent = true })
 end
 
-nmap('bb', '<cmd>e #<cr>', '[B]ack to Previous Buffer')
-nmap('bd', '<cmd>bd<cr>', '[B]uffer [D]elete')
-nmap('by', 'gg"+yG', '[B]uffer [Y]ank')
+nmap('bb', '<cmd>e #<cr>', '[b]ack to Previous [b]uffer')
+nmap('bd', '<cmd>bd<cr>', '[b]uffer [d]elete')
+nmap('by', 'gg"+yG', '[b]uffer [y]ank')
 -- Select buffer and switch to select mode. From there you can type and the selected
 -- text will be replaced.
-nmap('br', 'ggVG<C-g>', '[B]uffer [R]eplace')
+nmap('br', 'ggVG<C-g>', '[b]uffer [r]eplace')
+nmap('bs', 'ggVG', '[b]uffer [s]elect')
+nmap('bf', ':let @+ = expand("%?")<cr>', '[B]uffer Yank [F]ilepath')
 
 nmap('qq', '<cmd>q<cr>', '[Q]uit')
 nmap('Q', '<cmd>q!<cr>', '[Q]uit no save')
@@ -51,8 +53,6 @@ nmap('gu', '<cmd>GitBlameCopyCommitURL<cr>', 'Copy Commit URL')
 nmap('gU', '<cmd>GitBlameCopyFileURL<cr>', 'Copy File URL')
 nmap('go', '<cmd>GitBlameOpenCommitURL<cr>', 'Open Commit URL')
 nmap('gO', '<cmd>GitBlameOpenFileURL<cr>', 'Open File URL')
-
-nmap('bf', ':let @+ = expand("%?")<cr>', '[B]uffer Yank [F]ilepath')
 
 nmap('cd', vim.diagnostic.setloclist, '[C]ode [D]iagnostic Quickfix')
 -----------------------------------------------------------------------------
