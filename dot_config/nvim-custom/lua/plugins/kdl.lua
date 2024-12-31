@@ -1,3 +1,0 @@
-return {
-  "imsnif/kdl.vim",
-}
