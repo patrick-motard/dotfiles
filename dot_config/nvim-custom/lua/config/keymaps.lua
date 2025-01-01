@@ -92,3 +92,35 @@ nmap('tf', '<cmd>FormatToggle<cr>', '[t]oggle buffer auto-[f]ormat')
 nmap('tF', '<cmd>FormatToggle!<cr>', '[t]oggle global auto-[F]ormat')
 -- End Autoformat
 -----------------------------------------------------------------------------
+
+vim.api.nvim_create_user_command('HelpCurwin', function(opts)
+  HelpCurwin(opts.args)
+end, { nargs = '?', complete = 'help', bar = true })
+
+local did_open_help = false
+
+function HelpCurwin(subject)
+  local mods = 'silent noautocmd keepalt'
+  local helpfile = vim.o.helpfile
+
+  -- Open help buffer in the current window the first time
+  if not did_open_help then
+    vim.cmd(mods .. ' help')
+    vim.cmd(mods .. ' wincmd p') -- Return to the previous window
+    vim.cmd(mods .. ' helpclose') -- Close help buffer created by default behavior
+    did_open_help = true
+  end
+
+  -- If a valid help subject is provided, navigate to it in the current window
+  if subject and subject ~= '' and vim.fn.empty(vim.fn.getcompletion(subject, 'help')) == 0 then
+    vim.cmd(mods .. ' edit ' .. helpfile)
+    vim.cmd(mods .. ' help ' .. subject)
+    vim.cmd 'setlocal buftype=help'
+  elseif subject and subject ~= '' then
+    print('No help topic found for: ' .. subject)
+  else
+    -- Open default help page in current window if no subject is given
+    vim.cmd(mods .. ' edit ' .. helpfile)
+    vim.cmd 'setlocal buftype=help'
+  end
+end
