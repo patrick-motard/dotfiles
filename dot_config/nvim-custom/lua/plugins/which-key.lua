@@ -64,7 +64,9 @@ return { -- Useful plugin to show you pending keybinds.
       { '<leader>s', group = '[S]earch' },
       { '<leader>w', group = '[W]orkspace' },
       { '<leader>t', group = '[T]oggle' },
+      { '<leader>e', group = '[E]ditor' },
       { '<leader>h', group = '[H]elp', mode = { 'n', 'v' } },
+      { '<leader>el', '<CMD>Lazy<CR>', desc = 'Lazy UI' },
     },
   },
 }
