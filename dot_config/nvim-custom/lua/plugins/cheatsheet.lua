@@ -6,18 +6,19 @@ return {
     'nvim-lua/popup.nvim',
     'nvim-lua/plenary.nvim',
   },
+  keys = {
+    { '<leader>hh', '<Cmd>Cheatsheet<CR>', desc = 'Search Cheatsheet', silent = true, noremap = true },
+    {
+      '<leader>he',
+      function()
+        vim.cmd.edit(os.getenv 'MOIDIR' .. '/dot_config/nvim-custom/cheatsheet.txt')
+      end,
+      desc = 'Edit Cheatsheet',
+    },
+  },
   config = function()
     require('cheatsheet').setup {
       bundled_cheatsheets = false,
     }
-
-    -- Cheatsheet Plugin Related
-    ------------------------------------------------------------------------------------------------------------
-    -- Open Cheatsheet
-    vim.keymap.set('n', '<leader>hh', '<Cmd>Cheatsheet<CR>', { desc = 'Search Cheatsheet', silent = true, noremap = true })
-    -- Edit Cheatsheet
-    vim.keymap.set('n', '<leader>he', function()
-      vim.cmd.edit(os.getenv 'MOIDIR' .. '/dot_config/nvim-custom/cheatsheet.txt')
-    end, { silent = true, noremap = true, desc = 'Edit Cheatsheet' })
   end,
 }
