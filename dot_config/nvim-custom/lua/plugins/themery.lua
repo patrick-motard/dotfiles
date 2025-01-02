@@ -1,6 +1,12 @@
 return {
   'zaldih/themery.nvim',
+  -- Force themery to load lazily, even though keys are specified below.
+  -- Themery needs to load automatically otherwise the theme won'b be set until the
+  -- keys registered below are pressed.
   lazy = false,
+  keys = {
+    { '<leader>et', '<CMD>Themery<CR>', desc = '[T]hemery' },
+  },
   config = function()
     require('themery').setup {
       themes = {
