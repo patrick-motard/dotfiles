@@ -6,9 +6,11 @@ return {
       wrap = true,
     },
   },
+  keys = {
+    { '-', '<CMD>Oil<CR>', desc = 'Open parent directory' },
+  },
   config = function(opts)
     require('oil').setup(opts)
-    vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
   end,
   -- Optional dependencies
   dependencies = { { 'echasnovski/mini.icons', opts = {} } },
