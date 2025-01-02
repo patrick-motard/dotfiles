@@ -2,6 +2,7 @@ return {
   {
     --  https://github.com/rebelot/kanagawa.nvim
     'rebelot/kanagawa.nvim',
+    lazy = true,
     priority = 1000,
     config = function()
       require('kanagawa').setup {
@@ -14,19 +15,29 @@ return {
       }
     end,
   },
+  -- {
+  --   'ellisonleao/gruvbox.nvim',
+  --   priority = 1000,
+  --   -- init = function()
+  --   config = function()
+  --     require('gruvbox').setup {}
+  --     vim.o.background = 'dark'
+  --     vim.cmd 'colorscheme gruvbox'
+  --   end,
+  -- },
   {
-    'ellisonleao/gruvbox.nvim',
-    priority = 1000,
-    -- init = function()
+    'morhetz/gruvbox',
+    lazy = true,
     config = function()
-      require('gruvbox').setup {}
       vim.o.background = 'dark'
-      vim.cmd 'colorscheme gruvbox'
+      vim.g.gruvbox_contrast_dark = 'medium'
+      vim.g.gruvbox_contrast_light = 'soft'
+      -- vim.cmd [[colorscheme gruvbox]]
     end,
   },
-  { 'shaunsingh/nord.nvim' },
-  { 'AlexvZyl/nordic.nvim' },
-  { 'sainnhe/gruvbox-material' },
-  { 'sainnhe/everforest' },
-  { 'ptdewey/darkearth-nvim', priority = 1000 },
+  { 'shaunsingh/nord.nvim', lazy = true },
+  { 'AlexvZyl/nordic.nvim', lazy = true },
+  { 'sainnhe/gruvbox-material', lazy = true },
+  { 'sainnhe/everforest', lazy = true },
+  { 'ptdewey/darkearth-nvim', lazy = true, priority = 1000 },
 }
