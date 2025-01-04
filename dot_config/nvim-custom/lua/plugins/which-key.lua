@@ -67,6 +67,10 @@ return { -- Useful plugin to show you pending keybinds.
       { '<leader>e', group = '[E]ditor' },
       { '<leader>h', group = '[H]elp', mode = { 'n', 'v' } },
       { '<leader>el', '<CMD>Lazy<CR>', desc = 'Lazy UI' },
+      { '<C-w>h', '', desc = 'which_key_ignore' },
+      { '<C-w>j', '', desc = 'which_key_ignore' },
+      { '<C-w>k', '', desc = 'which_key_ignore' },
+      { '<C-w>l', '', desc = 'which_key_ignore' },
     },
   },
 }
