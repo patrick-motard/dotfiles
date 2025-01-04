@@ -18,18 +18,11 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 vim.keymap.set('n', 'q', '<Nop>', { noremap = true, silent = true })
 vim.keymap.set('n', 'gq', 'q', { desc = 'Start/Stop Macro', noremap = true, silent = true })
 
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
 --  See `:help wincmd` for a list of all window commands
-vim.api.nvim_set_keymap('n', '<C-w>m', '<C-w>h', { noremap = true, silent = true }) -- Move left (C-w h)
-vim.api.nvim_set_keymap('n', '<C-w>n', '<C-w>j', { noremap = true, silent = true }) -- Move down (C-w j)
-vim.api.nvim_set_keymap('n', '<C-w>e', '<C-w>k', { noremap = true, silent = true }) -- Move up (C-w k)
-vim.api.nvim_set_keymap('n', '<C-w>i', '<C-w>l', { noremap = true, silent = true }) -- Move right (C-w l)
--- { '<leader>wh', '<C-w>h', desc = 'Go ←' },
--- { '<leader>wl', '<C-w>l', desc = 'Go →' },
--- { '<leader>wj', '<C-w>j', desc = 'Go ↓' },
--- { '<leader>wk', '<C-w>k', desc = 'Go ↑' },
+vim.keymap.set('n', '<C-w>m', '<C-w>h', { noremap = true, silent = true, desc = 'Move Left' })
+vim.keymap.set('n', '<C-w>n', '<C-w>j', { noremap = true, silent = true, desc = 'Move Down' })
+vim.keymap.set('n', '<C-w>e', '<C-w>k', { noremap = true, silent = true, desc = 'Move Up' })
+vim.keymap.set('n', '<C-w>i', '<C-w>l', { noremap = true, silent = true, desc = 'Move Right' })
 
 local nmap = function(keys, cmd, desc)
   vim.keymap.set('n', '<leader>' .. keys, cmd, { desc = desc, noremap = true, silent = true })
