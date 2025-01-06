@@ -59,6 +59,9 @@ return {
       --   },
       -- },
       pickers = {
+        find_files = {
+          theme = 'ivy',
+        },
         -- find_files = {
         --   hidden = true,
         -- },
@@ -67,6 +70,7 @@ return {
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
         },
+        fzf = {},
       },
     }
 
@@ -86,15 +90,25 @@ return {
         -- show hidden files
         hidden = true,
         -- show gitignored files
-        no_ignore = true,
+        -- no_ignore = true, -- this really slows down the search in large repos.
       }
     end, { desc = '[S]earch [F]iles' })
+
+    vim.keymap.set('n', '<leader>sa', function()
+      builtin.find_files {
+        -- show hidden files
+        hidden = true,
+        -- show gitignored files
+        no_ignore = true, -- this really slows down the search in large repos.
+      }
+    end, { desc = '[S]earch [A]ll Files' })
+    vim.keymap.set('n', '<leader>sb', builtin.current_buffer_fuzzy_find, { desc = 'Fuzzy [S]earch [B]uffer' })
     vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
     vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
     vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
     vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
     vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-    vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+    vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files' })
     vim.keymap.set('n', '<leader>,', function()
       builtin.buffers { sort_mru = true, ignore_current_buffer = true }
     end, { desc = '[,] Find existing buffers' })
