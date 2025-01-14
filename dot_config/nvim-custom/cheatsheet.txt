@@ -1,7 +1,11 @@
 ## Tmux
+Swap Pane Left | `l + {`
+Swap Pane Right | `l + }`
 Open new window | `l` + `c`
 Next Pane | `l + o`
 Most recent other window | `l + l`
+Kill all panes except current (example pane #0) | `kill-pane -a -t 0`
+Get Pane ID | `l + q`
 
 ## Spectre
 Open spectre | `l-sr`
@@ -36,5 +40,5 @@ Increment number | `3 C-a`
 Decrement number | `3 C-x`
 Redo | `C-r`
 
-## Zellij
-Detach session | `C-o d`
+## Vim_Patterns
+Delete all lines containing pattern | `:g/pattern/d`
