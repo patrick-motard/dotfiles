@@ -15,26 +15,26 @@ return {
       }
     end,
   },
-  -- {
-  --   'ellisonleao/gruvbox.nvim',
-  --   priority = 1000,
-  --   -- init = function()
-  --   config = function()
-  --     require('gruvbox').setup {}
-  --     vim.o.background = 'dark'
-  --     vim.cmd 'colorscheme gruvbox'
-  --   end,
-  -- },
   {
-    'morhetz/gruvbox',
-    lazy = true,
+    'ellisonleao/gruvbox.nvim',
+    priority = 1000,
+    -- init = function()
     config = function()
+      require('gruvbox').setup {}
       vim.o.background = 'dark'
-      vim.g.gruvbox_contrast_dark = 'medium'
-      vim.g.gruvbox_contrast_light = 'soft'
-      -- vim.cmd [[colorscheme gruvbox]]
+      vim.cmd 'colorscheme gruvbox'
     end,
   },
+  -- {
+  --   'morhetz/gruvbox',
+  --   lazy = true,
+  --   config = function()
+  --     vim.o.background = 'dark'
+  --     vim.g.gruvbox_contrast_dark = 'medium'
+  --     vim.g.gruvbox_contrast_light = 'soft'
+  --     -- vim.cmd [[colorscheme gruvbox]]
+  --   end,
+  -- },
   { 'shaunsingh/nord.nvim', lazy = true },
   { 'AlexvZyl/nordic.nvim', lazy = true },
   { 'sainnhe/gruvbox-material', lazy = true },
