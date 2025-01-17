@@ -15,8 +15,8 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 
 -- q in normal mode starts a macro. I often misfire this when typing :q. It is difficult to
 -- exit macro mode so I am rebinding it to gq.
-vim.keymap.set('n', 'q', '<Nop>', { noremap = true, silent = true })
-vim.keymap.set('n', 'gq', 'q', { desc = 'Start/Stop Macro', noremap = true, silent = true })
+-- vim.keymap.set('n', 'q', '<Nop>', { noremap = true, silent = true })
+-- vim.keymap.set('n', 'gq', 'q', { desc = 'Start/Stop Macro', noremap = true, silent = true })
 
 --  See `:help wincmd` for a list of all window commands
 vim.keymap.set('n', '<C-w>m', '<C-w>h', { noremap = true, silent = true, desc = 'Move Left' })
