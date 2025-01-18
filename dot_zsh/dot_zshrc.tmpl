@@ -164,4 +164,25 @@ bindkey -M viins 'fd' vi-cmd-mode
 bindkey 'lk' autosuggest-accept
 bindkey 'lc' autosuggest-clear
 # bindkey 'ln' autosuggest-toggle
+
+# Sesh - tmux session manager.
+# This function allows you to select a tmux session from a list and connect to it
+# when not already in a tmux session.
+# https://github.com/joshmedeski/sesh
+function sesh-sessions() {
+  {
+    exec </dev/tty
+    exec <&1
+    local session
+    session=$(sesh list -t -c | fzf --height 40% --reverse --border-label ' sesh ' --border --prompt '⚡  ')
+    zle reset-prompt > /dev/null 2>&1 || true
+    [[ -z "$session" ]] && return
+    sesh connect $session
+  }
+}
+zle     -N             sesh-sessions
+bindkey -M vicmd '\es' sesh-sessions
+bindkey -M viins '\es' sesh-sessions
 #endregion Custom Key Bindings
+
+
