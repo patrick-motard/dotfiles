@@ -6,6 +6,7 @@ Next Pane | `l + o`
 Most recent other window | `l + l`
 Kill all panes except current (example pane #0) | `kill-pane -a -t 0`
 Get Pane ID | `l + q`
+Spread Panes Evenly | l + E
 
 ## Spectre
 Open spectre | `l-sr`
