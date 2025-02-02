@@ -1,4 +1,4 @@
-require 'plugins.custom.git'
+local git = require 'plugins.custom.git'
 
 return {
   'folke/snacks.nvim',
@@ -9,7 +9,7 @@ return {
       sources = {
         git_log_file = {
           confirm = function(picker, item)
-            openPullRequest(item.commit)
+            git.openPullRequest(item.commit)
             picker:close()
           end,
           actions = {
@@ -22,9 +22,8 @@ return {
           },
           win = {
             input = {
-
               keys = {
-                ['<cr>'] = 'confirm',
+                -- ['<cr>'] = 'confirm',
                 ['<a-c>'] = { 'foo', mode = { 'n', 'i' } },
                 ['<a-d>'] = { 'bar', mode = { 'n', 'i' } },
               },
