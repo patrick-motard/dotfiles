@@ -44,11 +44,11 @@ local live_multigrep = function(opts)
       sorter = require('telescope.sorters').empty(),
     })
     :find()
+  print(conf)
 end
 
 M.setup = function()
-  live_multigrep()
-  vim.keymap.set('n', '<leader>sG', live_multigrep, { desc = 'Live Multigrep' })
+  vim.keymap.set('n', '<leader>sG', live_multigrep, { desc = 'Live [M]ultigrep' })
 end
 
 return M
