@@ -6,6 +6,10 @@ local openPullRequest = function(commit)
     local output = handle:read '*all' -- Read all output
     handle:close()
     local table = vim.json.decode(output)
+    if #table == 0 then
+      vim.notify('No pull request found for commit: ' .. commit)
+      return
+    end
     local pr_url = table[1].url
 
     vim.notify(pr_url)
