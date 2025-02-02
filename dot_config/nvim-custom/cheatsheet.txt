@@ -43,3 +43,4 @@ Redo | `C-r`
 
 ## Vim_Patterns
 Delete all lines containing pattern | `:g/pattern/d`
+Case sensitive match | `:s/\CPatern/Replacement/g    the \C makes the search case sensitive`
