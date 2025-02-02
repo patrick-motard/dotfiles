@@ -14,3 +14,10 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = '*',
   callback = remove_trailing_whitespace,
 })
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'lua',
+  callback = function()
+    vim.keymap.set('n', '<leader>cs', '<cmd>luafile %<cr>', { desc = 'Source current file', noremap = true, silent = true })
+  end,
+})
