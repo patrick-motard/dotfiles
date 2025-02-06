@@ -30,6 +30,7 @@ end
 
 nmap('bb', '<cmd>e #<cr>', '[b]ack to Previous [b]uffer')
 nmap('bd', '<cmd>bd<cr>', '[b]uffer [d]elete')
+nmap('bD', '<cmd>bd!<cr>', 'Force [b]uffer [D]elete')
 nmap('by', 'gg"+yG', '[b]uffer [y]ank')
 -- Select buffer and switch to select mode. From there you can type and the selected
 -- text will be replaced.
