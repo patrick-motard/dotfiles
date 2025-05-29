@@ -3,7 +3,14 @@
 export PATH=/opt/homebrew/bin:$PATH
 #endregion Homebrew
 
+#BEGIN ZETUP
+eval "$( /opt/homebrew/bin/brew shellenv )"
+eval "$( zetup env shell-exports --zsh )"
+#END ZETUP
+
 ## BEGIN -- managed by zendesk:workstation -- ##
 [[ -f ~/.local/bin/zendesk_zprofile.sh ]] && source ~/.local/bin/zendesk_zprofile.sh
 ## END -- managed by zendesk:workstation -- ##
+
+export ZDP_DBT_DIR=/Users/pmotard/zdp_dbt_repos
 {{end -}}
