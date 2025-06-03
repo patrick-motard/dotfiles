@@ -9,8 +9,18 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
+{{ if eq .chezmoi.os "darwin" -}}
+[credential]
+	helper = osxkeychain
+[url "https://github.com/zendesk"]
+	insteadOf = git@github.com:zendesk
+{{ end -}}
+
+{{ if eq .chezmoi.os "linux" -}}
 [credential]
 	helper = store
+{{ end -}}
 
 # Delta: https://github.com/dandavison/delta
 [core]
