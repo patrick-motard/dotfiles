@@ -1,4 +1,10 @@
 # vim: set ft=zsh:
+
+# Helper function to check if running on WSL2
+is_wsl2() {
+    grep -qiE 'microsoft|wsl' /proc/version 2>/dev/null
+}
+
 #region Notes
 
 # What are these 'region' and 'endregion' sections?
@@ -140,7 +146,13 @@ eval "$(zoxide init zsh)"
 #endregion zoxide
 
 #region fzf
+
+if is_wsl2; then
+    echo 'in WSL2, adding fzf bin directory to PATH...'
+    export PATH="${PATH:+${PATH}:}$HOME/.fzf/bin"
+fi
 if command -v fzf >/dev/null 2>&1; then
+    # Add fzf's bin dir to PATH if on WSL2
     source <(fzf --zsh)
 else
     echo "fzf is not installed. Please install it to use its features."
@@ -164,7 +176,6 @@ bindkey -M viins 'fd' vi-cmd-mode
 bindkey 'lk' autosuggest-accept
 bindkey 'lc' autosuggest-clear
 # bindkey 'ln' autosuggest-toggle
-
 # Sesh - tmux session manager.
 # This function allows you to select a tmux session from a list and connect to it
 # when not already in a tmux session.
@@ -185,4 +196,5 @@ bindkey -M vicmd '\es' sesh-sessions
 bindkey -M viins '\es' sesh-sessions
 #endregion Custom Key Bindings
 
-
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
