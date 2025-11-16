@@ -67,6 +67,12 @@ export PATH="/opt/homebrew/opt/ncurses/bin:$PATH"
 export TERMINFO_DIRS=$TERMINFO_DIRS:$HOME/.local/share/terminfo
 export TERM=tmux-256color
 
+{{end -}}
+#endregion OSX specific
+
+#region Zendesk specific
+{{ if .zendesk_machine -}}
+
 [[ -f ~/.ssh/zendesk-company ]] && ssh-add -qK ~/.ssh/zendesk-company
 
 ## BEGIN -- managed by dot-ansible:zendesk -- ##
@@ -89,7 +95,7 @@ function awscreds {
 ## END -- managed by workstation, role: aws_cli -- ##
 
 {{end -}}
-#endregion OSX specific
+#endregion Zendesk specific
 
 #region Directories
 setopt AUTO_CD           # Auto-change directory without typing cd.
@@ -117,6 +123,8 @@ source $ZDOTDIR/aliases.zsh
 source ~/.zplug/init.zsh
 # vi mode
 zplug "plugins/vi-mode", from:oh-my-zsh
+# terraform plugin (provides tf_prompt_info for agnoster theme)
+zplug "plugins/terraform", from:oh-my-zsh
 
 # these two lines remove the user from prompt
 DEFAULT_USER=$USER
