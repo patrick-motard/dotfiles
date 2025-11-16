@@ -8,16 +8,26 @@
           - user_dir
       tags: [ always ]
   roles:
-    - zsh
-    - name: hammerspoon
+    - role: zsh
+      tags: [zsh]
+    - role: hammerspoon
       when: ansible_os_family == "Darwin"
+      tags: [hammerspoon]
   tasks:
     - debug:
         msg: "{{ansible_os_family}}"
+      tags: [always]
     - import_tasks: tasks/apt.yml
       when: ansible_os_family == "Debian"
+      tags: [apt, packages]
     - import_tasks: tasks/vundle.yml
+      tags: [vundle, vim]
     - import_tasks: tasks/homebrew.yml
       when: ansible_os_family == "Darwin"
+      tags: [homebrew, brew, packages]
+    - import_tasks: tasks/alacritty.yml
+      tags: [alacritty, terminal]
     - import_tasks: tasks/nodenv.yml
+      tags: [nodenv, node]
     - import_tasks: tasks/tmux.yml
+      tags: [tmux]
