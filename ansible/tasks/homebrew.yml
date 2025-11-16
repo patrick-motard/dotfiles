@@ -16,12 +16,14 @@
 - homebrew_cask:
     state: present
     name:
+      - raycast
       - discord
       - iterm2
       - visual-studio-code
       - spotify
       - keycastr
       - dbeaver-community
+      - font-iosevka-term-nerd-font
 - name: Remove unwanted brew packages.
   homebrew:
     name:
