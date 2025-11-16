@@ -93,12 +93,17 @@ nvim-lazyvim # LazyVim distribution
 Files with `.tmpl` extension are processed as Go templates. Key variables:
 - `{{ .chezmoi.os }}` - OS detection ("darwin" or "linux")
 - `{{ .chezmoi.hostname }}` - Machine hostname
-- Conditional blocks enable OS-specific configuration
+- `{{ .machine_profile }}` - Machine profile (e.g., "personal-mac", "zendesk-mac", "personal-linux", "zendesk-linux")
+- Conditional blocks enable OS-specific and profile-specific configuration
 
 Example from dot_gitconfig.tmpl:
 ```
 {{ if eq .chezmoi.os "darwin" -}}
 # macOS specific git config
+{{ end -}}
+
+{{ if or (eq .machine_profile "zendesk-mac") (eq .machine_profile "zendesk-linux") -}}
+# Zendesk-specific configuration
 {{ end -}}
 ```
 
@@ -209,19 +214,37 @@ Chezmoi supports custom data variables via `~/.config/chezmoi/chezmoi.toml`. Thi
 
 ```toml
 [data]
-    zendesk_machine = false  # Set to true on Zendesk work machines
+    # Machine profile determines which configuration to load
+    # Examples: "personal-mac", "zendesk-mac", "personal-linux", "zendesk-linux"
+    # You can create profiles for different employers/contexts
+    machine_profile = "personal-mac"
 ```
 
-**To configure a Zendesk machine**: After applying chezmoi, manually edit `~/.config/chezmoi/chezmoi.toml` and set `zendesk_machine = true`. This file is NOT tracked by git (it's applied from the template but overrides persist locally).
+**To configure your machine**: After applying chezmoi, manually edit `~/.config/chezmoi/chezmoi.toml` and set the appropriate profile:
+- `"personal-mac"` - Personal macOS machine (default)
+- `"zendesk-mac"` - Zendesk macOS machine (includes zetup, zendesk tooling, work SSH keys, etc.)
+- `"personal-linux"` - Personal Linux/WSL machine
+- `"zendesk-linux"` - Zendesk Linux/WSL machine
+- Or create custom profiles for other employers/contexts (e.g., "acme-corp-mac", "home-server")
 
-**Using in templates**: Reference the variable with `{{ .zendesk_machine }}`:
+This file is NOT tracked by git (it's applied from the template but overrides persist locally).
+
+**Using in templates**: Reference the variable with `{{ .machine_profile }}`:
 ```
-{{ if .zendesk_machine -}}
-# Zendesk-specific configuration
+{{ if or (eq .machine_profile "zendesk-mac") (eq .machine_profile "zendesk-linux") -}}
+# Zendesk-specific configuration (zetup, zendesk tooling, SSH keys, etc.)
+{{ end -}}
+
+{{ if eq .machine_profile "personal-mac" -}}
+# Personal macOS-only configuration
 {{ end -}}
 ```
 
-This allows separating Zendesk-specific config (like zetup, zendesk tooling) from general macOS config.
+This flexible profile system allows:
+- Different package sets per machine type
+- Employer/context-specific configuration (zendesk, other-company, etc.)
+- Platform-specific customizations within each context
+- Easy addition of new profiles for different work contexts or machine roles
 
 ### Platform-Specific Notes
 

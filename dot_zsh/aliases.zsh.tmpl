@@ -141,8 +141,8 @@ function hgrep() {
 
 #endregion Programs
 
-#region Zendesk Specific Configuration
-{{ if .zendesk_machine -}}
+#region Zendesk-Specific Configuration
+{{ if or (eq .machine_profile "zendesk-mac") (eq .machine_profile "zendesk-linux") -}}
 # Directories
 alias zen="cd ~/code/zendesk"
 function start_bill() {
@@ -150,7 +150,7 @@ function start_bill() {
     zdi zendesk_billing -d restart -e UNICORN_TIMEOUT=600000
 }
 {{end -}}
-#endregion Zendesk Specific Configuration
+#endregion Zendesk-Specific Configuration
 
 function generate_password() {
     if [[ $isLinux == 0 ]]; then
