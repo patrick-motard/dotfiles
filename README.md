@@ -42,26 +42,29 @@ The dotfiles pertaining to the keyboard driven desktop environment have moved lo
 
 2. **Configure machine-specific settings**:
 
-   After initialization, chezmoi will create `~/.config/chezmoi/chezmoi.toml` with default values. Edit this file to configure machine-specific settings:
+   After initialization, chezmoi will create `~/.config/chezmoi/chezmoi.toml` with default values. Edit this file to set your machine profile:
 
    ```shell
    # Edit the config file
    vim ~/.config/chezmoi/chezmoi.toml
    ```
 
-   **For Zendesk work machines**, set:
+   Set the appropriate profile for your machine:
    ```toml
    [data]
-       zendesk_machine = true
+       # Examples: "personal-mac", "zendesk-mac", "personal-linux", "zendesk-linux"
+       # You can create profiles for different employers/contexts
+       machine_profile = "personal-mac"
    ```
 
-   **For personal machines**, keep the default:
-   ```toml
-   [data]
-       zendesk_machine = false
-   ```
+   **Example profiles**:
+   - `"personal-mac"` - Personal macOS machine (default)
+   - `"zendesk-mac"` - Zendesk macOS machine (includes zetup, zendesk tooling, work SSH keys, etc.)
+   - `"personal-linux"` - Personal Linux/WSL machine
+   - `"zendesk-linux"` - Zendesk Linux/WSL machine
+   - Or create custom profiles for other employers/contexts (e.g., `"acme-corp-mac"`)
 
-   This variable controls whether Zendesk-specific configuration (zetup, zendesk tooling, ssh keys, etc.) is included in your shell configuration.
+   This flexible profile system allows different package sets and configurations per machine type and employer context, making it easy to maintain multiple work machines and personal machines from the same repository.
 
 3. **Apply dotfiles**:
    ```shell

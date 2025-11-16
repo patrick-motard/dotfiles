@@ -70,8 +70,8 @@ export TERM=tmux-256color
 {{end -}}
 #endregion OSX specific
 
-#region Zendesk specific
-{{ if .zendesk_machine -}}
+#region Zendesk-specific configuration
+{{ if or (eq .machine_profile "zendesk-mac") (eq .machine_profile "zendesk-linux") -}}
 
 [[ -f ~/.ssh/zendesk-company ]] && ssh-add -qK ~/.ssh/zendesk-company
 
@@ -95,7 +95,7 @@ function awscreds {
 ## END -- managed by workstation, role: aws_cli -- ##
 
 {{end -}}
-#endregion Zendesk specific
+#endregion Zendesk-specific configuration
 
 #region Directories
 setopt AUTO_CD           # Auto-change directory without typing cd.
