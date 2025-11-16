@@ -2,7 +2,9 @@
 #region Homebrew
 export PATH=/opt/homebrew/bin:$PATH
 #endregion Homebrew
+{{end -}}
 
+{{ if .zendesk_machine -}}
 #BEGIN ZETUP
 eval "$( /opt/homebrew/bin/brew shellenv )"
 eval "$( zetup env shell-exports --zsh )"
