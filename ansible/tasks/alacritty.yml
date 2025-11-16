@@ -1,0 +1,20 @@
+---
+# This task file is responsible for setting up Alacritty on my machine
+
+- name: Install Alacritty
+  homebrew_cask:
+    name: alacritty
+    state: present
+  when: ansible_os_family == "Darwin"
+
+- name: alacritty homebrew dependencies
+  homebrew:
+    name:
+      - ripgrep
+      - lazygit
+  when: ansible_os_family == "Darwin"
+
+- name: Make alacritty config directory
+  file:
+    path: "{{home}}/.config/alacritty"
+    state: directory
