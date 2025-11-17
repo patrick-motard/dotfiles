@@ -18,6 +18,7 @@
 - homebrew_cask:
     state: present
     name:
+      - obsidian
       - raycast
       - discord
       - iterm2
