@@ -10,15 +10,21 @@
 
 Welcome to my dotfile repo! More documentation to come.
 
-## Table of Contents
-
-- [Tmux Session Management](docs/TMUX.md) - How tmux, tmuxinator, sesh, and fzf work together to provide powerful session management and layouts
-
 ### Where did the tiling wm desktop dotfiles go?
 
 The dotfiles pertaining to the keyboard driven desktop environment have moved locations! Read more about that on my website [here](https://www.patrickmotard.com/posts/where-did-the-dotfiles-desktop-environment-go/). Going forward, this repo will contain dotfiles agnostic of any specific desktop environment.
 
 ## A 10,000 ft view
+
+These dotfiles provide a reproducible, cross-platform development environment that can be set up on any new machine in minutes. Whether you're switching between macOS and Linux, setting up a new work laptop, or just want a solid foundation for your terminal workflow, these configurations give you:
+
+- **Reproducibility**: Identical setup across all your machines
+- **Automation**: One command to install and configure everything
+- **Flexibility**: Machine profiles for different contexts (personal, work, etc.)
+- **Power**: Keyboard-driven workflow with tmux, vim, and modern shell tools
+- **Speed**: Optimized for fast shell startup and efficient terminal navigation
+
+**Key technologies:**
 
 - [Chezmoi](https://www.chezmoi.io/) dotfile manager
 - [Ansible](https://www.ansible.com/) to automate setup
@@ -31,117 +37,9 @@ The dotfiles pertaining to the keyboard driven desktop environment have moved lo
 - [ZSH](https://zsh.sourceforge.io/) for my shell
 - [Zplug](https://github.com/zplug/zplug) for ZSH plugins
 
-## Initial Setup
+## Table of Contents
 
-### New Machine Setup
-
-1. **Install Chezmoi** and initialize with this repo:
-   ```shell
-   # Install chezmoi (macOS)
-   brew install chezmoi
-
-   # Initialize with your dotfiles repo
-   chezmoi init https://github.com/YOUR_USERNAME/dotfiles.git
-   ```
-
-2. **Configure machine-specific settings**:
-
-   After initialization, chezmoi will create `~/.config/chezmoi/chezmoi.toml` with default values. Edit this file to set your machine profile:
-
-   ```shell
-   # Edit the config file
-   vim ~/.config/chezmoi/chezmoi.toml
-   ```
-
-   Set the appropriate profile for your machine:
-   ```toml
-   [data]
-       # Examples: "personal-mac", "zendesk-mac", "personal-linux", "zendesk-linux"
-       # You can create profiles for different employers/contexts
-       machine_profile = "personal-mac"
-   ```
-
-   **Example profiles**:
-   - `"personal-mac"` - Personal macOS machine (default)
-   - `"zendesk-mac"` - Zendesk macOS machine (includes zetup, zendesk tooling, work SSH keys, etc.)
-   - `"personal-linux"` - Personal Linux/WSL machine
-   - `"zendesk-linux"` - Zendesk Linux/WSL machine
-   - Or create custom profiles for other employers/contexts (e.g., `"acme-corp-mac"`)
-
-   This flexible profile system allows different package sets and configurations per machine type and employer context, making it easy to maintain multiple work machines and personal machines from the same repository.
-
-3. **Apply dotfiles**:
-   ```shell
-   # Apply all dotfiles
-   chezmoi apply
-   ```
-
-4. **Install ZSH plugins**:
-   ```shell
-   # Install zplug plugins (including agnoster theme)
-   zplug install
-   ```
-
-5. **Run Ansible** to install packages and configure system:
-   ```shell
-   # macOS
-   ./ansible/mac-setup.sh  # First time only
-   dotansible
-
-   # Linux/Fedora
-   ./ansible/fedora-setup.sh  # First time only
-   ```
-
-6. **Restart your terminal** to see the new theme and configuration take effect.
-
-## Usage
-
-Notes for myself because I forget a lot.
-
-### Chezmoi
-
-- edit = open chezmoi dir in editor
-- ma = chezmoi apply + source zsh files
-- moi = chezmoi
-- moi cd = go to chezmoi dir
-
-### Ansible
-
-Call from anywhere (osx only)
-
-```shell
-# Run full playbook
-dotansible
-
-# Run specific tasks only
-dotansible_brew      # Install/update Homebrew packages
-dotansible_packages  # Install all packages
-dotansible_zsh       # Configure ZSH
-dotansible_tmux      # Configure tmux
-```
-
-### Hammerspoon
-
-- ansible
-  - os: osx
-  - role: hammerspoon
-- config files managed by chezmoi
-
-## Performance Testing
-
-To benchmark shell startup time improvements:
-
-```shell
-# Install hyperfine
-brew install hyperfine
-
-# Benchmark shell startup
-hyperfine --warmup 3 'zsh -i -c exit'
-```
-
-Current performance (as of 2025-11-16):
-```
-Benchmark 1: zsh -i -c exit
-  Time (mean ± σ):     272.6 ms ±   7.4 ms    [User: 182.6 ms, System: 94.1 ms]
-  Range (min … max):   262.9 ms … 283.7 ms    10 runs
-```
+- [Initial Setup](docs/SETUP.md) - New machine setup and configuration
+- [Usage](docs/USAGE.md) - Common commands and daily usage
+- [Tmux Session Management](docs/TMUX.md) - How tmux, tmuxinator, sesh, and fzf work together to provide powerful session management and layouts
+- [Performance Testing](docs/PERFORMANCE.md) - Benchmarking shell startup time
