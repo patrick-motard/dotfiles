@@ -14,6 +14,7 @@
       - eza # colorized terminal ls
       - hyperfine
       - rbenv
+      - sesh
     state: present
 - homebrew_cask:
     state: present
