@@ -6,13 +6,25 @@
 - file:
     path: "{{home}}/.nodenv/plugins"
     state: directory
-- name: Clone Nodenv.
+- name: Clone node-build plugin.
   git:
     repo: "https://github.com/nodenv/node-build.git"
     dest: "{{home}}/.nodenv/plugins/node-build"
-- name: install node
-  shell: nodenv install 18.7.0
+- name: Update node-build definitions to get latest versions
+  shell: git -C {{home}}/.nodenv/plugins/node-build pull
   ignore_errors: true
-- name: Set installed version of node as the global version.
-  shell: nodenv global 18.7.0
+- name: Get latest LTS version of Node.js
+  shell: nodenv install --list | grep -E '^\s*[0-9]+\.[0-9]+\.[0-9]+$' | grep -E '^\s*(18|20|22)\.' | tail -1 | xargs
+  register: node_lts_version
+  changed_when: false
+- name: Display Node.js version to be installed
+  debug:
+    msg: "Installing Node.js version: {{ node_lts_version.stdout }}"
+- name: Install latest LTS Node.js version
+  shell: nodenv install {{ node_lts_version.stdout }}
+  args:
+    creates: "{{home}}/.nodenv/versions/{{ node_lts_version.stdout }}"
+  ignore_errors: true
+- name: Set installed version of node as the global version
+  shell: nodenv global {{ node_lts_version.stdout }}
   ignore_errors: true
