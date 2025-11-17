@@ -143,7 +143,7 @@ function hgrep() {
 #endregion Programs
 
 #region Zendesk-Specific Configuration
-{{ if or (eq .machine_profile "zendesk-mac") (eq .machine_profile "zendesk-linux") -}}
+{{ if eq .chezmoi.hostname "GVXPDWWKWG" -}}
 # Directories
 alias zen="cd ~/code/zendesk"
 function start_bill() {

@@ -92,18 +92,17 @@ nvim-lazyvim # LazyVim distribution
 
 Files with `.tmpl` extension are processed as Go templates. Key variables:
 - `{{ .chezmoi.os }}` - OS detection ("darwin" or "linux")
-- `{{ .chezmoi.hostname }}` - Machine hostname
-- `{{ .machine_profile }}` - Machine profile (e.g., "personal-mac", "zendesk-mac", "personal-linux", "zendesk-linux")
-- Conditional blocks enable OS-specific and profile-specific configuration
+- `{{ .chezmoi.hostname }}` - Machine hostname for machine-specific configuration
+- Conditional blocks enable OS-specific and hostname-specific configuration
 
-Example from dot_gitconfig.tmpl:
+Example from dot_zshrc.tmpl:
 ```
 {{ if eq .chezmoi.os "darwin" -}}
-# macOS specific git config
+# macOS specific configuration
 {{ end -}}
 
-{{ if or (eq .machine_profile "zendesk-mac") (eq .machine_profile "zendesk-linux") -}}
-# Zendesk-specific configuration
+{{ if eq .chezmoi.hostname "GVXPDWWKWG" -}}
+# Zendesk work machine configuration
 {{ end -}}
 ```
 
@@ -210,41 +209,26 @@ ansible-playbook ansible/main.yml -i ansible/inventory/$(hostname).yml
 
 ### Machine-Specific Configuration
 
-Chezmoi supports custom data variables via `~/.config/chezmoi/chezmoi.toml`. This repo includes a template at `dot_config/chezmoi/chezmoi.toml.tmpl` with:
+Machine-specific configurations are determined by hostname using chezmoi's built-in `{{ .chezmoi.hostname }}` variable in templates. No additional configuration files are needed.
 
-```toml
-[data]
-    # Machine profile determines which configuration to load
-    # Examples: "personal-mac", "zendesk-mac", "personal-linux", "zendesk-linux"
-    # You can create profiles for different employers/contexts
-    machine_profile = "personal-mac"
+**Using hostname in templates**:
 ```
-
-**To configure your machine**: After applying chezmoi, manually edit `~/.config/chezmoi/chezmoi.toml` and set the appropriate profile:
-- `"personal-mac"` - Personal macOS machine (default)
-- `"zendesk-mac"` - Zendesk macOS machine (includes zetup, zendesk tooling, work SSH keys, etc.)
-- `"personal-linux"` - Personal Linux/WSL machine
-- `"zendesk-linux"` - Zendesk Linux/WSL machine
-- Or create custom profiles for other employers/contexts (e.g., "acme-corp-mac", "home-server")
-
-This file is NOT tracked by git (it's applied from the template but overrides persist locally).
-
-**Using in templates**: Reference the variable with `{{ .machine_profile }}`:
-```
-{{ if or (eq .machine_profile "zendesk-mac") (eq .machine_profile "zendesk-linux") -}}
-# Zendesk-specific configuration (zetup, zendesk tooling, SSH keys, etc.)
-{{ end -}}
-
-{{ if eq .machine_profile "personal-mac" -}}
-# Personal macOS-only configuration
+{{ if eq .chezmoi.hostname "GVXPDWWKWG" -}}
+# Zendesk work machine configuration (zetup, zendesk tooling, SSH keys, etc.)
 {{ end -}}
 ```
 
-This flexible profile system allows:
-- Different package sets per machine type
-- Employer/context-specific configuration (zendesk, other-company, etc.)
-- Platform-specific customizations within each context
-- Easy addition of new profiles for different work contexts or machine roles
+**To add configuration for a new machine**:
+1. Get the hostname: `hostname`
+2. Add conditionals to templates based on the hostname
+3. Use `{{ .chezmoi.os }}` for OS-specific configuration (darwin/linux)
+4. Combine conditions as needed for specific machine + OS combinations
+
+This hostname-based approach:
+- Requires no manual configuration files
+- Makes machine identity explicit in templates
+- Works automatically when dotfiles are applied to any machine
+- Easy to add new machines by adding hostname checks to templates
 
 ### Platform-Specific Notes
 
@@ -270,7 +254,6 @@ Chezmoi uses special prefixes in the source directory:
 Examples of the directory structure mapping:
 - `dot_config/nvim/init.lua` → `~/.config/nvim/init.lua`
 - `dot_zsh/dot_zprofile.tmpl` → `~/.zsh/.zprofile` (templated)
-- `dot_config/chezmoi/chezmoi.toml.tmpl` → `~/.config/chezmoi/chezmoi.toml` (templated)
 - `dot_tmux.conf` → `~/.tmux.conf`
 
 The `dot_` prefix is used every time a dot is needed in the path, whether for directories or files.
