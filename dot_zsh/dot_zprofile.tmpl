@@ -1,6 +1,7 @@
 {{ if eq .chezmoi.os "darwin" -}}
 #region Homebrew
-export PATH=/opt/homebrew/bin:$PATH
+# Use brew shellenv for proper Homebrew PATH setup
+eval "$(/opt/homebrew/bin/brew shellenv)"
 #endregion Homebrew
 {{end -}}
 

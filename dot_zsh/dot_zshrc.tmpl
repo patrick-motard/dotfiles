@@ -59,18 +59,10 @@ export PATH="$PATH:$HOME/.rbenv/versions/3.3.4/bin"
 #region OSX specific
 {{ if eq .chezmoi.os "darwin" -}}
 
-# Oh My Posh setup
-# OMP doesn't work with the default terminal on macOS.
-# if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
-#   eval "$(oh-my-posh init zsh --config ~/.local/share/chezmoi/dot_config/oh_my_posh/themes/bubbles.omp.json)"
-# fi
-
-# homebrew installs some bins to /opt/homebrew/sbin
-export PATH="/opt/homebrew/sbin:$PATH"
-
 # Ruby Neovim setup
-export PATH="$PATH:$HOME/.rbenv/versions/3.3.3/bin" # osx
+export PATH="$PATH:$HOME/.rbenv/versions/3.3.3/bin"
 
+# Tmux 256 color support
 # https://gpanders.com/blog/the-definitive-guide-to-using-tmux-256color-on-macos/
 export PATH="/opt/homebrew/opt/ncurses/bin:$PATH"
 export TERMINFO_DIRS=$TERMINFO_DIRS:$HOME/.local/share/terminfo
