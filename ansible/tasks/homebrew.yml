@@ -12,6 +12,7 @@
       - zoxide
       - git-delta
       - eza # colorized terminal ls
+      - hyperfine
     state: present
 - homebrew_cask:
     state: present
