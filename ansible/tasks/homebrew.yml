@@ -13,6 +13,7 @@
       - git-delta
       - eza # colorized terminal ls
       - hyperfine
+      - rbenv
     state: present
 - homebrew_cask:
     state: present
