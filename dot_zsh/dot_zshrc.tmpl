@@ -22,7 +22,15 @@ alias history="fc -l 1"         # Ensure all history is shown
 alias historyts="fc -f -l 1"    # Show all history, with timestamp
 #endregion History
 
-autoload -U compinit; compinit
+#region Completion
+# Optimize compinit by using cache (only rebuild once per day)
+autoload -Uz compinit
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
+#endregion Completion
 
 #region SSH
 eval "$(ssh-agent -s)" &> /dev/null
@@ -44,8 +52,9 @@ export PATH="$PATH:$HOME/.rbenv/versions/3.3.4/bin"
 {{ end -}}
 #endregion Linux specific
 
-export PATH="$PATH:$HOME/.local/bin"
-export PATH="$PATH:$HOME/.local/bin/ssh-create"
+# Add local bin directories to PATH (only if they exist)
+[[ -d "$HOME/.local/bin" ]] && export PATH="$PATH:$HOME/.local/bin"
+[[ -d "$HOME/.local/bin/ssh-create" ]] && export PATH="$PATH:$HOME/.local/bin/ssh-create"
 
 #region OSX specific
 {{ if eq .chezmoi.os "darwin" -}}
@@ -109,9 +118,18 @@ for index ({1..9}) alias "$index"="cd +${index}"; unset index
 #endregion Directories
 
 #region Nodenv
-path+=($HOME/.nodenv/bin)
-eval "$(nodenv init - zsh)"
-export PATH="$(nodenv root)/versions/$(nodenv version-name)/bin:$PATH"
+# Lazy load nodenv to improve shell startup time
+if [[ -d "$HOME/.nodenv" ]]; then
+  export PATH="$HOME/.nodenv/bin:$PATH"
+
+  # Lazy-load nodenv
+  nodenv() {
+    unset -f nodenv
+    eval "$(command nodenv init - zsh)"
+    export PATH="$(nodenv root)/versions/$(nodenv version-name)/bin:$PATH"
+    nodenv "$@"
+  }
+fi
 #endregion Nodenv
 
 # Load aliases at the end to ensure they aren't clobbered.
@@ -144,8 +162,21 @@ zplug load
 #endregion Zplug
 
 #region zoxide
-# Fast zsh directory switching
-eval "$(zoxide init zsh)"
+# Fast zsh directory switching (lazy-loaded)
+if command -v zoxide >/dev/null 2>&1; then
+  # Lazy-load zoxide
+  z() {
+    unset -f z
+    eval "$(zoxide init zsh)"
+    z "$@"
+  }
+
+  zi() {
+    unset -f zi
+    eval "$(zoxide init zsh)"
+    zi "$@"
+  }
+fi
 #endregion zoxide
 
 #region fzf
