@@ -19,6 +19,7 @@
 - homebrew_cask:
     state: present
     name:
+      - docker
       - signal
       - obsidian
       - raycast
