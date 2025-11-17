@@ -77,7 +77,7 @@ export TERM=tmux-256color
 #endregion OSX specific
 
 #region Zendesk-specific configuration
-{{ if or (eq .machine_profile "zendesk-mac") (eq .machine_profile "zendesk-linux") -}}
+{{ if eq .chezmoi.hostname "GVXPDWWKWG" -}}
 
 [[ -f ~/.ssh/zendesk-company ]] && ssh-add -qK ~/.ssh/zendesk-company
 

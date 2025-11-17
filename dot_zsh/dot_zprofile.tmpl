@@ -5,7 +5,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 #endregion Homebrew
 {{end -}}
 
-{{ if or (eq .machine_profile "zendesk-mac") (eq .machine_profile "zendesk-linux") -}}
+{{ if eq .chezmoi.hostname "GVXPDWWKWG" -}}
 #BEGIN ZETUP
 eval "$( /opt/homebrew/bin/brew shellenv )"
 eval "$( zetup env shell-exports --zsh )"
