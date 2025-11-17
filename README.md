@@ -41,5 +41,6 @@ These dotfiles provide a reproducible, cross-platform development environment th
 
 - [Initial Setup](docs/SETUP.md) - New machine setup and configuration
 - [Usage](docs/USAGE.md) - Common commands and daily usage
+- [Claude Code Configuration](docs/CLAUDE.md) - Managing Claude Code global configuration
 - [Tmux Session Management](docs/TMUX.md) - How tmux, tmuxinator, sesh, and fzf work together to provide powerful session management and layouts
 - [Performance Testing](docs/PERFORMANCE.md) - Benchmarking shell startup time
