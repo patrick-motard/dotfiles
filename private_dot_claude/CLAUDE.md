@@ -12,4 +12,4 @@ These instructions apply to all projects where project-specific CLAUDE.md doesn'
 
 - Follow the existing code style in each project
 - Prioritize readability and maintainability
-
+- always update the links in the readme toc when adding/removing files in docs/
