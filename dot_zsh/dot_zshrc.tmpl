@@ -59,9 +59,11 @@ export PATH="$PATH:$(rbenv root)/versions/$(rbenv version-name)/bin"
 #region OSX specific
 {{ if eq .chezmoi.os "darwin" -}}
 
-# Ruby Neovim setup - ensures neovim can access 'neovim-ruby-host'
-# You can verify with :checkhealth in neovim
+# Initialize rbenv
 if command -v rbenv >/dev/null 2>&1; then
+  eval "$(rbenv init - zsh)"
+  # Ruby Neovim setup - ensures neovim can access 'neovim-ruby-host'
+  # You can verify with :checkhealth in neovim
   export PATH="$PATH:$(rbenv root)/versions/$(rbenv version-name)/bin"
 fi
 
