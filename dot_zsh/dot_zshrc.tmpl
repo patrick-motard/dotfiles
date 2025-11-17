@@ -48,7 +48,7 @@ export PATH="$PATH:$HOME/.rbenv/plugins/ruby-build/bin"
 
 # This ensures neovim can access 'neovim-ruby-host' to execute ruby commands from neovim.
 # You can see if this is configured correctly by running :checkhealth
-export PATH="$PATH:$HOME/.rbenv/versions/3.3.4/bin"
+export PATH="$PATH:$(rbenv root)/versions/$(rbenv version-name)/bin"
 {{ end -}}
 #endregion Linux specific
 
@@ -59,8 +59,11 @@ export PATH="$PATH:$HOME/.rbenv/versions/3.3.4/bin"
 #region OSX specific
 {{ if eq .chezmoi.os "darwin" -}}
 
-# Ruby Neovim setup
-export PATH="$PATH:$HOME/.rbenv/versions/3.3.3/bin"
+# Ruby Neovim setup - ensures neovim can access 'neovim-ruby-host'
+# You can verify with :checkhealth in neovim
+if command -v rbenv >/dev/null 2>&1; then
+  export PATH="$PATH:$(rbenv root)/versions/$(rbenv version-name)/bin"
+fi
 
 # Tmux 256 color support
 # https://gpanders.com/blog/the-definitive-guide-to-using-tmux-256color-on-macos/
