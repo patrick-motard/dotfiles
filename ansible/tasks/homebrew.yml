@@ -19,6 +19,7 @@
 - homebrew_cask:
     state: present
     name:
+      - claude-code
       - docker
       - signal
       - obsidian
