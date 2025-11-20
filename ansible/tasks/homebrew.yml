@@ -17,6 +17,7 @@
       - sesh
       - mpd
       - slides
+      - entr
     state: present
 - homebrew_cask:
     state: present
