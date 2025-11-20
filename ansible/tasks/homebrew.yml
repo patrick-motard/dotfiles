@@ -16,6 +16,7 @@
       - rbenv
       - sesh
       - mpd
+      - slides
     state: present
 - homebrew_cask:
     state: present
