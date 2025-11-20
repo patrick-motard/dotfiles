@@ -15,6 +15,7 @@
       - hyperfine
       - rbenv
       - sesh
+      - mpd
     state: present
 - homebrew_cask:
     state: present
