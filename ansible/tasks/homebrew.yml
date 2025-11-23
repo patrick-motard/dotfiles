@@ -1,23 +1,25 @@
 ---
 - homebrew:
     name:
-      - python3
-      - zsh
-      - neovim
-      - watch
+      - age
       - antigen # zsh plugin manager
       - chezmoi # dotfile manager
-      - fzf
-      - tmux
-      - zoxide
-      - git-delta
+      - entr
       - eza # colorized terminal ls
+      - fzf
+      - git-delta
       - hyperfine
+      - mpd
+      - neovim
+      - python3
       - rbenv
       - sesh
-      - mpd
       - slides
-      - entr
+      - tmux
+      - watch
+      - zoxide
+      - zsh
+      - protobuf
     state: present
 - homebrew_cask:
     state: present
