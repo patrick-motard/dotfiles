@@ -21,6 +21,7 @@
       - zsh
       - protobuf
       - google-chrome
+      - shortcat
     state: present
 - homebrew_cask:
     state: present
