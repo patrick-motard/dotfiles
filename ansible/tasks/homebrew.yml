@@ -23,6 +23,7 @@
       - google-chrome
       - shortcat
       - automake
+      - ffmpeg
     state: present
 - homebrew_cask:
     state: present
