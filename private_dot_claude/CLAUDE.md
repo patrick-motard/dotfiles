@@ -8,6 +8,10 @@ These instructions apply to all projects where project-specific CLAUDE.md doesn'
 - Prefer editing existing files over creating new ones when possible
 - Use clear, concise commit messages focused on "why" rather than "what"
 
+## Personal Repositories
+
+- Scripts repo: `~/code/scripts` (GitHub)
+
 ## Code Style
 
 - Follow the existing code style in each project
