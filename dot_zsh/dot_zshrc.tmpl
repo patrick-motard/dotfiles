@@ -53,7 +53,7 @@ export PATH="$PATH:$(rbenv root)/versions/$(rbenv version-name)/bin"
 #endregion Linux specific
 
 # Add local bin directories to PATH (only if they exist)
-[[ -d "$HOME/.local/bin" ]] && export PATH="$PATH:$HOME/.local/bin"
+[[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
 [[ -d "$HOME/.local/bin/ssh-create" ]] && export PATH="$PATH:$HOME/.local/bin/ssh-create"
 
 #region OSX specific
