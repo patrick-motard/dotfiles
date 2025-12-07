@@ -12,6 +12,15 @@ These instructions apply to all projects where project-specific CLAUDE.md doesn'
 
 - Scripts repo: `~/code/scripts` (GitHub)
 
+## Script Creation Conventions
+
+When creating scripts in the scripts repo:
+- Use `#!/usr/bin/env zsh` shebang (prefer zsh over bash)
+- Include a `usage` variable with NAME, SYNOPSIS, DESCRIPTION, ARGUMENTS, and EXAMPLES sections
+- Use `while/case` pattern for argument parsing
+- Make scripts executable after creation
+- Match the style of existing scripts like `new_script` or `compress-video`
+
 ## Code Style
 
 - Follow the existing code style in each project
