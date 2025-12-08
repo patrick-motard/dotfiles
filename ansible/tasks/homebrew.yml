@@ -25,6 +25,7 @@
       - automake
       - ffmpeg
       - yq
+      - qutebrowser
     state: present
 - homebrew_cask:
     state: present
