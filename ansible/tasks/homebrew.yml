@@ -24,6 +24,7 @@
       - shortcat
       - automake
       - ffmpeg
+      - yq
     state: present
 - homebrew_cask:
     state: present
