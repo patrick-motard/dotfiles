@@ -5,30 +5,24 @@
 	email = motard19@gmail.com
 	name = Patrick Motard
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
+	clean = {{ .chezmoi.config.git.command }}-lfs clean -- %f
+	smudge = {{ .chezmoi.config.git.command }}-lfs smudge -- %f
+	process = {{ .chezmoi.config.git.command }}-lfs filter-process
 	required = true
 
-{{ if eq .chezmoi.os "darwin" -}}
-{{ end -}}
-
-{{ if eq .chezmoi.os "linux" -}}
-[credential]
-	helper = store
-{{ end -}}
-
-# Delta: https://github.com/dandavison/delta
+# Delta{{ .chezmoi.pathListSeparator }} https{{ .chezmoi.pathListSeparator }}{{ .chezmoi.pathSeparator }}{{ .chezmoi.pathSeparator }}github.com{{ .chezmoi.pathSeparator }}dandavison{{ .chezmoi.pathSeparator }}delta
 [core]
     pager = delta
 [interactive]
     diffFilter = delta --color-only
 [delta]
     navigate = true    # use n and N to move between diff sections
-    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+    light = false      # set to true if you're in a terminal w{{ .chezmoi.pathSeparator }} a light background color (e.g. the default macOS terminal)
 [merge]
     conflictstyle = diff3
 [diff]
     colorMoved = default
 [pull]
 	rebase = true
+[init]
+	defaultBranch = main
