@@ -1,0 +1,4 @@
+# 4 panes side-by-side for widescreen
+# vim | claude | lazygit | narrow watch pane
+# Pane widths: ~25% | ~40% | ~25% | ~10%
+main-vertical
