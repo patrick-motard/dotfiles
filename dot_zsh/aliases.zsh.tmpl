@@ -154,13 +154,14 @@ function start_bill() {
 #endregion Zendesk-Specific Configuration
 
 function generate_password() {
-    if [[ $isLinux == 0 ]]; then
-       password=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c 32; echo;)
+    local password
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        password=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c 32)
     else
         password=$(env LC_CTYPE=C tr -dc "a-zA-Z0-9-_\$\?" < /dev/urandom | head -c 32)
     fi
 
-    echo $password | pbcopy
+    echo -n "$password" | pbcopy
     echo "New password copied to clipboard."
 }
 
