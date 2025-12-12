@@ -9,6 +9,7 @@
 #endregion Notes
 
 #region History
+[[ -d "${ZDOTDIR}" ]] || mkdir -p "${ZDOTDIR}"
 export HISTSIZE=100000 # max events for internal history
 export SAVEHIST=100000 # max events in history file
 export HISTFILE="${ZDOTDIR}/.zhistory"
