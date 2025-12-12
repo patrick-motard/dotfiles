@@ -1,0 +1,6 @@
+{{ if ne .chezmoi.hostname "GVXPDWWKWG" -}}
+[".ssh/config"]
+    type = "file"
+    url = "file://{{ .chezmoi.homeDir }}/code/dotfiles-private/ssh/config"
+    refreshPeriod = "0"
+{{ end -}}
