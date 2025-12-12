@@ -35,7 +35,10 @@ fi
 #region SSH
 eval "$(ssh-agent -s)" &> /dev/null
 [[ -f ~/.ssh/github ]] && ssh-add -q ~/.ssh/github
-[[ -f ~/.ssh/lahey ]] && ssh-add -q ~/.ssh/lahey
+{{ if ne .chezmoi.hostname "GVXPDWWKWG" -}}
+[[ -f ~/.ssh/pve1 ]] && ssh-add -q ~/.ssh/pve1
+[[ -f ~/.ssh/olivander ]] && ssh-add -q ~/.ssh/olivander
+{{ end -}}
 #endregion SSH
 
 #region Linux specific
