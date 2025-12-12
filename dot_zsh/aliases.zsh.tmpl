@@ -3,13 +3,11 @@
 # Reload zsh config - use exec to start fresh shell
 alias sz="exec zsh"
 alias csz="cat $ZDOTDIR/.zshrc"
-alias catsz="cat $ZDOTDIR/.zshrc"
 alias catrc="cat $ZDOTDIR/.zshrc"
 
 # ~/.zshenv
 alias szenv="source ~/.zshenv"
 alias czenv="cat ~/.zshenv"
-alias catzenv="cat ~/.zshenv"
 alias catenv="cat ~/.zshenv"
 
 # Directories
@@ -96,19 +94,6 @@ alias dotansible_alacritty="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR
 
 ## Nodenv
 alias update_nodenv_build="git -C ~/.nodenv/plugins/node-build pull"
-
-# FZF
-# function open_in_vscode {
-#     code $(fzf)
-# }
-
-# alias lfunctions="print -l ${(ok)functions[(I)[^_]*]}"
-# alias lfn=lfunctions
-# alias sfn="lfn | fzf"
-
-# function rfn {
-#     $(sfn)
-# }
 
 ## Able
 function start_able_dev {

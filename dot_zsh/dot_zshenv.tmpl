@@ -1,9 +1,6 @@
 # vim: set ft=zsh:
 
 export ZDOTDIR="$HOME/.zsh"
-# code_dir="$(which code)"
-# export EDITOR="${code_dir}"
-# export VISUAL="${code_dir}"
 export EDITOR=nvim
 export VISUAL=nvim
 export PATH="$PATH:$HOME/.local/bin/tools"
@@ -13,9 +10,6 @@ export PATH="$PATH:$HOME/.local/bin/tools"
 
 
 {{ if eq .chezmoi.os "darwin" -}}
-
-# export BROWSER=''
-
 [[ -f ~/.zendesk-zshenv ]] && source ~/.zendesk-zshenv
 ## BEGIN -- managed by dot-ansible:zendesk -- ##
 [[ -f ~/.local/bin/zendesk_zshenv.sh ]] && source ~/.local/bin/zendesk_zshenv.sh
@@ -23,15 +17,6 @@ export PATH="$PATH:$HOME/.local/bin/tools"
 
 # Needed to ensure Lazygit looks in this dir for it's config.
 export XDG_CONFIG_HOME="$HOME/.config"
-
-# https://github.com/sass/sassc-rails/issues/182#issuecomment-2501018835
-# export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
-# export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
-# export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
-# export CC=clang
-# export CXX=clang++
-# export SDKROOT="$(xcrun --show-sdk-path)"
-#
 {{end -}}
 
 # For env vars not to be checked in.
