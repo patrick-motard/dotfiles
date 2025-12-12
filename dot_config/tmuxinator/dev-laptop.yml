@@ -1,0 +1,21 @@
+# Laptop layout: separate windows for limited screen space
+# Start from sesh, switch windows with Alt+M/I
+
+name: dev-laptop
+root: .
+
+startup_window: vim
+
+windows:
+  - vim:
+      panes:
+        - nvim
+  - claude:
+      panes:
+        - claude
+  - lazygit:
+      panes:
+        - lazygit
+  - shell:
+      panes:
+        - # empty shell
