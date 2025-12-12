@@ -33,9 +33,12 @@ fi
 #endregion Completion
 
 #region SSH
-eval "$(ssh-agent -s)" &> {{ .chezmoi.pathSeparator }}dev{{ .chezmoi.pathSeparator }}null
-[[ -f ~{{ .chezmoi.pathSeparator }}.ssh{{ .chezmoi.pathSeparator }}github ]] && ssh-{{ .chezmoi.command }} -q ~{{ .chezmoi.pathSeparator }}.ssh{{ .chezmoi.pathSeparator }}github
-[[ -f ~{{ .chezmoi.pathSeparator }}.ssh{{ .chezmoi.pathSeparator }}lahey ]] && ssh-{{ .chezmoi.command }} -q ~{{ .chezmoi.pathSeparator }}.ssh{{ .chezmoi.pathSeparator }}lahey
+# Reuse existing ssh-agent if available, otherwise start new one
+if [ -z "$SSH_AUTH_SOCK" ]; then
+  eval "$(ssh-agent -s)" &> /dev/null
+fi
+[[ -f ~/.ssh/github ]] && ssh-add -q ~/.ssh/github 2>/dev/null
+[[ -f ~/.ssh/lahey ]] && ssh-add -q ~/.ssh/lahey 2>/dev/null
 #endregion SSH
 
 #region Linux specific

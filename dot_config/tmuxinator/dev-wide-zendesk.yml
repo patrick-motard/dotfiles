@@ -1,0 +1,16 @@
+# Widescreen Zendesk layout: vim | claude | lazygit | gh-watch-pr
+# Start from sesh, then use prefix+L to rearrange if needed
+
+name: dev-wide-zendesk
+root: .
+
+startup_pane: 1  # Focus on claude pane
+
+windows:
+  - dev:
+      layout: main-vertical
+      panes:
+        - nvim
+        - claude
+        - lazygit
+        - gh-watch-pr

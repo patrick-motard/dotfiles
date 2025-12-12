@@ -2,3 +2,4 @@ ansible/
 CLAUDE.md
 README.md
 docs/
+.claude/ticket-state.json*
