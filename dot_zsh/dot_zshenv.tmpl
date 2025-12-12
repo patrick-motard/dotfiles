@@ -1,31 +1,42 @@
-# vim: set ft=zsh:
+# vim{{ .chezmoi.pathListSeparator }} set ft=zsh{{ .chezmoi.pathListSeparator }}
 
-export ZDOTDIR="$HOME/.zsh"
+export ZDOTDIR="$HOME{{ .chezmoi.pathSeparator }}.zsh"
+# code_dir="$(which code)"
+# export EDITOR="${code_dir}"
+# export VISUAL="${code_dir}"
 export EDITOR=nvim
 export VISUAL=nvim
-export PATH="$PATH:$HOME/.local/bin/tools"
+export PATH="$PATH{{ .chezmoi.pathListSeparator }}$HOME{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}tools"
 
-# Create ~/.local/bin, used in many places in my dotfiles
-[ ! -d ~/.local/bin ] && mkdir -p ~/.local/bin
+# Create ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin, used in many places in my dotfiles
+[ ! -d ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin ] && mkdir -p ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin
 
 
-{{ if eq .chezmoi.os "darwin" -}}
-[[ -f ~/.zendesk-zshenv ]] && source ~/.zendesk-zshenv
-## BEGIN -- managed by dot-ansible:zendesk -- ##
-[[ -f ~/.local/bin/zendesk_zshenv.sh ]] && source ~/.local/bin/zendesk_zshenv.sh
-## END -- managed by dot-ansible:zendesk -- ##
+# export BROWSER=''
+
+[[ -f ~{{ .chezmoi.pathSeparator }}.zendesk-zshenv ]] && source ~{{ .chezmoi.pathSeparator }}.zendesk-zshenv
+## BEGIN -- managed by dot-ansible{{ .chezmoi.pathListSeparator }}zendesk -- ##
+[[ -f ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}zendesk_zshenv.sh ]] && source ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}zendesk_zshenv.sh
+## END -- managed by dot-ansible{{ .chezmoi.pathListSeparator }}zendesk -- ##
 
 # Needed to ensure Lazygit looks in this dir for it's config.
-export XDG_CONFIG_HOME="$HOME/.config"
-{{end -}}
+export XDG_CONFIG_HOME="$HOME{{ .chezmoi.pathSeparator }}.config"
 
+# https{{ .chezmoi.pathListSeparator }}{{ .chezmoi.pathSeparator }}{{ .chezmoi.pathSeparator }}github.com{{ .chezmoi.pathSeparator }}sass{{ .chezmoi.pathSeparator }}sassc-rails{{ .chezmoi.pathSeparator }}issues{{ .chezmoi.pathSeparator }}182#issuecomment-2501018835
+# export PATH="{{ .chezmoi.pathSeparator }}opt{{ .chezmoi.pathSeparator }}homebrew{{ .chezmoi.pathSeparator }}opt{{ .chezmoi.pathSeparator }}llvm{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathListSeparator }}$PATH"
+# export LDFLAGS="-L{{ .chezmoi.pathSeparator }}opt{{ .chezmoi.pathSeparator }}homebrew{{ .chezmoi.pathSeparator }}opt{{ .chezmoi.pathSeparator }}llvm{{ .chezmoi.pathSeparator }}lib"
+# export CPPFLAGS="-I{{ .chezmoi.pathSeparator }}opt{{ .chezmoi.pathSeparator }}homebrew{{ .chezmoi.pathSeparator }}opt{{ .chezmoi.pathSeparator }}llvm{{ .chezmoi.pathSeparator }}include"
+# export CC=clang
+# export CXX=clang++
+# export SDKROOT="$(xcrun --show-sdk-path)"
+#
 # For env vars not to be checked in.
-[[ -f ~/.local/bin/zshenv.sh ]] && source ~/.local/bin/zshenv.sh || touch ~/.local/bin/zshenv.sh
+[[ -f ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}zshenv.sh ]] && source ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}zshenv.sh || touch ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}zshenv.sh
 
 # Ensure Node's global packages are in the PATH
-if which npm > /dev/null; then
-  export PATH="$PATH:$(npm get prefix -g)"
+if which npm > {{ .chezmoi.pathSeparator }}dev{{ .chezmoi.pathSeparator }}null; then
+  export PATH="$PATH{{ .chezmoi.pathListSeparator }}$(npm get prefix -g)"
 fi
 
 # Rust
-[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+[[ -f "$HOME{{ .chezmoi.pathSeparator }}.cargo{{ .chezmoi.pathSeparator }}env" ]] && source "$HOME{{ .chezmoi.pathSeparator }}.cargo{{ .chezmoi.pathSeparator }}env"

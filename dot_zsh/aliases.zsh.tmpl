@@ -1,26 +1,28 @@
-# vim: set ft=zsh:
-# ~/.zsh/.zshrc
+# vim{{ .chezmoi.pathListSeparator }} set ft=zsh{{ .chezmoi.pathListSeparator }}
+# ~{{ .chezmoi.pathSeparator }}.zsh{{ .chezmoi.pathSeparator }}.zshrc
 # Reload zsh config - use exec to start fresh shell
 alias sz="exec zsh"
-alias csz="cat $ZDOTDIR/.zshrc"
-alias catrc="cat $ZDOTDIR/.zshrc"
+alias csz="cat $ZDOTDIR{{ .chezmoi.pathSeparator }}.zshrc"
+alias catsz="cat $ZDOTDIR{{ .chezmoi.pathSeparator }}.zshrc"
+alias catrc="cat $ZDOTDIR{{ .chezmoi.pathSeparator }}.zshrc"
 
-# ~/.zshenv
-alias szenv="source ~/.zshenv"
-alias czenv="cat ~/.zshenv"
-alias catenv="cat ~/.zshenv"
+# ~{{ .chezmoi.pathSeparator }}.zshenv
+alias szenv="source ~{{ .chezmoi.pathSeparator }}.zshenv"
+alias czenv="cat ~{{ .chezmoi.pathSeparator }}.zshenv"
+alias catzenv="cat ~{{ .chezmoi.pathSeparator }}.zshenv"
+alias catenv="cat ~{{ .chezmoi.pathSeparator }}.zshenv"
 
 # Directories
 alias ls="eza"
 alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-alias c="cd ~/code"
+alias ...="cd ..{{ .chezmoi.pathSeparator }}.."
+alias ....="cd ..{{ .chezmoi.pathSeparator }}..{{ .chezmoi.pathSeparator }}.."
+alias .....="cd ..{{ .chezmoi.pathSeparator }}..{{ .chezmoi.pathSeparator }}..{{ .chezmoi.pathSeparator }}.."
+alias c="cd ~{{ .chezmoi.pathSeparator }}code"
 alias h="cd ~"
 alias l="ls -l"
 alias ll="ls -al"
-alias localbin="cd ~/.local/bin"
+alias localbin="cd ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin"
 alias rmrf="rm -rf"
 
 # Files
@@ -28,78 +30,91 @@ alias x="chmod +x"
 
 # Git
 # nice shorthand,plus it gets rid of annoyingly launching ghostscript on accident.
-alias ga="git add"
-alias gaa="git add ."
-alias gau="git add -u" # git add unstaged only
+alias ga="{{ .chezmoi.config.git.command }} {{ .chezmoi.command }}"
+alias gaa="{{ .chezmoi.config.git.command }} {{ .chezmoi.command }} ."
+alias gau="{{ .chezmoi.config.git.command }} {{ .chezmoi.command }} -u" # {{ .chezmoi.config.git.command }} {{ .chezmoi.command }} unstaged only
 
-alias gb="git branch"
-alias gbl="git branch -l"
+alias gb="{{ .chezmoi.config.git.command }} branch"
+alias gbl="{{ .chezmoi.config.git.command }} branch -l"
 
-alias gc="git commit --verbose"
-alias gca="git commit --amend"
-alias gcb="git checkout -b"
-alias gcm="git commit -m"
+alias gc="{{ .chezmoi.config.git.command }} commit --verbose"
+alias gca="{{ .chezmoi.config.git.command }} commit --amend"
+alias gcb="{{ .chezmoi.config.git.command }} checkout -b"
+alias gcm="{{ .chezmoi.config.git.command }} commit -m"
 
-alias gd="git diff"
-alias gds="git diff --staged"
+alias gd="{{ .chezmoi.config.git.command }} diff"
+alias gds="{{ .chezmoi.config.git.command }} diff --staged"
 
-alias gl="git log"
-# fancy git
-alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
-alias glogv="glog | vim -" # fancy git log opened in vim, useful for searching and copying
-alias glogp="glog -p" # fancy git log, show diff for each commit
-alias glv="git log | vim -" # git log opened in vim, useful for searching and copying
+alias gl="{{ .chezmoi.config.git.command }} log"
+# fancy {{ .chezmoi.config.git.command }}
+alias glog="{{ .chezmoi.config.git.command }} log --graph --pretty=format{{ .chezmoi.pathListSeparator }}'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias glogv="glog | vim -" # fancy {{ .chezmoi.config.git.command }} log opened in vim, useful for searching and copying
+alias glogp="glog -p" # fancy {{ .chezmoi.config.git.command }} log, show diff for each commit
+alias glv="{{ .chezmoi.config.git.command }} log | vim -" # {{ .chezmoi.config.git.command }} log opened in vim, useful for searching and copying
 
-alias gp="git push"
-alias gpf="git push --force-with-lease"
-# git push and set upstream to current branch
+alias gp="{{ .chezmoi.config.git.command }} push"
+alias gpf="{{ .chezmoi.config.git.command }} push --force-with-lease"
+# {{ .chezmoi.config.git.command }} push and set upstream to current branch
 function push_upstream () {
-    git push -u origin $(git branch | grep "*" | awk -F " " '{print $NF}')
+    {{ .chezmoi.config.git.command }} push -u origin $({{ .chezmoi.config.git.command }} branch | grep "*" | awk -F " " '{print $NF}')
 }
 alias gpu=push_upstream
 alias lg="lazygit"
-alias gs="git status"
+alias gs="{{ .chezmoi.config.git.command }} status"
 
 # Ruby
 alias bi="bundle install"
 
-# Homebrew with Ansible sync
-source "$ZDOTDIR/scripts/brew-ansible-sync.sh"
+# {{ .chezmoi.version.builtBy }} with Ansible sync
+source "$ZDOTDIR{{ .chezmoi.pathSeparator }}scripts{{ .chezmoi.pathSeparator }}brew-ansible-sync.sh"
 
 #region Program Related
 
 ## Chezmoi
-export MOIDIR="$HOME/.local/share/chezmoi"
+export MOIDIR="$HOME{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}share{{ .chezmoi.pathSeparator }}chezmoi"
 alias moi="chezmoi"
 # cd to dotfiles repo.
 alias moicd="cd $MOIDIR"
-# Run a git command on dotfiles repo from any dir.
-alias gmoi="git -C $MOIDIR"
+# Run a {{ .chezmoi.config.git.command }} command on dotfiles repo from any dir.
+alias gmoi="{{ .chezmoi.config.git.command }} -C $MOIDIR"
 # Open dotfiles repo in editor.
 alias edit="pushd $MOIDIR && $EDITOR $MOIDIR"
 # Apply and source changes.
 alias ma="chezmoi apply && sz"
-alias moi_add_nvim="chezmoi add ~/.config/nvim && rm $MOIDIR/dot_config/nvim/lazy-lock.json"
+alias moi_{{ .chezmoi.command }}_nvim="chezmoi {{ .chezmoi.command }} ~{{ .chezmoi.pathSeparator }}.config{{ .chezmoi.pathSeparator }}nvim && rm $MOIDIR{{ .chezmoi.pathSeparator }}dot_config{{ .chezmoi.pathSeparator }}nvim{{ .chezmoi.pathSeparator }}lazy-lock.{{ .chezmoi.config.format }}"
 
 ## Ansible
-alias dotansible="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR/ansible/inventory/main.yml"
-alias dotansible_wsl="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR/ansible/inventory/main.yml --ask-become"
+alias dotansible="ansible-playbook $MOIDIR{{ .chezmoi.pathSeparator }}ansible{{ .chezmoi.pathSeparator }}main.yml -i $MOIDIR{{ .chezmoi.pathSeparator }}ansible{{ .chezmoi.pathSeparator }}inventory{{ .chezmoi.pathSeparator }}main.yml"
+alias dotansible_wsl="ansible-playbook $MOIDIR{{ .chezmoi.pathSeparator }}ansible{{ .chezmoi.pathSeparator }}main.yml -i $MOIDIR{{ .chezmoi.pathSeparator }}ansible{{ .chezmoi.pathSeparator }}inventory{{ .chezmoi.pathSeparator }}main.yml --ask-become"
 # Run specific ansible tasks by tag
-alias dotansible_brew="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR/ansible/inventory/main.yml --tags brew"
-alias dotansible_packages="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR/ansible/inventory/main.yml --tags packages"
-alias dotansible_zsh="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR/ansible/inventory/main.yml --tags zsh"
-alias dotansible_tmux="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR/ansible/inventory/main.yml --tags tmux"
-alias dotansible_nodenv="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR/ansible/inventory/main.yml --tags nodenv"
-alias dotansible_alacritty="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR/ansible/inventory/main.yml --tags alacritty"
+alias dotansible_brew="ansible-playbook $MOIDIR{{ .chezmoi.pathSeparator }}ansible{{ .chezmoi.pathSeparator }}main.yml -i $MOIDIR{{ .chezmoi.pathSeparator }}ansible{{ .chezmoi.pathSeparator }}inventory{{ .chezmoi.pathSeparator }}main.yml --tags brew"
+alias dotansible_packages="ansible-playbook $MOIDIR{{ .chezmoi.pathSeparator }}ansible{{ .chezmoi.pathSeparator }}main.yml -i $MOIDIR{{ .chezmoi.pathSeparator }}ansible{{ .chezmoi.pathSeparator }}inventory{{ .chezmoi.pathSeparator }}main.yml --tags packages"
+alias dotansible_zsh="ansible-playbook $MOIDIR{{ .chezmoi.pathSeparator }}ansible{{ .chezmoi.pathSeparator }}main.yml -i $MOIDIR{{ .chezmoi.pathSeparator }}ansible{{ .chezmoi.pathSeparator }}inventory{{ .chezmoi.pathSeparator }}main.yml --tags zsh"
+alias dotansible_tmux="ansible-playbook $MOIDIR{{ .chezmoi.pathSeparator }}ansible{{ .chezmoi.pathSeparator }}main.yml -i $MOIDIR{{ .chezmoi.pathSeparator }}ansible{{ .chezmoi.pathSeparator }}inventory{{ .chezmoi.pathSeparator }}main.yml --tags tmux"
+alias dotansible_nodenv="ansible-playbook $MOIDIR{{ .chezmoi.pathSeparator }}ansible{{ .chezmoi.pathSeparator }}main.yml -i $MOIDIR{{ .chezmoi.pathSeparator }}ansible{{ .chezmoi.pathSeparator }}inventory{{ .chezmoi.pathSeparator }}main.yml --tags nodenv"
+alias dotansible_alacritty="ansible-playbook $MOIDIR{{ .chezmoi.pathSeparator }}ansible{{ .chezmoi.pathSeparator }}main.yml -i $MOIDIR{{ .chezmoi.pathSeparator }}ansible{{ .chezmoi.pathSeparator }}inventory{{ .chezmoi.pathSeparator }}main.yml --tags alacritty"
 
 ## Nodenv
-alias update_nodenv_build="git -C ~/.nodenv/plugins/node-build pull"
+alias update_nodenv_build="{{ .chezmoi.config.git.command }} -C ~{{ .chezmoi.pathSeparator }}.nodenv{{ .chezmoi.pathSeparator }}plugins{{ .chezmoi.pathSeparator }}node-build pull"
+
+# FZF
+# function open_in_vscode {
+#     code $(fzf)
+# }
+
+# alias lfunctions="print -l ${(ok)functions[(I)[^_]*]}"
+# alias lfn=lfunctions
+# alias sfn="lfn | fzf"
+
+# function rfn {
+#     $(sfn)
+# }
 
 ## Able
 function start_able_dev {
     pkill Able
-    pushd ~/code/able
-    npm run electron:serve
+    pushd ~{{ .chezmoi.pathSeparator }}code{{ .chezmoi.pathSeparator }}able
+    npm run electron{{ .chezmoi.pathListSeparator }}serve
     popd
 }
 alias abledev=start_able_dev
@@ -109,17 +124,17 @@ alias vim="nvim"
 alias v="nvim"
 # alias vv="nvim ."
 alias vd="pushd $MOIDIR && nvim ."
-alias nvimcd="cd ~/.config/nvim"
+alias nvimcd="cd ~{{ .chezmoi.pathSeparator }}.config{{ .chezmoi.pathSeparator }}nvim"
 
 ## Grep
 # Colorize matches in grep output.
-alias grep="grep --color=auto"
+alias grep="grep --color={{ .chezmoi.config.color }}"
 
 # Search through history.
-# Example:
+# Example{{ .chezmoi.pathListSeparator }}
 # $ hgrep ls
-# 17625  ls /usr/bin
-# 17626  ls /usr/bin | grep firefox
+# 17625  ls {{ .chezmoi.pathSeparator }}usr{{ .chezmoi.pathSeparator }}bin
+# 17626  ls {{ .chezmoi.pathSeparator }}usr{{ .chezmoi.pathSeparator }}bin | grep firefox
 # 17641  ls
 function hgrep() {
     history | grep "${1}"
@@ -128,25 +143,22 @@ function hgrep() {
 #endregion Programs
 
 #region Zendesk-Specific Configuration
-{{ if eq .chezmoi.hostname "GVXPDWWKWG" -}}
 # Directories
-alias zen="cd ~/code/zendesk"
+alias zen="cd ~{{ .chezmoi.pathSeparator }}code{{ .chezmoi.pathSeparator }}zendesk"
 function start_bill() {
-    pushd ~/code/zendesk/billing
+    pushd ~{{ .chezmoi.pathSeparator }}code{{ .chezmoi.pathSeparator }}zendesk{{ .chezmoi.pathSeparator }}billing
     zdi zendesk_billing -d restart -e UNICORN_TIMEOUT=600000
 }
-{{end -}}
 #endregion Zendesk-Specific Configuration
 
 function generate_password() {
-    local password
-    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        password=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c 32)
+    if [[ $isLinux == 0 ]]; then
+       password=$(< {{ .chezmoi.pathSeparator }}dev{{ .chezmoi.pathSeparator }}urandom tr -dc _A-Z-a-z-0-9 | head -c 32; echo;)
     else
-        password=$(env LC_CTYPE=C tr -dc "a-zA-Z0-9-_\$\?" < /dev/urandom | head -c 32)
+        password=$(env LC_CTYPE=C tr -dc "a-zA-Z0-9-_\$\?" < {{ .chezmoi.pathSeparator }}dev{{ .chezmoi.pathSeparator }}urandom | head -c 32)
     fi
 
-    echo -n "$password" | pbcopy
+    echo $password | pbcopy
     echo "New password copied to clipboard."
 }
 
@@ -159,33 +171,19 @@ alias nt="new_script --name"
 
 # Alacritty command line
 #
-{{ if eq .chezmoi.os "linux" -}}
-export ALACRITTY_SETTINGS_DIR="/mnt/c/Users/Patrick/AppData/Roaming/Alacritty/Alacritty.toml"
-
-# This function only applies to WSL. It opens the alacritty settings file in vim.
-function alacritty_settings_open() {
-  $EDITOR $ALACRITTY_SETTINGS_DIR
-}
-
-function alacritty_settings_update() {
-  cp "$HOME/.local/share/chezmoi/dot_config/alacritty/alacritty.toml" $ALACRITTY_SETTINGS_DIR
-}
-
-{{end -}}
-
 # Tmux
 #
-alias tmux_uninstall_plugins="~/.tmux/plugins/tpm/bin/clean_plugins"
+alias tmux_uninstall_plugins="~{{ .chezmoi.pathSeparator }}.tmux{{ .chezmoi.pathSeparator }}plugins{{ .chezmoi.pathSeparator }}tpm{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}clean_plugins"
 
 
 # List all nvim configurations and launch nvim with the configuration you choose.
-# Source: https://michaeluloth.com/neovim-switch-configs/
-# This environment variable is the name of the folder in ~/.config/nvim that contains the
+# Source{{ .chezmoi.pathListSeparator }} https{{ .chezmoi.pathListSeparator }}{{ .chezmoi.pathSeparator }}{{ .chezmoi.pathSeparator }}michaeluloth.com{{ .chezmoi.pathSeparator }}neovim-switch-configs{{ .chezmoi.pathSeparator }}
+# This environment variable is the name of the folder in ~{{ .chezmoi.pathSeparator }}.config{{ .chezmoi.pathSeparator }}nvim that contains the
 # configuration you want to use for neovim.
 export NVIM_APPNAME="nvim-custom"
 vv() {
-  # Assumes all configs exist in directories named ~/.config/nvim-*
-  local config=$(fd --max-depth 1 --glob 'nvim-*' ~/.config | fzf --prompt="Neovim Configs > " --height=~50% --layout=reverse --border --exit-0)
+  # Assumes all configs exist in directories named ~{{ .chezmoi.pathSeparator }}.config{{ .chezmoi.pathSeparator }}nvim-*
+  local config=$(fd --max-depth 1 --glob 'nvim-*' ~{{ .chezmoi.pathSeparator }}.config | fzf --prompt="Neovim Configs > " --height=~50% --layout=reverse --border --exit-0)
 
   # If I exit fzf without selecting a config, don't open Neovim
   [[ -z $config ]] && echo "No config selected" && return

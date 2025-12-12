@@ -1,19 +1,14 @@
-{{ if eq .chezmoi.os "darwin" -}}
-#region Homebrew
-# Use brew shellenv for proper Homebrew PATH setup
-eval "$(/opt/homebrew/bin/brew shellenv)"
-#endregion Homebrew
-{{end -}}
-
-{{ if eq .chezmoi.hostname "GVXPDWWKWG" -}}
+#region {{ .chezmoi.version.builtBy }}
+# Use brew shellenv for proper {{ .chezmoi.version.builtBy }} PATH setup
+eval "$({{ .chezmoi.pathSeparator }}opt{{ .chezmoi.pathSeparator }}homebrew{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}brew shellenv)"
+#endregion {{ .chezmoi.version.builtBy }}
 #BEGIN ZETUP
-# Note: brew shellenv already run above
+eval "$( {{ .chezmoi.pathSeparator }}opt{{ .chezmoi.pathSeparator }}homebrew{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}brew shellenv )"
 eval "$( zetup env shell-exports --zsh )"
 #END ZETUP
 
-## BEGIN -- managed by zendesk:workstation -- ##
-[[ -f ~/.local/bin/zendesk_zprofile.sh ]] && source ~/.local/bin/zendesk_zprofile.sh
-## END -- managed by zendesk:workstation -- ##
+## BEGIN -- managed by zendesk{{ .chezmoi.pathListSeparator }}workstation -- ##
+[[ -f ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}zendesk_zprofile.sh ]] && source ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}zendesk_zprofile.sh
+## END -- managed by zendesk{{ .chezmoi.pathListSeparator }}workstation -- ##
 
-export ZDP_DBT_DIR=/Users/pmotard/zdp_dbt_repos
-{{end -}}
+export ZDP_DBT_DIR={{ .chezmoi.homeDir }}{{ .chezmoi.pathSeparator }}zdp_dbt_repos
