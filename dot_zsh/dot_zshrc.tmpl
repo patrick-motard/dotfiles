@@ -33,11 +33,27 @@ fi
 #endregion Completion
 
 #region SSH
-eval "$(ssh-agent -s)" &> /dev/null
+# Only start ssh-agent if we can't connect to one
+# ssh-add -l returns: 0=has keys, 1=no keys, 2=no agent
+ssh-add -l &>/dev/null
+if [[ $? -eq 2 ]]; then
+    eval "$(ssh-agent -s)" &> /dev/null
+fi
+
+{{ if eq .chezmoi.os "darwin" -}}
+# macOS: Use keychain integration to persist keys across reboots
+[[ -f ~/.ssh/github ]] && ssh-add -q --apple-use-keychain ~/.ssh/github 2>/dev/null
+{{ if ne .chezmoi.hostname "GVXPDWWKWG" -}}
+[[ -f ~/.ssh/pve1 ]] && ssh-add -q --apple-use-keychain ~/.ssh/pve1 2>/dev/null
+[[ -f ~/.ssh/olivander ]] && ssh-add -q --apple-use-keychain ~/.ssh/olivander 2>/dev/null
+{{ end -}}
+{{ else -}}
+# Linux: Standard key loading
 [[ -f ~/.ssh/github ]] && ssh-add -q ~/.ssh/github
 {{ if ne .chezmoi.hostname "GVXPDWWKWG" -}}
 [[ -f ~/.ssh/pve1 ]] && ssh-add -q ~/.ssh/pve1
 [[ -f ~/.ssh/olivander ]] && ssh-add -q ~/.ssh/olivander
+{{ end -}}
 {{ end -}}
 #endregion SSH
 
