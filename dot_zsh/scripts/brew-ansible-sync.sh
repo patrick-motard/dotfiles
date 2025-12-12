@@ -141,25 +141,13 @@ function brewi() {
           in_brew = 0
         }
         { print }
-      ' "$ansible_file" > "$ansible_file.tmp" && mv "$ansible_file.tmp" "$ansible_file"
+      ' "$ansible_file" > "$ansible_file.tmp" && mv "$ansible_file.tmp" "$ansible_file" || rm -f "$ansible_file.tmp"
 
-      # Sort the package list
-      awk '
-        /^- homebrew:$/ { in_section = 1; print; next }
-        in_section && /^    name:$/ { print; getting_packages = 1; next }
-        in_section && getting_packages && /^      - / { packages[++count] = $0; next }
-        in_section && getting_packages && /^    state: present$/ {
-          n = asort(packages, sorted)
-          for (i = 1; i <= n; i++) print sorted[i]
-          delete packages
-          count = 0
-          getting_packages = 0
-          in_section = 0
-          print
-          next
-        }
-        { print }
-      ' "$ansible_file" > "$ansible_file.tmp" && mv "$ansible_file.tmp" "$ansible_file"
+      # Sort the package list (using perl for portability - asort requires gawk)
+      perl -0777 -pe '
+        s/(- homebrew:\n    name:\n)((?:      - .+\n)+)(    state: present)/
+          $1 . join("", sort split(\/\n\/, $2)) . "\n" . $3/e
+      ' "$ansible_file" > "$ansible_file.tmp" && mv "$ansible_file.tmp" "$ansible_file" || rm -f "$ansible_file.tmp"
 
       # Commit and push
       git -C "$MOIDIR" add "$ansible_file"
@@ -206,26 +194,13 @@ function brewci() {
           next
         }
         { print }
-      ' "$ansible_file" > "$ansible_file.tmp" && mv "$ansible_file.tmp" "$ansible_file"
+      ' "$ansible_file" > "$ansible_file.tmp" && mv "$ansible_file.tmp" "$ansible_file" || rm -f "$ansible_file.tmp"
 
-      # Sort the cask list
-      awk '
-        /^- homebrew_cask:$/ { in_section = 1; print; next }
-        in_section && /^    state: present$/ { print; next }
-        in_section && /^    name:$/ { print; getting_packages = 1; next }
-        in_section && getting_packages && /^      - / { packages[++count] = $0; next }
-        in_section && getting_packages {
-          n = asort(packages, sorted)
-          for (i = 1; i <= n; i++) print sorted[i]
-          delete packages
-          count = 0
-          getting_packages = 0
-          in_section = 0
-          print
-          next
-        }
-        { print }
-      ' "$ansible_file" > "$ansible_file.tmp" && mv "$ansible_file.tmp" "$ansible_file"
+      # Sort the cask list (using perl for portability - asort requires gawk)
+      perl -0777 -pe '
+        s/(- homebrew_cask:\n    state: present\n    name:\n)((?:      - .+\n)+)/
+          $1 . join("", sort split(\/\n\/, $2)) . "\n"/e
+      ' "$ansible_file" > "$ansible_file.tmp" && mv "$ansible_file.tmp" "$ansible_file" || rm -f "$ansible_file.tmp"
 
       # Commit and push
       git -C "$MOIDIR" add "$ansible_file"
