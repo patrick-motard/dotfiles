@@ -27,6 +27,7 @@
       - yq
       - qutebrowser
       - superwhisper
+      - eqmac
     state: present
 - homebrew_cask:
     state: present
