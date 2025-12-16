@@ -227,12 +227,42 @@ function brewu() {
     return 1
   fi
 
+  # Check if package is installed locally
+  local is_installed=0
+  if command brew list "$package" &>/dev/null; then
+    is_installed=1
+  fi
+
+  # Check if package is in ansible config
+  local in_ansible=0
+  if grep -q "^\s*- $package\s*$" "$ansible_file" 2>/dev/null || grep -q "^\s*- $package\s*#" "$ansible_file" 2>/dev/null; then
+    in_ansible=1
+  fi
+
+  # If not installed locally but in ansible, just remove from ansible
+  if [[ $is_installed -eq 0 ]] && [[ $in_ansible -eq 1 ]]; then
+    sed -i.tmp "/^\s*- $package\s*$/d; /^\s*- $package\s*#/d" "$ansible_file" && rm -f "$ansible_file.tmp"
+
+    git -C "$MOIDIR" add "$ansible_file"
+    git -C "$MOIDIR" commit -m "Remove homebrew package: $package"
+    git -C "$MOIDIR" push
+
+    echo "✓ Removed '$package' from Ansible config (was not installed locally)"
+    return 0
+  fi
+
+  # If not installed and not in ansible, nothing to do
+  if [[ $is_installed -eq 0 ]] && [[ $in_ansible -eq 0 ]]; then
+    echo "Package '$package' is not installed and not in Ansible config"
+    return 1
+  fi
+
   # Create backup before making changes
   cp "$ansible_file" "$ansible_file.backup"
 
   # Remove from ansible first (we'll restore if uninstall fails)
   local removed=0
-  if grep -q "^\s*- $package\s*$" "$ansible_file" 2>/dev/null || grep -q "^\s*- $package\s*#" "$ansible_file" 2>/dev/null; then
+  if [[ $in_ansible -eq 1 ]]; then
     sed -i.tmp "/^\s*- $package\s*$/d; /^\s*- $package\s*#/d" "$ansible_file" && rm -f "$ansible_file.tmp"
     removed=1
   fi
@@ -275,12 +305,42 @@ function brewcu() {
     return 1
   fi
 
+  # Check if cask is installed locally
+  local is_installed=0
+  if command brew list --cask "$package" &>/dev/null; then
+    is_installed=1
+  fi
+
+  # Check if cask is in ansible config
+  local in_ansible=0
+  if grep -q "^\s*- $package\s*$" "$ansible_file" 2>/dev/null || grep -q "^\s*- $package\s*#" "$ansible_file" 2>/dev/null; then
+    in_ansible=1
+  fi
+
+  # If not installed locally but in ansible, just remove from ansible
+  if [[ $is_installed -eq 0 ]] && [[ $in_ansible -eq 1 ]]; then
+    sed -i.tmp "/^\s*- $package\s*$/d; /^\s*- $package\s*#/d" "$ansible_file" && rm -f "$ansible_file.tmp"
+
+    git -C "$MOIDIR" add "$ansible_file"
+    git -C "$MOIDIR" commit -m "Remove homebrew cask: $package"
+    git -C "$MOIDIR" push
+
+    echo "✓ Removed cask '$package' from Ansible config (was not installed locally)"
+    return 0
+  fi
+
+  # If not installed and not in ansible, nothing to do
+  if [[ $is_installed -eq 0 ]] && [[ $in_ansible -eq 0 ]]; then
+    echo "Cask '$package' is not installed and not in Ansible config"
+    return 1
+  fi
+
   # Create backup before making changes
   cp "$ansible_file" "$ansible_file.backup"
 
   # Remove from ansible first (we'll restore if uninstall fails)
   local removed=0
-  if grep -q "^\s*- $package\s*$" "$ansible_file" 2>/dev/null || grep -q "^\s*- $package\s*#" "$ansible_file" 2>/dev/null; then
+  if [[ $in_ansible -eq 1 ]]; then
     sed -i.tmp "/^\s*- $package\s*$/d; /^\s*- $package\s*#/d" "$ansible_file" && rm -f "$ansible_file.tmp"
     removed=1
   fi

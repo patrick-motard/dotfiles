@@ -1,21 +1,21 @@
-# vim{{ .chezmoi.pathListSeparator }} set ft=zsh{{ .chezmoi.pathListSeparator }}
+# vim: set ft=zsh:
 #region Notes
 
 # What are these 'region' and 'endregion' sections?
-# 'region' and 'endregion' are used throughout this {{ .chezmoi.config.mode }} to
-# provide folding in vscode, so that I can expand{{ .chezmoi.pathSeparator }}collapse
-# whole sections of this {{ .chezmoi.config.mode }} for easier editing.
+# 'region' and 'endregion' are used throughout this file to
+# provide folding in vscode, so that I can expand/collapse
+# whole sections of this file for easier editing.
 
 #endregion Notes
 
 #region History
 export HISTSIZE=100000 # max events for internal history
-export SAVEHIST=100000 # max events in history {{ .chezmoi.config.mode }}
-export HISTFILE="${ZDOTDIR}{{ .chezmoi.pathSeparator }}.zhistory"
+export SAVEHIST=100000 # max events in history file
+export HISTFILE="${ZDOTDIR}/.zhistory"
 # immediately append to history instead of on terminal close
 setopt HIST_FIND_NO_DUPS
 setopt EXTENDED_HISTORY         # record command start time
-setopt INC_APPEND_HISTORY_TIME  # append command to history {{ .chezmoi.config.mode }} immediately after execution
+setopt INC_APPEND_HISTORY_TIME  # append command to history file immediately after execution
 setopt SHARE_HISTORY
 bindkey '^R' history-incremental-search-backward
 alias history="fc -l 1"         # Ensure all history is shown
@@ -25,7 +25,7 @@ alias historyts="fc -f -l 1"    # Show all history, with timestamp
 #region Completion
 # Optimize compinit by using cache (only rebuild once per day)
 autoload -Uz compinit
-if [[ -n ${ZDOTDIR}{{ .chezmoi.pathSeparator }}.zcompdump(#qN.mh+24) ]]; then
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
   compinit
 else
   compinit -C
@@ -45,33 +45,34 @@ fi
 #endregion Linux specific
 
 # Add local bin directories to PATH (only if they exist)
-[[ -d "$HOME{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin" ]] && export PATH="$HOME{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathListSeparator }}$PATH"
-[[ -d "$HOME{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}ssh-create" ]] && export PATH="$PATH{{ .chezmoi.pathListSeparator }}$HOME{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}ssh-create"
+[[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
+[[ -d "$HOME/.local/bin/ssh-create" ]] && export PATH="$PATH:$HOME/.local/bin/ssh-create"
 
 #region OSX specific
 # Initialize rbenv
-if command -v rbenv >{{ .chezmoi.pathSeparator }}dev{{ .chezmoi.pathSeparator }}null 2>&1; then
+if command -v rbenv >/dev/null 2>&1; then
   eval "$(rbenv init - zsh)"
   # Ruby Neovim setup - ensures neovim can access 'neovim-ruby-host'
-  # You can verify with {{ .chezmoi.pathListSeparator }}checkhealth in neovim
-  export PATH="$PATH{{ .chezmoi.pathListSeparator }}$(rbenv root){{ .chezmoi.pathSeparator }}versions{{ .chezmoi.pathSeparator }}$(rbenv version-name){{ .chezmoi.pathSeparator }}bin"
+  # You can verify with :checkhealth in neovim
+  export PATH="$PATH:$(rbenv root)/versions/$(rbenv version-name)/bin"
 fi
 
 # Tmux 256 color support
-# https{{ .chezmoi.pathListSeparator }}{{ .chezmoi.pathSeparator }}{{ .chezmoi.pathSeparator }}gpanders.com{{ .chezmoi.pathSeparator }}blog{{ .chezmoi.pathSeparator }}the-definitive-guide-to-using-tmux-256color-on-macos{{ .chezmoi.pathSeparator }}
-export PATH="{{ .chezmoi.pathSeparator }}opt{{ .chezmoi.pathSeparator }}homebrew{{ .chezmoi.pathSeparator }}opt{{ .chezmoi.pathSeparator }}ncurses{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathListSeparator }}$PATH"
-export TERMINFO_DIRS=$TERMINFO_DIRS{{ .chezmoi.pathListSeparator }}$HOME{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}share{{ .chezmoi.pathSeparator }}terminfo
+# https://gpanders.com/blog/the-definitive-guide-to-using-tmux-256color-on-macos/
+export PATH="/opt/homebrew/opt/ncurses/bin:$PATH"
+export TERMINFO_DIRS=$TERMINFO_DIRS:$HOME/.local/share/terminfo
 export TERM=tmux-256color
 
 #endregion OSX specific
 
+{{ if eq .chezmoi.hostname "GVXPDWWKWG" -}}
 #region Zendesk-specific configuration
-[[ -f ~{{ .chezmoi.pathSeparator }}.ssh{{ .chezmoi.pathSeparator }}zendesk-company ]] && ssh-{{ .chezmoi.command }} -qK ~{{ .chezmoi.pathSeparator }}.ssh{{ .chezmoi.pathSeparator }}zendesk-company
+[[ -f ~/.ssh/zendesk-company ]] && ssh-add -qK ~/.ssh/zendesk-company
 
-## BEGIN -- managed by dot-ansible{{ .chezmoi.pathListSeparator }}zendesk -- ##
+## BEGIN -- managed by dot-ansible:zendesk -- ##
 # export PLUGINS=$plugins
-[[ -f ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}zendesk_zshrc.sh ]] && source ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}zendesk_zshrc.sh
-## END -- managed by dot-ansible{{ .chezmoi.pathListSeparator }}zendesk -- ##
+[[ -f ~/.local/bin/zendesk_zshrc.sh ]] && source ~/.local/bin/zendesk_zshrc.sh
+## END -- managed by dot-ansible:zendesk -- ##
 
 # for the billing repo
 export HUSKY=0
@@ -79,15 +80,16 @@ export HUSKY=0
 # CICD
 source <(cicd completion zsh); compdef _cicd cicd
 
-## BEGIN -- managed by workstation, role{{ .chezmoi.pathListSeparator }} aws_cli -- ##
+## BEGIN -- managed by workstation, role: aws_cli -- ##
 alias awswhoami='aws sts get-caller-identity'
 function awscreds {
     aws-work.sh $1
     export AWS_PROFILE=$1
 }
-## END -- managed by workstation, role{{ .chezmoi.pathListSeparator }} aws_cli -- ##
+## END -- managed by workstation, role: aws_cli -- ##
 
 #endregion Zendesk-specific configuration
+{{ end -}}
 
 #region Directories
 setopt AUTO_CD           # Auto-change directory without typing cd.
@@ -102,51 +104,51 @@ for index ({1..9}) alias "$index"="cd +${index}"; unset index
 
 #region Nodenv
 # Lazy load nodenv to improve shell startup time
-if [[ -d "$HOME{{ .chezmoi.pathSeparator }}.nodenv" ]]; then
-  export PATH="$HOME{{ .chezmoi.pathSeparator }}.nodenv{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathListSeparator }}$PATH"
+if [[ -d "$HOME/.nodenv" ]]; then
+  export PATH="$HOME/.nodenv/bin:$PATH"
 
   # Lazy-load nodenv
   nodenv() {
     unset -f nodenv
     eval "$(command nodenv init - zsh)"
-    export PATH="$(nodenv root){{ .chezmoi.pathSeparator }}versions{{ .chezmoi.pathSeparator }}$(nodenv version-name){{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathListSeparator }}$PATH"
+    export PATH="$(nodenv root)/versions/$(nodenv version-name)/bin:$PATH"
     nodenv "$@"
   }
 fi
 #endregion Nodenv
 
 # Load aliases at the end to ensure they aren't clobbered.
-source $ZDOTDIR{{ .chezmoi.pathSeparator }}aliases.zsh
+source $ZDOTDIR/aliases.zsh
 
 #region Zplug
 # zplug is a plugin manager for zsh. I install it initially
-# using ansible. Specifically ansible{{ .chezmoi.pathSeparator }}roles{{ .chezmoi.pathSeparator }}zsh
-source ~{{ .chezmoi.pathSeparator }}.zplug{{ .chezmoi.pathSeparator }}init.zsh
+# using ansible. Specifically ansible/roles/zsh
+source ~/.zplug/init.zsh
 # vi mode
-zplug "plugins{{ .chezmoi.pathSeparator }}vi-mode", from{{ .chezmoi.pathListSeparator }}oh-my-zsh
+zplug "plugins/vi-mode", from:oh-my-zsh
 # terraform plugin (provides tf_prompt_info for agnoster theme)
-zplug "plugins{{ .chezmoi.pathSeparator }}terraform", from{{ .chezmoi.pathListSeparator }}oh-my-zsh
+zplug "plugins/terraform", from:oh-my-zsh
 
 # these two lines remove the user from prompt
 DEFAULT_USER=$USER
 prompt_context() {}
-zplug "themes{{ .chezmoi.pathSeparator }}agnoster", from{{ .chezmoi.pathListSeparator }}oh-my-zsh
+zplug "themes/agnoster", from:oh-my-zsh
 
-# zplug "plugins{{ .chezmoi.pathSeparator }}{{ .chezmoi.config.git.command }}", from{{ .chezmoi.pathListSeparator }}oh-my-zsh
-zplug "zsh-users{{ .chezmoi.pathSeparator }}zsh-autosuggestions"
+# zplug "plugins/git", from:oh-my-zsh
+zplug "zsh-users/zsh-autosuggestions"
 # Don't use the zsh-vi-mode plugin. It breaks the keybindings
 # in zsh-autosuggestions like using 'lk' for "accept".
 # export ZVM_VI_ESCAPE_BINDKEY="fd"
-# zplug "jeffreytse{{ .chezmoi.pathSeparator }}zsh-vi-mode"
+# zplug "jeffreytse/zsh-vi-mode"
 # syntax highlighting must be the last plugin sourced
-zplug "zsh-users{{ .chezmoi.pathSeparator }}zsh-syntax-highlighting", defer{{ .chezmoi.pathListSeparator }}2
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
 zplug load
 #endregion Zplug
 
 #region zoxide
 # Fast zsh directory switching (lazy-loaded)
-if command -v zoxide >{{ .chezmoi.pathSeparator }}dev{{ .chezmoi.pathSeparator }}null 2>&1; then
+if command -v zoxide >/dev/null 2>&1; then
   # Lazy-load zoxide
   z() {
     unset -f z
@@ -163,7 +165,7 @@ fi
 #endregion zoxide
 
 #region fzf
-if command -v fzf >{{ .chezmoi.pathSeparator }}dev{{ .chezmoi.pathSeparator }}null 2>&1; then
+if command -v fzf >/dev/null 2>&1; then
     source <(fzf --zsh)
 else
     echo "fzf is not installed. Please install it to use its features."
@@ -191,14 +193,14 @@ bindkey 'lc' autosuggest-clear
 # Sesh - tmux session manager.
 # This function allows you to select a tmux session from a list and connect to it
 # when not already in a tmux session.
-# https{{ .chezmoi.pathListSeparator }}{{ .chezmoi.pathSeparator }}{{ .chezmoi.pathSeparator }}github.com{{ .chezmoi.pathSeparator }}joshmedeski{{ .chezmoi.pathSeparator }}sesh
+# https://github.com/joshmedeski/sesh
 function sesh-sessions() {
   {
-    exec <{{ .chezmoi.pathSeparator }}dev{{ .chezmoi.pathSeparator }}tty
+    exec </dev/tty
     exec <&1
     local session
     session=$(sesh list -t -c | fzf --height 40% --reverse --border-label ' sesh ' --border --prompt '⚡  ')
-    zle reset-prompt > {{ .chezmoi.pathSeparator }}dev{{ .chezmoi.pathSeparator }}null 2>&1 || true
+    zle reset-prompt > /dev/null 2>&1 || true
     [[ -z "$session" ]] && return
     sesh connect $session
   }
