@@ -175,7 +175,8 @@ alias nt="new_script --name"
 #
 # Tmux
 #
-alias t='sesh connect "$(sesh list -t | head -1)" 2>/dev/null || tmux new-session'
+# Start tmux: connect to first session if server running, otherwise create new session
+alias t='tmux list-sessions &>/dev/null && sesh connect "$(sesh list -t | head -1)" || tmux new-session'
 alias tmux_uninstall_plugins="~/.tmux/plugins/tpm/bin/clean_plugins"
 
 
