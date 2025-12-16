@@ -1,42 +1,44 @@
-# vim{{ .chezmoi.pathListSeparator }} set ft=zsh{{ .chezmoi.pathListSeparator }}
+# vim: set ft=zsh:
 
-export ZDOTDIR="$HOME{{ .chezmoi.pathSeparator }}.zsh"
+export ZDOTDIR="$HOME/.zsh"
 # code_dir="$(which code)"
 # export EDITOR="${code_dir}"
 # export VISUAL="${code_dir}"
 export EDITOR=nvim
 export VISUAL=nvim
-export PATH="$PATH{{ .chezmoi.pathListSeparator }}$HOME{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}tools"
+export PATH="$PATH:$HOME/.local/bin/tools"
 
-# Create ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin, used in many places in my dotfiles
-[ ! -d ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin ] && mkdir -p ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin
+# Create ~/.local/bin, used in many places in my dotfiles
+[ ! -d ~/.local/bin ] && mkdir -p ~/.local/bin
 
 
 # export BROWSER=''
 
-[[ -f ~{{ .chezmoi.pathSeparator }}.zendesk-zshenv ]] && source ~{{ .chezmoi.pathSeparator }}.zendesk-zshenv
-## BEGIN -- managed by dot-ansible{{ .chezmoi.pathListSeparator }}zendesk -- ##
-[[ -f ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}zendesk_zshenv.sh ]] && source ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}zendesk_zshenv.sh
-## END -- managed by dot-ansible{{ .chezmoi.pathListSeparator }}zendesk -- ##
+{{ if eq .chezmoi.hostname "GVXPDWWKWG" -}}
+[[ -f ~/.zendesk-zshenv ]] && source ~/.zendesk-zshenv
+## BEGIN -- managed by dot-ansible:zendesk -- ##
+[[ -f ~/.local/bin/zendesk_zshenv.sh ]] && source ~/.local/bin/zendesk_zshenv.sh
+## END -- managed by dot-ansible:zendesk -- ##
+{{ end -}}
 
 # Needed to ensure Lazygit looks in this dir for it's config.
-export XDG_CONFIG_HOME="$HOME{{ .chezmoi.pathSeparator }}.config"
+export XDG_CONFIG_HOME="$HOME/.config"
 
-# https{{ .chezmoi.pathListSeparator }}{{ .chezmoi.pathSeparator }}{{ .chezmoi.pathSeparator }}github.com{{ .chezmoi.pathSeparator }}sass{{ .chezmoi.pathSeparator }}sassc-rails{{ .chezmoi.pathSeparator }}issues{{ .chezmoi.pathSeparator }}182#issuecomment-2501018835
-# export PATH="{{ .chezmoi.pathSeparator }}opt{{ .chezmoi.pathSeparator }}homebrew{{ .chezmoi.pathSeparator }}opt{{ .chezmoi.pathSeparator }}llvm{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathListSeparator }}$PATH"
-# export LDFLAGS="-L{{ .chezmoi.pathSeparator }}opt{{ .chezmoi.pathSeparator }}homebrew{{ .chezmoi.pathSeparator }}opt{{ .chezmoi.pathSeparator }}llvm{{ .chezmoi.pathSeparator }}lib"
-# export CPPFLAGS="-I{{ .chezmoi.pathSeparator }}opt{{ .chezmoi.pathSeparator }}homebrew{{ .chezmoi.pathSeparator }}opt{{ .chezmoi.pathSeparator }}llvm{{ .chezmoi.pathSeparator }}include"
+# https://github.com/sass/sassc-rails/issues/182#issuecomment-2501018835
+# export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+# export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
+# export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
 # export CC=clang
 # export CXX=clang++
 # export SDKROOT="$(xcrun --show-sdk-path)"
 #
 # For env vars not to be checked in.
-[[ -f ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}zshenv.sh ]] && source ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}zshenv.sh || touch ~{{ .chezmoi.pathSeparator }}.local{{ .chezmoi.pathSeparator }}bin{{ .chezmoi.pathSeparator }}zshenv.sh
+[[ -f ~/.local/bin/zshenv.sh ]] && source ~/.local/bin/zshenv.sh || touch ~/.local/bin/zshenv.sh
 
 # Ensure Node's global packages are in the PATH
-if which npm > {{ .chezmoi.pathSeparator }}dev{{ .chezmoi.pathSeparator }}null; then
-  export PATH="$PATH{{ .chezmoi.pathListSeparator }}$(npm get prefix -g)"
+if which npm > /dev/null; then
+  export PATH="$PATH:$(npm get prefix -g)"
 fi
 
 # Rust
-[[ -f "$HOME{{ .chezmoi.pathSeparator }}.cargo{{ .chezmoi.pathSeparator }}env" ]] && source "$HOME{{ .chezmoi.pathSeparator }}.cargo{{ .chezmoi.pathSeparator }}env"
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
