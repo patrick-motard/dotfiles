@@ -60,6 +60,9 @@ history = 100000
 unfocused_hollow = true
 style = "Block"
 
+[terminal]
+shell = { program = "/bin/zsh", args = ["-l", "-c", "sesh connect \"$(sesh list -t | head -1)\" 2>/dev/null || tmux new-session"] }
+
 [keyboard]
 bindings = [
 { key = "J", mods = "Command|Shift", action = "CreateNewWindow" },
