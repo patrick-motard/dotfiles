@@ -32,19 +32,7 @@
 - homebrew_cask:
     state: present
     name:
-      - whispering
-      - claude-code
-      - docker
-      - signal
-      - obsidian
-      - raycast
-      - discord
-      - iterm2
-      - visual-studio-code
-      - spotify
-      - keycastr
-      - dbeaver-community
-      - font-iosevka-term-nerd-font
+      - claude-code      - dbeaver-community      - discord      - docker      - font-iosevka-term-nerd-font      - iterm2      - keycastr      - nikitabobko/tap/aerospace      - obsidian      - raycast      - signal      - spotify      - visual-studio-code      - whispering
 - name: Remove unwanted brew packages.
   homebrew:
     name:
