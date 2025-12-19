@@ -1,0 +1,124 @@
+# AeroSpace Configuration
+# Documentation: https://github.com/nikitabobko/AeroSpace
+
+# Start AeroSpace at login
+{{ if eq .chezmoi.hostname "GVXPDWWKWG" -}}
+start-at-login = true
+{{ else -}}
+start-at-login = false
+{{ end -}}
+
+# Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+# Mouse follows focus
+on-focus-changed = ['move-mouse window-lazy-center']
+
+# Gaps between windows
+[gaps]
+inner.horizontal = 8
+inner.vertical = 8
+outer.left = 8
+outer.bottom = 8
+outer.top = 8
+outer.right = 8
+
+# Workspace assignments - automatically move apps to specific workspaces
+[[on-window-detected]]
+if.app-id = 'org.alacritty'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.googlecode.iterm2'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'org.mozilla.firefox'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = 'move-node-to-workspace 5'
+
+[[on-window-detected]]
+if.app-id = 'com.hnc.Discord'
+run = 'move-node-to-workspace 7'
+
+[[on-window-detected]]
+if.app-id = 'com.spotify.client'
+run = 'move-node-to-workspace 8'
+
+# Mode definitions
+[mode.main.binding]
+# Focus windows (Colemak Mod-DH: m=left, n=down, e=up, i=right)
+cmd-alt-m = 'focus left'
+cmd-alt-n = 'focus down'
+cmd-alt-e = 'focus up'
+cmd-alt-i = 'focus right'
+
+# Move windows
+cmd-alt-shift-m = 'move left'
+cmd-alt-shift-n = 'move down'
+cmd-alt-shift-e = 'move up'
+cmd-alt-shift-i = 'move right'
+
+# Resize mode
+cmd-alt-r = 'mode resize'
+
+# Switch workspace (Cmd+number like native macOS)
+cmd-1 = 'workspace 1'
+cmd-2 = 'workspace 2'
+cmd-3 = 'workspace 3'
+cmd-4 = 'workspace 4'
+cmd-5 = 'workspace 5'
+cmd-6 = 'workspace 6'
+cmd-7 = 'workspace 7'
+cmd-8 = 'workspace 8'
+cmd-9 = 'workspace 9'
+
+# Move window to workspace
+cmd-shift-1 = 'move-node-to-workspace 1'
+cmd-shift-2 = 'move-node-to-workspace 2'
+cmd-shift-3 = 'move-node-to-workspace 3'
+cmd-shift-4 = 'move-node-to-workspace 4'
+cmd-shift-5 = 'move-node-to-workspace 5'
+cmd-shift-6 = 'move-node-to-workspace 6'
+cmd-shift-7 = 'move-node-to-workspace 7'
+cmd-shift-8 = 'move-node-to-workspace 8'
+cmd-shift-9 = 'move-node-to-workspace 9'
+
+# Layout
+cmd-alt-s = 'layout v_accordion'  # vertical split
+cmd-alt-w = 'layout h_accordion'  # horizontal split
+cmd-alt-f = 'fullscreen'
+
+# Close windows
+cmd-alt-q = 'close'  # close focused window
+cmd-alt-shift-q = 'close-all-windows-but-current'  # close all but current
+
+# Reload config
+cmd-alt-shift-c = 'reload-config'
+
+# Close windows with empty titles (fixes ghost windows)
+cmd-alt-shift-r = "exec-and-forget sh -c \"aerospace list-windows --all --json | jq -r '.[] | select(.\\\"window-title\\\"==\\\"\\\") | .\\\"window-id\\\"' | xargs -n1 aerospace close --window-id\""
+
+# Balance window sizes
+cmd-alt-0 = 'balance-sizes'
+
+[mode.resize.binding]
+# Resize with Colemak Mod-DH keys (m=left, n=down, e=up, i=right)
+m = 'resize width -50'
+n = 'resize height +50'
+e = 'resize height -50'
+i = 'resize width +50'
+enter = 'mode main'
+esc = 'mode main'
