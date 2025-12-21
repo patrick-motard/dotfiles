@@ -1,33 +1,13 @@
 ---
+- name: Add Homebrew taps
+  homebrew_tap:
+    name:
+      - d12frosted/emacs-plus
+    state: present
+
 - homebrew:
     name:
-      - age
-      - antigen # zsh plugin manager
-      - chezmoi # dotfile manager
-      - entr
-      - eza # colorized terminal ls
-      - fzf
-      - git-delta
-      - hyperfine
-      - mpd
-      - neovim
-      - python3
-      - rbenv
-      - sesh
-      - slides
-      - tmux
-      - watch
-      - zoxide
-      - zsh
-      - protobuf
-      - google-chrome
-      - shortcat
-      - automake
-      - ffmpeg
-      - yq
-      - qutebrowser
-      - superwhisper
-      - eqmac
+      - age      - antigen # zsh plugin manager      - automake      - chezmoi # dotfile manager      - emacs-plus@30      - entr      - eqmac      - eza # colorized terminal ls      - ffmpeg      - fzf      - git-delta      - google-chrome      - hyperfine      - mpd      - neovim      - protobuf      - python3      - qutebrowser      - rbenv      - sesh      - shortcat      - slides      - superwhisper      - tmux      - watch      - yq      - zoxide      - zsh
     state: present
 - homebrew_cask:
     state: present
