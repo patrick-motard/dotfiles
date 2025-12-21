@@ -4,8 +4,12 @@ all:
     localhost
   vars:
     ansible_connection: local
-    home: "{{ansible_user_dir}}"
+    ansible_python_interpreter: auto_silent
+    home: "{{ ansible_facts['user_dir'] }}"
     dirs:
       home: "{{home}}"
       code: "{{home}}/code"
       bin: "{{home}}/.local/bin"
+    # Optional features - set to true to enable
+    emacs_enabled: true
+    is_work_machine: false

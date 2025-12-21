@@ -1,21 +1,42 @@
 ---
-# for cloning all my repos to thier prospective location
-- name: go get my scripts repo!
-  tags: [ repos ]
+# for cloning all my repos to their respective location
+
+- name: Clone scripts repo
+  tags: [repos, scripts]
   block:
     - name: ensure local bin exists
       file:
         path: "{{dirs.bin}}"
         state: directory
     - name: clone the repo
-      git:
-        accept_hostkey: true
-        repo: "git@github.com:patrick-motard/scripts.git"
-        dest: "{{dirs.code}}/scripts"
+      command: gh repo clone patrick-motard/scripts "{{dirs.code}}/scripts"
+      args:
+        creates: "{{dirs.code}}/scripts"
     - name: symlink to $TOOLS
       file:
         src: "{{dirs.code}}/scripts"
         dest: "{{dirs.bin}}/tools"
         state: link
-# - name: clone repos
-  # git:
+
+- name: Clone Claude plugin repos
+  tags: [repos, claude, claude-plugins]
+  block:
+    - name: ensure claude plugins directory exists
+      file:
+        path: "{{dirs.code}}/claude"
+        state: directory
+    - name: clone claude-plugins-public
+      command: gh repo clone patrick-motard/claude-plugins-public "{{dirs.code}}/claude/plugins-public"
+      args:
+        creates: "{{dirs.code}}/claude/plugins-public"
+    - name: clone claude-plugins-private
+      command: gh repo clone patrick-motard/claude-plugins-private "{{dirs.code}}/claude/plugins-private"
+      args:
+        creates: "{{dirs.code}}/claude/plugins-private"
+
+- name: Clone Claude zendesk plugin (work machine only)
+  tags: [repos, claude, claude-plugins]
+  when: is_work_machine | default(false)
+  command: gh repo clone patrick-motard/claude-plugins-zendesk "{{dirs.code}}/claude/plugins-zendesk"
+  args:
+    creates: "{{dirs.code}}/claude/plugins-zendesk"
