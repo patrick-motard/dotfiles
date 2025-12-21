@@ -3,4 +3,4 @@
   become: false
   git:
     repo: "https://github.com/VundleVim/Vundle.vim.git"
-    dest: "{{ansible_user_dir}}/.vim/bundle/Vundle.vim"
+    dest: "{{ ansible_facts['user_dir'] }}/.vim/bundle/Vundle.vim"

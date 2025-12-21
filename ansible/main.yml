@@ -31,3 +31,5 @@
       tags: [nodenv, node]
     - import_tasks: tasks/tmux.yml
       tags: [tmux]
+    - import_tasks: tasks/repos.yml
+      tags: [repos]

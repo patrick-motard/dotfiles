@@ -1,31 +1,40 @@
 ---
-# chemacs adds a flag to emacs that allows setting which dir to load
-# emacs configuration from. This is called via a script launched from
-# mod+i in i3wm, which loads scripts defined in ~/.config/rofi/cmd.csv
-- name: Download chemacs
-  # when: ansible_os_family != "Darwin"
+# Chemacs2 - Emacs profile switcher
+# Allows switching between different emacs configurations via --with-profile flag
+# Profiles are defined in ~/.emacs-profiles.el
+
+- name: Check if ~/.emacs.d exists
+  stat:
+    path: "{{ ansible_facts['user_dir'] }}/.emacs.d"
+  register: emacs_d
+
+- name: Check if chemacs2 is installed
+  stat:
+    path: "{{ ansible_facts['user_dir'] }}/.emacs.d/chemacs.el"
+  register: chemacs_installed
+
+- name: Backup existing ~/.emacs.d if not chemacs2
+  command: "mv {{ ansible_facts['user_dir'] }}/.emacs.d {{ ansible_facts['user_dir'] }}/.emacs.d.backup.{{ ansible_date_time.iso8601_basic_short }}"
+  when: emacs_d.stat.exists and not chemacs_installed.stat.exists
+
+- name: Clone chemacs2
   git:
-    repo: "https://github.com/plexus/chemacs.git"
-    dest: "{{ansible_user_dir}}/code/chemacs"
-- name: Install chemacs
-  # when: ansible_os_family != "Darwin"
-  shell: ./install.sh
-  args:
-    chdir: "{{ansible_user_dir}}/code/chemacs"
-# - name: See if spacemacs is installed.
-#   stat:
-#     path: "{{ansible_user_dir}}/.emacs.d"
-#   register: spacemacs_repo
-# TODO: We shouldn't remove peoples ~/.emacs.d, we should move it to a backup folder
-# - name: Remove ~/.emacs.d
-#   become: false
-#   file:
-#     path: "{{ansible_user_dir}}/.emacs.d"
-#     state: absent
-#   when: spacemacs_repo.stat.exists == false
-- name: Install Spacemacs
-  become: false
+    repo: "https://github.com/plexus/chemacs2.git"
+    dest: "{{ ansible_facts['user_dir'] }}/.emacs.d"
+    update: yes
+
+- name: Clone Doom Emacs
   git:
-    repo: "https://github.com/syl20bnr/spacemacs"
-    dest: "{{ansible_user_dir}}/.emacs.d"
-    version: develop
+    repo: "https://github.com/doomemacs/doomemacs.git"
+    dest: "{{ ansible_facts['user_dir'] }}/.emacs.d.doom"
+    depth: 1
+    update: no  # Don't update if already cloned, use doom upgrade instead
+
+- name: Check if Doom is installed
+  stat:
+    path: "{{ ansible_facts['user_dir'] }}/.emacs.d.doom/.local"
+  register: doom_installed
+
+- name: Install Doom Emacs
+  command: "{{ ansible_facts['user_dir'] }}/.emacs.d.doom/bin/doom install --no-config --no-env --no-fonts"
+  when: not doom_installed.stat.exists
