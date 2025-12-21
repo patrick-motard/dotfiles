@@ -105,6 +105,43 @@ function brew() {
       fi
       ;;
 
+    tap)
+      local tap_name="$1"
+
+      if [[ -n "$tap_name" ]]; then
+        echo "Tap: $tap_name"
+        echo -n "Save to dotfiles? [Y/n]: "
+        read -r response
+
+        if [[ -z "$response" ]] || [[ "$response" =~ ^[Yy] ]]; then
+          brewtap "$tap_name"
+        else
+          command brew tap "$tap_name"
+        fi
+      else
+        # No tap specified, pass through (lists taps)
+        command brew tap "$@"
+      fi
+      ;;
+
+    untap)
+      local tap_name="$1"
+
+      if [[ -n "$tap_name" ]]; then
+        echo "Untap: $tap_name"
+        echo -n "Remove from dotfiles? [Y/n]: "
+        read -r response
+
+        if [[ -z "$response" ]] || [[ "$response" =~ ^[Yy] ]]; then
+          brewuntap "$tap_name"
+        else
+          command brew untap "$tap_name"
+        fi
+      else
+        command brew untap "$@"
+      fi
+      ;;
+
     *)
       # All other brew commands pass through unchanged
       command brew "$cmd" "$@"
@@ -370,5 +407,120 @@ function brewcu() {
       echo "✗ Failed to uninstall cask '$package'"
     fi
     return 1
+  fi
+}
+
+# Add a tap and update ansible/tasks/homebrew.yml
+function brewtap() {
+  local tap_name="$1"
+  local ansible_file="$MOIDIR/ansible/tasks/homebrew.yml"
+
+  if [[ -z "$tap_name" ]]; then
+    echo "Usage: brewtap <tap-name>"
+    return 1
+  fi
+
+  # Check if tap is already in ansible file
+  if grep -q "^\s*- $tap_name\s*$" "$ansible_file" 2>/dev/null; then
+    echo "Tap '$tap_name' already in Ansible config"
+  fi
+
+  # Add the tap
+  echo "Tapping $tap_name..."
+  if command brew tap "$tap_name"; then
+    # Only update ansible if tap succeeded and not already there
+    if ! grep -q "^\s*- $tap_name\s*$" "$ansible_file" 2>/dev/null; then
+      # Add tap to the homebrew_tap section (before "state: present")
+      awk -v tap="      - $tap_name" '
+        /^- name: Add Homebrew taps$/ { in_tap = 1 }
+        /^    state: present$/ && in_tap && !added {
+          print tap
+          added = 1
+          in_tap = 0
+        }
+        { print }
+      ' "$ansible_file" > "$ansible_file.tmp" && mv "$ansible_file.tmp" "$ansible_file" || rm -f "$ansible_file.tmp"
+
+      # Sort the tap list
+      perl -0777 -pe '
+        s/(- name: Add Homebrew taps\n  homebrew_tap:\n    name:\n)((?:      - .+\n)+)(    state: present)/
+          $1 . join("", sort split(\/\n\/, $2)) . "\n" . $3/e
+      ' "$ansible_file" > "$ansible_file.tmp" && mv "$ansible_file.tmp" "$ansible_file" || rm -f "$ansible_file.tmp"
+
+      # Commit and push
+      git -C "$MOIDIR" add "$ansible_file"
+      git -C "$MOIDIR" commit -m "Add homebrew tap: $tap_name"
+      git -C "$MOIDIR" push
+
+      echo "Added '$tap_name' to Ansible config and pushed changes"
+    else
+      echo "Tapped '$tap_name' (already in Ansible config)"
+    fi
+  else
+    echo "Failed to tap '$tap_name' - no changes made to Ansible config"
+    return 1
+  fi
+}
+
+# Remove a tap and update ansible/tasks/homebrew.yml
+function brewuntap() {
+  local tap_name="$1"
+  local ansible_file="$MOIDIR/ansible/tasks/homebrew.yml"
+
+  if [[ -z "$tap_name" ]]; then
+    echo "Usage: brewuntap <tap-name>"
+    return 1
+  fi
+
+  # Check if tap is currently tapped
+  local is_tapped=0
+  if command brew tap | grep -q "^$tap_name$"; then
+    is_tapped=1
+  fi
+
+  # Check if tap is in ansible config
+  local in_ansible=0
+  if grep -q "^\s*- $tap_name\s*$" "$ansible_file" 2>/dev/null; then
+    in_ansible=1
+  fi
+
+  # If not tapped but in ansible, just remove from ansible
+  if [[ $is_tapped -eq 0 ]] && [[ $in_ansible -eq 1 ]]; then
+    sed -i.tmp "/^\s*- $tap_name\s*$/d" "$ansible_file" && rm -f "$ansible_file.tmp"
+
+    git -C "$MOIDIR" add "$ansible_file"
+    git -C "$MOIDIR" commit -m "Remove homebrew tap: $tap_name"
+    git -C "$MOIDIR" push
+
+    echo "Removed '$tap_name' from Ansible config (was not tapped locally)"
+    return 0
+  fi
+
+  # If not tapped and not in ansible, nothing to do
+  if [[ $is_tapped -eq 0 ]] && [[ $in_ansible -eq 0 ]]; then
+    echo "Tap '$tap_name' is not tapped and not in Ansible config"
+    return 1
+  fi
+
+  # Untap if currently tapped
+  if [[ $is_tapped -eq 1 ]]; then
+    echo "Untapping $tap_name..."
+    if ! command brew untap "$tap_name"; then
+      echo "Failed to untap '$tap_name'"
+      return 1
+    fi
+  fi
+
+  # Remove from ansible if present
+  if [[ $in_ansible -eq 1 ]]; then
+    sed -i.tmp "/^\s*- $tap_name\s*$/d" "$ansible_file" && rm -f "$ansible_file.tmp"
+
+    git -C "$MOIDIR" add "$ansible_file"
+    git -C "$MOIDIR" commit -m "Remove homebrew tap: $tap_name"
+    git -C "$MOIDIR" push
+
+    echo "Removed '$tap_name' from Ansible config and pushed changes"
+  else
+    echo "Untapped '$tap_name' (was not in Ansible config)"
   fi
 }
