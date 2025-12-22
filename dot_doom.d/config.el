@@ -4,6 +4,10 @@
 (setq user-full-name "Patrick Motard"
       user-mail-address "")
 
+;; Faster which-key popup
+(after! which-key
+  (setq which-key-idle-delay 0.1))
+
 ;; Theme
 (setq doom-theme 'doom-one)
 
