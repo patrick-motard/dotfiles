@@ -106,13 +106,12 @@ for index ({1..9}) alias "$index"="cd +${index}"; unset index
 #region Nodenv
 # Lazy load nodenv to improve shell startup time
 if [[ -d "$HOME/.nodenv" ]]; then
-  export PATH="$HOME/.nodenv/bin:$PATH"
+  export PATH="$HOME/.nodenv/shims:$HOME/.nodenv/bin:$PATH"
 
-  # Lazy-load nodenv
+  # Lazy-load nodenv init (rehash, completions, etc.)
   nodenv() {
     unset -f nodenv
     eval "$(command nodenv init - zsh)"
-    export PATH="$(nodenv root)/versions/$(nodenv version-name)/bin:$PATH"
     nodenv "$@"
   }
 fi
