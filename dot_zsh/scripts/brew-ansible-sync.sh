@@ -1,6 +1,47 @@
 #!/usr/bin/env zsh
 # Homebrew installer functions that automatically sync with Ansible configuration
 
+# Helper function to check if a package exists in the homebrew formulae section
+function _brew_package_in_yaml() {
+  local package="$1"
+  local ansible_file="${2:-$MOIDIR/ansible/tasks/homebrew.yml}"
+  yq eval "[.[] | select(has(\"homebrew\")) | .homebrew.name[]] | contains([\"$package\"])" "$ansible_file" 2>/dev/null | grep -q "true"
+}
+
+# Helper function to check if a cask exists in the homebrew_cask section
+function _brew_cask_in_yaml() {
+  local package="$1"
+  local ansible_file="${2:-$MOIDIR/ansible/tasks/homebrew.yml}"
+  yq eval "[.[] | select(has(\"homebrew_cask\")) | .homebrew_cask.name[]] | contains([\"$package\"])" "$ansible_file" 2>/dev/null | grep -q "true"
+}
+
+# Helper function to check if a tap exists in the homebrew_tap section
+function _brew_tap_in_yaml() {
+  local tap_name="$1"
+  local ansible_file="${2:-$MOIDIR/ansible/tasks/homebrew.yml}"
+  yq eval "[.[] | select(has(\"homebrew_tap\")) | .homebrew_tap.name[]] | contains([\"$tap_name\"])" "$ansible_file" 2>/dev/null | grep -q "true"
+}
+
+# Helper function to remove a package from YAML (checks both formula and cask sections)
+function _brew_remove_from_yaml() {
+  local package="$1"
+  local ansible_file="${2:-$MOIDIR/ansible/tasks/homebrew.yml}"
+
+  # Remove from homebrew formulae section
+  yq eval "(.[] | select(has(\"homebrew\")) | .homebrew.name) |= (. - [\"$package\"])" -i "$ansible_file" 2>/dev/null
+
+  # Remove from homebrew_cask section
+  yq eval "(.[] | select(has(\"homebrew_cask\")) | .homebrew_cask.name) |= (. - [\"$package\"])" -i "$ansible_file" 2>/dev/null
+}
+
+# Helper function to remove a tap from YAML
+function _brew_remove_tap_from_yaml() {
+  local tap_name="$1"
+  local ansible_file="${2:-$MOIDIR/ansible/tasks/homebrew.yml}"
+
+  yq eval "(.[] | select(has(\"homebrew_tap\")) | .homebrew_tap.name) |= (. - [\"$tap_name\"])" -i "$ansible_file" 2>/dev/null
+}
+
 # Wrapper for brew command that prompts for Ansible sync
 function brew() {
   local cmd="$1"
@@ -10,12 +51,14 @@ function brew() {
     install)
       local is_cask=0
       local package=""
+      local has_cask_flag=0
 
       # Parse arguments to detect --cask and get package name
       while [[ $# -gt 0 ]]; do
         case "$1" in
           --cask)
             is_cask=1
+            has_cask_flag=1
             shift
             ;;
           -*)
@@ -30,8 +73,19 @@ function brew() {
       done
 
       if [[ -n "$package" ]]; then
+        # If --cask not specified, check if package is a cask by querying brew info
+        if [[ $has_cask_flag -eq 0 ]]; then
+          if brew info --cask "$package" &>/dev/null; then
+            is_cask=1
+          fi
+        fi
+
         # Ask user if they want to sync to dotfiles
-        echo "Install $([[ $is_cask -eq 1 ]] && echo "cask" || echo "formula"): $package"
+        if [[ $is_cask -eq 1 ]]; then
+          echo "Install cask: $package"
+        else
+          echo "Install formula: $package"
+        fi
         echo -n "Save to dotfiles? [Y/n]: "
         read -r response
 
@@ -59,6 +113,7 @@ function brew() {
     uninstall)
       local is_cask=0
       local package=""
+      local ansible_file="$MOIDIR/ansible/tasks/homebrew.yml"
 
       # Parse arguments to detect --cask and get package name
       while [[ $# -gt 0 ]]; do
@@ -79,8 +134,25 @@ function brew() {
       done
 
       if [[ -n "$package" ]]; then
+        # Detect if package is actually installed as a cask (if --cask not specified)
+        if [[ $is_cask -eq 0 ]]; then
+          if command brew list --cask "$package" &>/dev/null; then
+            is_cask=1
+          # If not installed, check YAML to determine if it's a cask or formula
+          elif ! command brew list "$package" &>/dev/null; then
+            # Check if it's in the homebrew_cask section using yq
+            if _brew_cask_in_yaml "$package" "$ansible_file"; then
+              is_cask=1
+            fi
+          fi
+        fi
+
         # Ask user if they want to sync to dotfiles
-        echo "Uninstall $([[ $is_cask -eq 1 ]] && echo "cask" || echo "formula"): $package"
+        if [[ $is_cask -eq 1 ]]; then
+          echo "Uninstall cask: $package"
+        else
+          echo "Uninstall formula: $package"
+        fi
         echo -n "Remove from dotfiles? [Y/n]: "
         read -r response
 
@@ -160,7 +232,7 @@ function brewi() {
   fi
 
   # Check if package is already in ansible file
-  if grep -q "^\s*- $package\s*$" "$ansible_file" 2>/dev/null || grep -q "^\s*- $package\s*#" "$ansible_file" 2>/dev/null; then
+  if _brew_package_in_yaml "$package" "$ansible_file"; then
     echo "Package '$package' already in Ansible config"
   fi
 
@@ -168,7 +240,7 @@ function brewi() {
   echo "Installing $package..."
   if command brew install "$package"; then
     # Only update ansible if install succeeded and package not already there
-    if ! grep -q "^\s*- $package\s*$" "$ansible_file" 2>/dev/null && ! grep -q "^\s*- $package\s*#" "$ansible_file" 2>/dev/null; then
+    if ! _brew_package_in_yaml "$package" "$ansible_file"; then
       # Add package to the homebrew formulae section (before "state: present")
       awk -v pkg="      - $package" '
         /^- homebrew:$/ { in_brew = 1 }
@@ -212,7 +284,7 @@ function brewci() {
   fi
 
   # Check if package is already in ansible file
-  if grep -q "^\s*- $package\s*$" "$ansible_file" 2>/dev/null || grep -q "^\s*- $package\s*#" "$ansible_file" 2>/dev/null; then
+  if _brew_cask_in_yaml "$package" "$ansible_file"; then
     echo "Cask '$package' already in Ansible config"
   fi
 
@@ -220,7 +292,7 @@ function brewci() {
   echo "Installing cask $package..."
   if command brew install --cask "$package"; then
     # Only update ansible if install succeeded and package not already there
-    if ! grep -q "^\s*- $package\s*$" "$ansible_file" 2>/dev/null && ! grep -q "^\s*- $package\s*#" "$ansible_file" 2>/dev/null; then
+    if ! _brew_cask_in_yaml "$package" "$ansible_file"; then
       # Add package to the homebrew_cask section
       awk -v pkg="      - $package" '
         /^- homebrew_cask:$/ { in_cask = 1 }
@@ -270,15 +342,21 @@ function brewu() {
     is_installed=1
   fi
 
-  # Check if package is in ansible config
+  # Check if package is in ansible config (check both sections in case it was miscategorized)
   local in_ansible=0
-  if grep -q "^\s*- $package\s*$" "$ansible_file" 2>/dev/null || grep -q "^\s*- $package\s*#" "$ansible_file" 2>/dev/null; then
+  local in_cask_section=0
+  if _brew_package_in_yaml "$package" "$ansible_file"; then
     in_ansible=1
+  fi
+  if _brew_cask_in_yaml "$package" "$ansible_file"; then
+    in_ansible=1
+    in_cask_section=1
   fi
 
   # If not installed locally but in ansible, just remove from ansible
   if [[ $is_installed -eq 0 ]] && [[ $in_ansible -eq 1 ]]; then
-    sed -i.tmp "/^\s*- $package\s*$/d; /^\s*- $package\s*#/d" "$ansible_file" && rm -f "$ansible_file.tmp"
+    echo "Package '$package' is not installed, removing from Ansible config..."
+    _brew_remove_from_yaml "$package" "$ansible_file"
 
     git -C "$MOIDIR" add "$ansible_file"
     git -C "$MOIDIR" commit -m "Remove homebrew package: $package"
@@ -300,7 +378,7 @@ function brewu() {
   # Remove from ansible first (we'll restore if uninstall fails)
   local removed=0
   if [[ $in_ansible -eq 1 ]]; then
-    sed -i.tmp "/^\s*- $package\s*$/d; /^\s*- $package\s*#/d" "$ansible_file" && rm -f "$ansible_file.tmp"
+    _brew_remove_from_yaml "$package" "$ansible_file"
     removed=1
   fi
 
@@ -348,15 +426,21 @@ function brewcu() {
     is_installed=1
   fi
 
-  # Check if cask is in ansible config
+  # Check if cask is in ansible config (check both sections in case it was miscategorized)
   local in_ansible=0
-  if grep -q "^\s*- $package\s*$" "$ansible_file" 2>/dev/null || grep -q "^\s*- $package\s*#" "$ansible_file" 2>/dev/null; then
+  local in_formula_section=0
+  if _brew_cask_in_yaml "$package" "$ansible_file"; then
     in_ansible=1
+  fi
+  if _brew_package_in_yaml "$package" "$ansible_file"; then
+    in_ansible=1
+    in_formula_section=1
   fi
 
   # If not installed locally but in ansible, just remove from ansible
   if [[ $is_installed -eq 0 ]] && [[ $in_ansible -eq 1 ]]; then
-    sed -i.tmp "/^\s*- $package\s*$/d; /^\s*- $package\s*#/d" "$ansible_file" && rm -f "$ansible_file.tmp"
+    echo "Cask '$package' is not installed, removing from Ansible config..."
+    _brew_remove_from_yaml "$package" "$ansible_file"
 
     git -C "$MOIDIR" add "$ansible_file"
     git -C "$MOIDIR" commit -m "Remove homebrew cask: $package"
@@ -378,7 +462,7 @@ function brewcu() {
   # Remove from ansible first (we'll restore if uninstall fails)
   local removed=0
   if [[ $in_ansible -eq 1 ]]; then
-    sed -i.tmp "/^\s*- $package\s*$/d; /^\s*- $package\s*#/d" "$ansible_file" && rm -f "$ansible_file.tmp"
+    _brew_remove_from_yaml "$package" "$ansible_file"
     removed=1
   fi
 
@@ -421,7 +505,7 @@ function brewtap() {
   fi
 
   # Check if tap is already in ansible file
-  if grep -q "^\s*- $tap_name\s*$" "$ansible_file" 2>/dev/null; then
+  if _brew_tap_in_yaml "$tap_name" "$ansible_file"; then
     echo "Tap '$tap_name' already in Ansible config"
   fi
 
@@ -429,7 +513,7 @@ function brewtap() {
   echo "Tapping $tap_name..."
   if command brew tap "$tap_name"; then
     # Only update ansible if tap succeeded and not already there
-    if ! grep -q "^\s*- $tap_name\s*$" "$ansible_file" 2>/dev/null; then
+    if ! _brew_tap_in_yaml "$tap_name" "$ansible_file"; then
       # Add tap to the homebrew_tap section (before "state: present")
       awk -v tap="      - $tap_name" '
         /^- name: Add Homebrew taps$/ { in_tap = 1 }
@@ -480,13 +564,13 @@ function brewuntap() {
 
   # Check if tap is in ansible config
   local in_ansible=0
-  if grep -q "^\s*- $tap_name\s*$" "$ansible_file" 2>/dev/null; then
+  if _brew_tap_in_yaml "$tap_name" "$ansible_file"; then
     in_ansible=1
   fi
 
   # If not tapped but in ansible, just remove from ansible
   if [[ $is_tapped -eq 0 ]] && [[ $in_ansible -eq 1 ]]; then
-    sed -i.tmp "/^\s*- $tap_name\s*$/d" "$ansible_file" && rm -f "$ansible_file.tmp"
+    _brew_remove_tap_from_yaml "$tap_name" "$ansible_file"
 
     git -C "$MOIDIR" add "$ansible_file"
     git -C "$MOIDIR" commit -m "Remove homebrew tap: $tap_name"
@@ -513,7 +597,7 @@ function brewuntap() {
 
   # Remove from ansible if present
   if [[ $in_ansible -eq 1 ]]; then
-    sed -i.tmp "/^\s*- $tap_name\s*$/d" "$ansible_file" && rm -f "$ansible_file.tmp"
+    _brew_remove_tap_from_yaml "$tap_name" "$ansible_file"
 
     git -C "$MOIDIR" add "$ansible_file"
     git -C "$MOIDIR" commit -m "Remove homebrew tap: $tap_name"
