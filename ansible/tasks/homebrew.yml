@@ -7,12 +7,55 @@
 
 - homebrew:
     name:
-      - age      - antigen # zsh plugin manager      - automake      - chezmoi # dotfile manager      - emacs-plus@30      - entr      - eqmac      - eza # colorized terminal ls      - ffmpeg      - fzf      - git-delta      - google-chrome      - hyperfine      - mpd      - neovim      - protobuf      - python3      - qutebrowser      - rbenv      - sesh      - shortcat      - slides      - superwhisper      - tmux      - watch      - yq      - zoxide      - zsh      - cmake      - libtool
+      - age
+      - antigen # zsh plugin manager
+      - automake
+      - chezmoi # dotfile manager
+      - cmake
+      - emacs-plus@30
+      - entr
+      - eqmac
+      - eza # colorized terminal ls
+      - ffmpeg
+      - fzf
+      - git-delta
+      - go
+      - google-chrome
+      - hyperfine
+      - libtool
+      - mpd
+      - neovim
+      - protobuf
+      - python3
+      - qutebrowser
+      - rbenv
+      - sesh
+      - shortcat
+      - slides
+      - superwhisper
+      - tmux
+      - watch
+      - yq
+      - zoxide
+      - zsh
     state: present
 - homebrew_cask:
     state: present
     name:
-      - claude-code      - dbeaver-community      - discord      - docker      - font-iosevka-term-nerd-font      - iterm2      - keycastr      - nikitabobko/tap/aerospace      - obsidian      - raycast      - signal      - spotify      - visual-studio-code      - whispering
+      - claude-code
+      - dbeaver-community
+      - discord
+      - docker
+      - font-iosevka-term-nerd-font
+      - iterm2
+      - keycastr
+      - nikitabobko/tap/aerospace
+      - obsidian
+      - raycast
+      - signal
+      - spotify
+      - visual-studio-code
+      - whispering
 - name: Remove unwanted brew packages.
   homebrew:
     name:
