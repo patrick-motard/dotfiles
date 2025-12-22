@@ -1,5 +1,12 @@
 # vim: set ft=zsh:
 
+# Machine type detection
+{{ if eq .chezmoi.hostname "GVXPDWWKWG" -}}
+export IS_WORK_MACHINE=1
+{{ else -}}
+export IS_WORK_MACHINE=0
+{{ end -}}
+
 export ZDOTDIR="$HOME/.zsh"
 # code_dir="$(which code)"
 # export EDITOR="${code_dir}"
@@ -7,6 +14,7 @@ export ZDOTDIR="$HOME/.zsh"
 export EDITOR=nvim
 export VISUAL=nvim
 export PATH="$PATH:$HOME/.local/bin/tools"
+export PATH="$PATH:$HOME/code/scripts-private"
 
 # Create ~/.local/bin, used in many places in my dotfiles
 [ ! -d ~/.local/bin ] && mkdir -p ~/.local/bin
@@ -42,3 +50,6 @@ fi
 
 # Rust
 [[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+
+# Go
+export PATH="$PATH:$HOME/go/bin"
