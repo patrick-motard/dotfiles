@@ -40,3 +40,15 @@
   command: gh repo clone patrick-motard/claude-plugins-zendesk "{{dirs.code}}/claude/plugins-zendesk"
   args:
     creates: "{{dirs.code}}/claude/plugins-zendesk"
+
+- name: Clone scripts-private repo
+  tags: [repos, scripts-private]
+  command: gh repo clone patrick-motard/scripts-private "{{dirs.code}}/scripts-private"
+  args:
+    creates: "{{dirs.code}}/scripts-private"
+
+- name: Install Claude plugins via marketplaces
+  tags: [repos, claude, claude-plugins]
+  command: "{{dirs.code}}/scripts-private/claude-plugins-sync"
+  environment:
+    IS_WORK_MACHINE: "{{ '1' if is_work_machine | default(false) else '0' }}"
