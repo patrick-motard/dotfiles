@@ -4,7 +4,6 @@
     name:
       - d12frosted/emacs-plus
     state: present
-
 - homebrew:
     name:
       - age
@@ -27,7 +26,6 @@
       - neovim
       - protobuf
       - python3
-      - qutebrowser
       - rbenv
       - sesh
       - shortcat
