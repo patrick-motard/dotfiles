@@ -52,3 +52,7 @@ doc/
 
 # Box storage for spec
 test/vagrant-spec/boxes/*.box
+
+# Ansible performance cache files
+.homebrew-hash
+.git-repos-hash

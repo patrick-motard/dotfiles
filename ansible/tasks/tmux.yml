@@ -1,5 +1,18 @@
 ---
+- name: Check when git repos were last updated
+  stat:
+    path: "{{ ansible_env.HOME }}/.ansible-last-git-update"
+  register: git_update_timestamp
+
+- name: Determine if git update is needed
+  set_fact:
+    should_update_git: >-
+      {{ force_update | default(false) | bool or
+         not git_update_timestamp.stat.exists or
+         (ansible_date_time.epoch | int) - (git_update_timestamp.stat.mtime | int) > 86400 }}
+
 - name: Clone tmux package manager
   git:
     repo: "https://github.com/tmux-plugins/tpm"
     dest: "{{home}}/.tmux/plugins/tpm"
+    update: "{{ should_update_git | bool }}"

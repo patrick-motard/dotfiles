@@ -1,18 +1,30 @@
 ---
-- name: Clone Nodenv.
+- name: Check when git repos were last updated
+  stat:
+    path: "{{ ansible_env.HOME }}/.ansible-last-git-update"
+  register: git_update_timestamp
+
+- name: Determine if git update is needed
+  set_fact:
+    should_update_git: >-
+      {{ force_update | default(false) | bool or
+         not git_update_timestamp.stat.exists or
+         (ansible_date_time.epoch | int) - (git_update_timestamp.stat.mtime | int) > 86400 }}
+
+- name: Clone Nodenv
   git:
     repo: "https://github.com/nodenv/nodenv.git"
     dest: "{{home}}/.nodenv"
+    update: "{{ should_update_git | bool }}"
 - file:
     path: "{{home}}/.nodenv/plugins"
     state: directory
-- name: Clone node-build plugin.
+- name: Clone node-build plugin
   git:
     repo: "https://github.com/nodenv/node-build.git"
     dest: "{{home}}/.nodenv/plugins/node-build"
-- name: Update node-build definitions to get latest versions
-  shell: git -C {{home}}/.nodenv/plugins/node-build pull
-  ignore_errors: true
+    update: "{{ should_update_git | bool }}"
+  register: node_build_clone
 - name: Get latest LTS version of Node.js
   shell: nodenv install --list | grep -E '^\s*[0-9]+\.[0-9]+\.[0-9]+$' | grep -E '^\s*(18|20|22)\.' | tail -1 | xargs
   register: node_lts_version
@@ -25,6 +37,20 @@
   args:
     creates: "{{home}}/.nodenv/versions/{{ node_lts_version.stdout }}"
   ignore_errors: true
+- name: Check current nodenv global version
+  shell: nodenv global 2>/dev/null || echo "none"
+  register: current_node_version
+  changed_when: false
+
 - name: Set installed version of node as the global version
   shell: nodenv global {{ node_lts_version.stdout }}
+  when: current_node_version.stdout != node_lts_version.stdout
   ignore_errors: true
+
+- name: Update git timestamp file
+  file:
+    path: "{{ ansible_env.HOME }}/.ansible-last-git-update"
+    state: touch
+    modification_time: preserve
+  when: should_update_git | bool
+  changed_when: false

@@ -1,6 +1,19 @@
 ---
+- name: Check when git repos were last updated
+  stat:
+    path: "{{ ansible_env.HOME }}/.ansible-last-git-update"
+  register: git_update_timestamp
+
+- name: Determine if git update is needed
+  set_fact:
+    should_update_git: >-
+      {{ force_update | default(false) | bool or
+         not git_update_timestamp.stat.exists or
+         (ansible_date_time.epoch | int) - (git_update_timestamp.stat.mtime | int) > 86400 }}
+
 - name: Install Vundle
   become: false
   git:
     repo: "https://github.com/VundleVim/Vundle.vim.git"
     dest: "{{ ansible_facts['user_dir'] }}/.vim/bundle/Vundle.vim"
+    update: "{{ should_update_git | bool }}"

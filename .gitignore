@@ -5,3 +5,7 @@ ansible.cfg
 */*/lazy-lock.json
 tmux-client-*
 .DS_Store
+
+# Ansible cache files
+ansible/.homebrew-hash
+ansible/.git-repos-hash

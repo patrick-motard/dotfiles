@@ -1,18 +1,24 @@
 
 #Note, run `zplug install` on fresh install after this runs
 # then re-run ansible. I could probably improve this eventually.
+- name: Check if zplug is installed
+  stat:
+    path: "{{home}}/.zplug"
+  register: zplug_installed
+
 - name: Install the zplug zsh plugin manager
-  ignore_errors: true
+  when: not zplug_installed.stat.exists
   shell: curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+
 - name: Check if oh-my-zsh is installed
   stat:
-    path: "{{home}}/.oh-my-zsh"
+    path: "{{home}}/.zplug/repos/robbyrussell/oh-my-zsh"
   register: oh_my_zsh_installed
+
 # oh-my-zsh is installed because there are some plugins i use
 # from oh-my-zsh
 - name: Install oh-my-zsh
   become: false
-  ignore_errors: true
-  when: oh_my_zsh_installed.stat.exists == false
+  when: not oh_my_zsh_installed.stat.exists
   shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 

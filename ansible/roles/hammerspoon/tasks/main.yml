@@ -1,6 +1,13 @@
 ---
 - name: Install hammerspoon
+  when: hammerspoon_enabled | default(false)
   homebrew_cask:
     name: hammerspoon
     state: present
     update_homebrew: no
+
+- name: Uninstall hammerspoon (when disabled)
+  when: not (hammerspoon_enabled | default(false))
+  homebrew_cask:
+    name: hammerspoon
+    state: absent
