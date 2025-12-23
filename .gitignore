@@ -9,3 +9,6 @@ tmux-client-*
 # Ansible cache files
 ansible/.homebrew-hash
 ansible/.git-repos-hash
+
+# Node version file
+.node-version
