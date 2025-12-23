@@ -5,6 +5,7 @@
   homebrew_cask:
     name: alacritty
     state: present
+    update_homebrew: no
   when: ansible_facts['os_family'] == "Darwin"
 
 - name: alacritty homebrew dependencies
@@ -12,6 +13,7 @@
     name:
       - ripgrep
       - lazygit
+    update_homebrew: no
   when: ansible_facts['os_family'] == "Darwin"
 
 - name: Make alacritty config directory

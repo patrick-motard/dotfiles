@@ -11,7 +11,7 @@
     - role: zsh
       tags: [zsh]
     - role: hammerspoon
-      when: ansible_os_family == "Darwin"
+      when: ansible_os_family == "Darwin" and hammerspoon_enabled | default(false)
       tags: [hammerspoon]
   tasks:
     - debug:

@@ -1,6 +1,18 @@
 ---
 # for cloning all my repos to their respective location
 
+- name: Check when git repos were last updated
+  stat:
+    path: "{{ ansible_env.HOME }}/.ansible-last-git-update"
+  register: git_update_timestamp
+
+- name: Determine if git update is needed
+  set_fact:
+    should_update_git: >-
+      {{ force_update | default(false) | bool or
+         not git_update_timestamp.stat.exists or
+         (ansible_date_time.epoch | int) - (git_update_timestamp.stat.mtime | int) > 86400 }}
+
 - name: Clone scripts repo
   tags: [repos, scripts]
   block:
@@ -41,14 +53,99 @@
   args:
     creates: "{{dirs.code}}/claude/plugins-zendesk"
 
-- name: Clone scripts-private repo
+- name: Manage scripts-private repo
   tags: [repos, scripts-private]
-  command: gh repo clone patrick-motard/scripts-private "{{dirs.code}}/scripts-private"
-  args:
-    creates: "{{dirs.code}}/scripts-private"
+  block:
+    - name: Check if scripts-private exists
+      stat:
+        path: "{{dirs.code}}/scripts-private"
+      register: scripts_private_exists
+
+    - name: Clone scripts-private repo (if not exists)
+      command: gh repo clone patrick-motard/scripts-private "{{dirs.code}}/scripts-private"
+      when: not scripts_private_exists.stat.exists
+
+    - name: Update scripts-private repo (if exists)
+      when: scripts_private_exists.stat.exists
+      block:
+        - name: Stash local changes in scripts-private
+          command: git stash push -m "ansible-dotfiles-autostash"
+          args:
+            chdir: "{{dirs.code}}/scripts-private"
+          register: stash_result
+          changed_when: "'No local changes to save' not in stash_result.stderr"
+          when: should_update_git | bool
+
+        - name: Pull latest changes from scripts-private
+          command: git pull --rebase
+          args:
+            chdir: "{{dirs.code}}/scripts-private"
+          register: pull_result
+          changed_when: "'Already up to date' not in pull_result.stdout"
+          failed_when: false
+          when: should_update_git | bool
+
+        - name: Check for rebase conflicts
+          stat:
+            path: "{{dirs.code}}/scripts-private/.git/rebase-merge"
+          register: rebase_conflict
+
+        - name: Check for merge conflicts
+          stat:
+            path: "{{dirs.code}}/scripts-private/.git/MERGE_HEAD"
+          register: merge_conflict
+
+        - name: Pause if merge conflict detected
+          pause:
+            prompt: |
+
+              ⚠️  MERGE CONFLICT DETECTED in scripts-private repo!
+
+              Please resolve conflicts in: {{dirs.code}}/scripts-private
+
+              After resolving conflicts:
+              1. Run: cd {{dirs.code}}/scripts-private
+              2. Complete the merge/rebase
+              3. Press Enter to continue or Ctrl+C to abort
+          when: >
+            (rebase_conflict.stat.exists or merge_conflict.stat.exists) and
+            (pull_result.rc != 0 or 'CONFLICT' in pull_result.stdout or 'CONFLICT' in pull_result.stderr)
+
+        - name: Find our labeled stash
+          shell: "git stash list | grep 'ansible-dotfiles-autostash' | head -1 | cut -d: -f1"
+          args:
+            chdir: "{{dirs.code}}/scripts-private"
+          when: should_update_git | bool and stash_result.changed
+          register: stash_ref
+          changed_when: false
+          failed_when: false
+
+        - name: Pop our specific stashed changes
+          command: "git stash pop {{ stash_ref.stdout }}"
+          args:
+            chdir: "{{dirs.code}}/scripts-private"
+          when: should_update_git | bool and stash_result.changed and stash_ref.stdout != ""
+          register: stash_pop_result
+          failed_when: false
+
+        - name: Pause if stash pop had conflicts
+          pause:
+            prompt: |
+
+              ⚠️  CONFLICTS when re-applying stashed changes in scripts-private!
+
+              Please resolve conflicts in: {{dirs.code}}/scripts-private
+
+              Press Enter to continue or Ctrl+C to abort
+          when: >
+            stash_pop_result.rc is defined and
+            stash_pop_result.rc != 0 and
+            ('CONFLICT' in stash_pop_result.stdout or 'CONFLICT' in stash_pop_result.stderr)
 
 - name: Install Claude plugins via marketplaces
   tags: [repos, claude, claude-plugins]
   command: "{{dirs.code}}/scripts-private/claude-plugins-sync"
   environment:
     IS_WORK_MACHINE: "{{ '1' if is_work_machine | default(false) else '0' }}"
+  register: plugins_sync_result
+  changed_when: "'No changes' not in plugins_sync_result.stdout and 'Already up to date' not in plugins_sync_result.stdout"

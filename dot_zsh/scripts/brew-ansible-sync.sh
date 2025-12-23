@@ -263,6 +263,9 @@ function brewi() {
       git -C "$MOIDIR" commit -m "Add homebrew package: $package"
       git -C "$MOIDIR" push
 
+      # Update hash cache with new file state
+      shasum "$ansible_file" | awk '{print $1}' > "$MOIDIR/ansible/.homebrew-hash"
+
       echo "✓ Added '$package' to Ansible config and pushed changes"
     else
       echo "✓ Installed '$package' (already in Ansible config)"
@@ -316,6 +319,9 @@ function brewci() {
       git -C "$MOIDIR" commit -m "Add homebrew cask: $package"
       git -C "$MOIDIR" push
 
+      # Update hash cache with new file state
+      shasum "$ansible_file" | awk '{print $1}' > "$MOIDIR/ansible/.homebrew-hash"
+
       echo "✓ Added cask '$package' to Ansible config and pushed changes"
     else
       echo "✓ Installed cask '$package' (already in Ansible config)"
@@ -362,6 +368,9 @@ function brewu() {
     git -C "$MOIDIR" commit -m "Remove homebrew package: $package"
     git -C "$MOIDIR" push
 
+    # Update hash cache with new file state
+    shasum "$ansible_file" | awk '{print $1}' > "$MOIDIR/ansible/.homebrew-hash"
+
     echo "✓ Removed '$package' from Ansible config (was not installed locally)"
     return 0
   fi
@@ -390,6 +399,9 @@ function brewu() {
       git -C "$MOIDIR" add "$ansible_file"
       git -C "$MOIDIR" commit -m "Remove homebrew package: $package"
       git -C "$MOIDIR" push
+
+      # Update hash cache with new file state
+      shasum "$ansible_file" | awk '{print $1}' > "$MOIDIR/ansible/.homebrew-hash"
 
       rm -f "$ansible_file.backup"
       echo "✓ Removed '$package' from Ansible config and pushed changes"
@@ -446,6 +458,9 @@ function brewcu() {
     git -C "$MOIDIR" commit -m "Remove homebrew cask: $package"
     git -C "$MOIDIR" push
 
+    # Update hash cache with new file state
+    shasum "$ansible_file" | awk '{print $1}' > "$MOIDIR/ansible/.homebrew-hash"
+
     echo "✓ Removed cask '$package' from Ansible config (was not installed locally)"
     return 0
   fi
@@ -474,6 +489,9 @@ function brewcu() {
       git -C "$MOIDIR" add "$ansible_file"
       git -C "$MOIDIR" commit -m "Remove homebrew cask: $package"
       git -C "$MOIDIR" push
+
+      # Update hash cache with new file state
+      shasum "$ansible_file" | awk '{print $1}' > "$MOIDIR/ansible/.homebrew-hash"
 
       rm -f "$ansible_file.backup"
       echo "✓ Removed cask '$package' from Ansible config and pushed changes"
@@ -536,6 +554,9 @@ function brewtap() {
       git -C "$MOIDIR" commit -m "Add homebrew tap: $tap_name"
       git -C "$MOIDIR" push
 
+      # Update hash cache with new file state
+      shasum "$ansible_file" | awk '{print $1}' > "$MOIDIR/ansible/.homebrew-hash"
+
       echo "Added '$tap_name' to Ansible config and pushed changes"
     else
       echo "Tapped '$tap_name' (already in Ansible config)"
@@ -576,6 +597,9 @@ function brewuntap() {
     git -C "$MOIDIR" commit -m "Remove homebrew tap: $tap_name"
     git -C "$MOIDIR" push
 
+    # Update hash cache with new file state
+    shasum "$ansible_file" | awk '{print $1}' > "$MOIDIR/ansible/.homebrew-hash"
+
     echo "Removed '$tap_name' from Ansible config (was not tapped locally)"
     return 0
   fi
@@ -602,6 +626,9 @@ function brewuntap() {
     git -C "$MOIDIR" add "$ansible_file"
     git -C "$MOIDIR" commit -m "Remove homebrew tap: $tap_name"
     git -C "$MOIDIR" push
+
+    # Update hash cache with new file state
+    shasum "$ansible_file" | awk '{print $1}' > "$MOIDIR/ansible/.homebrew-hash"
 
     echo "Removed '$tap_name' from Ansible config and pushed changes"
   else
