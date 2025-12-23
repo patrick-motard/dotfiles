@@ -67,7 +67,14 @@ alias gs="git status"
 alias bi="bundle install"
 
 # Homebrew with Ansible sync
-source "$ZDOTDIR/scripts/brew-ansible-sync.sh"
+# brew-ansible-sync functions (brewi, brewci, brewtap, etc)
+# Sourced from scripts repo
+if [[ -f "$HOME/code/scripts/brew-ansible-sync" ]]; then
+  source "$HOME/code/scripts/brew-ansible-sync"
+else
+  echo "Warning: brew-ansible-sync script not found at $HOME/code/scripts/brew-ansible-sync"
+  echo "Possible cause: scripts repo not cloned yet. Run 'dotansible' to clone it."
+fi
 
 #region Program Related
 
