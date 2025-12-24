@@ -11,15 +11,24 @@ Notes for myself because I forget a lot.
 
 ## Ansible
 
-Call from anywhere (osx only)
+Call from anywhere. Uses hostname-specific inventory if available.
 
 ```shell
 # Run full playbook
 dotansible
 
-# Run specific tasks only
-dotansible_brew      # Install/update Homebrew packages
-dotansible_packages  # Install all packages
-dotansible_zsh       # Configure ZSH
-dotansible_tmux      # Configure tmux
+# Interactive tag selection with fzf
+dotansible -i
+
+# Run specific tasks by tag
+dotansible brew      # Install/update Homebrew packages
+dotansible packages  # Install all packages
+dotansible zsh       # Configure ZSH
+dotansible tmux      # Configure tmux
+
+# List available tags
+dotansible tags
+
+# For WSL (prompts for sudo password)
+dotansible --ask-become
 ```
