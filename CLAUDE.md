@@ -45,22 +45,30 @@ moi_add_nvim
 ### Ansible Playbook
 
 ```bash
-# Run full ansible playbook to configure system (macOS)
+# Run full ansible playbook to configure system
 dotansible
 
-# For WSL (prompts for sudo password)
-dotansible_wsl
+# Interactive tag selection with fzf
+dotansible -i
 
 # Run specific ansible tasks by tag
-dotansible_brew      # Install/update Homebrew packages only
-dotansible_packages  # Install all packages (brew or apt)
-dotansible_zsh       # Configure ZSH only
-dotansible_tmux      # Configure tmux only
+dotansible brew      # Install/update Homebrew packages only
+dotansible packages  # Install all packages (brew or apt)
+dotansible zsh       # Configure ZSH only
+dotansible tmux      # Configure tmux only
+
+# List available tags
+dotansible tags
+
+# For WSL (prompts for sudo password)
+dotansible --ask-become
 
 # First-time setup scripts
 ./ansible/mac-setup.sh      # macOS
 ./ansible/fedora-setup.sh   # Fedora Linux
 ```
+
+The `dotansible` function automatically uses hostname-specific inventory files when available (e.g., `ansible/inventory/GVXPDWWKWG.yml`), falling back to `main.yml`.
 
 ### Shell Management
 

@@ -92,16 +92,52 @@ alias ma="chezmoi apply && sz"
 alias moi_add_nvim="chezmoi add ~/.config/nvim && rm $MOIDIR/dot_config/nvim/lazy-lock.json"
 
 ## Ansible
-alias dotansible="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR/ansible/inventory/main.yml"
-alias dotansible_wsl="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR/ansible/inventory/main.yml --ask-become"
-# Run specific ansible tasks by tag
-alias dotansible_brew="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR/ansible/inventory/main.yml --tags brew"
-alias dotansible_packages="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR/ansible/inventory/main.yml --tags packages"
-alias dotansible_zsh="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR/ansible/inventory/main.yml --tags zsh"
-alias dotansible_tmux="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR/ansible/inventory/main.yml --tags tmux"
-alias dotansible_nodenv="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR/ansible/inventory/main.yml --tags nodenv"
-alias dotansible_alacritty="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR/ansible/inventory/main.yml --tags alacritty"
-alias dotansible_emacs="ansible-playbook $MOIDIR/ansible/main.yml -i $MOIDIR/ansible/inventory/main.yml --tags emacs"
+# Run dotfiles ansible playbook. Uses hostname-specific inventory if available.
+# Usage: dotansible [options] [tag] [ansible args...]
+#        dotansible              - run full playbook
+#        dotansible tags         - list available tags
+#        dotansible -i           - select tag interactively with fzf
+#        dotansible brew         - run only brew tasks
+#        dotansible zsh --check  - dry-run zsh tasks
+dotansible() {
+  local inventory playbook cmd
+  playbook="$MOIDIR/ansible/main.yml"
+  if [[ -f "$MOIDIR/ansible/inventory/$(hostname).yml" ]]; then
+    inventory="$MOIDIR/ansible/inventory/$(hostname).yml"
+  else
+    inventory="$MOIDIR/ansible/inventory/main.yml"
+  fi
+
+  case "$1" in
+    tags|--list-tags)
+      cmd=(ansible-playbook "$playbook" -i "$inventory" --list-tags)
+      ;;
+    -i|--interactive)
+      shift
+      local tag
+      tag=$(ansible-playbook "$playbook" -i "$inventory" --list-tags 2>/dev/null \
+        | grep -oE '\b[a-z][-a-z0-9_]*\b' \
+        | sort -u \
+        | fzf --prompt="Select tag: " --height=40% --reverse)
+      [[ -z "$tag" ]] && return 0
+      cmd=(ansible-playbook "$playbook" -i "$inventory" --tags "$tag" "$@")
+      ;;
+    "")
+      cmd=(ansible-playbook "$playbook" -i "$inventory")
+      ;;
+    -*)
+      cmd=(ansible-playbook "$playbook" -i "$inventory" "$@")
+      ;;
+    *)
+      local tag="$1"
+      shift
+      cmd=(ansible-playbook "$playbook" -i "$inventory" --tags "$tag" "$@")
+      ;;
+  esac
+
+  echo "Running: ${cmd[*]}"
+  "${cmd[@]}"
+}
 
 ## Nodenv
 alias update_nodenv_build="git -C ~/.nodenv/plugins/node-build pull"

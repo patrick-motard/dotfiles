@@ -1,0 +1,17 @@
+---
+# Zendesk work machine (MacBook)
+all:
+  hosts:
+    localhost
+  vars:
+    ansible_connection: local
+    ansible_python_interpreter: auto_silent
+    home: "{{ ansible_facts['user_dir'] }}"
+    dirs:
+      home: "{{home}}"
+      code: "{{home}}/code"
+      bin: "{{home}}/.local/bin"
+    # Machine-specific settings
+    is_work_machine: true
+    emacs_enabled: false
+    hammerspoon_enabled: false
