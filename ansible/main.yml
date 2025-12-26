@@ -13,6 +13,9 @@
     - role: hammerspoon
       when: ansible_os_family == "Darwin" and hammerspoon_enabled | default(false)
       tags: [hammerspoon]
+    - role: emacs
+      when: emacs_enabled | default(false)
+      tags: [emacs]
   tasks:
     - debug:
         msg: "{{ansible_os_family}}"
