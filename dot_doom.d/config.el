@@ -10,6 +10,8 @@
 
 ;; Theme
 (setq doom-theme 'doom-one)
+;; Always use dark theme, ignore system appearance
+(setq ns-use-system-appearance nil)
 
 ;; Line numbers
 (setq display-line-numbers-type 'relative)
