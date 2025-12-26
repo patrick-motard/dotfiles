@@ -24,6 +24,9 @@ export PATH="$PATH:$HOME/code/scripts-private"
 # export BROWSER=''
 
 {{ if eq .chezmoi.hostname "GVXPDWWKWG" -}}
+# Zendesk wiki vault root for zd plugin
+export ZD_VAULT_ROOT="${HOME}/code/zendesk/wiki-zendesk"
+
 [[ -f ~/.zendesk-zshenv ]] && source ~/.zendesk-zshenv
 ## BEGIN -- managed by dot-ansible:zendesk -- ##
 [[ -f ~/.local/bin/zendesk_zshenv.sh ]] && source ~/.local/bin/zendesk_zshenv.sh
