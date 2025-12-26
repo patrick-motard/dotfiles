@@ -87,8 +87,33 @@ alias moicd="cd $MOIDIR"
 alias gmoi="git -C $MOIDIR"
 # Open dotfiles repo in editor.
 alias edit="pushd $MOIDIR && $EDITOR $MOIDIR"
+# Check system state across machines.
+alias ssc="system-state-check"
+
 # Apply and source changes.
 alias ma="chezmoi apply && sz"
+
+# Apply and source changes with pre-flight system state check.
+mam() {
+  # Run system state check first
+  system-state-check
+  local exit_code=$?
+
+  if [[ $exit_code -eq 1 ]] || [[ $exit_code -eq 2 ]]; then
+    # Issues found, ask user
+    echo ""
+    read -q "REPLY?Issues found. Continue with chezmoi apply? (y/n) "
+    echo ""
+    if [[ $REPLY != "y" ]]; then
+      echo "Aborted."
+      return 1
+    fi
+  fi
+
+  # Proceed with apply and reload
+  chezmoi apply && sz
+}
+
 alias moi_add_nvim="chezmoi add ~/.config/nvim && rm $MOIDIR/dot_config/nvim/lazy-lock.json"
 
 ## Ansible
