@@ -1,0 +1,16 @@
+---
+- name: Check if AeroSpace display monitor LaunchAgent is loaded
+  shell: "launchctl print gui/{{ ansible_user_uid }}/com.aerospace.display-monitor 2>&1"
+  register: aerospace_status
+  failed_when: false
+  changed_when: false
+
+- name: Bootout existing AeroSpace display monitor LaunchAgent
+  command: "launchctl bootout gui/{{ ansible_user_uid }}/com.aerospace.display-monitor"
+  when: aerospace_status.rc == 0
+  failed_when: false
+  changed_when: false
+
+- name: Bootstrap AeroSpace display monitor LaunchAgent
+  command: "launchctl bootstrap gui/{{ ansible_user_uid }} {{ ansible_env.HOME }}/Library/LaunchAgents/com.aerospace.display-monitor.plist"
+  changed_when: false
