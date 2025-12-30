@@ -34,5 +34,8 @@
       tags: [nodenv, node]
     - import_tasks: tasks/tmux.yml
       tags: [tmux]
+    - import_tasks: tasks/aerospace.yml
+      when: ansible_os_family == "Darwin" and aerospace_enabled | default(false)
+      tags: [aerospace, window-manager]
     - import_tasks: tasks/repos.yml
       tags: [repos]

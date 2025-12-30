@@ -15,3 +15,4 @@ all:
     is_work_machine: true
     emacs_enabled: false
     hammerspoon_enabled: false
+    aerospace_enabled: true

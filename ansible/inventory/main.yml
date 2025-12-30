@@ -13,4 +13,5 @@ all:
     # Optional features - set to true to enable
     emacs_enabled: true
     hammerspoon_enabled: false
+    aerospace_enabled: false
     is_work_machine: false
