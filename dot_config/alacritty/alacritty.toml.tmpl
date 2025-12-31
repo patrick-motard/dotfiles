@@ -62,7 +62,7 @@ unfocused_hollow = true
 style = "Block"
 
 [terminal]
-shell = { program = "/bin/zsh", args = ["-l", "-c", "sesh connect \"$(sesh list -t | head -1)\" 2>/dev/null || tmux new-session"] }
+shell = { program = "/bin/zsh", args = ["-l", "-c", "session=$(sesh list -t | head -1); [ -n \"$session\" ] && sesh connect \"$session\" || tmux new-session"] }
 
 [keyboard]
 bindings = [
