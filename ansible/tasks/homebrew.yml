@@ -57,7 +57,7 @@
 - name: Add Homebrew taps
   homebrew_tap:
     name:
-      - d12frosted/emacs-plus
+      - assimelha/tap      - d12frosted/emacs-plus
     state: present
   when: should_check_brew_packages | bool
 
