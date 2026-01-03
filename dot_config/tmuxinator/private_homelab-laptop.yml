@@ -1,0 +1,31 @@
+# ~/.config/tmuxinator/homelab-laptop.yml
+name: homelab-laptop
+root: ~/code/homelab
+
+windows:
+  - editor:
+      panes:
+        - nvim .
+
+  - ssh:
+      layout: tiled
+      panes:
+        - ssh olivander
+        - ssh olivander
+        - ssh olivander
+
+  - claude:
+      layout: even-horizontal
+      panes:
+        - claude
+        - claude
+
+  - beads:
+      layout: even-vertical
+      panes:
+        - bv
+        - bdui
+
+  - git:
+      panes:
+        - lazygit
