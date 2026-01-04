@@ -1,0 +1,24 @@
+# ~/.config/tmuxinator/dotfiles-laptop.yml
+name: dotfiles-laptop
+root: ~/.local/share/chezmoi
+
+windows:
+  - editor:
+      panes:
+        - nvim .
+
+  - claude:
+      layout: even-horizontal
+      panes:
+        - claude
+        - claude
+
+  - beads:
+      layout: even-vertical
+      panes:
+        - bv
+        - bdui
+
+  - git:
+      panes:
+        - lazygit
