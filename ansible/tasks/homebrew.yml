@@ -63,7 +63,7 @@
 
 - homebrew:
     name:
-      - age      - antigen # zsh plugin manager      - automake      - bdui      - chezmoi # dotfile manager      - cmake      - emacs-plus@30      - entr      - eqmac      - eza # colorized terminal ls      - ffmpeg      - fzf      - git-delta      - go      - hyperfine      - libtool      - mpd      - neovim      - protobuf      - python3      - rbenv      - sesh      - shortcat      - slides      - superwhisper      - tmux      - watch      - yq      - zoxide      - zsh
+      - age      - antigen # zsh plugin manager      - automake      - bdui      - chezmoi # dotfile manager      - cmake      - emacs-plus@30      - entr      - eqmac      - eza # colorized terminal ls      - ffmpeg      - fzf      - git-delta      - go      - hyperfine      - libtool      - mpd      - neovim      - protobuf      - python3      - rbenv      - sesh      - shortcat      - slides      - superwhisper      - tmux      - watch      - yq      - zoxide      - zsh      - tmuxinator
     state: present
     update_homebrew: no
   when: should_check_brew_packages | bool
