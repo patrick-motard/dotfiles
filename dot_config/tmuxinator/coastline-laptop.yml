@@ -1,0 +1,29 @@
+# Coastline development layout (laptop-friendly)
+# Start: tmuxinator start coastline-laptop
+
+name: coastline-laptop
+root: ~/code/coastline
+
+startup_window: editor
+
+windows:
+  - editor:
+      panes:
+        - nvim
+
+  - claude:
+      layout: even-vertical
+      panes:
+        - claude --dangerously-skip-permissions
+        - claude
+
+  - git:
+      panes:
+        - lazygit
+
+  - dev:
+      layout: main-horizontal
+      panes:
+        - npm run dev
+        - # logs / misc
+        - # shell
