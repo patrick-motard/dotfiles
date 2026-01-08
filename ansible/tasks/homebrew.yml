@@ -89,13 +89,14 @@
       - sesh
       - shortcat
       - slides
+      - steveyegge/beads/bd
       - superwhisper
       - tmux
+      - tmuxinator
       - watch
       - yq
       - zoxide
       - zsh
-      - tmuxinator
     state: present
     update_homebrew: no
   when: should_check_brew_packages | bool
