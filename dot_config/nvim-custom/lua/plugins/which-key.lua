@@ -60,6 +60,7 @@ return { -- Useful plugin to show you pending keybinds.
       { '<leader>b', group = '[B]uffer' },
       { '<leader>d', group = '[D]ocument' },
       { '<leader>g', group = '[G]it' },
+      { '<leader>o', group = '[O]cto (GitHub)' },
       { '<leader>r', group = '[R]ename' },
       { '<leader>s', group = '[S]earch' },
       { '<leader>w', group = '[W]orkspace' },
