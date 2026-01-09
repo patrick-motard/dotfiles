@@ -36,6 +36,9 @@
       tags: [nodenv, node]
     - import_tasks: tasks/tmux.yml
       tags: [tmux]
+    - import_tasks: tasks/system-state-check.yml
+      when: ansible_os_family == "Darwin"
+      tags: [system-state-check, launchd]
     - import_tasks: tasks/aerospace.yml
       when: ansible_os_family == "Darwin" and aerospace_enabled | default(false)
       tags: [aerospace, window-manager]

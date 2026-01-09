@@ -1,0 +1,16 @@
+---
+- name: Check if system-state-check LaunchAgent is loaded
+  shell: "launchctl print gui/{{ ansible_user_uid }}/com.patrick.system-state-check 2>&1"
+  register: system_state_check_status
+  failed_when: false
+  changed_when: false
+
+- name: Bootout existing system-state-check LaunchAgent
+  command: "launchctl bootout gui/{{ ansible_user_uid }}/com.patrick.system-state-check"
+  when: system_state_check_status.rc == 0
+  failed_when: false
+  changed_when: false
+
+- name: Bootstrap system-state-check LaunchAgent
+  command: "launchctl bootstrap gui/{{ ansible_user_uid }} {{ ansible_env.HOME }}/Library/LaunchAgents/com.patrick.system-state-check.plist"
+  changed_when: false
