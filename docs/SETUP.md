@@ -35,4 +35,8 @@
    ./ansible/fedora-setup.sh  # First time only
    ```
 
-5. **Restart your terminal** to see the new theme and configuration take effect.
+5. **Install Tmux plugins**:
+   - Open tmux: `tmux`
+   - Press `Ctrl+t` then `I` (capital I) to install TPM plugins
+
+6. **Restart your terminal** to see the new theme and configuration take effect.
