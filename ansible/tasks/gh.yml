@@ -1,0 +1,16 @@
+---
+- name: Check if gh is installed
+  command: which gh
+  register: gh_check
+  changed_when: false
+  failed_when: false
+
+- name: Get installed gh extensions
+  command: gh extension list
+  register: extension_list
+  changed_when: false
+  when: gh_check.rc == 0
+
+- name: Install gh-dash extension
+  command: gh extension install dlvhdr/gh-dash
+  when: gh_check.rc == 0 and "dlvhdr/gh-dash" not in extension_list.stdout

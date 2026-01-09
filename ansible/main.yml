@@ -28,6 +28,8 @@
     - import_tasks: tasks/homebrew.yml
       when: ansible_os_family == "Darwin"
       tags: [homebrew, brew, packages]
+    - import_tasks: tasks/gh.yml
+      tags: [gh, github]
     - import_tasks: tasks/alacritty.yml
       tags: [alacritty, terminal]
     - import_tasks: tasks/nodenv.yml

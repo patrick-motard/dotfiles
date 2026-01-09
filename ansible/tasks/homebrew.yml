@@ -76,6 +76,7 @@
       - eza # colorized terminal ls
       - ffmpeg
       - fzf
+      - gh
       - git-delta
       - go
       - hyperfine
