@@ -49,6 +49,7 @@ startup_mode = "Windowed"
 option_as_alt = "Both"
 decorations = "Transparent"
 dynamic_padding = true
+opacity = 0.95
 
 [window.padding]
 x = 5
@@ -64,11 +65,41 @@ style = "Block"
 [terminal]
 shell = { program = "/bin/zsh", args = ["-l", "-c", "session=$(sesh list -t | head -1); [ -n \"$session\" ] && sesh connect \"$session\" || tmux new-session"] }
 
+[mouse]
+hide_when_typing = true
+
 [keyboard]
 bindings = [
 { key = "J", mods = "Command|Shift", action = "CreateNewWindow" },
 # unbind Command-T, CreateNewTab
-{ key = "T", mods = "Command", action = "None" }
+{ key = "T", mods = "Command", action = "None" },
+# Trigger hints mode
+{ key = "O", mods = "Command|Shift", action = "ReceiveChar", mode = "~Search" },
 ]
+
+[hints]
+alphabet = "arstgmneioqwfplu"
+
+# URLs
+[[hints.enabled]]
+regex = "(https?://|git@|ssh://)[^\\s\"'<>\\]\\)]*"
+hyperlinks = true
+command = "open"
+post_processing = true
+binding = { key = "O", mods = "Command|Shift" }
+
+# File paths
+[[hints.enabled]]
+regex = "~?/?[\\w.-]+(/[\\w.-]+)+"
+command = "open"
+post_processing = true
+binding = { key = "P", mods = "Command|Shift" }
+
+# Git commit SHAs
+[[hints.enabled]]
+regex = "[0-9a-f]{7,40}"
+command = { program = "zsh", args = ["-c", "echo $0 | pbcopy"] }
+post_processing = false
+binding = { key = "G", mods = "Command|Shift" }
 
 
