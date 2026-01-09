@@ -13,6 +13,12 @@
          not git_update_timestamp.stat.exists or
          (ansible_date_time.epoch | int) - (git_update_timestamp.stat.mtime | int) > 86400 }}
 
+- name: Clone dotfiles-private repo
+  tags: [repos, dotfiles-private]
+  command: gh repo clone patrick-motard/dotfiles-private "{{dirs.code}}/dotfiles-private"
+  args:
+    creates: "{{dirs.code}}/dotfiles-private"
+
 - name: Clone scripts repo
   tags: [repos, scripts]
   block:
