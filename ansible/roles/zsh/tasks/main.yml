@@ -12,7 +12,7 @@
 
 - name: Check if oh-my-zsh is installed
   stat:
-    path: "{{home}}/.zplug/repos/robbyrussell/oh-my-zsh"
+    path: "{{home}}/.oh-my-zsh"
   register: oh_my_zsh_installed
 
 # oh-my-zsh is installed because there are some plugins i use

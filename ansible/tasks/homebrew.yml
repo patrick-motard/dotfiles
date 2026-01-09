@@ -107,7 +107,8 @@
     update_homebrew: no
   when: should_check_brew_packages | bool and ansible_hostname != "GVXPDWWKWG"
 
-- homebrew_cask:
+- name: Install Homebrew casks
+  homebrew_cask:
     state: present
     name:
       - claude-code
