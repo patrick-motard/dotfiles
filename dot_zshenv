@@ -1,0 +1,3 @@
+# Bootstrap ZDOTDIR - zsh reads this file first
+export ZDOTDIR="$HOME/.zsh"
+source "$ZDOTDIR/.zshenv"
