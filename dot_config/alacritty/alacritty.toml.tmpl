@@ -66,7 +66,7 @@ style = "Block"
 shell = { program = "/bin/zsh", args = ["-l", "-c", "session=$(sesh list -t | head -1); [ -n \"$session\" ] && sesh connect \"$session\" || tmux new-session"] }
 
 [mouse]
-hide_when_typing = true
+hide_when_typing = false
 
 [keyboard]
 bindings = [
