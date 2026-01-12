@@ -1,3 +1,8 @@
+## Alacritty
+Open URL hints | `Cmd-Shift-O`
+Open file path hints | `Cmd-Shift-P`
+Copy git SHA to clipboard | `Cmd-Shift-G`
+
 ## Tmux
 Swap Pane Left | `l + {`
 Swap Pane Right | `l + }`
