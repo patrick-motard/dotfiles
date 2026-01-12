@@ -147,20 +147,10 @@ zplug load
 #endregion Zplug
 
 #region zoxide
-# Fast zsh directory switching (lazy-loaded)
+# Fast zsh directory switching
+# Note: eager init required so cd hook tracks all directory changes
 if command -v zoxide >/dev/null 2>&1; then
-  # Lazy-load zoxide
-  z() {
-    unset -f z
-    eval "$(zoxide init zsh)"
-    z "$@"
-  }
-
-  zi() {
-    unset -f zi
-    eval "$(zoxide init zsh)"
-    zi "$@"
-  }
+  eval "$(zoxide init zsh)"
 fi
 #endregion zoxide
 
