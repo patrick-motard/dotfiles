@@ -3,49 +3,47 @@
   shell: "shasum {{ playbook_dir }}/tasks/homebrew.yml | awk '{print $1}'"
   register: current_brew_hash
   changed_when: false
-
 - name: Check if hash cache exists
   stat:
     path: "{{ playbook_dir }}/.homebrew-hash"
   register: brew_hash_cache
-
 - name: Read cached hash
   slurp:
     path: "{{ playbook_dir }}/.homebrew-hash"
   register: cached_brew_hash_content
   when: brew_hash_cache.stat.exists
-
 - name: Set cached hash value
   set_fact:
     cached_brew_hash: "{{ (cached_brew_hash_content.content | b64decode | trim) if brew_hash_cache.stat.exists else '' }}"
-
 - name: Determine if homebrew packages need checking
   set_fact:
     should_check_brew_packages: >-
       {{ force_update | default(false) | bool or
+
+
          not brew_hash_cache.stat.exists or
          current_brew_hash.stdout != cached_brew_hash }}
-
 - name: Check when Homebrew was last updated
   stat:
     path: "{{ ansible_env.HOME }}/.ansible-last-brew-update"
   register: brew_update_timestamp
   when: should_check_brew_packages | bool
-
 - name: Determine if Homebrew update is needed
   set_fact:
     should_update_brew: >-
       {{ force_update | default(false) | bool or
+
+
          not brew_update_timestamp.stat.exists or
          (ansible_date_time.epoch | int) - (brew_update_timestamp.stat.mtime | int) > 86400 }}
   when: should_check_brew_packages | bool
-
 - name: Update Homebrew (if needed)
   homebrew:
     update_homebrew: yes
     upgrade_all: no
+    name:
+      - bd
   when: should_check_brew_packages | bool and should_update_brew | bool
-
 - name: Update brew update timestamp file
   file:
     path: "{{ ansible_env.HOME }}/.ansible-last-brew-update"
@@ -53,7 +51,6 @@
     modification_time: preserve
   when: should_check_brew_packages | bool and should_update_brew | bool
   changed_when: false
-
 - name: Add Homebrew taps
   homebrew_tap:
     name:
@@ -61,7 +58,6 @@
       - d12frosted/emacs-plus
     state: present
   when: should_check_brew_packages | bool
-
 - homebrew:
     name:
       - age
@@ -100,7 +96,6 @@
     state: present
     update_homebrew: no
   when: should_check_brew_packages | bool
-
 - name: Install packages not pre-installed on work machine
   homebrew:
     name:
@@ -108,7 +103,6 @@
     state: present
     update_homebrew: no
   when: should_check_brew_packages | bool and ansible_hostname != "GVXPDWWKWG"
-
 - name: Install Homebrew casks
   homebrew_cask:
     state: present
@@ -129,7 +123,6 @@
       - whispering
     update_homebrew: no
   when: should_check_brew_packages | bool
-
 - name: Remove unwanted brew packages.
   homebrew:
     name:
@@ -137,7 +130,6 @@
     state: absent
     update_homebrew: no
   when: should_check_brew_packages | bool
-
 - name: Update homebrew hash cache
   copy:
     content: "{{ current_brew_hash.stdout }}"
