@@ -28,6 +28,9 @@ export PATH="$PATH:$HOME/code/scripts-private/bin"
 # Zendesk wiki vault root for zd plugin
 export ZD_VAULT_ROOT="${HOME}/code/zendesk/wiki-zendesk"
 
+# Enable Node.js to use system CA certificates (required for Claude Code)
+export NODE_USE_SYSTEM_CA=1
+
 [[ -f ~/.zendesk-zshenv ]] && source ~/.zendesk-zshenv
 ## BEGIN -- managed by dot-ansible:zendesk -- ##
 [[ -f ~/.local/bin/zendesk_zshenv.sh ]] && source ~/.local/bin/zendesk_zshenv.sh
