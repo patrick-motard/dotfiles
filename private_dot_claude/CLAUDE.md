@@ -26,3 +26,15 @@ When creating scripts in the scripts repo:
 - Follow the existing code style in each project
 - Prioritize readability and maintainability
 - always update the links in the readme toc when adding/removing files in docs/
+
+## NEVER EVER DO
+
+These rules are ABSOLUTE:
+
+### NEVER Publish Sensitive Data
+- NEVER publish passwords, API keys, tokens to git/npm/docker
+- Before ANY commit: verify no secrets included
+
+### NEVER Commit .env Files
+- NEVER commit `.env` to git
+- ALWAYS verify `.env` is in `.gitignore`
