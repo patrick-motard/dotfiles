@@ -8,31 +8,11 @@ This setup uses a combination of tools to provide powerful tmux session manageme
 
 - **tmux** - Terminal multiplexer
 - **TPM (Tmux Plugin Manager)** - Plugin management
-- **Tmux Layouts** - Quick layout switching for existing panes (`~/.config/tmux-layouts/`)
 - **Tmuxinator** - Full session configurations with commands (`~/.config/tmuxinator/`)
 - **sesh** - Smart session selector that integrates everything
 - **fzf** - Fuzzy finder for interactive selection
 
-## Two Layout Systems
-
-### 1. Tmux Layouts (Rearrange Existing Panes)
-
-**Location**: `~/.config/tmux-layouts/*.layout`
-
-Simple layout files that rearrange your existing panes without killing processes. Use these when you want to quickly reorganize your workspace.
-
-**Keybind**: `Ctrl+t + L` - Opens layout picker
-
-**Available layouts**:
-| Layout | Description |
-|--------|-------------|
-| `4-wide` | 4 panes side-by-side (main-vertical) |
-| `3-wide` | 3 equal panes side-by-side |
-| `2-wide` | 2 equal panes side-by-side |
-| `2-stack` | 2 panes stacked vertically |
-| `grid` | Tiled grid layout |
-
-### 2. Tmuxinator (Full Session Setup)
+## Tmuxinator (Full Session Setup)
 
 **Location**: `~/.config/tmuxinator/*.yml`
 
@@ -45,51 +25,6 @@ Full session configurations that create new windows/panes with specific commands
 
 Access via sesh (`Ctrl+t + s`) or `tmuxinator start <name>`.
 
-## Switching Layouts On-the-Fly
-
-Press `Ctrl+t + L` to open the layout picker. This:
-- Shows all available layouts with descriptions
-- Previews the layout file
-- Applies the selected layout to your **current window**
-- **Does not kill any processes** - just rearranges panes
-
-## Creating New Layouts
-
-### Save Your Current Arrangement
-
-1. Manually arrange your panes how you want them
-2. Run `layout-new my-layout-name`
-3. Enter a description when prompted
-4. The layout is saved and immediately available via `Ctrl+t + L`
-
-```bash
-# Example: create a layout from your current pane arrangement
-layout-new dev-custom
-```
-
-### Create a Layout Manually
-
-Create a file in `~/.config/tmux-layouts/`:
-
-```bash
-# ~/.config/tmux-layouts/my-layout.layout
-# Description of this layout
-main-vertical
-```
-
-Layout strings can be:
-- Built-in names: `main-vertical`, `main-horizontal`, `even-horizontal`, `even-vertical`, `tiled`
-- Custom strings from `tmux list-windows -F "#{window_layout}"`
-
-### Sync to Dotfiles
-
-After creating layouts, add them to chezmoi:
-
-```bash
-chezmoi add ~/.config/tmux-layouts/
-ma  # apply and reload
-```
-
 ## How It Works Together
 
 ### 1. Tmux Configuration
@@ -99,7 +34,6 @@ The main tmux configuration is in `dot_tmux.conf` with:
 - **Prefix key**: `Ctrl+t`
 - **Custom keybindings** for pane navigation using `mnei` (Colemak-inspired)
 - **Sesh integration** bound to `Ctrl+t + s`
-- **Layout picker** bound to `Ctrl+t + L`
 - **Theme**: Gruvbox (via tmux-gruvbox plugin)
 
 ### 2. TPM (Tmux Plugin Manager)
@@ -160,7 +94,6 @@ For quick one-off layouts without saving:
 | Command | Description |
 |---------|-------------|
 | `Ctrl+t + s` | Open sesh session picker |
-| `Ctrl+t + L` | Open layout picker (rearrange panes) |
 | `Ctrl+t + t` | Switch to last session (via sesh) |
 | `Ctrl+t + c` | Create new window |
 | `Ctrl+t + /` | Split pane vertically |
@@ -169,19 +102,6 @@ For quick one-off layouts without saving:
 | `Alt+m/n/e/i` | Navigate panes |
 | `Alt+M/I` | Navigate windows |
 | `Ctrl+t + r` | Reload tmux config |
-
-### Layout Commands
-
-```bash
-# Apply a layout interactively
-# Press Ctrl+t + L
-
-# List available layouts
-layout-picker -l
-
-# Save current pane arrangement as a new layout
-layout-new my-layout
-```
 
 ### Tmuxinator Commands
 
@@ -216,22 +136,13 @@ sesh last
 
 ## Tips
 
-1. **Use `Ctrl+t + L` for quick rearrangement** - When you need to reorganize existing panes without losing running processes
+1. **Use tmuxinator for fresh starts** - When you need specific commands running in specific panes
 
-2. **Use tmuxinator for fresh starts** - When you need specific commands running in specific panes
+2. **Sesh is the main entry point** - Use `Ctrl+t + s` to access sessions, tmuxinator configs, and directories
 
-3. **Save layouts you like** - After manually arranging panes, run `layout-new name` to save for later
-
-4. **Sesh is the main entry point** - Use `Ctrl+t + s` to access sessions, tmuxinator configs, and directories
-
-5. **Session switching** - `Ctrl+t + t` quickly toggles between your last two sessions
+3. **Session switching** - `Ctrl+t + t` quickly toggles between your last two sessions
 
 ## Troubleshooting
-
-**Layout picker not working**:
-- Ensure `~/.config/tmux-layouts/` exists and has `.layout` files
-- Run `layout-picker -l` to verify layouts are found
-- Reload tmux config: `Ctrl+t + r`
 
 **Tmuxinator config not showing in sesh**:
 - Ensure config is in `~/.config/tmuxinator/`
