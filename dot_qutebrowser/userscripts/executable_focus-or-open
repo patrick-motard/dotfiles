@@ -1,0 +1,20 @@
+#!/bin/bash
+# Focus a tab by URL pattern, or open it if not found.
+# Usage: spawn --userscript focus-or-open <url>
+
+URL="${1:-qute://bindings}"
+DATA_DIR="${QUTE_DATA_DIR:-$HOME/.qutebrowser}"
+SESSION_FILE="$DATA_DIR/sessions/default.yml"
+
+# Save session first so we can read current tabs
+echo "session-save --quiet default" >> "$QUTE_FIFO"
+
+# Small delay to let session save complete
+sleep 0.1
+
+# Check if URL exists in session file
+if [ -f "$SESSION_FILE" ] && grep -q "$URL" "$SESSION_FILE" 2>/dev/null; then
+    echo "tab-select $URL" >> "$QUTE_FIFO"
+else
+    echo "open -t $URL" >> "$QUTE_FIFO"
+fi
