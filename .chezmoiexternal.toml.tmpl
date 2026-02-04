@@ -4,4 +4,9 @@
     type = "file"
     url = "file://{{ .chezmoi.homeDir }}/code/dotfiles-private/ssh/config"
     refreshPeriod = "0"
+
+[".local/bin/zshenv.sh"]
+    type = "file"
+    url = "file://{{ .chezmoi.homeDir }}/code/dotfiles-private/dot_local/bin/zshenv.sh"
+    refreshPeriod = "0"
 {{ end -}}
