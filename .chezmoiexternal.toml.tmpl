@@ -9,4 +9,8 @@
     type = "file"
     url = "file://{{ .chezmoi.homeDir }}/code/dotfiles-private/dot_local/bin/zshenv.sh"
     refreshPeriod = "0"
+[".claude/settings.json"]
+    type = "file"
+    url = "file://{{ .chezmoi.homeDir }}/code/dotfiles-private/dot_claude/settings.json"
+    refreshPeriod = "0"
 {{ end -}}
