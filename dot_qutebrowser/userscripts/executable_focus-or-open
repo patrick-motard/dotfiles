@@ -1,20 +1,38 @@
 #!/bin/bash
 # Focus a tab by URL pattern, or open it if not found.
 # Usage: spawn --userscript focus-or-open <url>
+#
+# Behavior:
+# - If already on target URL: close the tab (toggle off)
+# - Otherwise: try to focus existing tab, or open new one
 
 URL="${1:-qute://bindings}"
-DATA_DIR="${QUTE_DATA_DIR:-$HOME/.qutebrowser}"
-SESSION_FILE="$DATA_DIR/sessions/default.yml"
 
-# Save session first so we can read current tabs
-echo "session-save --quiet default" >> "$QUTE_FIFO"
+# Normalize URLs for comparison
+CURRENT_URL="${QUTE_URL%/}"
+TARGET_URL="${URL%/}"
 
-# Small delay to let session save complete
-sleep 0.1
+# If we're already on the target URL, close this tab (toggle behavior)
+if [[ "$CURRENT_URL" == "$TARGET_URL" ]]; then
+    echo "tab-close" >> "$QUTE_FIFO"
+    exit 0
+fi
 
-# Check if URL exists in session file
-if [ -f "$SESSION_FILE" ] && grep -q "$URL" "$SESSION_FILE" 2>/dev/null; then
-    echo "tab-select $URL" >> "$QUTE_FIFO"
+# Try to select existing tab first.
+# If this fails (no matching tab), qutebrowser shows an error.
+# User can press ? again, which will then open a new tab since we
+# check tab count below.
+
+# Count tabs with this URL in the title/URL by checking buffer
+# Actually, we can't easily do this. Let's use a simple state file approach.
+
+STATE_FILE="/tmp/qute-singleton-${URL//[^a-zA-Z0-9]/_}"
+
+if [[ -f "$STATE_FILE" ]]; then
+    # We've opened this before, try to select it
+    echo "tab-select $URL/" >> "$QUTE_FIFO"
 else
+    # First time - open and record
+    touch "$STATE_FILE"
     echo "open -t $URL" >> "$QUTE_FIFO"
 fi
