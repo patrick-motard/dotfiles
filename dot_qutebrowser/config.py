@@ -1,6 +1,9 @@
 # Qutebrowser config with Colemak-DH keybindings
 # Navigation: mnei (m=left, n=down, e=up, i=right)
 
+# Load settings configured via GUI (required in newer qutebrowser versions)
+config.load_autoconfig(False)
+
 # Unbind defaults that conflict with Colemak-DH navigation
 config.unbind('m')  # was: quickmark-save
 config.unbind('n')  # was: search-next
@@ -109,6 +112,17 @@ config.bind(',O', 'spawn open -a "Google Chrome" {url}')
 
 # Focus bindings tab if open, otherwise open it
 config.bind('?', 'spawn --userscript focus-or-open qute://bindings', mode='normal')
+
+# =============================================================================
+# DARK MODE
+# =============================================================================
+
+# Follow system dark mode preference
+c.colors.webpage.preferred_color_scheme = 'auto'
+
+# Enable Chromium's dark mode for all pages (including qute:// pages)
+c.colors.webpage.darkmode.enabled = True
+c.colors.webpage.darkmode.algorithm = 'lightness-cielab'
 
 # =============================================================================
 # AD BLOCKING
