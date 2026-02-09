@@ -1,0 +1,195 @@
+" Tridactyl config with Colemak-DH keybindings
+" Navigation: mnei (m=left, n=down, e=up, i=right)
+
+" =============================================================================
+" COLEMAK-DH NAVIGATION (mnei = hjkl)
+" =============================================================================
+
+" Scrolling (hjkl -> mnei)
+bind m scrollpx -50
+bind n scrollline 5
+bind e scrollline -5
+bind i scrollpx 50
+
+" Half-page scrolling
+bind N scrollpage 0.5
+bind E scrollpage -0.5
+
+" Tab navigation (use gt/gT for next/prev, but also add convenient bindings)
+bind M tabprev
+bind I tabnext
+
+" History navigation
+bind <A-m> back
+bind <A-i> forward
+
+" =============================================================================
+" RELOCATED BINDINGS (displaced by navigation)
+" =============================================================================
+
+" Search next/prev (n/N -> k/K)
+bind k findnext
+bind K findnext --reverse
+
+" Insert mode / focus input (i -> l)
+bind l focusinput
+
+" Mark operations (m -> a for "add mark")
+bind a markadd
+bind ` markjump
+
+" =============================================================================
+" HINT MODE COLEMAK-DH
+" =============================================================================
+
+" Use Colemak-DH home row for hint characters
+set hintchars arstgmneiowfpluy
+
+" =============================================================================
+" GO COMMANDS (g prefix) - remap where needed
+" =============================================================================
+
+" Focus input with gi relocated to gl
+bind gl focusinput -l
+
+" Tab movement
+bind ga tabmove
+
+" Move tabs left/right
+bind g< tabmove -1
+bind g> tabmove +1
+
+" =============================================================================
+" WINDOW NAVIGATION (for splits if using Tree Style Tab or similar)
+" =============================================================================
+
+" Jump to specific tab by index
+bind gm buffer
+bind g1 tab 1
+bind g2 tab 2
+bind g3 tab 3
+bind g4 tab 4
+bind g5 tab 5
+bind g6 tab 6
+bind g7 tab 7
+bind g8 tab 8
+bind g9 tablast
+
+" =============================================================================
+" VISUAL/CARET MODE (v to enter)
+" =============================================================================
+
+" Navigation in visual mode
+bind --mode=visual m js document.getSelection().modify("extend","backward","character")
+bind --mode=visual n js document.getSelection().modify("extend","forward","line")
+bind --mode=visual e js document.getSelection().modify("extend","backward","line")
+bind --mode=visual i js document.getSelection().modify("extend","forward","character")
+
+" Word movement in visual mode
+bind --mode=visual w js document.getSelection().modify("extend","forward","word")
+bind --mode=visual b js document.getSelection().modify("extend","backward","word")
+
+" =============================================================================
+" COMMAND MODE (ex mode)
+" =============================================================================
+
+" Navigate command history with Ctrl+n/e
+bind --mode=ex <C-n> ex.next_history
+bind --mode=ex <C-e> ex.prev_history
+
+" Navigate completions
+bind --mode=ex <C-j> ex.next_completion
+bind --mode=ex <C-k> ex.prev_completion
+
+" =============================================================================
+" ADDITIONAL USEFUL BINDINGS
+" =============================================================================
+
+" Quick open bookmark/history in current/new tab
+bind o fillcmdline open
+bind O fillcmdline tabopen
+
+" Buffer/tab switching
+bind B fillcmdline buffer
+
+" Close tab
+bind x tabclose
+bind X undo
+
+" Pin/unpin tab
+bind gp pin
+
+" Duplicate tab
+bind yd tabduplicate
+
+" Detach tab to new window
+bind gd tabdetach
+
+" Move tab to another window
+bind gD composite tabdetach | tabclose
+
+" =============================================================================
+" SEARCH
+" =============================================================================
+
+" Start search
+bind / fillcmdline find
+bind ? fillcmdline find --reverse
+
+" Clear search highlighting
+bind <Escape> clearsearchhighlight
+
+" =============================================================================
+" ZOOM
+" =============================================================================
+
+bind zi zoom 10 true
+bind zo zoom -10 true
+bind zz zoom 100
+
+" =============================================================================
+" URL MANIPULATION
+" =============================================================================
+
+" Increment/decrement URL
+bind ]] followpage next
+bind [[ followpage prev
+
+" Open current URL in new tab
+bind ;t hint -t
+
+" Open current URL in background tab
+bind ;b hint -b
+
+" =============================================================================
+" MISCELLANEOUS
+" =============================================================================
+
+" View source
+bind gf viewsource
+
+" Help
+bind ;h help
+
+" Reload config
+bind ;r source
+
+" =============================================================================
+" IGNORE SITES (sites where tridactyl should not intercept keys)
+" =============================================================================
+
+" Disable on certain sites
+autocmd DocStart mail.google.com mode ignore
+autocmd DocStart docs.google.com mode ignore
+autocmd DocStart sheets.google.com mode ignore
+autocmd DocStart slides.google.com mode ignore
+
+" =============================================================================
+" APPEARANCE
+" =============================================================================
+
+" Use dark theme
+set theme dark
+
+" Show mode indicator
+set modeindicator true
