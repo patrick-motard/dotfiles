@@ -1,0 +1,5 @@
+# Show 2 directory components so worktree sessions display as "project/branch"
+dir_length = 2
+
+[default_session]
+startup_command = "nvim"
