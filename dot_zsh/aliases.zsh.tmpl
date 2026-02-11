@@ -63,6 +63,93 @@ alias gpu=push_upstream
 alias lg="lazygit"
 alias gs="git status"
 
+# Git Worktrees
+# Base directory for all worktree-managed repos
+export WORKTREE_DIR="$HOME/code/worktrees"
+
+# Clone a repo as a bare repo for worktree use
+# Usage: gwt-clone <repo-url> [project-name]
+function gwt-clone() {
+    local repo_url="$1"
+    local project_name="${2:-$(basename -s .git "$repo_url")}"
+    local project_dir="$WORKTREE_DIR/$project_name"
+
+    if [[ -z "$repo_url" ]]; then
+        echo "Usage: gwt-clone <repo-url> [project-name]"
+        return 1
+    fi
+
+    mkdir -p "$project_dir"
+    git clone --bare "$repo_url" "$project_dir/.git"
+
+    # Configure the bare repo to fetch all remote branches
+    git --git-dir="$project_dir/.git" config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+    git --git-dir="$project_dir/.git" fetch origin
+
+    # Create a worktree for the default branch
+    local default_branch
+    default_branch=$(git --git-dir="$project_dir/.git" symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's|refs/remotes/origin/||')
+    if [[ -z "$default_branch" ]]; then
+        default_branch="main"
+    fi
+
+    git --git-dir="$project_dir/.git" worktree add "$project_dir/$default_branch" "$default_branch"
+    echo "Worktree ready: $project_dir/$default_branch"
+    echo "Use Alt-s > Ctrl-w in tmux to switch worktrees"
+    cd "$project_dir/$default_branch"
+}
+
+# Add a worktree for an existing or new branch
+# Usage: gwt-add <branch-name> [base-branch]
+function gwt-add() {
+    local branch="$1"
+    local base="${2:-HEAD}"
+
+    if [[ -z "$branch" ]]; then
+        echo "Usage: gwt-add <branch-name> [base-branch]"
+        return 1
+    fi
+
+    # Find the bare repo's git dir
+    local git_common_dir
+    git_common_dir=$(git rev-parse --git-common-dir 2>/dev/null)
+    if [[ -z "$git_common_dir" || "$git_common_dir" == "." ]]; then
+        echo "Not in a worktree-managed repo"
+        return 1
+    fi
+
+    local project_dir=$(dirname "$git_common_dir")
+    local worktree_path="$project_dir/$branch"
+
+    # Check if branch exists on remote
+    if git show-ref --verify --quiet "refs/remotes/origin/$branch" 2>/dev/null; then
+        git worktree add "$worktree_path" "$branch"
+    else
+        git worktree add -b "$branch" "$worktree_path" "$base"
+    fi
+
+    echo "Created worktree at $worktree_path"
+    cd "$worktree_path"
+}
+
+# List worktrees for the current project
+alias gwt-ls="git worktree list"
+
+# Remove a worktree
+# Usage: gwt-rm <branch-name>
+function gwt-rm() {
+    local branch="$1"
+    if [[ -z "$branch" ]]; then
+        echo "Usage: gwt-rm <branch-name>"
+        return 1
+    fi
+    git worktree remove "$(dirname "$(git rev-parse --git-common-dir)")/$branch"
+    echo "Removed worktree $branch"
+}
+
+# Navigate to worktrees directory
+alias wt="cd $HOME/code/worktrees"
+
 # Ruby
 alias bi="bundle install"
 
