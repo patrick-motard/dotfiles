@@ -28,12 +28,11 @@ These dotfiles provide a reproducible, cross-platform development environment th
 
 - [Chezmoi](https://www.chezmoi.io/) dotfile manager
 - [Ansible](https://www.ansible.com/) to automate setup
-- [Hammerspoon](https://www.hammerspoon.org/) on mac for desktop automation
 - [VsCode](https://code.visualstudio.com/) with vim keybinds is my main editor, I no longer use emacs.
 - [Neovim](https://neovim.io/) is my terminal editor
 - [lazy.nvim](https://github.com/folke/lazy.nvim) for vim plugin management
-- [tmux]() for terminal multiplexing
-  - [tmux-tea]() for tmux session management
+- [tmux](https://github.com/tmux/tmux) for terminal multiplexing
+  - [sesh](https://github.com/joshmedeski/sesh) for tmux session management
 - [ZSH](https://zsh.sourceforge.io/) for my shell
 - [Zplug](https://github.com/zplug/zplug) for ZSH plugins
 
