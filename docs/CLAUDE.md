@@ -117,6 +117,10 @@ To create a new plugin repository:
 3. Add skills/commands/agents as markdown files
 4. Register it as a marketplace in Claude Code
 
+### Public Marketplace
+
+A public plugin marketplace is available at [patrick-motard/claude-plugins-public](https://github.com/patrick-motard/claude-plugins-public). This can serve as a reference for creating your own plugin repositories.
+
 ### Separation of Concerns
 
 - **Dotfiles repo (public)**: Global `CLAUDE.md` instructions, ansible tasks for plugin installation
