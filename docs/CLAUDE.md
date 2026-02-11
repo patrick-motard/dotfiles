@@ -41,9 +41,89 @@ git add -A && git commit -m "Update Claude global instructions" && git push
 
 Or use `/pm:sync-claude-config` if available.
 
-## Custom Commands and Skills
+## Plugin System
 
-Custom slash commands and skills are managed through a separate plugin system, not through this dotfiles repo. See the plugin repositories for more information.
+Custom slash commands and skills are managed through a plugin marketplace system, separate from this dotfiles repo.
+
+### How It Works
+
+1. **Plugin Repositories**: Plugins are organized into git repositories, each acting as a "marketplace"
+2. **Ansible Installation**: The dotfiles ansible playbook clones plugin repos to `~/code/claude/`
+3. **Marketplace Registration**: A sync script registers these repos as Claude plugin marketplaces
+4. **Plugin Loading**: Claude Code discovers and loads plugins from registered marketplaces
+
+### Plugin Repository Structure
+
+Each plugin repository follows this structure:
+
+```
+plugins-example/
+├── marketplace.json       # Marketplace metadata and plugin list
+└── plugins/
+    └── example/           # Plugin namespace
+        ├── skills/        # Reusable workflows (invoked with /skill-name)
+        │   └── my-skill/
+        │       └── SKILL.md
+        ├── commands/      # Simple slash commands
+        │   └── my-command.md
+        └── agents/        # Autonomous task handlers
+            └── my-agent.md
+```
+
+### Plugin Types
+
+| Type | Purpose | Invocation |
+|------|---------|------------|
+| **Skills** | Multi-step workflows with instructions | `/namespace:skill-name` |
+| **Commands** | Simple prompt injections | `/namespace:command-name` |
+| **Agents** | Background task handlers | Automatically triggered |
+
+### Installation via Ansible
+
+The ansible playbook handles plugin setup:
+
+```bash
+# Run the full playbook (includes plugin setup)
+dotansible
+
+# Or run just the claude-plugins tag
+dotansible claude-plugins
+```
+
+This will:
+1. Clone plugin repositories to `~/code/claude/`
+2. Run the plugin sync script to register marketplaces
+3. Machine-specific plugins (e.g., work-only) are conditionally installed
+
+### Creating Your Own Plugins
+
+To create a new plugin repository:
+
+1. Create a git repo with the marketplace structure above
+2. Add a `marketplace.json` with metadata:
+   ```json
+   {
+     "name": "my-marketplace",
+     "version": "1.0.0",
+     "plugins": [
+       {
+         "name": "my-plugin",
+         "version": "1.0.0",
+         "description": "What this plugin does"
+       }
+     ]
+   }
+   ```
+3. Add skills/commands/agents as markdown files
+4. Register it as a marketplace in Claude Code
+
+### Separation of Concerns
+
+- **Dotfiles repo (public)**: Global `CLAUDE.md` instructions, ansible tasks for plugin installation
+- **Plugin repos (can be private)**: Actual plugin code, skills, commands, and sensitive workflows
+- **Claude config**: Plugin cache, installation state, settings (`~/.claude/plugins/`)
+
+This separation allows sharing dotfiles publicly while keeping custom workflows private.
 
 ## File Naming
 
