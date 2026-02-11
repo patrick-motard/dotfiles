@@ -28,8 +28,7 @@ These dotfiles provide a reproducible, cross-platform development environment th
 
 - [Chezmoi](https://www.chezmoi.io/) dotfile manager
 - [Ansible](https://www.ansible.com/) to automate setup
-- [VsCode](https://code.visualstudio.com/) with vim keybinds is my main editor, I no longer use emacs.
-- [Neovim](https://neovim.io/) is my terminal editor
+- [Neovim](https://neovim.io/) and [VsCode](https://code.visualstudio.com/) (with vim keybinds) are my editors
 - [lazy.nvim](https://github.com/folke/lazy.nvim) for vim plugin management
 - [tmux](https://github.com/tmux/tmux) for terminal multiplexing
   - [sesh](https://github.com/joshmedeski/sesh) for tmux session management
