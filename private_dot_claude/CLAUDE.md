@@ -12,6 +12,14 @@ These instructions apply to all projects where project-specific CLAUDE.md doesn'
 
 - Scripts repo: `~/code/scripts` (GitHub)
 
+## Beads (Issue Tracking)
+
+Beads issues are tracked in these repos only:
+- `~/code/zendesk/wiki-zendesk` - Zendesk work issues
+- `~/code/wiki` - Personal wiki issues
+
+Do not initialize or look for `.beads/` in other repositories.
+
 ## Script Creation Conventions
 
 When creating scripts in the scripts repo:
