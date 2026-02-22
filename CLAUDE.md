@@ -171,22 +171,6 @@ Example from dot_zshrc.tmpl:
 
 Switch between configs using the `vv` function or by setting `NVIM_APPNAME`.
 
-### Hammerspoon (macOS)
-
-**Structure**:
-- `init.lua` - Main configuration, loads modules
-- `src/` - Custom modules (application, window, help)
-- `Spoons/` - Hammerspoon plugins
-- `bookmarks/` - Custom bookmarks configuration
-
-**Key features**:
-- Application launching/focusing keybinds
-- Window management and tiling
-- Google Calendar integration (requires setup)
-- Modifiers defined: hyper (cmd+alt), meh (alt+shift+ctrl), leader (alt)
-
-**Reload**: Bound to cmd+alt+r
-
 ## Development Workflow
 
 ### Making Changes to Dotfiles
