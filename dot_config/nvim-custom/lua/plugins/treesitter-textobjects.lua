@@ -5,10 +5,10 @@ return {
   event = { 'BufReadPre', 'BufNewFile' },
   dependencies = { 'nvim-treesitter/nvim-treesitter' },
   config = function()
-    local select = require 'nvim-treesitter.textobjects.select'
-    local move = require 'nvim-treesitter.textobjects.move'
-    local swap = require 'nvim-treesitter.textobjects.swap'
-    local repeat_move = require 'nvim-treesitter.textobjects.repeatable_move'
+    local select = require 'nvim-treesitter-textobjects.select'
+    local move = require 'nvim-treesitter-textobjects.move'
+    local swap = require 'nvim-treesitter-textobjects.swap'
+    local repeat_move = require 'nvim-treesitter-textobjects.repeatable_move'
 
     -- Select keymaps
     local select_keymaps = {
