@@ -7,6 +7,7 @@ return {
   ---@module "auto-session"
   ---@type AutoSession.Config
   opts = {
+    bypass_session_save_file_types = { 'help' },
     -- suppressed_dirs = { '~/' },
     -- allowed_dirs = {
     --   '~/code/*',
