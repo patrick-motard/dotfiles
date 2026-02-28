@@ -15,10 +15,17 @@
     path: "{{home}}/.oh-my-zsh"
   register: oh_my_zsh_installed
 
+- name: Check if oh-my-zsh is installed via zplug
+  stat:
+    path: "{{home}}/.zplug/repos/robbyrussell/oh-my-zsh"
+  register: oh_my_zsh_via_zplug
+
 # oh-my-zsh is installed because there are some plugins i use
 # from oh-my-zsh
 - name: Install oh-my-zsh
   become: false
-  when: not oh_my_zsh_installed.stat.exists
+  when: not oh_my_zsh_installed.stat.exists and not oh_my_zsh_via_zplug.stat.exists
+  environment:
+    ZSH: ""
   shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 

@@ -19,12 +19,17 @@
 - file:
     path: "{{home}}/.nodenv/plugins"
     state: directory
-- name: Clone node-build plugin
+- name: Clone node-build plugin (initial)
   git:
     repo: "https://github.com/nodenv/node-build.git"
     dest: "{{home}}/.nodenv/plugins/node-build"
-    update: "{{ should_update_git | bool }}"
+    update: no
   register: node_build_clone
+
+- name: Update node-build plugin (force tags)
+  shell: git -C "{{home}}/.nodenv/plugins/node-build" fetch --tags --force && git -C "{{home}}/.nodenv/plugins/node-build" pull
+  when: should_update_git | bool and not node_build_clone.changed
+  changed_when: false
 - name: Get latest LTS version of Node.js
   shell: nodenv install --list | grep -E '^\s*[0-9]+\.[0-9]+\.[0-9]+$' | grep -E '^\s*(18|20|22)\.' | tail -1 | xargs
   register: node_lts_version
