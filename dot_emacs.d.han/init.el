@@ -18,11 +18,24 @@
 ;; Set up MELPA, and the rest, via package.el
 (setq package-archives '(("org"       . "http://orgmode.org/elpa/")
 			 ("gnu"       . "http://elpa.gnu.org/packages/")
-			 ("melpa"     . "https://melpa.org/packages/")
-			 ("marmalade" . "http://marmalade-repo.org/packages/")))
+			 ("melpa"     . "https://melpa.org/packages/")))
 (require 'package)
 (package-initialize)
 (org-babel-load-file "~/.emacs.d.han/settings.org")
+
+;; MCP server - allows Claude to interact with this Emacs session
+(add-to-list 'load-path "~/code/emacs-mcp-server")
+(require 'mcp-server)
+(setq mcp-server-socket-directory "~/.emacs.d.han/.local/cache/")
+(add-hook 'emacs-startup-hook #'mcp-server-start-unix)
+
+;; Safe helper for Claude to read the *Warnings* buffer via MCP
+(defun my/get-warnings ()
+  "Return the contents of the *Warnings* buffer for MCP access."
+  (if (get-buffer "*Warnings*")
+      (with-current-buffer "*Warnings*" (buffer-string))
+    "No warnings buffer found."))
+(add-to-list 'mcp-server-security-allowed-dangerous-functions 'my/get-warnings)
 ;; ;;(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
 ;; disable menu and tool bar
@@ -64,7 +77,6 @@
     doom-themes
     cycle-themes
     magit
-    evil-magit
     go-mode
     exec-path-from-shell
     yaml-mode
@@ -98,8 +110,6 @@
 ;; ;; Since tab is 'helm-select-action', switch that to C-z so we can still call it.
 ;; (define-key helm-map (kbd "C-z") #'helm-select-action)
 
-;; (use-package helm-git-grep :ensure t :defer t)
-;; (use-package helm-swoop :ensure t :defer t)
 
 ;; ;; (require 'mu4e)
 ;; ;; use mu4e for email in emacs
@@ -219,7 +229,6 @@
 (spaceline-spacemacs-theme)
 
 (require 'magit)
-(require 'evil-magit)
 
 ;; languages
 ;; golang
@@ -405,7 +414,6 @@
 ;;    "f s" '(save-buffer :which-key "save file")
 
 ;;    "g" '(:which-key "git")
-;;    "g /" '(helm-git-grep :which-key "git-grep")
 ;;    "g s" '(magit-status :which-key "status")
 ;;    "g m" '(magit-dispatch :which-key "dispatch popup")
 
@@ -421,7 +429,6 @@
 ;;    "o t" '(org-todo :which-key "todo")
 
 ;;    "s" '(:which-key "search")
-;;    "s s" '(helm-swoop :which-key "helm-swoop")
 
 ;;    "w" '(:which-key "window")
 ;;    "w d" '(delete-window :which-key "delete window")

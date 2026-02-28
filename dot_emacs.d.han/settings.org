@@ -127,7 +127,6 @@ Activate shell mode for AUR PKGBUILD files.
 ** Helm
 #+BEGIN_SRC emacs-lisp
   (use-package helm :ensure t)
-  (require 'helm-config)
   (helm-mode 1)
   ;;(setq helm-mode-fuzzy-match t)
   ;;(setq helm-completion-in-region-fuzzy-match t)
@@ -138,12 +137,7 @@ Activate shell mode for AUR PKGBUILD files.
   ;; Since tab is 'helm-select-action', switch that to C-z so we can still call it.
   (define-key helm-map (kbd "C-z") #'helm-select-action)
 
-  (use-package helm-git-grep :ensure t :defer t)
-  (use-package helm-swoop :ensure t :defer t)
-  ;; fuzzy search is a little too liberal, disabling for now
-  ;; (setq helm-swoop-use-fuzzy-match t)
   (use-package helm-projectile :ensure t :defer t)
-  (use-package helm-ag :ensure t :defer t)
 #+END_SRC
 ** Autocompletion (company)
 #+BEGIN_SRC emacs-lisp
