@@ -253,6 +253,11 @@ dotansible() {
       ;;
   esac
 
+  # --ask-become-pass is required on Arch Linux so emacs can be installed via pacman
+  if grep -q '^ID=arch' /etc/os-release 2>/dev/null; then
+    cmd+=('--ask-become-pass')
+  fi
+
   echo "Running: ${cmd[*]}"
   "${cmd[@]}"
 }
