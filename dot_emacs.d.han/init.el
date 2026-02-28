@@ -10,6 +10,9 @@
 
 (setq user-emacs-directory "~/.emacs.d.han")
 (setq user-init-file "~/.emacs.d.han/init.el")
+;; Write custom vars to a separate file so Emacs doesn't modify init.el
+(setq custom-file "~/.emacs.d.han/custom.el")
+(load custom-file 'noerror)
 ;; This TLS setting fixes "failed to download 'gnu' archive" error.
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
@@ -23,6 +26,14 @@
 (package-initialize)
 (org-babel-load-file "~/.emacs.d.han/settings.org")
 
+;; Claude Code IDE - native Emacs integration for Claude Code CLI
+(use-package vterm :ensure t)
+(use-package claude-code-ide
+  :vc (:url "https://github.com/manzaltu/claude-code-ide.el" :rev :newest)
+  :bind ("C-c C-'" . claude-code-ide-menu)
+  :config
+  (claude-code-ide-emacs-tools-setup))
+
 ;; MCP server - allows Claude to interact with this Emacs session
 (add-to-list 'load-path "~/code/emacs-mcp-server")
 (require 'mcp-server)
@@ -35,7 +46,13 @@
   (if (get-buffer "*Warnings*")
       (with-current-buffer "*Warnings*" (buffer-string))
     "No warnings buffer found."))
+(defun my/get-messages ()
+  "Return the contents of the *Messages* buffer for MCP access."
+  (if (get-buffer "*Messages*")
+      (with-current-buffer "*Messages*" (buffer-string))
+    "No messages buffer found."))
 (add-to-list 'mcp-server-security-allowed-dangerous-functions 'my/get-warnings)
+(add-to-list 'mcp-server-security-allowed-dangerous-functions 'my/get-messages)
 ;; ;;(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
 ;; disable menu and tool bar
@@ -422,10 +439,10 @@
 
    "w" '(:which-key "window")
    "w d" '(delete-window :which-key "delete")
-   "w ;" '(evil-window-right :which-key "right")
-   "w l" '(evil-window-up :which-key "up")
-   "w k" '(evil-window-down :which-key "down")
-   "w j" '(evil-window-left :which-key "left")
+   "w i" '(evil-window-right :which-key "right")
+   "w e" '(evil-window-up :which-key "up")
+   "w n" '(evil-window-down :which-key "down")
+   "w m" '(evil-window-left :which-key "left")
    "w s" '(split-window-vertically :which-key "split vert")
    "w /" '(split-window-horizontally :which-key "split horiz")
    )
@@ -472,7 +489,10 @@
      (vm-imap . vm-visit-imap-folder-other-frame)
      (gnus . org-gnus-no-new-news) (file . find-file)
      (wl . wl-other-frame)))
- '(package-selected-packages nil)
+ '(package-selected-packages '(claude-code-ide))
+ '(package-vc-selected-packages
+   '((claude-code-ide :vc-backend Git :url
+		      "https://github.com/manzaltu/claude-code-ide.el")))
  '(pdf-view-midnight-colors (cons "#ECEFF4" "#2E3440"))
  '(rustic-ansi-faces
    ["#2E3440" "#BF616A" "#A3BE8C" "#EBCB8B" "#81A1C1" "#B48EAD" "#88C0D0"
