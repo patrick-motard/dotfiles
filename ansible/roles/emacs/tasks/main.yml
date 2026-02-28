@@ -35,6 +35,12 @@
     path: "{{ ansible_facts['user_dir'] }}/.emacs.d.doom/.local"
   register: doom_installed
 
+- name: Check if emacs binary is available
+  command: which emacs
+  changed_when: false
+  failed_when: false
+  register: emacs_binary
+
 - name: Install Doom Emacs
   command: "{{ ansible_facts['user_dir'] }}/.emacs.d.doom/bin/doom install --no-config --no-env --no-fonts"
-  when: not doom_installed.stat.exists
+  when: not doom_installed.stat.exists and emacs_binary.rc == 0
