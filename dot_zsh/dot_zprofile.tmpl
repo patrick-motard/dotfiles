@@ -2,7 +2,9 @@
 # vim: set ft=zsh:
 #region homebrew
 # Use brew shellenv for proper homebrew PATH setup
+{{ if eq .chezmoi.os "darwin" -}}
 eval "$(/opt/homebrew/bin/brew shellenv)"
+{{ end -}}
 #endregion homebrew
 
 {{ if eq .chezmoi.hostname "GVXPDWWKWG" -}}
