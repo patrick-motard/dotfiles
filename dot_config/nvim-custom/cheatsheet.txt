@@ -23,6 +23,7 @@ Forward, next result | `f{n}`
 Motion: Backward | `F`
 
 ## Vim
+Capitalize word | `gUiw`
 Save | `C-s`
 Escape | `C-[`
 Reselect last visual selection | `gv`
