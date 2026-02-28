@@ -1,4 +1,11 @@
 ---
+- name: Install emacs
+  become: true
+  pacman:
+    name: emacs
+    state: present
+  when: ansible_os_family == "Archlinux"
+
 # Chemacs2 - Emacs profile switcher
 # Allows switching between different emacs configurations via --with-profile flag
 # Profiles are defined in ~/.emacs-profiles.el
