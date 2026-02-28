@@ -49,7 +49,7 @@
   register: emacs_binary
 
 - name: Install Doom Emacs
-  command: "{{ ansible_facts['user_dir'] }}/.emacs.d.doom/bin/doom install --no-config --no-env --no-fonts"
+  command: "{{ ansible_facts['user_dir'] }}/.emacs.d.doom/bin/doom install --no-config --no-env"
   when: not doom_installed.stat.exists and emacs_binary.rc == 0
 
 # MCP Server - allows Claude Code to interact with Emacs via Model Context Protocol
