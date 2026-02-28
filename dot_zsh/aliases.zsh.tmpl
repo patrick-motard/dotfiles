@@ -214,8 +214,8 @@ alias moi_add_nvim="chezmoi add ~/.config/nvim && rm $MOIDIR/dot_config/nvim/laz
 dotansible() {
   local inventory playbook cmd
   playbook="$MOIDIR/ansible/main.yml"
-  if [[ -f "$MOIDIR/ansible/inventory/$(hostname).yml" ]]; then
-    inventory="$MOIDIR/ansible/inventory/$(hostname).yml"
+  if [[ -f "$MOIDIR/ansible/inventory/$HOST.yml" ]]; then
+    inventory="$MOIDIR/ansible/inventory/$HOST.yml"
   else
     inventory="$MOIDIR/ansible/inventory/main.yml"
   fi
