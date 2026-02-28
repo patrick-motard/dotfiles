@@ -178,7 +178,11 @@ alias edit="pushd $MOIDIR && $EDITOR $MOIDIR"
 alias ssc="system-state-check"
 
 # Apply and source changes.
-alias ma="chezmoi apply && sz"
+ma() {
+  chezmoi apply
+  [[ -d ~/code/dotfiles-private ]] && chezmoi -S ~/code/dotfiles-private apply
+  sz
+}
 
 # Apply and source changes with pre-flight system state check.
 mam() {
@@ -198,7 +202,9 @@ mam() {
   fi
 
   # Proceed with apply and reload
-  chezmoi apply && sz
+  chezmoi apply
+  [[ -d ~/code/dotfiles-private ]] && chezmoi -S ~/code/dotfiles-private apply
+  sz
 }
 
 alias moi_add_nvim="chezmoi add ~/.config/nvim && rm $MOIDIR/dot_config/nvim/lazy-lock.json"
