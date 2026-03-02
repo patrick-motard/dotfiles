@@ -36,6 +36,13 @@ When creating scripts in the scripts repo:
 - Prioritize readability and maintainability
 - always update the links in the readme toc when adding/removing files in docs/
 
+## Confluence
+
+When creating or updating Confluence pages via MCP tools with markdown content:
+- Confluence's markdown renderer collapses adjacent list items onto one line unless there is a blank line between them
+- Always put a blank line between markdown list items (`- item`) when writing content for Confluence pages
+- This applies to both ordered and unordered lists
+
 ## NEVER EVER DO
 
 These rules are ABSOLUTE:
