@@ -44,3 +44,10 @@
 - name: Install Doom Emacs
   command: "{{ ansible_facts['user_dir'] }}/.emacs.d.doom/bin/doom install --no-config --no-env --no-fonts"
   when: not doom_installed.stat.exists and emacs_binary.rc == 0
+
+# MCP Server - allows Claude Code to interact with Emacs via Model Context Protocol
+- name: Clone emacs-mcp-server
+  git:
+    repo: "https://github.com/rhblind/emacs-mcp-server.git"
+    dest: "{{ ansible_facts['user_dir'] }}/code/emacs-mcp-server"
+    update: no  # Don't update automatically, user can pull manually
