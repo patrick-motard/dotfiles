@@ -24,7 +24,7 @@ I'll leave it here for reference.
 
 #+BEGIN_SRC emacs-lisp
   ;; (add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline-20"))
-  (set-face-font 'default "Inconsolata for Powerline-18")
+  (set-face-font 'default "IosevkaTerm Nerd Font Mono-14")
   (global-display-line-numbers-mode)
 #+END_SRC
 
@@ -89,6 +89,23 @@ Activate shell mode for AUR PKGBUILD files.
 (add-to-list 'auto-mode-alist'("PKGBUILD\\'" . shell-script-mode))
 #+END_SRC
 * Packages
+** Dashboard
+#+BEGIN_SRC emacs-lisp
+  (use-package dashboard
+    :ensure t
+    :config
+    (setq dashboard-banner-logo-title "Welcome back, Patrick")
+    (setq dashboard-startup-banner 'logo)
+    (setq dashboard-center-content t)
+    (setq dashboard-items '((recents   . 8)
+                            (projects  . 5)
+                            (bookmarks . 5)))
+    (setq dashboard-set-heading-icons t)
+    (setq dashboard-set-file-icons t)
+    (setq dashboard-projects-backend 'projectile)
+    (dashboard-setup-startup-hook))
+#+END_SRC
+
 ** Org
 #+BEGIN_SRC emacs-lisp
   (use-package org :ensure t
@@ -314,13 +331,10 @@ Use ruby mode for files containing ruby code that aren't '.rb' files.
       :states '(normal visual insert emacs)
      "C-," (general-simulate-key "M-x"))
     (general-define-key
-     :keymaps '(normal visual insert emacs dired-mode-map)
+     :keymaps '(normal visual insert emacs dired-mode-map help-mode-map)
      :prefix "SPC"
-     ;; :states '(normal)
      :non-normal-prefix "C-SPC"
      "" nil
-     ;; TODO: fiture out how to make tab switch between current and previous buffer
-     ;; with switch-to-prev-buffer it just rotates backwards
      "TAB" '(switch-to-prev-buffer :which-key "prev buffer")
      "," (general-simulate-key "C-c")
      "SPC" '(helm-M-x :which-key "helm-M-x")
@@ -335,74 +349,101 @@ Use ruby mode for files containing ruby code that aren't '.rb' files.
      "9" '(winum-select-window-9 :which-key "window #9")
      "0" '(treemacs :which-key "treemacs")
 
-
-     "b"   '(                        :which-key "buffer")
+     "b" '(:which-key "buffer")
      "b b" '(helm-mini               :which-key "helm-mini")
      "b n" '(my-next-user-buffer     :which-key "next buffer")
      "b p" '(my-previous-user-buffer :which-key "previous buffer")
-     "b d" '(kill-this-buffer        :which-key "delete buffer")
+     "b d" '(kill-current-buffer     :which-key "delete buffer")
+     "b m" '((lambda () (interactive) (switch-to-buffer "*Messages*") (evil-motion-state)) :which-key "messages buffer")
 
-     "b m" '((lambda () (interactive) (switch-to-buffer "Messages") (evil-motion-state)) :which-key "messages buffer")
+     "c" '(:which-key "claude / code")
+     "c c" '(claude-code-ide-menu :which-key "claude code")
+     "c l" '(comment-line         :which-key "comment line")
+     "c r" '(comment-region       :which-key "comment region")
 
-     "c l" '(comment-line          :which     "comment line")
-     "c r" '(comment-region        :which     "comment region")
-     "j" '(:which "jira")
-     "j i" '(org-jira-get-issues   :which     "get issues")
+     "d" '(:which-key "dotfiles")
+     "d f" '(chezmoi-find         :which-key "find source file")
+     "d a" '(chezmoi-apply        :which-key "apply")
+     "d d" '(chezmoi-diff         :which-key "diff")
+     "d w" '(chezmoi-write        :which-key "write")
+     "d m" '(chezmoi-magit-status :which-key "magit")
 
-     "e" '(                        :which-key "emacs misc")
-     "e d" '(elisp-def             :which-key "elisp-def (go to function)")
+     "e" '(:which-key "emacs")
+     "e d" '(elisp-def            :which-key "go to definition")
      "e i" '((lambda () (interactive) (find-file user-init-file)) :which-key "edit init.el")
      "e l" '((lambda () (interactive) (load-file user-init-file)) :which-key "load init.el")
-     "e t" '(                      :which-key "theme")
-     "e t n" '(cycle-themes        :which-key "next theme")
-     "e p" '(                      :which-key "package")
-     "e p i" '(package-install     :which-key "install")
-     "e p d" '(package-delete      :which-key "delete")
-     "e p r" '(package-refresh-contents :which-key "refresh-contents")
+     "e r" '((lambda () (interactive) (org-babel-load-file "~/.emacs.d.han/settings.org") (load-file user-init-file) (message "Config reloaded!")) :which-key "reload config")
+     "e a" '((lambda () (interactive) (async-shell-command "zsh -i -c 'chezmoi apply'" "*chezmoi*")) :which-key "chezmoi apply")
      "e n" '((lambda () (interactive) (find-file "~/Nextcloud/Documents/notes/notes.org")) :which-key "open notes")
-     "e e" '(mu4e :which-key "email")
+     "e t" '(:which-key "theme")
+     "e t n" '(cycle-themes       :which-key "next theme")
+     "e p" '(:which-key "package")
+     "e p i" '(package-install    :which-key "install")
+     "e p d" '(package-delete     :which-key "delete")
+     "e p r" '(package-refresh-contents :which-key "refresh")
 
      "f" '(:which-key "file")
-     "f l" '(load-file :which-key "load file")
-     "f f" '(helm-find-files :which-key "find-file")
-     "f s" '(save-buffer :which-key "save file")
+     "f f" '(helm-find-files      :which-key "find file")
+     "f l" '(load-file            :which-key "load file")
+     "f s" '(save-buffer          :which-key "save file")
 
      "g" '(:which-key "git")
-     "g /" '(helm-git-grep :which-key "git-grep")
-     "g s" '(magit-status :which-key "status")
-     "g m" '(magit-dispatch :which-key "dispatch popup")
+     "g /" '(helm-git-grep        :which-key "git-grep")
+     "g s" '(magit-status         :which-key "status")
+     "g m" '(magit-dispatch       :which-key "dispatch")
 
      "h" '(:which-key "help")
-     "h a" '(ansible-doc :which-key "ansible-doc")
+     "h f" '(describe-function    :which-key "describe function")
+     "h k" '(describe-key         :which-key "describe key")
+     "h v" '(describe-variable    :which-key "describe variable")
+     "h m" '(describe-mode        :which-key "describe mode")
+     "h a" '(ansible-doc          :which-key "ansible-doc")
+
+     "j" '(:which-key "jira")
+     "j i" '(org-jira-get-issues  :which-key "get issues")
 
      "o" '(:which-key "org")
-     "o d" '(org-do-demote :which-key "demote")
-     "o p" '(org-do-promote :which-key "promote")
+     "o d" '(org-do-demote        :which-key "demote")
+     "o p" '(org-do-promote       :which-key "promote")
      "o c" '(:which-key "checkbox")
      "o c a" '(org-insert-todo-heading :which-key "add")
      "o c t" '(org-toggle-checkbox :which-key "toggle")
-     "o t" '(org-todo :which-key "todo")
+     "o t" '(org-todo             :which-key "todo")
 
-     "p" '(:which-key "projects")
-     "p p" '(helm-projectile :which-key "switch project")
-     "p f" '(helm-projectile-find-file-dwim :which-key "find file")
+     "p" '(:which-key "project")
+     "p p" '(helm-projectile-switch-project :which-key "switch project")
+     "p f" '(helm-projectile-find-file :which-key "find file")
+     "p s" '(helm-projectile-grep :which-key "search project")
+     "p b" '(helm-projectile-switch-to-buffer :which-key "project buffer")
 
      "s" '(:which-key "search")
-     "s s" '(helm-swoop-without-pre-input :which-key "helm-swoop")
-     "s S" '(helm-swoop :which-key "helm-swoop-cursor")
+     "s s" '(helm-occur           :which-key "search buffer")
+     "s p" '(helm-projectile-grep :which-key "search project")
+
+     "t" '(:which-key "treemacs")
+     "t t" '(treemacs             :which-key "toggle")
+     "t f" '(treemacs-find-file   :which-key "find file")
 
      "w" '(:which-key "window")
-     "w d" '(delete-window :which-key "delete window")
-     "w ;" '(evil-window-right :which-key "select window right")
-     "w l" '(evil-window-up :which-key "select window up")
-     "w k" '(evil-window-down :which-key "select window down")
-     "w j" '(evil-window-left :which-key "select window left")
-     "w s" '(split-window-vertically :which-key "split window vert")
-     "w /" '(split-window-horizontally :which-key "split window horizontally")
+     "w d" '(delete-window        :which-key "delete")
+     "w i" '(evil-window-right    :which-key "right")
+     "w e" '(evil-window-up       :which-key "up")
+     "w n" '(evil-window-down     :which-key "down")
+     "w m" '(evil-window-left     :which-key "left")
+     "w s" '(split-window-vertically   :which-key "split vert")
+     "w /" '(split-window-horizontally :which-key "split horiz")
+
+     "y" '(:which-key "snippets")
+     "y y" '(yas-insert-snippet   :which-key "insert")
+     "y n" '(yas-new-snippet      :which-key "new")
      )
     )
 #+END_SRC
 
+** Chezmoi
+#+BEGIN_SRC emacs-lisp
+  (use-package chezmoi :ensure t)
+#+END_SRC
 ** post keybind steps
 Group all the winum-select-window keybinds under one heading. This solution comes from [[https://emacs.stackexchange.com/a/36720/15876][this stack overflow post]]. Documentation for this method can be found on the [[https://github.com/justbur/emacs-which-key#key-and-description-replacement][which-key readme]].
 #+BEGIN_SRC emacs-lisp
