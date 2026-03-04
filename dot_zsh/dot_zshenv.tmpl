@@ -61,3 +61,29 @@ fi
 
 # Go
 export PATH="$PATH:$HOME/go/bin"
+
+{{ if eq .chezmoi.os "darwin" -}}
+# Emacs native compilation with Homebrew's libgccjit on macOS
+#
+# Problem: Emacs 28+ with native-comp fails with "error invoking gcc driver"
+# and "library 'emutls_w' not found" when libgccjit can't find GCC libraries.
+#
+# Solution: Set LIBRARY_PATH to include:
+#   1. /opt/homebrew/lib/gcc/current - main gcc libraries including libgccjit
+#   2. /opt/homebrew/lib/gcc/current/gcc/<arch>/<version> - contains libemutls_w.a
+#
+# The arch-specific path is found dynamically (e.g., aarch64-apple-darwin25/15).
+# This also needs to be set in ~/.emacs.d.han/early-init.el for GUI launches
+# since GUI apps don't inherit shell environment variables.
+#
+# Only activates if Homebrew's gcc is installed at the expected path.
+if [[ -d "/opt/homebrew/lib/gcc/current" ]]; then
+  _gcc_lib="/opt/homebrew/lib/gcc/current"
+  _gcc_arch="$(find "$_gcc_lib/gcc" -maxdepth 1 -type d -name '*apple-darwin*' 2>/dev/null | head -1)"
+  if [[ -n "$_gcc_arch" ]]; then
+    _gcc_ver="$(find "$_gcc_arch" -maxdepth 1 -type d -name '[0-9]*' 2>/dev/null | head -1)"
+    export LIBRARY_PATH="${_gcc_lib}${_gcc_ver:+:$_gcc_ver}${LIBRARY_PATH:+:$LIBRARY_PATH}"
+  fi
+  unset _gcc_lib _gcc_arch _gcc_ver
+fi
+{{ end -}}
