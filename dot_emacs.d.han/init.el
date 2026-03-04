@@ -24,6 +24,10 @@
 			 ("melpa"     . "https://melpa.org/packages/")))
 (require 'package)
 (package-initialize)
+;; Load theme early to avoid white flash on startup
+(when (package-installed-p 'doom-themes)
+  (require 'doom-themes)
+  (load-theme 'doom-nord t))
 (org-babel-load-file "~/.emacs.d.han/settings.org")
 
 ;; Claude Code IDE - native Emacs integration for Claude Code CLI
@@ -363,90 +367,10 @@
 (use-package which-key :ensure t)
 (which-key-mode)
 (setq which-key-idle-delay 0.1)
+;; Show all winum window keys as a single "1..9 window" entry
+(push '(("SPC [2-9]" . nil) . t) which-key-replacement-alist)
+(push '(("SPC 1" . "winum-select-window-1") . (nil . "1..9 → window")) which-key-replacement-alist)
 
-(use-package general :ensure t
-  :config
-  (general-define-key
-    :states '(normal visual emacs)
-   "," (general-simulate-key "C-c"))
-  (general-define-key
-    :states '(normal visual insert emacs)
-   "C-," (general-simulate-key "M-x"))
-  (general-define-key
-   :keymaps '(normal visual insert emacs dired-mode-map)
-   :prefix "SPC"
-   :non-normal-prefix "C-SPC"
-   "" nil
-   "TAB" '(switch-to-prev-buffer :which-key "prev buffer")
-   "," (general-simulate-key "C-c")
-   "SPC" '(helm-M-x :which-key "helm-M-x")
-   "1" '(winum-select-window-1 :which-key "window #1")
-   "2" '(winum-select-window-2 :which-key "window #2")
-   "3" '(winum-select-window-3 :which-key "window #3")
-   "4" '(winum-select-window-4 :which-key "window #4")
-   "5" '(winum-select-window-5 :which-key "window #5")
-   "6" '(winum-select-window-6 :which-key "window #6")
-   "7" '(winum-select-window-7 :which-key "window #7")
-   "8" '(winum-select-window-8 :which-key "window #8")
-   "9" '(winum-select-window-9 :which-key "window #9")
-
-   "b" '(:which-key "buffer")
-   "b b" '(helm-mini :which-key "helm-mini")
-   "b n" '(switch-to-next-buffer :which-key "next buffer")
-   "b p" '(switch-to-prev-buffer :which-key "previous buffer")
-   "b d" '(kill-this-buffer :which-key "delete buffer")
-   "b m" '((lambda () (interactive) (switch-to-buffer "*Messages*") (evil-motion-state)) :which-key "messages buffer")
-
-   "c" '(:which-key "claude / code")
-   "c c" '(claude-code-ide-menu :which-key "claude code")
-   "c l" '(comment-line :which-key "comment line")
-   "c r" '(comment-region :which-key "comment region")
-
-   "e" '(:which-key "emacs")
-   "e d" '(elisp-def :which-key "go to definition")
-   "e i" '((lambda () (interactive) (find-file user-init-file)) :which-key "edit init.el")
-   "e l" '((lambda () (interactive) (load-file user-init-file)) :which-key "load init.el")
-   "e t" '(:which-key "theme")
-   "e t n" '(cycle-themes :which-key "next theme")
-   "e p" '(:which-key "package")
-   "e p i" '(package-install :which-key "install")
-   "e p d" '(package-delete :which-key "delete")
-   "e p r" '(package-refresh-contents :which-key "refresh")
-
-   "f" '(:which-key "file")
-   "f l" '(load-file :which-key "load file")
-   "f f" '(helm-find-files :which-key "find file")
-   "f s" '(save-buffer :which-key "save file")
-
-   "g" '(:which-key "git")
-   "g s" '(magit-status :which-key "status")
-   "g m" '(magit-dispatch :which-key "dispatch")
-
-   "h" '(:which-key "help")
-   "h a" '(ansible-doc :which-key "ansible-doc")
-
-   "o" '(:which-key "org")
-   "o d" '(org-do-demote :which-key "demote")
-   "o p" '(org-do-promote :which-key "promote")
-   "o c" '(:which-key "checkbox")
-   "o c a" '(org-insert-todo-heading :which-key "add")
-   "o c t" '(org-toggle-checkbox :which-key "toggle")
-   "o t" '(org-todo :which-key "todo")
-
-   "s" '(:which-key "search")
-   "s s" '(helm-occur :which-key "search buffer")
-   "s p" '(helm-projectile-grep :which-key "search project")
-
-   "w" '(:which-key "window")
-   "w d" '(delete-window :which-key "delete")
-   "w i" '(evil-window-right :which-key "right")
-   "w e" '(evil-window-up :which-key "up")
-   "w n" '(evil-window-down :which-key "down")
-   "w m" '(evil-window-left :which-key "left")
-   "w s" '(split-window-vertically :which-key "split vert")
-   "w /" '(split-window-horizontally :which-key "split horiz")
-   )
-  )
 ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
