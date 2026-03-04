@@ -36,6 +36,7 @@ nmap('by', 'gg"+yG', '[b]uffer [y]ank')
 -- text will be replaced.
 nmap('br', 'ggVG<C-g>', '[b]uffer [r]eplace')
 nmap('bs', 'ggVG', '[b]uffer [s]elect')
+nmap('bn', '<cmd>enew | setlocal buftype=nofile bufhidden=hide noswapfile<cr>', '[b]uffer [n]ew scratch')
 nmap('bf', ':let @+ = expand("%?")<cr>', '[B]uffer Yank [F]ilepath')
 
 nmap('qq', '<cmd>q<cr>', '[Q]uit')

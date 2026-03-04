@@ -73,3 +73,18 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 
 vim.opt.termguicolors = true
+
+-- Compatibility shim for deprecated vim.lsp.util.jump_to_location
+-- This bridges the old API to the new vim.lsp.util.show_document API
+-- Remove this once telescope.nvim and other plugins migrate to the new API
+if vim.lsp.util.jump_to_location then
+  local original_jump = vim.lsp.util.jump_to_location
+  vim.lsp.util.jump_to_location = function(location, offset_encoding, reuse_win)
+    -- If location is a table with uri, convert to the new format
+    if type(location) == 'table' and location.uri then
+      return vim.lsp.util.show_document(location, offset_encoding, { reuse_win = reuse_win, focus = true })
+    end
+    -- Otherwise, call the original function
+    return original_jump(location, offset_encoding, reuse_win)
+  end
+end
