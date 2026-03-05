@@ -48,12 +48,12 @@ return {
   },
   keys = {
     {
-      '<leader>as',
+      '<leader>gl',
       function()
         local Snacks = require 'snacks'
         Snacks.picker.git_log_file()
       end,
-      desc = 'Snacks',
+      desc = 'Git log (file)',
     },
   },
 }

@@ -76,12 +76,12 @@ return {
         swap = {
           enable = true,
           swap_next = {
-            ['<leader>na'] = { query = '@parameter.inner', desc = 'Swap parameter with next' },
-            ['<leader>nm'] = { query = '@function.outer', desc = 'Swap function with next' },
+            ['<leader>csa'] = { query = '@parameter.inner', desc = 'Swap parameter with next' },
+            ['<leader>csm'] = { query = '@function.outer', desc = 'Swap function with next' },
           },
           swap_previous = {
-            ['<leader>pa'] = { query = '@parameter.inner', desc = 'Swap parameter with previous' },
-            ['<leader>pm'] = { query = '@function.outer', desc = 'Swap function with previous' },
+            ['<leader>cSa'] = { query = '@parameter.inner', desc = 'Swap parameter with previous' },
+            ['<leader>cSm'] = { query = '@function.outer', desc = 'Swap function with previous' },
           },
         },
       },
