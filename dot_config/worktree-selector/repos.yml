@@ -1,0 +1,6 @@
+# Worktree Selector Configuration
+# List the repos you want to manage with worktrees
+# These should be bare repos cloned into ~/code/worktrees/
+
+repos:
+  - growth-engine
