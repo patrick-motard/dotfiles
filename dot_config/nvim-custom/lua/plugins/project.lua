@@ -47,35 +47,28 @@ return {
     local builtin = require 'telescope.builtin'
 
     -- Normal mode keybindings with <leader>p prefix (like Projectile)
+    vim.keymap.set('n', '<leader>pp', function()
+      telescope.extensions.projects.projects {}
+    end, { desc = '[P]roject switch [P]roject' })
     vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = '[P]roject [F]ind files' })
-    vim.keymap.set('n', '<leader>pb', builtin.file_browser, { desc = '[P]roject [B]rowse files' })
     vim.keymap.set('n', '<leader>ps', builtin.live_grep, { desc = '[P]roject [S]earch (grep)' })
     vim.keymap.set('n', '<leader>pr', builtin.oldfiles, { desc = '[P]roject [R]ecent files' })
     vim.keymap.set('n', '<leader>pw', function()
       telescope.extensions.projects.projects {}
     end, { desc = '[P]roject [W]orkspace (change directory)' })
-    vim.keymap.set('n', '<leader>pp', function()
-      telescope.extensions.projects.projects {}
-    end, { desc = '[P]roject switch [P]roject' })
 
-    -- Insert mode keybindings in Telescope picker
-    -- These will be available when the projects picker is open
+    -- Custom mappings within the projects picker
     local actions = require 'telescope.actions'
     local action_state = require 'telescope.actions.state'
 
     require('telescope').setup {
       extensions = {
         projects = {
-          -- Mappings when in the projects telescope picker
           mappings = {
             i = {
               ['<c-f>'] = function(prompt_bufnr)
                 actions.close(prompt_bufnr)
                 builtin.find_files()
-              end,
-              ['<c-b>'] = function(prompt_bufnr)
-                actions.close(prompt_bufnr)
-                builtin.file_browser()
               end,
               ['<c-s>'] = function(prompt_bufnr)
                 actions.close(prompt_bufnr)
@@ -98,10 +91,6 @@ return {
               ['f'] = function(prompt_bufnr)
                 actions.close(prompt_bufnr)
                 builtin.find_files()
-              end,
-              ['b'] = function(prompt_bufnr)
-                actions.close(prompt_bufnr)
-                builtin.file_browser()
               end,
               ['s'] = function(prompt_bufnr)
                 actions.close(prompt_bufnr)
