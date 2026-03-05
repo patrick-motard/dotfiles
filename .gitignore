@@ -6,6 +6,9 @@ ansible.cfg
 tmux-client-*
 .DS_Store
 
+# Emacs autosave/lock files
+\#*#
+
 # Ansible cache files
 ansible/.homebrew-hash
 ansible/.git-repos-hash
