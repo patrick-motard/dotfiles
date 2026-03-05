@@ -56,11 +56,12 @@ return { -- Useful plugin to show you pending keybinds.
 
     -- Document existing key chains
     spec = {
-      { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
+      { '<leader>c', group = '[C]ode/Claude', mode = { 'n', 'x' } },
       { '<leader>b', group = '[B]uffer' },
       { '<leader>d', group = '[D]ocument' },
       { '<leader>g', group = '[G]it' },
       { '<leader>o', group = '[O]cto (GitHub)' },
+      { '<leader>p', group = '[P]roject' },
       { '<leader>r', group = '[R]ename' },
       { '<leader>s', group = '[S]earch' },
       { '<leader>w', group = '[W]orkspace' },
