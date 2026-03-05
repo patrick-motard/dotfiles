@@ -25,7 +25,7 @@
      (vm-imap . vm-visit-imap-folder-other-frame)
      (gnus . org-gnus-no-new-news) (file . find-file)
      (wl . wl-other-frame)))
- '(package-selected-packages nil)
+ '(package-selected-packages '(chezmoi claude-code-ide))
  '(package-vc-selected-packages
    '((claude-code-ide :vc-backend Git :url
 		      "https://github.com/manzaltu/claude-code-ide.el")))
