@@ -8,7 +8,7 @@ return {
     'nvim-treesitter/nvim-treesitter-textobjects',
   },
   config = function()
-    require('nvim-treesitter.configs').setup {
+    require('nvim-treesitter').setup {
       ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
       auto_install = true,
       highlight = {
@@ -89,19 +89,12 @@ return {
 
     vim.treesitter.language.register('markdown', 'mdx')
 
-    -- Incremental selection keymaps
-    vim.keymap.set('n', '<C-space>', function()
-      require('nvim-treesitter.incremental_selection').init_selection()
-    end, { desc = 'Start incremental selection' })
-    vim.keymap.set('v', '<C-space>', function()
-      require('nvim-treesitter.incremental_selection').node_incremental()
-    end, { desc = 'Increment selection' })
-    vim.keymap.set('v', '<bs>', function()
-      require('nvim-treesitter.incremental_selection').node_decremental()
-    end, { desc = 'Decrement selection' })
+    -- Note: incremental_selection was removed from nvim-treesitter
+    -- Consider using vim.treesitter.get_node() for similar functionality
+    -- or a dedicated plugin if needed
 
     -- Repeatable move with ; and ,
-    local ts_repeat_move = require 'nvim-treesitter.textobjects.repeatable_move'
+    local ts_repeat_move = require 'nvim-treesitter-textobjects.repeatable_move'
     vim.keymap.set({ 'n', 'x', 'o' }, ';', ts_repeat_move.repeat_last_move)
     vim.keymap.set({ 'n', 'x', 'o' }, ',', ts_repeat_move.repeat_last_move_opposite)
 
