@@ -5,6 +5,7 @@ return {
   dependencies = {
     { 'nvim-lua/plenary.nvim' },
     { 'nvim-telescope/telescope.nvim' },
+    { 'Shatur/neovim-session-manager' },
   },
   init = function()
     -- Enable saving the state of plugins in the session
