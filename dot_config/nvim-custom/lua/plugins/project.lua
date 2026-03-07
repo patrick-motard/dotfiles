@@ -1,7 +1,8 @@
 -- Project management - Projectile-like functionality for Neovim
 return {
   'coffebar/neovim-project',
-  event = 'VimEnter',
+  lazy = false,
+  priority = 100,
   dependencies = {
     { 'nvim-lua/plenary.nvim' },
     { 'nvim-telescope/telescope.nvim' },
