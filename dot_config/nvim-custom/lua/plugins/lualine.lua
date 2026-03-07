@@ -37,7 +37,11 @@ return {
             icon = '󰉋',
             color = { fg = '#8be9fd', gui = 'bold' },
           },
-          'filename',
+          {
+            'filename',
+            path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path, 3 = absolute with ~ for home
+            shorting_target = 40, -- Shorten path to leave 40 spaces for other components
+          },
         },
         lualine_x = {},
         lualine_y = {},
