@@ -95,6 +95,29 @@ nmap('Q', '<cmd>q!<cr>', '[Q]uit no save')
 nmap('wq', '<cmd>wq<cr>', 'Write Quit')
 nmap('ww', '<cmd>w<cr>', '[W]rite')
 
+-- Copy last message to clipboard
+nmap('ym', function()
+  local messages = vim.fn.execute 'messages'
+  local lines = vim.split(messages, '\n')
+  -- Get the last non-empty line
+  local last_msg = ''
+  for i = #lines, 1, -1 do
+    if lines[i]:match '%S' then
+      last_msg = lines[i]
+      break
+    end
+  end
+  if last_msg ~= '' then
+    vim.fn.setreg('+', last_msg)
+    print('Copied: ' .. last_msg)
+  else
+    print 'No message to copy'
+  end
+end, '[y]ank last [m]essage')
+
+-- Open messages in a split for easy selection/copying
+nmap('em', '<cmd>split | enew | put =execute(\"messages\") | setlocal buftype=nofile<cr>', '[e]xplore [m]essages')
+
 nmap('gu', '<cmd>GitBlameCopyCommitURL<cr>', 'Copy Commit URL')
 nmap('gU', '<cmd>GitBlameCopyFileURL<cr>', 'Copy File URL')
 nmap('go', '<cmd>GitBlameOpenCommitURL<cr>', 'Open Commit URL')
