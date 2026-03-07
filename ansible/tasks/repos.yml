@@ -51,6 +51,43 @@
       command: gh repo clone patrick-motard/claude-plugins-private "{{dirs.code}}/claude/plugins-private"
       args:
         creates: "{{dirs.code}}/claude/plugins-private"
+    - name: install pre-commit hook in claude-plugins-private
+      copy:
+        dest: "{{dirs.code}}/claude/plugins-private/.git/hooks/pre-commit"
+        mode: "0755"
+        content: |
+          #!/usr/bin/env zsh
+
+          # Auto-bump patch version in marketplace.json when plugin files are staged
+
+          MARKETPLACE=".claude-plugin/marketplace.json"
+
+          # Check if any plugin files are staged (excluding marketplace.json itself)
+          staged=$(git diff --cached --name-only | grep -v "^${MARKETPLACE}$")
+
+          if [[ -z "$staged" ]]; then
+            exit 0
+          fi
+
+          # Read current version
+          current=$(python3 -c "import json; d=json.load(open('${MARKETPLACE}')); print(d['plugins'][0]['version'])")
+
+          # Bump patch version
+          new=$(echo "$current" | awk -F. '{print $1"."$2"."$3+1}')
+
+          # Update marketplace.json in place
+          python3 - << PYEOF
+          import json
+          with open('${MARKETPLACE}') as f:
+              d = json.load(f)
+          d['plugins'][0]['version'] = '${new}'
+          with open('${MARKETPLACE}', 'w') as f:
+              json.dump(d, f, indent=2)
+              f.write('\n')
+          PYEOF
+
+          git add "${MARKETPLACE}"
+          echo "Bumped plugin version: ${current} -> ${new}"
 
 - name: Clone Claude zendesk plugin (work machine only)
   tags: [repos, claude, claude-plugins]
