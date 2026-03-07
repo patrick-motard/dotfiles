@@ -74,6 +74,26 @@ vim.opt.scrolloff = 10
 
 vim.opt.termguicolors = true
 
+-- Swap file settings - reduce E325 swap file warnings
+-- Keep swap files but auto-recover without prompting
+vim.opt.swapfile = true
+vim.opt.directory = vim.fn.stdpath 'data' .. '/swap//'
+-- Create swap directory if it doesn't exist
+vim.fn.mkdir(vim.fn.stdpath 'data' .. '/swap', 'p')
+-- Shorter time before writing swap file (default 4000ms)
+vim.opt.updatetime = 250
+-- Auto-read files when changed outside of vim
+vim.opt.autoread = true
+-- Check for external file changes when cursor stops moving
+vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold' }, {
+  pattern = '*',
+  callback = function()
+    if vim.fn.mode() ~= 'c' then
+      vim.cmd 'checktime'
+    end
+  end,
+})
+
 -- Compatibility shim for deprecated vim.lsp.util.jump_to_location
 -- This bridges the old API to the new vim.lsp.util.show_document API
 -- Remove this once telescope.nvim and other plugins migrate to the new API
