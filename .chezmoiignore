@@ -3,3 +3,9 @@ CLAUDE.md
 README.md
 docs/
 .claude/ticket-state.json*
+
+# Managed by private dotfiles
+dot_claude/settings.json
+dot_config/gh-dash/config.yml
+dot_local/bin/zshenv.sh
+private_dot_ssh/config
