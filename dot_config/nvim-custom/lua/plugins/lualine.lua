@@ -4,12 +4,8 @@ return {
   config = function()
     -- Custom component to show current project
     local function project_name()
-      local project_nvim = require 'project_nvim.project'
-      local project_root = project_nvim.get_project_root()
-      if project_root then
-        return vim.fn.fnamemodify(project_root, ':t')
-      end
-      return ''
+      local cwd = vim.fn.getcwd()
+      return vim.fn.fnamemodify(cwd, ':t')
     end
 
     require('lualine').setup {

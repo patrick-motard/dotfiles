@@ -1,46 +1,32 @@
 -- Project management - Projectile-like functionality for Neovim
 return {
-  'ahmedkhalf/project.nvim',
+  'coffebar/neovim-project',
   event = 'VimEnter',
+  dependencies = {
+    { 'nvim-lua/plenary.nvim' },
+    { 'nvim-telescope/telescope.nvim' },
+  },
+  init = function()
+    -- Enable saving the state of plugins in the session
+    vim.opt.sessionoptions:append 'globals'
+  end,
   config = function()
-    require('project_nvim').setup {
-      -- Manual mode doesn't automatically change your root directory, so you have
-      -- the option to manually do so using `:ProjectRoot` command.
-      manual_mode = false,
-
-      -- Methods of detecting the root directory. **"lsp"** uses the native neovim
-      -- lsp, while **"pattern"** uses vim-rooter like glob pattern matching. Here
-      -- order matters: if one is not detected, the other is used as fallback.
-      detection_methods = { 'lsp', 'pattern' },
-
-      -- All the patterns used to detect root dir, when **"pattern"** is in
-      -- detection_methods
-      patterns = { '.git', '_darcs', '.hg', '.bzr', '.svn', 'Makefile', 'package.json', 'Cargo.toml' },
-
-      -- Don't calculate root dir on specific directories
-      -- Ex: { "~/.cargo/*", ... }
-      exclude_dirs = {},
-
-      -- Show hidden files in telescope
-      show_hidden = false,
-
-      -- When set to false, you will get a message when project.nvim changes your
-      -- directory.
-      silent_chdir = true,
-
-      -- What scope to change the directory, valid options are
-      -- * global (default)
-      -- * tab
-      -- * win
-      scope_chdir = 'global',
-
-      -- Path where project.nvim will store the project history for use in
-      -- telescope
-      datapath = vim.fn.stdpath 'data',
+    require('neovim-project').setup {
+      projects = {
+        '~/code/*',
+        '~/code/zendesk/*',
+        '~/.config/*',
+        '~/.local/share/chezmoi',
+      },
+      -- Automatically detect project root
+      last_session_on_startup = false,
+      -- Dashboard mode
+      dashboard_mode = false,
     }
 
     -- Load the telescope extension
-    require('telescope').load_extension 'projects'
+    local neovim_project_discover = require 'neovim-project.discover'
+    require('telescope').load_extension 'neovim-project'
 
     -- Keybindings for project management
     local telescope = require 'telescope'
@@ -48,70 +34,20 @@ return {
 
     -- Normal mode keybindings with <leader>p prefix (like Projectile)
     vim.keymap.set('n', '<leader>pp', function()
-      telescope.extensions.projects.projects {}
+      telescope.extensions['neovim-project'].discover {}
     end, { desc = '[P]roject switch [P]roject' })
+    vim.keymap.set('n', '<leader>ph', function()
+      telescope.extensions['neovim-project'].history {}
+    end, { desc = '[P]roject [H]istory' })
     vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = '[P]roject [F]ind files' })
     vim.keymap.set('n', '<leader>ps', builtin.live_grep, { desc = '[P]roject [S]earch (grep)' })
     vim.keymap.set('n', '<leader>pr', builtin.oldfiles, { desc = '[P]roject [R]ecent files' })
     vim.keymap.set('n', '<leader>pw', function()
-      telescope.extensions.projects.projects {}
+      telescope.extensions['neovim-project'].discover {}
     end, { desc = '[P]roject [W]orkspace (change directory)' })
 
-    -- Custom mappings within the projects picker
-    local actions = require 'telescope.actions'
-    local action_state = require 'telescope.actions.state'
-
-    require('telescope').setup {
-      extensions = {
-        projects = {
-          mappings = {
-            i = {
-              ['<c-f>'] = function(prompt_bufnr)
-                actions.close(prompt_bufnr)
-                builtin.find_files()
-              end,
-              ['<c-s>'] = function(prompt_bufnr)
-                actions.close(prompt_bufnr)
-                builtin.live_grep()
-              end,
-              ['<c-r>'] = function(prompt_bufnr)
-                actions.close(prompt_bufnr)
-                builtin.oldfiles()
-              end,
-              ['<c-w>'] = function(prompt_bufnr)
-                local selection = action_state.get_selected_entry()
-                actions.close(prompt_bufnr)
-                if selection then
-                  vim.cmd('cd ' .. selection.value)
-                  print('Changed directory to: ' .. selection.value)
-                end
-              end,
-            },
-            n = {
-              ['f'] = function(prompt_bufnr)
-                actions.close(prompt_bufnr)
-                builtin.find_files()
-              end,
-              ['s'] = function(prompt_bufnr)
-                actions.close(prompt_bufnr)
-                builtin.live_grep()
-              end,
-              ['r'] = function(prompt_bufnr)
-                actions.close(prompt_bufnr)
-                builtin.oldfiles()
-              end,
-              ['w'] = function(prompt_bufnr)
-                local selection = action_state.get_selected_entry()
-                actions.close(prompt_bufnr)
-                if selection then
-                  vim.cmd('cd ' .. selection.value)
-                  print('Changed directory to: ' .. selection.value)
-                end
-              end,
-            },
-          },
-        },
-      },
-    }
+    -- The neovim-project picker already has good defaults
+    -- Press Enter to switch to project
+    -- It will open the last session or create a new one
   end,
 }
