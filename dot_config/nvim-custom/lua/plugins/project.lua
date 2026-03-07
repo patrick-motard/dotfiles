@@ -17,7 +17,6 @@ return {
       projects = {
         '~/code/*',
         '~/code/zendesk/*',
-        '~/.config/*',
         '~/.local/share/chezmoi',
       },
       -- Automatically detect project root
