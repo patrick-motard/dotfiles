@@ -38,6 +38,57 @@ nmap('br', 'ggVG<C-g>', '[b]uffer [r]eplace')
 nmap('bs', 'ggVG', '[b]uffer [s]elect')
 nmap('bn', '<cmd>enew | setlocal buftype=nofile bufhidden=hide noswapfile<cr>', '[b]uffer [n]ew scratch')
 nmap('bf', ':let @+ = expand("%?")<cr>', '[B]uffer Yank [F]ilepath')
+nmap('bp', function()
+  local filepath = vim.fn.expand '%:p'
+  local relative_path = vim.fn.expand '%:~:.'
+  local filename = vim.fn.expand '%:t'
+
+  -- Create popup content
+  local lines = {
+    '  File: ' .. filename,
+    '',
+    '  Full path:',
+    '  ' .. filepath,
+    '',
+    '  Relative path:',
+    '  ' .. relative_path,
+  }
+
+  -- Calculate popup dimensions
+  local width = 0
+  for _, line in ipairs(lines) do
+    width = math.max(width, #line)
+  end
+  width = math.min(width + 4, vim.o.columns - 4)
+  local height = #lines
+
+  -- Create floating window
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+
+  local opts = {
+    relative = 'editor',
+    width = width,
+    height = height,
+    col = math.floor((vim.o.columns - width) / 2),
+    row = math.floor((vim.o.lines - height) / 2),
+    style = 'minimal',
+    border = 'rounded',
+    title = ' Buffer Path ',
+    title_pos = 'center',
+  }
+
+  local win = vim.api.nvim_open_win(buf, true, opts)
+
+  -- Set buffer options
+  vim.api.nvim_set_option_value('modifiable', false, { buf = buf })
+  vim.api.nvim_set_option_value('buftype', 'nofile', { buf = buf })
+
+  -- Close on any key press
+  vim.keymap.set('n', '<Esc>', '<cmd>close<cr>', { buffer = buf, silent = true })
+  vim.keymap.set('n', 'q', '<cmd>close<cr>', { buffer = buf, silent = true })
+  vim.keymap.set('n', '<CR>', '<cmd>close<cr>', { buffer = buf, silent = true })
+end, '[b]uffer show [p]ath')
 
 nmap('qq', '<cmd>q<cr>', '[Q]uit')
 nmap('Q', '<cmd>q!<cr>', '[Q]uit no save')
