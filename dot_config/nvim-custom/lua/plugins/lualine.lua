@@ -2,6 +2,16 @@ return {
   'nvim-lualine/lualine.nvim',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
+    -- Custom component to show current project
+    local function project_name()
+      local project_nvim = require 'project_nvim.project'
+      local project_root = project_nvim.get_project_root()
+      if project_root then
+        return vim.fn.fnamemodify(project_root, ':t')
+      end
+      return ''
+    end
+
     require('lualine').setup {
       options = {
         icons_enabled = true,
@@ -25,7 +35,14 @@ return {
       sections = {
         lualine_a = { 'mode' },
         lualine_b = { 'branch', 'diff', 'diagnostics' },
-        lualine_c = { 'filename' },
+        lualine_c = {
+          {
+            project_name,
+            icon = '󰉋',
+            color = { fg = '#8be9fd', gui = 'bold' },
+          },
+          'filename',
+        },
         lualine_x = {},
         lualine_y = {},
         lualine_z = { 'filetype' },
