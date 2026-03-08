@@ -2,7 +2,6 @@ return {
   'pwntester/octo.nvim',
   dependencies = {
     'nvim-lua/plenary.nvim',
-    'nvim-telescope/telescope.nvim',
     'nvim-tree/nvim-web-devicons',
   },
   cmd = 'Octo',
@@ -13,7 +12,6 @@ return {
     { '<leader>oP', '<cmd>Octo pr create<cr>', desc = '[P]r create' },
     { '<leader>or', '<cmd>Octo repo list<cr>', desc = '[r]epo list' },
     { '<leader>os', '<cmd>Octo search<cr>', desc = '[s]earch' },
-    { '<leader>oo', '<cmd>Telescope octo<cr>', desc = '[o]cto picker' },
   },
   opts = {
     enable_builtin = true,
