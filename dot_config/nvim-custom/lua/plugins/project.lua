@@ -17,7 +17,12 @@ return {
       projects = {
         '~/code/*',
         '~/code/zendesk/*',
+        '~/code/claude/*',
         '~/.local/share/chezmoi',
+      },
+      -- Exclude config directories from project discovery
+      excluded_dirs = {
+        '~/.config',
       },
       -- Automatically detect project root
       last_session_on_startup = false,
@@ -29,11 +34,11 @@ return {
     local builtin = require 'telescope.builtin'
 
     -- Normal mode keybindings with <leader>p prefix (like Projectile)
-    vim.keymap.set('n', '<leader>pp', '<cmd>Telescope neovim-project discover<cr>', { desc = '[P]roject switch [P]roject' })
-    vim.keymap.set('n', '<leader>ph', '<cmd>Telescope neovim-project history<cr>', { desc = '[P]roject [H]istory' })
-    vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = '[P]roject [F]ind files' })
-    vim.keymap.set('n', '<leader>ps', builtin.live_grep, { desc = '[P]roject [S]earch (grep)' })
-    vim.keymap.set('n', '<leader>pr', builtin.oldfiles, { desc = '[P]roject [R]ecent files' })
-    vim.keymap.set('n', '<leader>pw', '<cmd>Telescope neovim-project discover<cr>', { desc = '[P]roject [W]orkspace (change directory)' })
+    vim.keymap.set('n', '<leader>pp', '<cmd>Telescope neovim-project discover<cr>', { desc = '[p] switch project' })
+    vim.keymap.set('n', '<leader>ph', '<cmd>Telescope neovim-project history<cr>', { desc = '[h]istory' })
+    vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = '[f]ind files' })
+    vim.keymap.set('n', '<leader>ps', builtin.live_grep, { desc = '[s]earch (grep)' })
+    vim.keymap.set('n', '<leader>pr', builtin.oldfiles, { desc = '[r]ecent files' })
+    vim.keymap.set('n', '<leader>pw', '<cmd>Telescope neovim-project discover<cr>', { desc = '[w]orkspace (change directory)' })
   end,
 }

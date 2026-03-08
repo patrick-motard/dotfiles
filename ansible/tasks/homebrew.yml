@@ -67,7 +67,6 @@
       - bdui
       - chezmoi # dotfile manager
       - cmake
-      - delta
       - emacs-plus@30
       - entr
       - eqmac
