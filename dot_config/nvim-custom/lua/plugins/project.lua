@@ -16,12 +16,16 @@ return {
     require('neovim-project').setup {
       projects = {
         '~/code/*',
+        '~/code/clients/*/*',
         '~/code/zendesk/*',
         '~/code/claude/*',
         '~/.local/share/chezmoi',
       },
       -- Exclude config directories from project discovery
-      excluded_dirs = {
+      ignore_projects = {
+        '~/code/claude',
+        '~/code/clients',
+        '~/code/clients/*',
         '~/.config',
       },
       -- Automatically detect project root
@@ -39,6 +43,5 @@ return {
     vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = '[f]ind files' })
     vim.keymap.set('n', '<leader>ps', builtin.live_grep, { desc = '[s]earch (grep)' })
     vim.keymap.set('n', '<leader>pr', builtin.oldfiles, { desc = '[r]ecent files' })
-    vim.keymap.set('n', '<leader>pw', '<cmd>Telescope neovim-project discover<cr>', { desc = '[w]orkspace (change directory)' })
   end,
 }
