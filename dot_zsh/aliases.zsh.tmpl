@@ -289,7 +289,9 @@ alias abledev=start_able_dev
 
 ## Vim
 alias vim="nvim"
-alias v="nvim"
+# Each nvim instance gets a unique socket based on its PID, enabling Claude Code
+# to send commands/read messages from a running instance via --server /tmp/nvim-<PID>.sock
+alias v="nvim --listen /tmp/nvim-$$.sock"
 # alias vv="nvim ."
 alias vd="pushd $MOIDIR && nvim ."
 alias nvimcd="cd ~/.config/nvim"
