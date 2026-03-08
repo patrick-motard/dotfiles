@@ -73,17 +73,6 @@ return {
             ['[L'] = { query = '@loop.outer', desc = 'Prev loop end' },
           },
         },
-        swap = {
-          enable = true,
-          swap_next = {
-            ['<leader>csa'] = { query = '@parameter.inner', desc = 'Swap parameter with next' },
-            ['<leader>csm'] = { query = '@function.outer', desc = 'Swap function with next' },
-          },
-          swap_previous = {
-            ['<leader>cSa'] = { query = '@parameter.inner', desc = 'Swap parameter with previous' },
-            ['<leader>cSm'] = { query = '@function.outer', desc = 'Swap function with previous' },
-          },
-        },
       },
     }
 
