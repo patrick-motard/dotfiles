@@ -18,8 +18,8 @@ return {
     }
   end,
   keys = {
-    { '<leader>cc', '<cmd>ClaudeCode<cr>', desc = '[C]laude [C]ode toggle' },
-    { '<leader>cs', '<cmd>ClaudeCodeStart<cr>', desc = '[C]laude Code [S]tart server' },
-    { '<leader>cq', '<cmd>ClaudeCodeStop<cr>', desc = '[C]laude Code [Q]uit server' },
+    { '<leader>cc', '<cmd>ClaudeCode<cr>', desc = '[c]laude code toggle' },
+    { '<leader>cs', '<cmd>ClaudeCodeStart<cr>', desc = '[s]tart server' },
+    { '<leader>cq', '<cmd>ClaudeCodeStop<cr>', desc = '[q]uit server' },
   },
 }

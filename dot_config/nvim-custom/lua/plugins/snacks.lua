@@ -53,7 +53,7 @@ return {
         local Snacks = require 'snacks'
         Snacks.picker.git_log_file()
       end,
-      desc = 'Git log (file)',
+      desc = '[l]og (file)',
     },
   },
 }

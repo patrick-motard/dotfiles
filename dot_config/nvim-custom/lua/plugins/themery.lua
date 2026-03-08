@@ -5,7 +5,7 @@ return {
   -- keys registered below are pressed.
   lazy = false,
   keys = {
-    { '<leader>et', '<CMD>Themery<CR>', desc = '[T]hemery' },
+    { '<leader>et', '<CMD>Themery<CR>', desc = '[t]hemery' },
   },
   config = function()
     require('themery').setup {

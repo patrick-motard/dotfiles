@@ -28,16 +28,16 @@ local nmap = function(keys, cmd, desc)
   vim.keymap.set('n', '<leader>' .. keys, cmd, { desc = desc, noremap = true, silent = true })
 end
 
-nmap('bb', '<cmd>e #<cr>', '[b]ack to Previous [b]uffer')
-nmap('bd', '<cmd>bd<cr>', '[b]uffer [d]elete')
-nmap('bD', '<cmd>bd!<cr>', 'Force [b]uffer [D]elete')
-nmap('by', 'gg"+yG', '[b]uffer [y]ank')
+nmap('bb', '<cmd>e #<cr>', '[b]ack to Previous Buffer')
+nmap('bd', '<cmd>bd<cr>', '[d]elete')
+nmap('bD', '<cmd>bd!<cr>', 'Force [D]elete')
+nmap('by', 'gg"+yG', '[y]ank all')
 -- Select buffer and switch to select mode. From there you can type and the selected
 -- text will be replaced.
-nmap('br', 'ggVG<C-g>', '[b]uffer [r]eplace')
-nmap('bs', 'ggVG', '[b]uffer [s]elect')
-nmap('bn', '<cmd>enew | setlocal buftype=nofile bufhidden=hide noswapfile<cr>', '[b]uffer [n]ew scratch')
-nmap('bf', ':let @+ = expand("%?")<cr>', '[B]uffer Yank [F]ilepath')
+nmap('br', 'ggVG<C-g>', '[r]eplace all')
+nmap('bs', 'ggVG', '[s]elect all')
+nmap('bn', '<cmd>enew | setlocal buftype=nofile bufhidden=hide noswapfile<cr>', '[n]ew scratch')
+nmap('bf', ':let @+ = expand("%?")<cr>', '[f]ilepath yank')
 nmap('bp', function()
   local filepath = vim.fn.expand '%:p'
   local relative_path = vim.fn.expand '%:~:.'
@@ -88,12 +88,12 @@ nmap('bp', function()
   vim.keymap.set('n', '<Esc>', '<cmd>close<cr>', { buffer = buf, silent = true })
   vim.keymap.set('n', 'q', '<cmd>close<cr>', { buffer = buf, silent = true })
   vim.keymap.set('n', '<CR>', '<cmd>close<cr>', { buffer = buf, silent = true })
-end, '[b]uffer show [p]ath')
+end, 'show [p]ath')
 
-nmap('qq', '<cmd>q<cr>', '[Q]uit')
+nmap('qq', '<cmd>q<cr>', '[q]uit')
 nmap('Q', '<cmd>q!<cr>', '[Q]uit no save')
-nmap('wq', '<cmd>wq<cr>', 'Write Quit')
-nmap('ww', '<cmd>w<cr>', '[W]rite')
+nmap('wq', '<cmd>wq<cr>', '[w]rite [q]uit')
+nmap('ww', '<cmd>w<cr>', '[w]rite')
 
 -- Copy last message to clipboard
 nmap('ym', function()
@@ -113,17 +113,23 @@ nmap('ym', function()
   else
     print 'No message to copy'
   end
-end, '[y]ank last [m]essage')
+end, '[y]ank last message')
 
 -- Open messages in a split for easy selection/copying
-nmap('em', '<cmd>split | enew | put =execute(\"messages\") | setlocal buftype=nofile<cr>', '[e]xplore [m]essages')
+nmap('em', function()
+  local messages = vim.fn.execute 'messages'
+  vim.cmd 'split | enew'
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.split(messages, '\n'))
+  vim.bo.buftype = 'nofile'
+  vim.bo.modifiable = false
+end, '[e]xplore messages')
 
-nmap('gu', '<cmd>GitBlameCopyCommitURL<cr>', 'Copy Commit URL')
-nmap('gU', '<cmd>GitBlameCopyFileURL<cr>', 'Copy File URL')
-nmap('go', '<cmd>GitBlameOpenCommitURL<cr>', 'Open Commit URL')
-nmap('gO', '<cmd>GitBlameOpenFileURL<cr>', 'Open File URL')
+nmap('gu', '<cmd>GitBlameCopyCommitURL<cr>', '[u] copy commit URL')
+nmap('gU', '<cmd>GitBlameCopyFileURL<cr>', '[U] copy file URL')
+nmap('go', '<cmd>GitBlameOpenCommitURL<cr>', '[o]pen commit URL')
+nmap('gO', '<cmd>GitBlameOpenFileURL<cr>', '[O]pen file URL')
 
-nmap('cd', vim.diagnostic.setloclist, '[C]ode [D]iagnostic Quickfix')
+nmap('cd', vim.diagnostic.setloclist, '[d]iagnostic quickfix')
 -----------------------------------------------------------------------------
 -- Start Autoformat
 -- These two use commands can be used to enable or disable auto formatting.
@@ -157,8 +163,8 @@ vim.api.nvim_create_user_command('FormatToggle', function(args)
   end
 end, { bang = true, desc = 'Toggle autoformatting. ! for global.' })
 
-nmap('tf', '<cmd>FormatToggle<cr>', '[t]oggle buffer auto-[f]ormat')
-nmap('tF', '<cmd>FormatToggle!<cr>', '[t]oggle global auto-[F]ormat')
+nmap('tf', '<cmd>FormatToggle<cr>', '[f]ormat buffer auto-toggle')
+nmap('tF', '<cmd>FormatToggle!<cr>', '[F]ormat global auto-toggle')
 -- End Autoformat
 -----------------------------------------------------------------------------
 
