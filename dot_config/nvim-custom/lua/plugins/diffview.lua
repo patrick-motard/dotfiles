@@ -1,3 +1,16 @@
+local disable_leader = {
+  { 'n', '<leader>e',  false },
+  { 'n', '<leader>b',  false },
+  { 'n', '<leader>co', false },
+  { 'n', '<leader>ct', false },
+  { 'n', '<leader>cb', false },
+  { 'n', '<leader>ca', false },
+  { 'n', '<leader>cO', false },
+  { 'n', '<leader>cT', false },
+  { 'n', '<leader>cB', false },
+  { 'n', '<leader>cA', false },
+}
+
 return {
   'sindrets/diffview.nvim',
   cmd = { 'DiffviewOpen', 'DiffviewFileHistory', 'DiffviewClose' },
@@ -9,9 +22,9 @@ return {
   },
   opts = {
     keymaps = {
-      view = {
-        { 'n', '<localleader>e',  '<cmd>DiffviewFocusFiles<cr>',                { desc = 'Bring focus to the file panel' } },
-        { 'n', '<localleader>b',  '<cmd>DiffviewToggleFiles<cr>',               { desc = 'Toggle the file panel' } },
+      view = vim.list_extend(vim.deepcopy(disable_leader), {
+        { 'n', '<localleader>e',  '<cmd>DiffviewFocusFiles<cr>',                    { desc = 'Bring focus to the file panel' } },
+        { 'n', '<localleader>b',  '<cmd>DiffviewToggleFiles<cr>',                   { desc = 'Toggle the file panel' } },
         { 'n', '<localleader>co', function() require('diffview.actions').conflict_choose('ours') end,   { desc = 'Choose OURS' } },
         { 'n', '<localleader>ct', function() require('diffview.actions').conflict_choose('theirs') end, { desc = 'Choose THEIRS' } },
         { 'n', '<localleader>cb', function() require('diffview.actions').conflict_choose('base') end,   { desc = 'Choose BASE' } },
@@ -20,19 +33,19 @@ return {
         { 'n', '<localleader>cT', function() require('diffview.actions').conflict_choose_all('theirs') end, { desc = 'Choose THEIRS (whole file)' } },
         { 'n', '<localleader>cB', function() require('diffview.actions').conflict_choose_all('base') end,   { desc = 'Choose BASE (whole file)' } },
         { 'n', '<localleader>cA', function() require('diffview.actions').conflict_choose_all('all') end,    { desc = 'Choose all (whole file)' } },
-      },
-      file_panel = {
-        { 'n', '<localleader>e', '<cmd>DiffviewFocusFiles<cr>',  { desc = 'Bring focus to the file panel' } },
-        { 'n', '<localleader>b', '<cmd>DiffviewToggleFiles<cr>', { desc = 'Toggle the file panel' } },
+      }),
+      file_panel = vim.list_extend(vim.deepcopy(disable_leader), {
+        { 'n', '<localleader>e',  '<cmd>DiffviewFocusFiles<cr>',                     { desc = 'Bring focus to the file panel' } },
+        { 'n', '<localleader>b',  '<cmd>DiffviewToggleFiles<cr>',                    { desc = 'Toggle the file panel' } },
         { 'n', '<localleader>cO', function() require('diffview.actions').conflict_choose_all('ours') end,   { desc = 'Choose OURS (whole file)' } },
         { 'n', '<localleader>cT', function() require('diffview.actions').conflict_choose_all('theirs') end, { desc = 'Choose THEIRS (whole file)' } },
         { 'n', '<localleader>cB', function() require('diffview.actions').conflict_choose_all('base') end,   { desc = 'Choose BASE (whole file)' } },
         { 'n', '<localleader>cA', function() require('diffview.actions').conflict_choose_all('all') end,    { desc = 'Choose all (whole file)' } },
-      },
-      file_history_panel = {
+      }),
+      file_history_panel = vim.list_extend(vim.deepcopy(disable_leader), {
         { 'n', '<localleader>e', '<cmd>DiffviewFocusFiles<cr>',  { desc = 'Bring focus to the file panel' } },
         { 'n', '<localleader>b', '<cmd>DiffviewToggleFiles<cr>', { desc = 'Toggle the file panel' } },
-      },
+      }),
     },
   },
 }
