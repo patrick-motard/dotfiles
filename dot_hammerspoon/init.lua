@@ -53,3 +53,23 @@ usbWatcher:start()
 if not isZSAConnected() then
     startKanata()
 end
+
+-- Game layer toggle with menu bar indicator
+local gameModeActive = false
+local gameModeMenuItem = hs.menubar.new(false)
+
+local function setGameMode(active)
+    gameModeActive = active
+    if active then
+        hs.execute("echo 'ActOnFakeKey layer game' | nc -q1 127.0.0.1 7070 2>/dev/null")
+        gameModeMenuItem:setTitle("GAME")
+        gameModeMenuItem:returnToMenuBar()
+    else
+        hs.execute("echo 'ActOnFakeKey layer base' | nc -q1 127.0.0.1 7070 2>/dev/null")
+        gameModeMenuItem:removeFromMenuBar()
+    end
+end
+
+hs.hotkey.bind(hyper, "g", "Toggle Game Mode", function()
+    setGameMode(not gameModeActive)
+end)

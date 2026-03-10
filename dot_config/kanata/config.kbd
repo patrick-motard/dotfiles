@@ -5,6 +5,7 @@
 
 (defcfg
   process-unmapped-keys yes
+  tcp-server-address 127.0.0.1:7070
 )
 
 (defsrc
@@ -17,15 +18,35 @@
 
 ;; Colemak-DH matrix layout with homerow mods
 ;; Homerow: @a=Alt @r=Gui @s=Ctrl @t=Shift | @n=Shift @e=Ctrl @i=Gui @o=Alt
+;; @w = tap:w hold:nav layer
 (deflayer base
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
-  tab  q    w    f    p    b    j    l    u    y    ;    [    ]    \
+  tab  q    @w   f    p    b    j    l    u    y    ;    [    ]    \
   esc  @a   @r   @s   @t   g    m    @n   @e   @i   @o   '    ret
   lsft z    x    c    d    v    k    h    ,    .    /    rsft
   lctl lmet lalt           spc            ralt
 )
 
+;; Nav layer - mirrors ZSA layer 2: h/j/k/l = left/down/up/right
+(deflayer nav
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    left down up   rght _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _              _              _
+)
+
+;; Game layer - plain Colemak, no homerow mods, no nav layer
+(deflayer game
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    f    p    b    j    l    u    y    ;    [    ]    \
+  esc  a    r    s    t    g    m    n    e    i    o    '    ret
+  lsft z    x    c    d    v    k    h    ,    .    /    rsft
+  lctl lmet lalt           spc            ralt
+)
+
 (defalias
+  w (tap-hold-release-keys 240 240 w (layer-while-held nav) (a s d f j k l ;))
   a (tap-hold-release-keys 240 240 a lalt (s d f j k l ;))
   r (tap-hold-release-keys 240 240 r lctl (a d f j k l ;))
   s (tap-hold-release-keys 240 240 s lmet (a s f j k l ;))
