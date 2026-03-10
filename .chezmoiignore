@@ -1,5 +1,6 @@
 ansible/
 CLAUDE.md
+dot_hammerspoon/Spoons/
 README.md
 docs/
 .claude/ticket-state.json*
