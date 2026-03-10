@@ -55,6 +55,9 @@ if not isZSAConnected() then
 end
 
 -- Game layer toggle with menu bar indicator
+-- Communicates with kanata via TCP (127.0.0.1:7070, set in ~/.config/kanata/config.kbd)
+-- Game layer disables homerow mods and nav layer (hold-w arrows)
+-- Toggle: hyper+g (Cmd+Alt+g)
 local gameModeActive = false
 local gameModeMenuItem = hs.menubar.new(false)
 
