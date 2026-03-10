@@ -7,6 +7,8 @@
     <key>ProgramArguments</key>
     <array>
         <string>/Applications/Kanata.app/Contents/MacOS/Kanata</string>
+        <string>--tcp-server-address</string>
+        <string>127.0.0.1:7070</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
