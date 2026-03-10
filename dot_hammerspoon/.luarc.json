@@ -1,0 +1,6 @@
+{
+  "globals": ["hs", "spoon", "Install"],
+  "diagnostics": {
+    "globals": ["hs", "spoon", "Install"]
+  }
+}
