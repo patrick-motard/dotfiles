@@ -1,6 +1,6 @@
 # Kanata - Keyboard Remapping
 
-Kanata provides a full Colemak-DH matrix layout with homerow mods, managed as a macOS system service.
+Kanata provides a full Colemak-DH matrix layout with homerow mods, managed as a macOS user service.
 
 ## Layout
 
@@ -30,7 +30,11 @@ Hold homerow keys to activate modifiers (240ms tapping term):
 | I | i | Right Ctrl |
 | O | o | Right Alt |
 
-Uses `tap-hold-release-keys` so fast typing doesn't trigger modifiers.
+### Layers
+
+- **Base**: Colemak-DH with homerow mods
+- **Nav**: Hold `w` to activate arrow keys on `m/n/e/i` (left/down/up/right), mirrors ZSA Voyager layer 2
+- **Game**: Plain Colemak without homerow mods or nav layer, toggled via Hammerspoon (`Cmd+Alt+g`)
 
 ## Architecture
 
@@ -39,26 +43,37 @@ Uses `tap-hold-release-keys` so fast typing doesn't trigger modifiers.
 macOS requires Input Monitoring permission for any process that intercepts keystrokes. This permission can only be granted to `.app` bundles, not raw CLI binaries. The workaround:
 
 1. A minimal app bundle lives at `/Applications/Kanata.app`
-2. The bundle's executable is a shell script that runs `sudo kanata`
+2. The bundle's executable is the actual kanata binary (not a wrapper script)
 3. macOS shows `Kanata.app` in Privacy & Security > Input Monitoring
-4. A system LaunchDaemon launches the app bundle at boot
+4. A user LaunchAgent runs the binary via `sudo` at login
+
+### Why a LaunchAgent (not LaunchDaemon)?
+
+LaunchDaemons run in the system domain, which doesn't have access to the user's TCC (Input Monitoring) permissions. A LaunchAgent runs in the user session where the permission applies, then uses `sudo` for the root access kanata needs.
 
 ### Components
 
 - **Config**: `~/.config/kanata/config.kbd` (managed by chezmoi)
 - **Plist source**: `~/.config/kanata/com.kanata.plist` (copied by ansible)
-- **App bundle**: `/Applications/Kanata.app` (created by ansible)
-- **LaunchDaemon**: `/Library/LaunchDaemons/com.kanata.plist` (installed by ansible)
-- **Sudoers**: `/etc/sudoers.d/kanata` - allows passwordless `sudo kanata`
+- **App bundle**: `/Applications/Kanata.app` (binary installed by ansible)
+- **LaunchAgent**: `~/Library/LaunchAgents/com.kanata.plist` (installed by ansible)
+- **Sudoers**: `/etc/sudoers.d/kanata` - allows passwordless `sudo` for the kanata binary
+- **TCP server**: Listens on `127.0.0.1:7070` for layer switching commands
+
+### Hammerspoon Integration
+
+Hammerspoon manages kanata lifecycle and provides a game mode toggle:
+
+- **Auto-toggle**: USB watcher stops kanata when a ZSA keyboard is connected, starts it when disconnected
+- **Game mode**: `Cmd+Alt+g` switches to the game layer via TCP and shows "GAME" in the macOS menu bar
 
 ## Setup (First Time)
 
 ### Prerequisites
 
-Install kanata and the Karabiner virtual HID driver:
+Install the Karabiner virtual HID driver:
 
 ```bash
-brew install kanata
 brew install --cask karabiner-elements  # provides the VirtualHIDDevice driver
 ```
 
@@ -80,8 +95,8 @@ ma && dotansible kanata --ask-become-pass
 
 This will:
 1. Install the sudoers entry
-2. Create `/Applications/Kanata.app`
-3. Install and bootstrap the LaunchDaemon
+2. Download and install the kanata binary into `/Applications/Kanata.app`
+3. Install and bootstrap the LaunchAgent
 
 ### Grant Input Monitoring Permission
 
@@ -91,7 +106,7 @@ After running ansible, go to:
 
 Click `+`, press `Cmd+Shift+G`, type `/Applications/Kanata.app`, click Open.
 
-Kanata will start working immediately and will auto-start on every reboot.
+Kanata will start working immediately and will auto-start on every login.
 
 ### Set OS Keyboard to QWERTY
 
@@ -101,7 +116,7 @@ Since kanata handles all remapping, the OS must be set to QWERTY:
 
 ## Disabling
 
-Set `kanata_enabled: false` in your inventory and run `dotansible kanata --ask-become-pass`. Ansible will remove the LaunchDaemon, app bundle, and sudoers entry.
+Set `kanata_enabled: false` in your inventory and run `dotansible kanata --ask-become-pass`. Ansible will remove the LaunchAgent, app bundle, sudoers entry, and any old LaunchDaemon artifacts.
 
 ## Troubleshooting
 
@@ -114,7 +129,7 @@ tail -f /tmp/kanata.log
 ### Manually restart
 
 ```bash
-sudo launchctl bootout system/com.kanata 2>/dev/null; sudo launchctl bootstrap system /Library/LaunchDaemons/com.kanata.plist
+launchctl kickstart -k gui/$(id -u)/com.kanata
 ```
 
 ### `IOHIDDeviceOpen error: not permitted Apple Internal Keyboard`
@@ -127,4 +142,8 @@ Check that `Kanata.app` is still in Input Monitoring. macOS occasionally removes
 
 ### Homerow mods triggering accidentally
 
-The 240ms tapping term may be too short or too long. Adjust in `~/.config/kanata/config.kbd` - change the two `240` values in each `tap-hold-release-keys` entry, then run `ma` and restart kanata.
+The 240ms tapping term may be too short or too long. Adjust in `~/.config/kanata/config.kbd` - change the two `240` values in each `tap-hold` entry, then run `ma` and restart kanata.
+
+### Game mode not working
+
+Verify the TCP server is running: `echo '{}' | nc -w1 127.0.0.1 7070`. You should get a JSON response with the current layer. If not, check that kanata was started with the `-p 127.0.0.1:7070` flag.
