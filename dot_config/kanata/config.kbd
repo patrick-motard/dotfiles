@@ -1,31 +1,37 @@
-;; Kanata config - homerow mods for Mac laptop keyboard
-;; Mirrors ZSA Voyager layout: ARST/NEIO = Alt/Gui/Ctrl/Shift on both hands
-;; Tapping term: 240ms (matching QMK config)
+;; Kanata config - full Colemak-DH matrix layout + homerow mods
+;; OS keyboard set to QWERTY - kanata handles all remapping
+;; Homerow mods: ARST/NEIO = Alt/Gui/Ctrl/Shift (matching ZSA Voyager)
+;; Tapping term: 240ms
 
 (defcfg
   process-unmapped-keys yes
 )
 
 (defsrc
-  a r s t n e i o
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  lctl lmet lalt           spc            ralt
 )
 
+;; Colemak-DH matrix layout with homerow mods
+;; Homerow: @a=Alt @r=Gui @s=Ctrl @t=Shift | @n=Shift @e=Ctrl @i=Gui @o=Alt
 (deflayer base
-  @a @r @s @t @n @e @i @o
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    f    p    b    j    l    u    y    ;    [    ]    \
+  esc  @a   @r   @s   @t   g    m    @n   @e   @i   @o   '    ret
+  lsft z    x    c    d    v    k    h    ,    .    /    rsft
+  lctl lmet lalt           spc            ralt
 )
-
-;; Homerow mods using tap-hold-release-keys
-;; - tap: the letter
-;; - hold: the modifier
-;; Using tap-hold-release-keys so that fast typing doesn't trigger mods
 
 (defalias
-  a (tap-hold-release-keys 240 240 a lalt (r s t n e i o))
-  r (tap-hold-release-keys 240 240 r lmet (a s t n e i o))
-  s (tap-hold-release-keys 240 240 s lctl (a r t n e i o))
-  t (tap-hold-release-keys 240 240 t lsft (a r s n e i o))
-  n (tap-hold-release-keys 240 240 n rsft (a r s t e i o))
-  e (tap-hold-release-keys 240 240 e rctl (a r s t n i o))
-  i (tap-hold-release-keys 240 240 i rmet (a r s t n e o))
-  o (tap-hold-release-keys 240 240 o ralt (a r s t n e i))
+  a (tap-hold-release-keys 240 240 a lalt (s d f j k l ;))
+  r (tap-hold-release-keys 240 240 r lctl (a d f j k l ;))
+  s (tap-hold-release-keys 240 240 s lmet (a s f j k l ;))
+  t (tap-hold-release-keys 240 240 t lsft (a s d j k l ;))
+  n (tap-hold-release-keys 240 240 n rsft (a s d f k l ;))
+  e (tap-hold-release-keys 240 240 e rmet (a s d f j l ;))
+  i (tap-hold-release-keys 240 240 i rctl (a s d f j k ;))
+  o (tap-hold-release-keys 240 240 o ralt (a s d f j k l))
 )

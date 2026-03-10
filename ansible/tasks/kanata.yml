@@ -1,4 +1,9 @@
 ---
+# Kanata setup for macOS
+# - Creates a .app bundle so macOS can grant Input Monitoring permission
+# - Installs a system LaunchDaemon that launches the app bundle
+# - Manages sudoers entry for passwordless sudo
+
 - name: Install kanata sudoers entry
   become: yes
   copy:
@@ -8,8 +13,60 @@
     group: wheel
     mode: '0440'
     validate: visudo -cf %s
+  when: kanata_enabled | default(false)
 
-- name: Install kanata launchd daemon
+- name: Remove kanata sudoers entry
+  become: yes
+  file:
+    path: /etc/sudoers.d/kanata
+    state: absent
+  when: not (kanata_enabled | default(false))
+
+# --- Enable kanata ---
+
+- name: Create Kanata.app bundle directories
+  become: yes
+  file:
+    path: /Applications/Kanata.app/Contents/MacOS
+    state: directory
+    mode: '0755'
+  when: kanata_enabled | default(false)
+
+- name: Create Kanata.app Info.plist
+  become: yes
+  copy:
+    content: |
+      <?xml version="1.0" encoding="UTF-8"?>
+      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+      <plist version="1.0">
+      <dict>
+          <key>CFBundleIdentifier</key>
+          <string>com.kanata</string>
+          <key>CFBundleName</key>
+          <string>Kanata</string>
+          <key>CFBundleExecutable</key>
+          <string>Kanata</string>
+          <key>CFBundleVersion</key>
+          <string>1.0</string>
+          <key>LSUIElement</key>
+          <true/>
+      </dict>
+      </plist>
+    dest: /Applications/Kanata.app/Contents/Info.plist
+    mode: '0644'
+  when: kanata_enabled | default(false)
+
+- name: Create Kanata.app executable
+  become: yes
+  copy:
+    content: |
+      #!/bin/sh
+      exec /usr/bin/sudo /opt/homebrew/bin/kanata --cfg /Users/patrick/.config/kanata/config.kbd
+    dest: /Applications/Kanata.app/Contents/MacOS/Kanata
+    mode: '0755'
+  when: kanata_enabled | default(false)
+
+- name: Install kanata LaunchDaemon plist
   become: yes
   copy:
     src: "{{ ansible_env.HOME }}/.config/kanata/com.kanata.plist"
@@ -18,11 +75,39 @@
     group: wheel
     mode: '0644'
   register: kanata_plist
+  when: kanata_enabled | default(false)
 
-- name: Reload kanata launchd daemon if plist changed
+- name: Bootstrap kanata LaunchDaemon
   become: yes
   shell: |
-    launchctl unload /Library/LaunchDaemons/com.kanata.plist 2>/dev/null || true
-    launchctl load /Library/LaunchDaemons/com.kanata.plist
-  when: kanata_plist.changed
-  changed_when: kanata_plist.changed
+    launchctl bootout system/com.kanata 2>/dev/null || true
+    launchctl bootstrap system /Library/LaunchDaemons/com.kanata.plist
+  when: kanata_enabled | default(false)
+  changed_when: false
+
+# --- Disable kanata ---
+
+- name: Bootout kanata LaunchDaemon
+  become: yes
+  shell: launchctl bootout system/com.kanata 2>/dev/null || true
+  when: not (kanata_enabled | default(false))
+  changed_when: false
+
+- name: Remove kanata LaunchDaemon plist
+  become: yes
+  file:
+    path: /Library/LaunchDaemons/com.kanata.plist
+    state: absent
+  when: not (kanata_enabled | default(false))
+
+- name: Remove Kanata.app bundle
+  become: yes
+  file:
+    path: /Applications/Kanata.app
+    state: absent
+  when: not (kanata_enabled | default(false))
+
+- name: Remove kanata LaunchAgent plist if present
+  file:
+    path: "{{ ansible_env.HOME }}/Library/LaunchAgents/com.kanata.plist"
+    state: absent

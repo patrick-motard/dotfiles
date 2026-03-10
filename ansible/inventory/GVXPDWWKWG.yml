@@ -16,3 +16,4 @@ all:
     emacs_enabled: false
     hammerspoon_enabled: false
     aerospace_enabled: true
+    kanata_enabled: true

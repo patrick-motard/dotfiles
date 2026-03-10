@@ -6,20 +6,15 @@
     <string>com.kanata</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/usr/bin/sudo</string>
-        <string>/opt/homebrew/bin/kanata</string>
-        <string>--cfg</string>
-        <string>/Users/patrick/.config/kanata/config.kbd</string>
+        <string>/Applications/Kanata.app/Contents/MacOS/Kanata</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
     <key>KeepAlive</key>
-    <false/>
+    <true/>
     <key>StandardOutPath</key>
     <string>/tmp/kanata.log</string>
     <key>StandardErrorPath</key>
     <string>/tmp/kanata.log</string>
-    <key>UserName</key>
-    <string>patrick</string>
 </dict>
 </plist>
