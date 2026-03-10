@@ -6,8 +6,11 @@
     <string>com.kanata</string>
     <key>ProgramArguments</key>
     <array>
+        <string>/usr/bin/sudo</string>
         <string>/Applications/Kanata.app/Contents/MacOS/Kanata</string>
-        <string>--tcp-server-address</string>
+        <string>--cfg</string>
+        <string>/Users/patrick/.config/kanata/config.kbd</string>
+        <string>-p</string>
         <string>127.0.0.1:7070</string>
     </array>
     <key>RunAtLoad</key>
