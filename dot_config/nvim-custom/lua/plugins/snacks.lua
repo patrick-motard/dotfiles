@@ -5,11 +5,7 @@ return {
   ---@type snacks.Config
   opts = {
     quickfile = {},
-    terminal = {
-      win = {
-        style = 'terminal',
-      },
-    },
+    terminal = { enabled = false },
     ---@type snacks.picker.Config
     picker = {
       sources = {
@@ -53,12 +49,6 @@ return {
     },
   },
   keys = {
-    {
-      '<leader>tt',
-      function() require('snacks').terminal.toggle() end,
-      desc = '[t]erminal toggle',
-      mode = { 'n', 't' },
-    },
     {
       '<leader>gl',
       function()
