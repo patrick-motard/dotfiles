@@ -43,3 +43,4 @@ These dotfiles provide a reproducible, cross-platform development environment th
 - [Tridactyl](docs/TRIDACTYL.md) - Firefox Vim keybindings with Colemak-DH navigation
 - [Tmux Session Management](docs/TMUX.md) - How tmux, tmuxinator, sesh, and fzf work together to provide powerful session management and layouts
 - [Performance Testing](docs/PERFORMANCE.md) - Benchmarking shell startup time
+- [Kanata](docs/KANATA.md) - Keyboard remapping with Colemak-DH matrix layout and homerow mods
