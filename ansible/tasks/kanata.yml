@@ -7,7 +7,7 @@
 - name: Install kanata sudoers entry
   become: yes
   copy:
-    content: "patrick ALL=(root) NOPASSWD: /opt/homebrew/bin/kanata\n"
+    content: "patrick ALL=(root) NOPASSWD: /usr/local/bin/kanata_cmd\n"
     dest: /etc/sudoers.d/kanata
     owner: root
     group: wheel
@@ -23,6 +23,24 @@
   when: not (kanata_enabled | default(false))
 
 # --- Enable kanata ---
+
+- name: Download kanata_cmd_allowed binary (includes TCP server support)
+  become: yes
+  get_url:
+    url: https://github.com/jtroo/kanata/releases/download/v1.11.0/macos-binaries-arm64.zip
+    dest: /tmp/kanata-macos-arm64.zip
+    mode: '0644'
+  when: kanata_enabled | default(false)
+
+- name: Extract kanata_cmd_allowed binary
+  become: yes
+  shell: |
+    cd /tmp && unzip -o kanata-macos-arm64.zip kanata_macos_cmd_allowed_arm64
+    mv /tmp/kanata_macos_cmd_allowed_arm64 /usr/local/bin/kanata_cmd
+    chmod +x /usr/local/bin/kanata_cmd
+  args:
+    creates: /usr/local/bin/kanata_cmd
+  when: kanata_enabled | default(false)
 
 - name: Create Kanata.app bundle directories
   become: yes
@@ -61,7 +79,7 @@
   copy:
     content: |
       #!/bin/sh
-      exec /usr/bin/sudo /opt/homebrew/bin/kanata --cfg /Users/patrick/.config/kanata/config.kbd --tcp-server-address 127.0.0.1:7070
+      exec /usr/bin/sudo /usr/local/bin/kanata_cmd --cfg /Users/patrick/.config/kanata/config.kbd --tcp-server-address 127.0.0.1:7070
     dest: /Applications/Kanata.app/Contents/MacOS/Kanata
     mode: '0755'
   when: kanata_enabled | default(false)
