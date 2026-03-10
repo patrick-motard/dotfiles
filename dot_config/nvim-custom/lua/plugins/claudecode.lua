@@ -21,5 +21,11 @@ return {
     { '<leader>cc', '<cmd>ClaudeCode<cr>', desc = '[c]laude code toggle' },
     { '<leader>cs', '<cmd>ClaudeCodeStart<cr>', desc = '[s]tart server' },
     { '<leader>cq', '<cmd>ClaudeCodeStop<cr>', desc = '[q]uit server' },
+    { '<leader>cf', '<cmd>ClaudeCodeFocus<cr>', desc = '[f]ocus terminal' },
+    { '<leader>ca', '<cmd>ClaudeCodeAdd<cr>', desc = '[a]dd file to context' },
+    { '<leader>cv', '<cmd>ClaudeCodeSend<cr>', desc = 'send [v]isual to claude', mode = { 'n', 'v' } },
+    { '<leader>cm', '<cmd>ClaudeCodeSelectModel<cr>', desc = 'select [m]odel' },
+    { '<leader>cy', '<cmd>ClaudeCodeDiffAccept<cr>', desc = '[y] accept diff' },
+    { '<leader>cn', '<cmd>ClaudeCodeDiffDeny<cr>', desc = '[n] deny diff' },
   },
 }
