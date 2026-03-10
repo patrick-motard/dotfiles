@@ -1,5 +1,4 @@
 hyper = { "cmd", "alt" }
-leader = { "alt" }
 
 hs.loadSpoon("HSKeybindings")
 hs.loadSpoon("ReloadConfiguration")
@@ -14,11 +13,5 @@ Install:andUse("FadeLogo", {
 	start = true,
 })
 
--- Reload config
-hs.hotkey.bind(hyper, "r", "Reload Hammerspoon", function()
-	hs.notify.new({ informativeText = "Reloading Hammerspoon." }):send()
-	hs.reload()
-end)
-
--- Cheatsheet
-require("src/help")
+menuHammer = hs.loadSpoon("MenuHammer")
+menuHammer:enter()

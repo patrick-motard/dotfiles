@@ -33,6 +33,8 @@
         url: https://github.com/Hammerspoon/Spoons/raw/master/Spoons/HSKeybindings.spoon.zip
       - name: FadeLogo
         url: https://github.com/Hammerspoon/Spoons/raw/master/Spoons/FadeLogo.spoon.zip
+      - name: MenuHammer
+        url: https://github.com/FryJay/MenuHammer/releases/latest/download/MenuHammer.spoon.zip
   block:
     - name: Check if spoon is already installed
       stat:
