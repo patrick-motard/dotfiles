@@ -61,7 +61,7 @@
   copy:
     content: |
       #!/bin/sh
-      exec /usr/bin/sudo /opt/homebrew/bin/kanata --cfg /Users/patrick/.config/kanata/config.kbd
+      exec /usr/bin/sudo /opt/homebrew/bin/kanata --cfg /Users/patrick/.config/kanata/config.kbd --tcp-server-address 127.0.0.1:7070
     dest: /Applications/Kanata.app/Contents/MacOS/Kanata
     mode: '0755'
   when: kanata_enabled | default(false)
