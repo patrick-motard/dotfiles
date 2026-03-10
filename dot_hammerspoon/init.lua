@@ -30,11 +30,11 @@ local function isZSAConnected()
 end
 
 local function startKanata()
-    hs.execute("launchctl load /Library/LaunchDaemons/com.kanata.plist 2>/dev/null")
+    hs.execute("launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.kanata.plist 2>/dev/null")
 end
 
 local function stopKanata()
-    hs.execute("launchctl unload /Library/LaunchDaemons/com.kanata.plist 2>/dev/null")
+    hs.execute("launchctl bootout gui/$(id -u)/com.kanata 2>/dev/null")
 end
 
 local usbWatcher = hs.usb.watcher.new(function(device)
@@ -59,17 +59,24 @@ end
 -- Game layer disables homerow mods and nav layer (hold-w arrows)
 -- Toggle: hyper+g (Cmd+Alt+g)
 local gameModeActive = false
-local gameModeMenuItem = hs.menubar.new(false)
+local gameModeMenuItem = nil
 
 local function setGameMode(active)
     gameModeActive = active
     if active then
-        hs.execute("echo 'ActOnFakeKey layer game' | nc -w1 127.0.0.1 7070 2>/dev/null")
-        gameModeMenuItem:setTitle("GAME")
-        gameModeMenuItem:returnToMenuBar()
+        hs.execute('echo \'{"ChangeLayer":{"new":"game"}}\' | nc -w1 127.0.0.1 7070 2>/dev/null')
+        if not gameModeMenuItem then
+            gameModeMenuItem = hs.menubar.new()
+        end
+        if gameModeMenuItem then
+            gameModeMenuItem:setTitle("GAME")
+        end
     else
-        hs.execute("echo 'ActOnFakeKey layer base' | nc -w1 127.0.0.1 7070 2>/dev/null")
-        gameModeMenuItem:removeFromMenuBar()
+        hs.execute('echo \'{"ChangeLayer":{"new":"base"}}\' | nc -w1 127.0.0.1 7070 2>/dev/null')
+        if gameModeMenuItem then
+            gameModeMenuItem:delete()
+            gameModeMenuItem = nil
+        end
     end
 end
 
