@@ -33,8 +33,6 @@
         url: https://github.com/Hammerspoon/Spoons/raw/master/Spoons/HSKeybindings.spoon.zip
       - name: FadeLogo
         url: https://github.com/Hammerspoon/Spoons/raw/master/Spoons/FadeLogo.spoon.zip
-      - name: MenuHammer
-        url: https://github.com/FryJay/MenuHammer/releases/latest/download/MenuHammer.spoon.zip
   block:
     - name: Check if spoon is already installed
       stat:
@@ -50,3 +48,29 @@
       loop: "{{ spoon_stat.results }}"
       when: not item.stat.exists
       changed_when: not item.stat.exists
+
+- name: Install MenuHammer spoon
+  when: hammerspoon_enabled | default(false)
+  block:
+    - name: Check if MenuHammer is installed
+      stat:
+        path: "{{ ansible_env.HOME }}/.hammerspoon/Spoons/MenuHammer.spoon"
+      register: menuhammer_stat
+
+    - name: Clone MenuHammer repo
+      command:
+        cmd: git clone https://github.com/FryJay/MenuHammer.git /tmp/MenuHammer
+        creates: /tmp/MenuHammer
+      when: not menuhammer_stat.stat.exists
+
+    - name: Copy MenuHammer.spoon into place
+      command:
+        cmd: cp -r /tmp/MenuHammer/Spoons/MenuHammer.spoon "{{ ansible_env.HOME }}/.hammerspoon/Spoons/MenuHammer.spoon"
+      when: not menuhammer_stat.stat.exists
+      changed_when: not menuhammer_stat.stat.exists
+
+    - name: Clean up MenuHammer clone
+      file:
+        path: /tmp/MenuHammer
+        state: absent
+      when: not menuhammer_stat.stat.exists
