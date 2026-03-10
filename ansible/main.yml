@@ -42,5 +42,8 @@
     - import_tasks: tasks/aerospace.yml
       when: ansible_os_family == "Darwin" and aerospace_enabled | default(false)
       tags: [aerospace, window-manager]
+    - import_tasks: tasks/kanata.yml
+      when: ansible_os_family == "Darwin"
+      tags: [kanata]
     - import_tasks: tasks/repos.yml
       tags: [repos]
