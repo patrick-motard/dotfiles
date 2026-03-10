@@ -1,13 +1,15 @@
 ---
 # Kanata setup for macOS
-# - Creates a .app bundle so macOS can grant Input Monitoring permission
-# - Installs a system LaunchDaemon that launches the app bundle
+# - Creates a .app bundle with the kanata binary so macOS can grant Input Monitoring permission
+# - Installs a user LaunchAgent that runs kanata via sudo
 # - Manages sudoers entry for passwordless sudo
+
+# --- Enable kanata ---
 
 - name: Install kanata sudoers entry
   become: yes
   copy:
-    content: "patrick ALL=(root) NOPASSWD: /usr/local/bin/kanata_cmd\n"
+    content: "patrick ALL=(root) NOPASSWD: /Applications/Kanata.app/Contents/MacOS/Kanata\n"
     dest: /etc/sudoers.d/kanata
     owner: root
     group: wheel
@@ -15,31 +17,12 @@
     validate: visudo -cf %s
   when: kanata_enabled | default(false)
 
-- name: Remove kanata sudoers entry
-  become: yes
-  file:
-    path: /etc/sudoers.d/kanata
-    state: absent
-  when: not (kanata_enabled | default(false))
-
-# --- Enable kanata ---
-
-- name: Download kanata_cmd_allowed binary (includes TCP server support)
+- name: Download kanata binary
   become: yes
   get_url:
     url: https://github.com/jtroo/kanata/releases/download/v1.11.0/macos-binaries-arm64.zip
     dest: /tmp/kanata-macos-arm64.zip
     mode: '0644'
-  when: kanata_enabled | default(false)
-
-- name: Extract kanata_cmd_allowed binary
-  become: yes
-  shell: |
-    cd /tmp && unzip -o kanata-macos-arm64.zip kanata_macos_cmd_allowed_arm64
-    mv /tmp/kanata_macos_cmd_allowed_arm64 /usr/local/bin/kanata_cmd
-    chmod +x /usr/local/bin/kanata_cmd
-  args:
-    creates: /usr/local/bin/kanata_cmd
   when: kanata_enabled | default(false)
 
 - name: Create Kanata.app bundle directories
@@ -48,6 +31,16 @@
     path: /Applications/Kanata.app/Contents/MacOS
     state: directory
     mode: '0755'
+  when: kanata_enabled | default(false)
+
+- name: Extract kanata binary into Kanata.app bundle
+  become: yes
+  shell: |
+    cd /tmp && unzip -o kanata-macos-arm64.zip kanata_macos_cmd_allowed_arm64
+    mv /tmp/kanata_macos_cmd_allowed_arm64 /Applications/Kanata.app/Contents/MacOS/Kanata
+    chmod +x /Applications/Kanata.app/Contents/MacOS/Kanata
+  args:
+    creates: /Applications/Kanata.app/Contents/MacOS/Kanata
   when: kanata_enabled | default(false)
 
 - name: Create Kanata.app Info.plist
@@ -74,50 +67,41 @@
     mode: '0644'
   when: kanata_enabled | default(false)
 
-- name: Create Kanata.app executable
-  become: yes
-  copy:
-    content: |
-      #!/bin/sh
-      exec /usr/bin/sudo /usr/local/bin/kanata_cmd --cfg /Users/patrick/.config/kanata/config.kbd -p 127.0.0.1:7070
-    dest: /Applications/Kanata.app/Contents/MacOS/Kanata
-    mode: '0755'
-  when: kanata_enabled | default(false)
-
-- name: Install kanata LaunchDaemon plist
-  become: yes
+- name: Install kanata LaunchAgent plist
   copy:
     src: "{{ ansible_env.HOME }}/.config/kanata/com.kanata.plist"
-    dest: /Library/LaunchDaemons/com.kanata.plist
-    owner: root
-    group: wheel
+    dest: "{{ ansible_env.HOME }}/Library/LaunchAgents/com.kanata.plist"
     mode: '0644'
   register: kanata_plist
   when: kanata_enabled | default(false)
 
-- name: Bootstrap or restart kanata LaunchDaemon
-  become: yes
+- name: Bootstrap or restart kanata LaunchAgent
   shell: |
-    if launchctl print system/com.kanata &>/dev/null; then
-      launchctl kickstart -k system/com.kanata
+    if launchctl print gui/$(id -u)/com.kanata &>/dev/null; then
+      launchctl kickstart -k gui/$(id -u)/com.kanata
     else
-      launchctl bootstrap system /Library/LaunchDaemons/com.kanata.plist
+      launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.kanata.plist
     fi
   when: kanata_enabled | default(false)
   changed_when: false
 
 # --- Disable kanata ---
 
-- name: Bootout kanata LaunchDaemon
+- name: Remove kanata sudoers entry
   become: yes
-  shell: launchctl bootout system/com.kanata 2>/dev/null || true
+  file:
+    path: /etc/sudoers.d/kanata
+    state: absent
+  when: not (kanata_enabled | default(false))
+
+- name: Bootout kanata LaunchAgent
+  shell: launchctl bootout gui/$(id -u)/com.kanata 2>/dev/null || true
   when: not (kanata_enabled | default(false))
   changed_when: false
 
-- name: Remove kanata LaunchDaemon plist
-  become: yes
+- name: Remove kanata LaunchAgent plist
   file:
-    path: /Library/LaunchDaemons/com.kanata.plist
+    path: "{{ ansible_env.HOME }}/Library/LaunchAgents/com.kanata.plist"
     state: absent
   when: not (kanata_enabled | default(false))
 
@@ -128,7 +112,22 @@
     state: absent
   when: not (kanata_enabled | default(false))
 
-- name: Remove kanata LaunchAgent plist if present
+- name: Remove old kanata LaunchDaemon plist
+  become: yes
   file:
-    path: "{{ ansible_env.HOME }}/Library/LaunchAgents/com.kanata.plist"
+    path: /Library/LaunchDaemons/com.kanata.plist
     state: absent
+  when: not (kanata_enabled | default(false))
+
+- name: Bootout old kanata LaunchDaemon if present
+  become: yes
+  shell: launchctl bootout system/com.kanata 2>/dev/null || true
+  when: not (kanata_enabled | default(false))
+  changed_when: false
+
+- name: Remove old kanata binary from /usr/local/bin
+  become: yes
+  file:
+    path: /usr/local/bin/kanata_cmd
+    state: absent
+  when: not (kanata_enabled | default(false))
