@@ -8,6 +8,7 @@ These instructions apply to all projects where project-specific CLAUDE.md doesn'
 - Never use em-dashes (—). Use regular dashes (-) or rewrite the sentence instead
 - Prefer editing existing files over creating new ones when possible
 - Use clear, concise commit messages focused on "why" rather than "what"
+- When outputting a command for the user to run, use pbcopy to copy it to the clipboard instead of printing it as a code block. For example: `echo 'the command' | pbcopy` and tell the user it's been copied. Only print it as a code block if it's very short (one word or a simple flag).
 
 ## Personal Repositories
 
