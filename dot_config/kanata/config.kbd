@@ -1,0 +1,31 @@
+;; Kanata config - homerow mods for Mac laptop keyboard
+;; Mirrors ZSA Voyager layout: ARST/NEIO = Alt/Gui/Ctrl/Shift on both hands
+;; Tapping term: 240ms (matching QMK config)
+
+(defcfg
+  process-unmapped-keys yes
+)
+
+(defsrc
+  a r s t n e i o
+)
+
+(deflayer base
+  @a @r @s @t @n @e @i @o
+)
+
+;; Homerow mods using tap-hold-release-keys
+;; - tap: the letter
+;; - hold: the modifier
+;; Using tap-hold-release-keys so that fast typing doesn't trigger mods
+
+(defalias
+  a (tap-hold-release-keys 240 240 a lalt (r s t n e i o))
+  r (tap-hold-release-keys 240 240 r lmet (a s t n e i o))
+  s (tap-hold-release-keys 240 240 s lctl (a r t n e i o))
+  t (tap-hold-release-keys 240 240 t lsft (a r s n e i o))
+  n (tap-hold-release-keys 240 240 n rsft (a r s t e i o))
+  e (tap-hold-release-keys 240 240 e rctl (a r s t n i o))
+  i (tap-hold-release-keys 240 240 i rmet (a r s t n e o))
+  o (tap-hold-release-keys 240 240 o ralt (a r s t n e i))
+)
