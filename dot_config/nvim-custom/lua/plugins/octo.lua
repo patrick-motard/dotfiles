@@ -9,6 +9,7 @@ return {
     { '<leader>oi', '<cmd>Octo issue list<cr>', desc = '[i]ssue list' },
     { '<leader>oI', '<cmd>Octo issue create<cr>', desc = '[I]ssue create' },
     { '<leader>op', '<cmd>Octo pr list<cr>', desc = '[p]r list' },
+    { '<leader>om', '<cmd>Octo search is:pr author:@me is:open<cr>', desc = '[m]y PRs' },
     { '<leader>oP', '<cmd>Octo pr create<cr>', desc = '[P]r create' },
     { '<leader>or', '<cmd>Octo repo list<cr>', desc = '[r]epo list' },
     { '<leader>os', '<cmd>Octo search<cr>', desc = '[s]earch' },
