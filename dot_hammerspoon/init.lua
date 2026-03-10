@@ -1,4 +1,4 @@
-hyper = { "ctrl", "alt" }
+hyper = { "cmd", "alt" }
 
 hs.loadSpoon("HSKeybindings")
 hs.loadSpoon("ReloadConfiguration")
