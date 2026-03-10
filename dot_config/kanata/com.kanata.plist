@@ -6,6 +6,7 @@
     <string>com.kanata</string>
     <key>ProgramArguments</key>
     <array>
+        <string>/usr/bin/sudo</string>
         <string>/opt/homebrew/bin/kanata</string>
         <string>--cfg</string>
         <string>/Users/patrick/.config/kanata/config.kbd</string>
@@ -18,5 +19,7 @@
     <string>/tmp/kanata.log</string>
     <key>StandardErrorPath</key>
     <string>/tmp/kanata.log</string>
+    <key>UserName</key>
+    <string>patrick</string>
 </dict>
 </plist>

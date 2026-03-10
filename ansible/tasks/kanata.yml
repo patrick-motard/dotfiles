@@ -1,4 +1,14 @@
 ---
+- name: Install kanata sudoers entry
+  become: yes
+  copy:
+    content: "patrick ALL=(root) NOPASSWD: /opt/homebrew/bin/kanata\n"
+    dest: /etc/sudoers.d/kanata
+    owner: root
+    group: wheel
+    mode: '0440'
+    validate: visudo -cf %s
+
 - name: Install kanata launchd daemon
   become: yes
   copy:
