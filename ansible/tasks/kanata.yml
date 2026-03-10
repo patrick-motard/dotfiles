@@ -77,11 +77,14 @@
   register: kanata_plist
   when: kanata_enabled | default(false)
 
-- name: Bootstrap kanata LaunchDaemon
+- name: Bootstrap or restart kanata LaunchDaemon
   become: yes
   shell: |
-    launchctl bootout system/com.kanata 2>/dev/null || true
-    launchctl bootstrap system /Library/LaunchDaemons/com.kanata.plist
+    if launchctl print system/com.kanata &>/dev/null; then
+      launchctl kickstart -k system/com.kanata
+    else
+      launchctl bootstrap system /Library/LaunchDaemons/com.kanata.plist
+    fi
   when: kanata_enabled | default(false)
   changed_when: false
 
