@@ -64,11 +64,11 @@ local gameModeMenuItem = hs.menubar.new(false)
 local function setGameMode(active)
     gameModeActive = active
     if active then
-        hs.execute("echo 'ActOnFakeKey layer game' | nc -q1 127.0.0.1 7070 2>/dev/null")
+        hs.execute("echo 'ActOnFakeKey layer game' | nc -w1 127.0.0.1 7070 2>/dev/null")
         gameModeMenuItem:setTitle("GAME")
         gameModeMenuItem:returnToMenuBar()
     else
-        hs.execute("echo 'ActOnFakeKey layer base' | nc -q1 127.0.0.1 7070 2>/dev/null")
+        hs.execute("echo 'ActOnFakeKey layer base' | nc -w1 127.0.0.1 7070 2>/dev/null")
         gameModeMenuItem:removeFromMenuBar()
     end
 end
