@@ -118,6 +118,7 @@
       - docker
       - font-iosevka-term-nerd-font
       - iterm2
+      - karabiner-elements
       - keycastr
       - nikitabobko/tap/aerospace
       - obsidian
