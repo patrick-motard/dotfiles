@@ -11,3 +11,40 @@
   homebrew_cask:
     name: hammerspoon
     state: absent
+
+- name: Ensure Hammerspoon Spoons directory exists
+  when: hammerspoon_enabled | default(false)
+  file:
+    path: "{{ ansible_env.HOME }}/.hammerspoon/Spoons"
+    state: directory
+    mode: '0755'
+
+- name: Install Hammerspoon Spoons
+  when: hammerspoon_enabled | default(false)
+  vars:
+    spoons:
+      - name: SpoonInstall
+        url: https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip
+      - name: ReloadConfiguration
+        url: https://github.com/Hammerspoon/Spoons/raw/master/Spoons/ReloadConfiguration.spoon.zip
+      - name: KSheet
+        url: https://github.com/Hammerspoon/Spoons/raw/master/Spoons/KSheet.spoon.zip
+      - name: HSKeybindings
+        url: https://github.com/Hammerspoon/Spoons/raw/master/Spoons/HSKeybindings.spoon.zip
+      - name: FadeLogo
+        url: https://github.com/Hammerspoon/Spoons/raw/master/Spoons/FadeLogo.spoon.zip
+  block:
+    - name: Check if spoon is already installed
+      stat:
+        path: "{{ ansible_env.HOME }}/.hammerspoon/Spoons/{{ item.name }}.spoon"
+      register: spoon_stat
+      loop: "{{ spoons }}"
+
+    - name: Download and install missing spoons
+      unarchive:
+        src: "{{ item.item.url }}"
+        dest: "{{ ansible_env.HOME }}/.hammerspoon/Spoons"
+        remote_src: yes
+      loop: "{{ spoon_stat.results }}"
+      when: not item.stat.exists
+      changed_when: not item.stat.exists
