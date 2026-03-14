@@ -9,7 +9,7 @@
 - name: Install kanata sudoers entry
   become: yes
   copy:
-    content: "patrick ALL=(root) NOPASSWD: /Applications/Kanata.app/Contents/MacOS/Kanata\n"
+    content: "{{ ansible_env.USER }} ALL=(root) NOPASSWD: /Applications/Kanata.app/Contents/MacOS/Kanata\n"
     dest: /etc/sudoers.d/kanata
     owner: root
     group: wheel
