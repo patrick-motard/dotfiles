@@ -9,6 +9,13 @@
 
 #endregion Notes
 
+#region Profiling
+# Usage: PROFILE_STARTUP=true zsh
+if [[ "$PROFILE_STARTUP" == true ]]; then
+  zmodload zsh/zprof
+fi
+#endregion Profiling
+
 #region History
 export HISTSIZE=100000 # max events for internal history
 export SAVEHIST=100000 # max events in history file
@@ -211,3 +218,8 @@ zle     -N             sesh-sessions
 bindkey -M vicmd '\es' sesh-sessions
 bindkey -M viins '\es' sesh-sessions
 #endregion Custom Key Bindings
+
+# Print profiling results if enabled
+if [[ "$PROFILE_STARTUP" == true ]]; then
+  zprof
+fi

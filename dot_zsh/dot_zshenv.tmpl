@@ -52,8 +52,11 @@ export XDG_CONFIG_HOME="$HOME/.config"
 [[ -f ~/.local/bin/zshenv.sh ]] && source ~/.local/bin/zshenv.sh || touch ~/.local/bin/zshenv.sh
 
 # Ensure Node's global packages are in the PATH
-if which npm > /dev/null; then
-  export PATH="$PATH:$(npm get prefix -g)"
+# Use nodenv shims path directly instead of calling npm (saves ~465ms)
+if [[ -d "$HOME/.nodenv" ]]; then
+  _node_ver=$(cat "$HOME/.nodenv/version" 2>/dev/null)
+  [[ -n "$_node_ver" ]] && export PATH="$PATH:$HOME/.nodenv/versions/$_node_ver"
+  unset _node_ver
 fi
 
 # Rust
@@ -79,9 +82,9 @@ export PATH="$PATH:$HOME/go/bin"
 # Only activates if Homebrew's gcc is installed at the expected path.
 if [[ -d "/opt/homebrew/lib/gcc/current" ]]; then
   _gcc_lib="/opt/homebrew/lib/gcc/current"
-  _gcc_arch="$(find "$_gcc_lib/gcc" -maxdepth 1 -type d -name '*apple-darwin*' 2>/dev/null | head -1)"
+  _gcc_arch=($_gcc_lib/gcc/*apple-darwin*(N[1]))
   if [[ -n "$_gcc_arch" ]]; then
-    _gcc_ver="$(find "$_gcc_arch" -maxdepth 1 -type d -name '[0-9]*' 2>/dev/null | head -1)"
+    _gcc_ver=($_gcc_arch/[0-9]*(N[1]))
     export LIBRARY_PATH="${_gcc_lib}${_gcc_ver:+:$_gcc_ver}${LIBRARY_PATH:+:$LIBRARY_PATH}"
   fi
   unset _gcc_lib _gcc_arch _gcc_ver
