@@ -1,31 +1,24 @@
 
-#Note, run `zplug install` on fresh install after this runs
-# then re-run ansible. I could probably improve this eventually.
-- name: Check if zplug is installed
+# Zinit plugin manager (replaces zplug)
+- name: Check if zinit is installed
   stat:
+    path: "{{home}}/.zinit/bin"
+  register: zinit_installed
+
+- name: Install zinit plugin manager
+  when: not zinit_installed.stat.exists
+  git:
+    repo: https://github.com/zdharma-continuum/zinit.git
+    dest: "{{home}}/.zinit/bin"
+    depth: 1
+
+# Clean up old plugin managers
+- name: Remove zplug (replaced by zinit)
+  file:
     path: "{{home}}/.zplug"
-  register: zplug_installed
+    state: absent
 
-- name: Install the zplug zsh plugin manager
-  when: not zplug_installed.stat.exists
-  shell: curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
-
-- name: Check if oh-my-zsh is installed
-  stat:
+- name: Remove standalone oh-my-zsh (zinit loads OMZ plugins as snippets)
+  file:
     path: "{{home}}/.oh-my-zsh"
-  register: oh_my_zsh_installed
-
-- name: Check if oh-my-zsh is installed via zplug
-  stat:
-    path: "{{home}}/.zplug/repos/robbyrussell/oh-my-zsh"
-  register: oh_my_zsh_via_zplug
-
-# oh-my-zsh is installed because there are some plugins i use
-# from oh-my-zsh
-- name: Install oh-my-zsh
-  become: false
-  when: not oh_my_zsh_installed.stat.exists and not oh_my_zsh_via_zplug.stat.exists
-  environment:
-    ZSH: ""
-  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-
+    state: absent

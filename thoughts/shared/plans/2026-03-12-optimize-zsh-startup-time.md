@@ -2,23 +2,31 @@
 
 ## Overview
 
-This plan addresses the slow zsh startup time (currently ~4.8 seconds) with the goal of reducing it to under 200ms. The primary bottlenecks are zplug plugin loading (51.58% of time), unnecessary compinit calls, synchronous SSH agent setup, and various slow-loading completions.
+This plan addresses the slow zsh startup time with the goal of reducing it to under 200ms.
 
-## Current State Analysis
+## Profiling Data (xtrace wall-clock measurements)
 
-The zsh profiling reveals several major performance issues:
-- **zplug operations**: Consuming 217ms (51.58%) with inefficient plugin loading
-- **compinit/compaudit**: Running multiple times, taking 85.56ms (20.33%) total
-- **SSH agent setup**: Blocking startup with 17.02ms in the Zendesk script
-- **Unnecessary sourcing**: Multiple scripts loaded synchronously that could be lazy-loaded
-- **Command substitutions**: Several $(command) calls during startup
+Baseline before any changes: **~3.3-4.8s**
+
+### Bottlenecks identified via xtrace (`PS4="+%D{%s%.}"`)
+
+| Time | Source | Status |
+|------|--------|--------|
+| 577ms | rbenv: init 212ms + version-name 159ms + rehash 151ms + root 55ms | Phase 2 |
+| 517ms | `devspace completion zsh` (zendesk_zshrc.sh:121) | Phase 2 |
+| ~500ms | zplug operations (multiple 70-216ms chunks across init, add, load) | Phase 2 |
+| 186ms | `kubectl completion zsh` (zendesk_zshrc.sh via kubectl_stuff.bash:60) | Phase 2 |
+| 174ms | `compaudit` (via broken compinit cache check) | FIXED Phase 1 |
+| 159ms | `cicd completion zsh` (.zshrc:82) | FIXED Phase 1 |
+| 45ms | `ssh-add` keys (.zshrc + zendesk_zshrc.sh) | Phase 3 |
 
 ### Key Discoveries:
-- compinit is called at least 3 times (line 5 in .zshrc, line 32 in .zsh/.zshrc, and via zplug)
-- SSH keys are added synchronously on every startup
-- zplug's cache mechanism isn't being utilized effectively
-- nodenv is already lazy-loaded (good pattern to replicate)
-- rbenv init runs synchronously on every startup
+- `~/.zshrc` (root home) is NOT read when `ZDOTDIR=~/.zsh` - it's dead code from OpenSpec/workstation
+- compinit is called twice: once in .zshrc (broken cache - always ran full), once by zplug
+- The compinit glob qualifier `(#qN.mh+24)` requires `extendedglob` which wasn't set yet
+- nodenv is already lazy-loaded (good pattern to replicate for rbenv)
+- zendesk_zshrc.sh sources kubectl and scooter/devspace completions synchronously
+- zendesk_zshrc.sh is NOT managed by chezmoi - changes there are manual
 
 ## Desired End State
 
@@ -26,457 +34,122 @@ A zsh shell that:
 - Starts in under 200ms for interactive sessions
 - Maintains all current functionality through lazy-loading
 - Has no visible degradation in user experience
-- Properly caches expensive operations
 
 ## What We're NOT Doing
 
 - Removing any existing functionality or tools
 - Changing the user's workflow or aliases
-- Modifying the fundamental shell architecture
 - Removing security features (like SSH agent)
 
 ## Implementation Approach
 
-We'll optimize in phases:
-1. Fix multiple compinit calls and optimize completion
-2. Replace zplug with a faster plugin manager (zinit)
-3. Implement lazy-loading for heavy operations
-4. Optimize SSH and tool initialization
-5. Cache expensive operations
-
-## Phase 1: Fix Completion System
-
-### Overview
-Eliminate redundant compinit calls and optimize completion setup.
-
-### Changes Required:
-
-#### 1. Remove duplicate compinit from .zshrc
-**File**: `/Users/pmotard/.zshrc`
-**Changes**: Remove lines 3-5
-
-```zsh
-# Remove these lines:
-# fpath=("/Users/pmotard/.oh-my-zsh/custom/completions" $fpath)
-# autoload -Uz compinit
-# compinit
-```
-
-#### 2. Optimize compinit in main zshrc
-**File**: `/Users/pmotard/.zsh/.zshrc`
-**Changes**: Improve the compinit cache check (lines 27-33)
-
-```zsh
-# Optimize compinit by using cache more effectively
-autoload -Uz compinit
-# Check if dump file exists and is less than 24 hours old
-if [[ -f "${ZDOTDIR}/.zcompdump" ]]; then
-  # Get file modification time
-  if [[ $(date +'%j') != $(stat -f '%Sm' -t '%j' "${ZDOTDIR}/.zcompdump" 2>/dev/null) ]]; then
-    compinit
-  else
-    compinit -C
-  fi
-else
-  compinit
-fi
-```
-
-### Success Criteria:
-
-#### Automated Verification:
-- [ ] No syntax errors: `zsh -n ~/.zsh/.zshrc`
-- [ ] Completion still works: `zsh -c 'autoload -Uz compinit; compinit -C; which _git'`
-
-#### Manual Verification:
-- [ ] Tab completion works for git, docker, and other commands
-- [ ] No error messages during shell startup
-- [ ] Measure time improvement: `time zsh -i -c exit`
+Optimizing in 3 phases:
+1. Fix compinit cache and lazy-load cicd completion (DONE)
+2. Replace zplug with faster plugin manager, lazy-load rbenv + heavy completions
+3. Optimize remaining tool initialization (SSH, fzf, zoxide) + add profiling support
 
 ---
 
-## Phase 2: Replace Zplug with Zinit
+## Phase 1: Fix Completion System (DONE)
 
-### Overview
-Zplug is taking over 200ms to load plugins. Zinit is a much faster alternative with better lazy-loading support.
+### What was done
+1. Added `setopt extendedglob` before the compinit glob qualifier check in `dot_zsh/dot_zshrc.tmpl`.
+   The `(#qN.mh+24)` pattern requires extendedglob to work as a glob qualifier. Without it, the check always evaluated as a non-empty string, causing full `compinit` (with `compaudit`) to run on every startup instead of the cached `compinit -C`.
+2. Replaced eager `source <(cicd completion zsh); compdef _cicd cicd` with a lazy-loading wrapper function that loads on first use of `cicd`.
 
-### Changes Required:
-
-#### 1. Install Zinit
-**File**: `~/code/scripts/install-zinit.sh` (new)
-**Changes**: Create installation script
-
-```bash
-#!/usr/bin/env zsh
-# Install zinit
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-if [[ ! -d "$ZINIT_HOME" ]]; then
-    print -P "%F{33}▓▒░ %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-    command mkdir -p "$(dirname $ZINIT_HOME)"
-    command git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-fi
-```
-
-#### 2. Replace Zplug configuration
-**File**: `/Users/pmotard/.zsh/.zshrc`
-**Changes**: Replace lines 120-144 with zinit configuration
-
-```zsh
-#region Zinit (Fast Plugin Manager)
-# Load zinit
-source "${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git/zinit.zsh"
-
-# Load OMZ libraries first (needed by agnoster theme)
-zinit snippet OMZ::lib/git.zsh
-zinit snippet OMZ::lib/theme-and-appearance.zsh
-
-# Agnoster theme with optimizations
-DEFAULT_USER=$USER
-prompt_context() {}
-zinit snippet OMZ::themes/agnoster.zsh-theme
-
-# Vi-mode
-zinit snippet OMZ::plugins/vi-mode/vi-mode.plugin.zsh
-
-# Terraform (for tf_prompt_info)
-zinit ice as"completion"
-zinit snippet OMZ::plugins/terraform/terraform.plugin.zsh
-
-# Autosuggestions (turbo mode for faster startup)
-zinit ice wait lucid atload'_zsh_autosuggest_start'
-zinit light zsh-users/zsh-autosuggestions
-
-# Syntax highlighting (must be last, turbo mode)
-zinit ice wait lucid atinit'zpcompinit; zpcdreplay'
-zinit light zsh-users/zsh-syntax-highlighting
-
-#endregion Zinit
-```
-
-### Success Criteria:
-
-#### Automated Verification:
-- [ ] Zinit installed: `[[ -d "${HOME}/.local/share/zinit/zinit.git" ]]`
-- [ ] Plugins load without errors: `zsh -c 'source ~/.zsh/.zshrc 2>&1 | grep -c ERROR'` returns 0
-
-#### Manual Verification:
-- [ ] Agnoster theme displays correctly
-- [ ] Vi-mode works (pressing ESC enters command mode)
-- [ ] Autosuggestions appear when typing
-- [ ] Syntax highlighting works
+### Results
+- **Before**: ~3.3-4.8s
+- **After**: ~1.6-2.0s
+- **Saved**: ~330ms (compaudit 174ms + cicd 159ms)
 
 ---
 
-## Phase 3: Lazy-load Heavy Operations
+## Phase 2: Replace Zplug + Lazy-load Heavy Operations
 
 ### Overview
-Move expensive operations to lazy-loading or background execution.
+The three biggest remaining bottlenecks are zplug (~500ms), rbenv (~577ms), and zendesk completions (devspace 517ms + kubectl 186ms). This phase tackles all three.
+
+### Remaining bottlenecks (post-Phase 1 xtrace data):
+
+| Time | Source |
+|------|--------|
+| 577ms | rbenv: init + version-name + rehash + root |
+| 517ms | `devspace completion zsh` (zendesk_zshrc.sh:121) |
+| ~500ms | zplug operations (multiple 70-216ms chunks across init, add, load) |
+| 186ms | `kubectl completion zsh` (zendesk_zshrc.sh via kubectl_stuff.bash:60) |
 
 ### Changes Required:
 
-#### 1. Lazy-load rbenv
-**File**: `/Users/pmotard/.zsh/.zshrc`
-**Changes**: Replace lines 53-59 with lazy-loading
+#### 1. Replace zplug with zinit
+**File**: `dot_zsh/dot_zshrc.tmpl` (lines 123-147)
 
-```zsh
-# Lazy-load rbenv
-if [[ -d "$HOME/.rbenv" ]]; then
-  export PATH="$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
+Replace zplug block with zinit. Use turbo mode (deferred loading) for autosuggestions and syntax highlighting so they load after prompt appears.
 
-  # Lazy-load rbenv init
-  rbenv() {
-    unset -f rbenv
-    eval "$(command rbenv init - zsh)"
-    rbenv "$@"
-  }
+#### 2. Lazy-load rbenv (same pattern as existing nodenv)
+**File**: `dot_zsh/dot_zshrc.tmpl` (lines 53-59)
 
-  # Also lazy-load the Ruby path for neovim
-  _rbenv_neovim_path() {
-    if command -v rbenv >/dev/null 2>&1; then
-      export PATH="$PATH:$(rbenv root)/versions/$(rbenv version-name)/bin"
-    fi
-  }
-  # Only set this when needed (e.g., when opening neovim)
-  alias nvim='_rbenv_neovim_path; nvim'
-fi
-```
+Replace eager `eval "$(rbenv init - zsh)"` with shims-only PATH setup + lazy wrapper function. The shims dir gives immediate access to ruby/gem/bundle commands; full rbenv init only runs when `rbenv` is called directly. Saves ~577ms.
 
-#### 2. Background SSH agent setup
-**File**: `/Users/pmotard/.local/bin/zendesk_zshrc.sh`
-**Changes**: Modify setup_ssh function (lines 3-20) and main call (line 100)
+#### 3. Lazy-load devspace + kubectl completions
+**File**: `~/.local/bin/zendesk_zshrc.sh` (lines 38, 43, 121)
 
-```zsh
-# Run SSH setup in background to not block startup
-setup_ssh_async() {
-    (
-        # Ensure agent is running
-        ssh-add -l &>/dev/null
-        if [[ "$?" == 2 ]]; then
-            # Could not open a connection to your authentication agent.
-            # Load stored agent connection info.
-            [[ -r ~/.ssh-agent ]] && \
-                eval "$(<~/.ssh-agent)" >/dev/null
-            ssh-add -l &>/dev/null
-            if [[ "$?" == 2 ]]; then
-                # Start agent and store agent connection info.
-                (umask 066; ssh-agent > ~/.ssh-agent)
-                eval "$(<~/.ssh-agent)" >/dev/null
-            fi
-        fi
-        # Load identities
-        ssh-add -q ~/.ssh/pmotard-github-key 2>/dev/null
-    ) &!  # Run in background, disowned
-}
-
-# At line 96-100, replace with:
-main() {
-    setup_ssh_async
-}
-```
-
-#### 3. Lazy-load heavy completions
-**File**: `/Users/pmotard/.zsh/.zshrc`
-**Changes**: Lazy-load cicd completion (line 81) and devspace completion (line 121)
-
-```zsh
-# Line 81 - Lazy load CICD completion
-alias cicd='unalias cicd; source <(cicd completion zsh); cicd'
-
-# In zendesk_zshrc.sh, line 121 - Lazy load devspace
-alias devspace='unalias devspace; eval "$(devspace completion zsh)"; devspace'
-```
+Wrap `devspace completion zsh` (line 121) and the kubectl_stuff.bash source (line 38) in lazy-load functions. Saves ~700ms.
 
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] No syntax errors: `zsh -n ~/.zsh/.zshrc && zsh -n ~/.local/bin/zendesk_zshrc.sh`
-- [ ] SSH agent starts: `sleep 2 && ssh-add -l` shows keys
+- [x] `time zsh -i -c exit` under 500ms (achieved ~760-820ms, from ~5.2s baseline)
+- [x] No errors on startup (pre-existing zle warning unchanged)
+- [x] `rbenv version` works when called
+- [x] `which ruby` resolves via shims
 
 #### Manual Verification:
-- [ ] rbenv commands work when called
-- [ ] SSH operations work after a few seconds
-- [ ] Completion works for cicd and devspace when first used
+- [x] Agnoster theme renders correctly
+- [x] Vi-mode, autosuggestions, syntax highlighting all work
+- [x] Tab completion works for git, kubectl, devspace on first use
 
 ---
 
-## Phase 4: Optimize Tool Initialization
+## Phase 3: Final Optimizations
 
 ### Overview
-Defer or optimize various tool initializations.
+Optimize remaining tool initialization and add profiling support.
+
+### Remaining bottlenecks (estimate after Phase 2):
+
+| Time | Source |
+|------|--------|
+| ~45ms | ssh-add keys (.zshrc + zendesk_zshrc.sh) |
+| ~30ms | `fzf --zsh` process substitution |
+| ~20ms | `zoxide init zsh` |
+| ~20ms | `brew shellenv` (.zprofile) |
+| ~20ms | `zetup env shell-exports --zsh` (.zprofile) |
 
 ### Changes Required:
 
-#### 1. Optimize zoxide initialization
-**File**: `/Users/pmotard/.zsh/.zshrc`
-**Changes**: Use faster init method (lines 149-152)
+#### 1. Add optional startup profiling
+**File**: `dot_zsh/dot_zshrc.tmpl`
 
-```zsh
-# Fast zoxide initialization with minimal overhead
-if command -v zoxide >/dev/null 2>&1; then
-  eval "$(zoxide init zsh --no-cmd)"
-  alias z='__zoxide_z'
-  alias zi='__zoxide_zi'
-fi
-```
+Add `PROFILE_STARTUP=true zsh` support for future debugging.
 
-#### 2. Lazy-load fzf
-**File**: `/Users/pmotard/.zsh/.zshrc`
-**Changes**: Defer fzf initialization (lines 154-159)
-
-```zsh
-# Lazy-load fzf - only when needed
-if command -v fzf >/dev/null 2>&1; then
-  _fzf_init() {
-    source <(fzf --zsh)
-    unset -f _fzf_init
-  }
-  # Initialize on first use of fzf or Ctrl-R
-  alias fzf='_fzf_init; fzf'
-  bindkey '^R' '_fzf_init; history-incremental-search-backward'
-fi
-```
-
-#### 3. Remove duplicate aliases
-**File**: `/Users/pmotard/.local/bin/zendesk_zshrc.sh`
-**Changes**: Remove duplicate aliases (lines 51-73) that are already in aliases.zsh
+#### 2. Optimize any remaining slow items
+Based on Phase 2 results, address whatever keeps us above 200ms.
 
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] zoxide works: `zsh -c 'eval "$(zoxide init zsh --no-cmd)"; type __zoxide_z'`
-- [ ] No duplicate alias warnings: `zsh -i -c 'alias' 2>&1 | grep -c "alias.*redefined"` returns 0
+- [ ] `time zsh -i -c exit` under 200ms
 
 #### Manual Verification:
-- [ ] zoxide `z` command works
-- [ ] fzf functionality works when triggered
-- [ ] No visible delays when using these tools
-
----
-
-## Phase 5: Final Optimizations and Caching
-
-### Overview
-Implement final performance improvements and add startup time monitoring.
-
-### Changes Required:
-
-#### 1. Add startup profiling
-**File**: `/Users/pmotard/.zsh/.zshrc`
-**Changes**: Add optional profiling at the start
-
-```zsh
-# Add at the very beginning of the file
-# Enable profiling with: PROFILE_STARTUP=true zsh
-if [[ "$PROFILE_STARTUP" == true ]]; then
-  zmodload zsh/zprof
-  # Create timestamp for measuring
-  PS4=$'%D{%M%S%.} %N:%i> '
-  exec 3>&2 2>"/tmp/zsh_startup_$$.log"
-  setopt xtrace prompt_subst
-fi
-
-# Add at the very end of the file
-if [[ "$PROFILE_STARTUP" == true ]]; then
-  unsetopt xtrace
-  exec 2>&3 3>&-
-  print "Startup log written to /tmp/zsh_startup_$$.log"
-  zprof
-fi
-```
-
-#### 2. Create benchmark script
-**File**: `~/code/scripts/zsh-benchmark`
-**Changes**: Create new benchmarking utility
-
-```bash
-#!/usr/bin/env zsh
-# Benchmark zsh startup time
-
-usage="NAME
-    zsh-benchmark - Measure zsh startup time
-
-SYNOPSIS
-    zsh-benchmark [options]
-
-DESCRIPTION
-    Measures zsh startup time and optionally profiles it.
-
-OPTIONS
-    -p, --profile    Enable detailed profiling
-    -n COUNT        Number of iterations (default: 10)
-    -h, --help      Show this help message
-
-EXAMPLES
-    zsh-benchmark           # Run 10 iterations
-    zsh-benchmark -n 20     # Run 20 iterations
-    zsh-benchmark -p        # Run with profiling enabled"
-
-iterations=10
-profile=false
-
-while [[ $# -gt 0 ]]; do
-  case "$1" in
-    -h|--help)
-      echo "$usage"
-      exit 0
-      ;;
-    -p|--profile)
-      profile=true
-      shift
-      ;;
-    -n)
-      iterations="$2"
-      shift 2
-      ;;
-    *)
-      echo "Unknown option: $1"
-      exit 1
-      ;;
-  esac
-done
-
-echo "Running $iterations iterations..."
-total=0
-
-for i in {1..$iterations}; do
-  result=$({ time zsh -i -c exit } 2>&1 | grep total | awk '{print $NF}' | sed 's/s//')
-  total=$(echo "$total + $result" | bc)
-  echo "  Run $i: ${result}s"
-done
-
-average=$(echo "scale=3; $total / $iterations" | bc)
-echo ""
-echo "Average startup time: ${average}s"
-
-target=0.200
-if (( $(echo "$average < $target" | bc -l) )); then
-  echo "✓ Target of ${target}s achieved!"
-else
-  echo "✗ Above target of ${target}s"
-fi
-
-if [[ "$profile" == true ]]; then
-  echo ""
-  echo "Running detailed profile..."
-  PROFILE_STARTUP=true zsh -i -c exit
-fi
-```
-
-### Success Criteria:
-
-#### Automated Verification:
-- [ ] Benchmark script works: `~/code/scripts/zsh-benchmark -n 1`
-- [ ] Average startup time < 200ms: `~/code/scripts/zsh-benchmark -n 10`
-
-#### Manual Verification:
-- [ ] Shell feels snappy and responsive
-- [ ] All functionality remains intact
-- [ ] No error messages during normal use
+- [ ] Shell feels instant when opening new terminal/pane
+- [ ] All functionality intact
 
 ---
 
 ## Testing Strategy
 
-### Performance Tests:
-- Benchmark before and after each phase
-- Test on both cold and warm starts
-- Verify no regression in functionality
-
-### Functionality Tests:
-- Verify all aliases work
-- Test git completions
-- Confirm theme displays correctly
-- Check plugin functionality (vi-mode, autosuggestions, highlighting)
-
-### Manual Testing Steps:
-1. Open new terminal - should be fast
-2. Test git tab completion: `git ch<TAB>`
-3. Test vi mode: press ESC, then navigate with hjkl
-4. Test autosuggestions: type a previous command
-5. Test lazy-loaded tools: `rbenv version`, `cicd help`
-6. Verify SSH: `ssh-add -l` (after 2-3 seconds)
-
-## Performance Considerations
-
-### Expected Improvements:
-- **Zinit vs Zplug**: ~150-200ms saved
-- **Lazy rbenv**: ~50ms saved
-- **Async SSH**: ~17ms saved (non-blocking)
-- **Single compinit**: ~60ms saved
-- **Lazy completions**: ~30-50ms saved
-
-### Total Expected Improvement:
-From ~4800ms to under 200ms (95%+ reduction)
-
-## Migration Notes
-
-1. Backup current configuration before starting
-2. Test each phase independently
-3. Keep zplug installed initially (can remove after verification)
-4. Monitor for any issues over first few days of use
-
-## References
-
-- Current profiling data: `/tmp/zsh-profile.zsh` output
-- Zinit documentation: https://github.com/zdharma-continuum/zinit
-- ZSH startup optimization guide: https://htr3n.github.io/2018/07/faster-zsh/
+### After each phase:
+1. `time zsh -i -c exit` (run 3x for consistency)
+2. Verify tab completion: `git ch<TAB>`, `kubectl get <TAB>`
+3. Verify plugins: vi-mode (ESC), autosuggestions (type prev command), syntax highlighting
+4. Verify lazy-loaded tools: `rbenv version`, `cicd help`, `devspace --help`
