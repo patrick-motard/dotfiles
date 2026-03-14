@@ -1,5 +1,5 @@
 ## Alacritty
-Open URL hints | `Cmd-Shift-O`
+Navigate to URL in pane (hints mode) | `Cmd-Shift-O`
 Open file path hints | `Cmd-Shift-P`
 Copy git SHA to clipboard | `Cmd-Shift-G`
 
