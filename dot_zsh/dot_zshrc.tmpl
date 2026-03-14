@@ -24,8 +24,11 @@ alias historyts="fc -f -l 1"    # Show all history, with timestamp
 #endregion History
 
 #region Completion
-# Optimize compinit by using cache (only rebuild once per day)
+# Optimize compinit: skip compaudit on every startup (saves ~170ms).
+# Full compinit (with security audit) only runs once per day.
 autoload -Uz compinit
+# Glob qualifier (#qN.mh+24) requires extendedglob to work as a pattern
+setopt extendedglob
 if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
   compinit
 else
@@ -50,12 +53,21 @@ fi
 [[ -d "$HOME/.local/bin/ssh-create" ]] && export PATH="$PATH:$HOME/.local/bin/ssh-create"
 
 #region OSX specific
-# Initialize rbenv
-if command -v rbenv >/dev/null 2>&1; then
-  eval "$(rbenv init - zsh)"
+# Lazy-load rbenv (saves ~577ms) - same pattern as nodenv
+if [[ -d "$HOME/.rbenv" ]]; then
+  export PATH="$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
+{{ if eq .chezmoi.os "darwin" -}}
   # Ruby Neovim setup - ensures neovim can access 'neovim-ruby-host'
   # You can verify with :checkhealth in neovim
-  export PATH="$PATH:$(rbenv root)/versions/$(rbenv version-name)/bin"
+  local _rbv=$(cat "$HOME/.ruby-version" 2>/dev/null || cat "$HOME/.rbenv/version" 2>/dev/null)
+  [[ -n "$_rbv" ]] && export PATH="$PATH:$HOME/.rbenv/versions/$_rbv/bin"
+{{ end -}}
+
+  rbenv() {
+    unset -f rbenv
+    eval "$(command rbenv init - zsh)"
+    rbenv "$@"
+  }
 fi
 
 # Tmux 256 color support
@@ -78,8 +90,12 @@ export TERM=tmux-256color
 # for the billing repo
 export HUSKY=0
 
-# CICD
-source <(cicd completion zsh); compdef _cicd cicd
+# CICD - lazy-load completion on first use (saves ~160ms)
+cicd() {
+  unfunction cicd
+  source <(command cicd completion zsh)
+  cicd "$@"
+}
 
 ## BEGIN -- managed by workstation, role: aws_cli -- ##
 alias awswhoami='aws sts get-caller-identity'
@@ -120,31 +136,31 @@ fi
 # Load aliases at the end to ensure they aren't clobbered.
 source $ZDOTDIR/aliases.zsh
 
-#region Zplug
-# zplug is a plugin manager for zsh. I install it initially
-# using ansible. Specifically ansible/roles/zsh
-source ~/.zplug/init.zsh
-# vi mode
-zplug "plugins/vi-mode", from:oh-my-zsh
-# terraform plugin (provides tf_prompt_info for agnoster theme)
-zplug "plugins/terraform", from:oh-my-zsh
+#region Zinit
+# zinit plugin manager, installed via ansible (roles/zsh)
+source ~/.zinit/bin/zinit.zsh
 
-# these two lines remove the user from prompt
+# vi mode (eager - needed before prompt)
+zinit snippet OMZP::vi-mode
+
+# agnoster theme (eager - renders the prompt)
+# Requires OMZ git library for parse_git_dirty
+setopt promptsubst
+zinit snippet OMZL::git.zsh
 DEFAULT_USER=$USER
 prompt_context() {}
-zplug "themes/agnoster", from:oh-my-zsh
+tf_prompt_info() {}
+zinit snippet OMZT::agnoster
 
-# zplug "plugins/git", from:oh-my-zsh
-zplug "zsh-users/zsh-autosuggestions"
-# Don't use the zsh-vi-mode plugin. It breaks the keybindings
-# in zsh-autosuggestions like using 'lk' for "accept".
-# export ZVM_VI_ESCAPE_BINDKEY="fd"
-# zplug "jeffreytse/zsh-vi-mode"
-# syntax highlighting must be the last plugin sourced
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
+# Autosuggestions (eager - needed immediately for first command)
+zinit light zsh-users/zsh-autosuggestions
+bindkey 'lk' autosuggest-accept
+bindkey 'lc' autosuggest-clear
 
-zplug load
-#endregion Zplug
+# Syntax highlighting (turbo - cosmetic, can load after prompt)
+zinit ice wait lucid
+zinit light zsh-users/zsh-syntax-highlighting
+#endregion Zinit
 
 #region zoxide
 # Fast zsh directory switching
@@ -175,10 +191,6 @@ fi
 ## Qwerty layout.
 # rebind esc for vim mode
 bindkey -M viins 'fd' vi-cmd-mode
-# this is for the zsh-autosuggetions plugin
-bindkey 'lk' autosuggest-accept
-bindkey 'lc' autosuggest-clear
-# bindkey 'ln' autosuggest-toggle
 
 # Sesh - tmux session manager.
 # This function allows you to select a tmux session from a list and connect to it

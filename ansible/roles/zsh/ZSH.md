@@ -4,4 +4,4 @@ This role is responsible for installing whatever libraries are necessary for ZSH
 
 ## Plugin Manager
 
-I use [zplug](https://github.com/zplug/zplug).
+I use [zinit](https://github.com/zdharma-continuum/zinit) with turbo mode for deferred plugin loading.
