@@ -5,9 +5,13 @@
 
 (defcfg
   process-unmapped-keys yes
+  macos-dev-names-include (
+    "Apple Internal Keyboard / Trackpad"
+  )
 )
 
 (defsrc
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
   caps a    s    d    f    g    h    j    k    l    ;    '    ret
@@ -19,6 +23,7 @@
 ;; Homerow: @a=Alt @r=Gui @s=Ctrl @t=Shift | @n=Shift @e=Ctrl @i=Gui @o=Alt
 ;; @w = tap:w hold:nav layer
 (deflayer base
+  esc  brdn brup mctl lpad _    _    prev pp   next mute vold volu
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    @w   f    p    b    j    l    u    y    ;    [    ]    \
   esc  @a   @r   @s   @t   g    m    @n   @e   @i   @o   '    ret
@@ -28,6 +33,7 @@
 
 ;; Nav layer - mirrors ZSA layer 2: h/j/k/l = left/down/up/right
 (deflayer nav
+  _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    left down up   rght _    _    _
@@ -37,6 +43,7 @@
 
 ;; Game layer - plain Colemak, no homerow mods, no nav layer
 (deflayer game
+  esc  brdn brup mctl lpad _    _    prev pp   next mute vold volu
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    w    f    p    b    j    l    u    y    ;    [    ]    \
   esc  a    r    s    t    g    m    n    e    i    o    '    ret
