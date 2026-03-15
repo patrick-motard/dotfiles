@@ -1,3 +1,5 @@
 ---
 os:
   editPreset: 'nvim-remote'
+  editTemplate: '[ -z "$NVIM" ] && nvim -- {{filename}} || nvim --server "$NVIM" --remote {{filename}}'
+  editAtLineTemplate: '[ -z "$NVIM" ] && nvim +{{line}} -- {{filename}} || (nvim --server "$NVIM" --remote {{filename}} && nvim --server "$NVIM" --remote-send ":{{line}}<CR>")'
