@@ -22,6 +22,18 @@ menuItemColors = {
     menuBarIdle   = { background = "#282828", text = "#665c54" },
 }
 
+local function setAudioOutput(pattern)
+    local devices = hs.audiodevice.allOutputDevices()
+    for _, dev in ipairs(devices) do
+        if dev:name():lower():find(pattern) then
+            dev:setDefaultOutputDevice()
+            hs.notify.new({ informativeText = "Audio output: " .. dev:name() }):send()
+            return
+        end
+    end
+    hs.notify.new({ informativeText = "Audio device not found: " .. pattern }):send()
+end
+
 menuHammerMenuList = {
     mainMenu = {
         parentMenu = nil,
@@ -31,11 +43,26 @@ menuHammerMenuList = {
                 hs.notify.new({ informativeText = "Reloading Hammerspoon." }):send()
                 hs.reload()
             end } } },
-            { cons.cat.action, "", "k", "Show Keybindings", { { cons.act.func, function()
-                spoon.HSKeybindings:show()
+            { cons.cat.action, "", "t", "Firefox Tab Search", { { cons.act.func, function()
+                showTabChooser()
             end } } },
-            { cons.cat.action, "", "/", "KSheet Toggle", { { cons.act.func, function()
-                spoon.KSheet:toggle()
+            { cons.cat.action, "", "b", "Firefox Bookmark Search", { { cons.act.func, function()
+                showBookmarkChooser()
+            end } } },
+            { cons.cat.submenu, "", "s", "Audio Output", { { cons.act.menu, "audioMenu" } } },
+        },
+    },
+    audioMenu = {
+        parentMenu = "mainMenu",
+        menuItems = {
+            { cons.cat.action, "", "1", "Speakers (MacBook Pro)", { { cons.act.func, function()
+                setAudioOutput("macbook pro")
+            end } } },
+            { cons.cat.action, "", "2", "TX Speakers", { { cons.act.func, function()
+                setAudioOutput("^tx")
+            end } } },
+            { cons.cat.action, "", "3", "Schiit Headphones", { { cons.act.func, function()
+                setAudioOutput("^schi")
             end } } },
         },
     },
