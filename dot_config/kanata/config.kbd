@@ -32,7 +32,7 @@
 (deflayer base
   esc  brdn brup mctl lpad _    _    prev pp   next mute vold volu
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
-  tab  q    @w   f    p    b    j    l    u    y    ;    [    ]    \
+  tab  q    @w   f    p    b    j    l    u    @y   ;    [    ]    \
   tab  @a   @r   @s   @t   g    m    @n   @e   @i   @o   '    ret
   lsft z    x    c    d    v    k    h    @,   @.   /    rsft
   lctl lmet lalt           spc            ralt
@@ -73,4 +73,5 @@
   e (tap-hold 240 240 e rmet)
   i (tap-hold 240 240 i rctl)
   o (tap-hold 240 240 o ralt)
+  y (tap-hold 240 240 y (multi lmet lalt))
 )
