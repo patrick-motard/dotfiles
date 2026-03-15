@@ -2,7 +2,6 @@ hyper = { "cmd", "alt" }
 
 hs.loadSpoon("HSKeybindings")
 hs.loadSpoon("ReloadConfiguration")
-hs.loadSpoon("KSheet")
 hs.loadSpoon("SpoonInstall")
 Install = spoon.SpoonInstall
 
@@ -83,3 +82,5 @@ end
 hs.hotkey.bind(hyper, "g", "Toggle Game Mode", function()
     setGameMode(not gameModeActive)
 end)
+
+require("src/firefox-tabs")
