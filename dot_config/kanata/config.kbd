@@ -10,6 +10,12 @@
   )
 )
 
+(defchords comm-dot 50
+  (,)   ,
+  (.)   .
+  (, .) esc
+)
+
 (defsrc
   esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
@@ -17,6 +23,7 @@
   caps a    s    d    f    g    h    j    k    l    ;    '    ret
   lsft z    x    c    v    b    n    m    ,    .    /    rsft
   lctl lmet lalt           spc            ralt
+  prev pp   next mute vold volu
 )
 
 ;; Colemak-DH matrix layout with homerow mods
@@ -26,9 +33,10 @@
   esc  brdn brup mctl lpad _    _    prev pp   next mute vold volu
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
   tab  q    @w   f    p    b    j    l    u    y    ;    [    ]    \
-  esc  @a   @r   @s   @t   g    m    @n   @e   @i   @o   '    ret
-  lsft z    x    c    d    v    k    h    ,    .    /    rsft
+  tab  @a   @r   @s   @t   g    m    @n   @e   @i   @o   '    ret
+  lsft z    x    c    d    v    k    h    @,   @.   /    rsft
   lctl lmet lalt           spc            ralt
+  prev pp   next mute vold volu
 )
 
 ;; Nav layer - mirrors ZSA layer 2: h/j/k/l = left/down/up/right
@@ -39,6 +47,7 @@
   _    _    _    _    _    _    left down up   rght _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _              _              _
+  _    _    _    _    _    _
 )
 
 ;; Game layer - plain Colemak, no homerow mods, no nav layer
@@ -49,9 +58,12 @@
   esc  a    r    s    t    g    m    n    e    i    o    '    ret
   lsft z    x    c    d    v    k    h    ,    .    /    rsft
   lctl lmet lalt           spc            ralt
+  prev pp   next mute vold volu
 )
 
 (defalias
+  , (chord comm-dot ,)
+  . (chord comm-dot .)
   w (tap-hold 240 240 w (layer-while-held nav))
   a (tap-hold 240 240 a lalt)
   r (tap-hold 240 240 r lctl)
