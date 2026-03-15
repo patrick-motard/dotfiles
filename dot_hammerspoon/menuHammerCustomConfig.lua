@@ -49,6 +49,10 @@ menuHammerMenuList = {
             { cons.cat.action, "", "b", "Firefox Bookmark Search", { { cons.act.func, function()
                 showBookmarkChooser()
             end } } },
+            { cons.cat.action, "", "k", "Restart Kanata", { { cons.act.func, function()
+                hs.execute("launchctl unload ~/Library/LaunchAgents/com.kanata.plist && launchctl load ~/Library/LaunchAgents/com.kanata.plist")
+                hs.notify.new({ informativeText = "Kanata restarted." }):send()
+            end } } },
             { cons.cat.submenu, "", "s", "Audio Output", { { cons.act.menu, "audioMenu" } } },
         },
     },
