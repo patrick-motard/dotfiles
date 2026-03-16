@@ -95,6 +95,7 @@
       - tmuxinator
       - watch
       - yq
+      - zig
       - zoxide
       - zsh
     state: present
