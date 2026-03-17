@@ -1,0 +1,240 @@
+command_alias_start_index: 200
+keybindings:
+  prefix_table: space
+title:
+  style: align=centre,bold
+  prefix: tmux
+  prefix_style: fg=colour214,align=centre,bold
+position:
+  x: C
+  y: C
+
+custom_variables: []
+
+macros:
+  - name: reload-config
+    commands:
+      - source-file ~/.tmux.conf
+      - display-message "~/.tmux.conf reloaded"
+
+items:
+  # --- Panes ---
+  - name: +Panes
+    key: p
+    menu:
+      - name: Split right
+        key: /
+        command: split-window -h -c "#{pane_current_path}"
+      - name: Split down
+        key: "-"
+        command: split-window -v -c "#{pane_current_path}"
+      - name: Select left
+        key: m
+        command: select-pane -L
+      - name: Select down
+        key: n
+        command: select-pane -D
+      - name: Select up
+        key: e
+        command: select-pane -U
+      - name: Select right
+        key: i
+        command: select-pane -R
+      - name: Next pane (cycle)
+        key: o
+        command: select-pane -t :.+
+      - name: Display pane numbers
+        key: q
+        command: display-panes
+      - name: Zoom/unzoom pane
+        key: z
+        command: resize-pane -Z
+      - name: Break to new window
+        key: "!"
+        command: break-pane
+      - name: Kill pane
+        key: x
+        command: confirm-before -p "kill-pane #P? (y/n)" kill-pane
+      - name: Restart pane
+        key: r
+        command: respawn-pane -k
+      - name: Swap pane up
+        key: "{"
+        command: swap-pane -U
+      - name: Swap pane down
+        key: "}"
+        command: swap-pane -D
+      - name: Paste buffer
+        key: p
+        command: paste-buffer
+      - name: +Resize
+        key: R
+        menu:
+          - name: Left 5
+            key: m
+            command: resize-pane -L 5
+            transient: true
+          - name: Down 5
+            key: n
+            command: resize-pane -D 5
+            transient: true
+          - name: Up 5
+            key: e
+            command: resize-pane -U 5
+            transient: true
+          - name: Right 5
+            key: i
+            command: resize-pane -R 5
+            transient: true
+
+  # --- Windows ---
+  - name: +Windows
+    key: w
+    menu:
+      - name: New window
+        key: c
+        command: new-window -c "#{pane_current_path}"
+      - name: Next window
+        key: i
+        command: next-window
+      - name: Prev window
+        key: m
+        command: previous-window
+      - name: Last window
+        key: l
+        command: last-window
+      - name: Find window
+        key: f
+        command: command-prompt { find-window -Z "%%" }
+      - name: Rename window
+        key: ","
+        command: command-prompt -I "#W" { rename-window "%%" }
+      - name: Move window
+        key: .
+        command: command-prompt -T target { move-window -t "%%" }
+      - name: Kill window
+        key: k
+        command: confirm-before -p "kill-window #W? (y/n)" kill-window
+      - name: Window menu
+        key: "<"
+        command: display-menu -T "#[align=centre]#{window_index}:#{window_name}" -x W -y W "#{?#{>:#{session_windows},1},,-}Swap Left" l { swap-window -t :-1 } "#{?#{>:#{session_windows},1},,-}Swap Right" r { swap-window -t :+1 } "#{?pane_marked_set,,-}Swap Marked" s { swap-window } '' Kill X { kill-window } Respawn R { respawn-window -k } "#{?pane_marked,Unmark,Mark}" m { select-pane -m } Rename n { command-prompt -F -I "#W" { rename-window -t "#{window_id}" "%%" } } '' "New After" w { new-window -a } "New At End" W { new-window }
+      - name: +Layout
+        key: L
+        menu:
+          - name: Even horizontal
+            key: h
+            command: select-layout even-horizontal
+          - name: Even vertical
+            key: v
+            command: select-layout even-vertical
+          - name: Main horizontal
+            key: m
+            command: select-layout main-horizontal
+          - name: Main vertical
+            key: "1"
+            command: select-layout main-vertical
+          - name: Tiled
+            key: t
+            command: select-layout tiled
+          - name: Spread evenly
+            key: e
+            command: select-layout -E
+
+  # --- Sessions ---
+  - name: +Sessions
+    key: s
+    menu:
+      - name: Session picker (sesh)
+        key: s
+        command: display-popup -E -w 80% -h 70% "$HOME/code/scripts/tmux/session-visual-switcher /tmp/tmux-session-switch-#{session_id}"
+      - name: Last session
+        key: l
+        command: run-shell "sesh last"
+      - name: Switch client prev
+        key: "("
+        command: switch-client -p
+      - name: Switch client next
+        key: ")"
+        command: switch-client -n
+      - name: Rename session
+        key: "$"
+        command: command-prompt -I "#S" { rename-session "%%" }
+      - name: Detach client
+        key: d
+        command: detach-client
+      - name: Choose client
+        key: D
+        command: choose-client -Z
+      - name: Worktree selector
+        key: w
+        command: display-popup -E -w 80% -h 70% "$HOME/code/scripts/tmux/worktree-branch-selector"
+      - name: Layout picker
+        key: p
+        command: display-popup -E -w 80% -h 80% "$HOME/code/scripts/tmux/layout-picker"
+      - name: +Resurrect
+        key: r
+        menu:
+          - name: Save session
+            key: s
+            command: run-shell ~/.tmux/plugins/tmux-resurrect/scripts/save.sh
+          - name: Restore session
+            key: r
+            command: run-shell ~/.tmux/plugins/tmux-resurrect/scripts/restore.sh
+
+  # --- Copy/Buffers ---
+  - name: +Copy
+    key: c
+    menu:
+      - name: Enter copy mode
+        key: c
+        command: copy-mode
+      - name: Copy mode (scroll up)
+        key: u
+        command: copy-mode -u
+      - name: Paste buffer
+        key: p
+        command: paste-buffer -p
+      - name: Choose buffer
+        key: "="
+        command: choose-buffer -Z
+      - name: List buffers
+        key: "#"
+        command: list-buffers
+
+  # --- Config ---
+  - name: +Config
+    key: C
+    menu:
+      - name: Reload config
+        key: r
+        macro: reload-config
+      - name: Customize mode
+        key: C
+        command: customize-mode -Z
+      - name: Show messages
+        key: "~"
+        command: show-messages
+      - name: Command prompt
+        key: ":"
+        command: command-prompt
+      - name: +Plugins
+        key: p
+        menu:
+          - name: Install plugins
+            key: i
+            command: run-shell ~/.tmux/plugins/tpm/bindings/install_plugins
+          - name: Update plugins
+            key: u
+            command: run-shell "~/.tmux/plugins/tpm/bindings/update_plugins all"
+          - name: Clean plugins
+            key: c
+            command: run-shell ~/.tmux/plugins/tpm/bindings/clean_plugins
+
+  # --- Utilities ---
+  - name: PR popup
+    key: g
+    command: run-shell "$HOME/code/scripts/github/pr-popup-toggle"
+
+  - name: All keybindings
+    key: "?"
+    command: display-popup -E -w 90% -h 90% "$HOME/code/scripts/tmux/tmux-keys-fzf"
