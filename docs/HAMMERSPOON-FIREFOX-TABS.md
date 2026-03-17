@@ -1,6 +1,6 @@
-# Firefox Tab Switcher (Hammerspoon)
+# Firefox Tab & Bookmark Switcher (Hammerspoon)
 
-A fuzzy tab switcher that lets you search and jump to any open Firefox tab from Hammerspoon using `hyper+t`.
+Fuzzy search open Firefox tabs and bookmarks from Hammerspoon. Jump to any tab or open any bookmark - if a bookmark is already open it switches to that tab instead of opening a new one.
 
 ## How It Works
 
@@ -53,9 +53,16 @@ Then reload Hammerspoon (`hyper+m` → `r`).
 
 ## Usage
 
-`hyper+t` - open the fuzzy tab switcher
+| Hotkey | Action |
+| --- | --- |
+| `hyper+t` | Fuzzy search open tabs - select to jump to it |
+| `hyper+b` | Fuzzy search bookmarks - select to open or switch to it |
 
-Type to filter by title or URL. Press enter to jump to the selected tab.
+Both search by title and URL. Both are also accessible via `hyper+m` → `t` / `b`.
+
+### Bookmark search behavior
+
+If the selected bookmark is already open in any tab, it focuses that tab. If not, it opens it in a new tab. Already-open bookmarks show `open - <url>` in the subtext.
 
 ## Persistence Caveat
 

@@ -44,4 +44,4 @@ These dotfiles provide a reproducible, cross-platform development environment th
 - [Tmux Session Management](docs/TMUX.md) - How tmux, tmuxinator, sesh, and fzf work together to provide powerful session management and layouts
 - [Performance Testing](docs/PERFORMANCE.md) - Benchmarking shell startup time
 - [Kanata](docs/KANATA.md) - Keyboard remapping with Colemak-DH matrix layout and homerow mods
-- [Firefox Tab Switcher](docs/HAMMERSPOON-FIREFOX-TABS.md) - Fuzzy search open Firefox tabs from Hammerspoon
+- [Firefox Tab & Bookmark Switcher](docs/HAMMERSPOON-FIREFOX-TABS.md) - Fuzzy search open tabs and bookmarks from Hammerspoon
