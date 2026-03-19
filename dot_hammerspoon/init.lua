@@ -60,10 +60,9 @@ end
 local gameModeActive = false
 local gameModeMenuItem = nil
 
-local function setGameMode(active)
+local function updateGameModeUI(active)
     gameModeActive = active
     if active then
-        hs.execute('echo \'{"ChangeLayer":{"new":"game"}}\' | nc -w1 127.0.0.1 7070 2>/dev/null')
         if not gameModeMenuItem then
             gameModeMenuItem = hs.menubar.new()
         end
@@ -71,13 +70,30 @@ local function setGameMode(active)
             gameModeMenuItem:setTitle("GAME")
         end
     else
-        hs.execute('echo \'{"ChangeLayer":{"new":"base"}}\' | nc -w1 127.0.0.1 7070 2>/dev/null')
         if gameModeMenuItem then
             gameModeMenuItem:delete()
             gameModeMenuItem = nil
         end
     end
 end
+
+local function setGameMode(active)
+    updateGameModeUI(active)
+    local layer = active and "game" or "base"
+    hs.execute('echo \'{"ChangeLayer":{"new":"' .. layer .. '"}}\' | nc -w1 127.0.0.1 7070 2>/dev/null')
+end
+
+-- Sync game mode state from kanata on startup
+-- Kanata sends a LayerChange event on new TCP connections with the current layer
+local function syncGameModeFromKanata()
+    local output = hs.execute('echo "" | nc -w1 127.0.0.1 7070 2>/dev/null')
+    if output and output:find('"game"') then
+        updateGameModeUI(true)
+    else
+        updateGameModeUI(false)
+    end
+end
+syncGameModeFromKanata()
 
 hs.hotkey.bind(hyper, "g", "Toggle Game Mode", function()
     setGameMode(not gameModeActive)
