@@ -22,3 +22,18 @@ mode = "execute"
 description = "Copy output to clipboard"
 command = "$HOME/code/scripts/shell/cmd-history-copy output {}"
 mode = "execute"
+
+[actions.copy_cmd_and_output]
+description = "Copy command + output to clipboard"
+command = "$HOME/code/scripts/shell/cmd-history-copy cmd+output {}"
+mode = "execute"
+
+[actions.copy_dir_and_cmd]
+description = "Copy directory + command to clipboard"
+command = "$HOME/code/scripts/shell/cmd-history-copy dir+cmd {}"
+mode = "execute"
+
+[actions.copy_all]
+description = "Copy all fields to clipboard"
+command = "$HOME/code/scripts/shell/cmd-history-copy all {}"
+mode = "execute"
