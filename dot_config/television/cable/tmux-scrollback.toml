@@ -1,0 +1,11 @@
+[metadata]
+name = "tmux-scrollback"
+description = "Browse current tmux pane scrollback (for subshell sessions)"
+
+[source]
+# Capture last 5000 lines and segment by prompt character (❯ from agnoster)
+command = "tmux capture-pane -pJ -S -5000 | awk '/❯/{if(block) print block; block=$0; next} {block=block\"\\n\"$0} END{if(block) print block}'"
+no_sort = true
+
+[preview]
+command = "printf '%s' '{}' | fold -w 80"

@@ -143,6 +143,9 @@ fi
 # Load aliases at the end to ensure they aren't clobbered.
 source $ZDOTDIR/aliases.zsh
 
+# Command history logger (structured JSONL log with optional output capture)
+source $ZDOTDIR/cmd-history-logger.zsh
+
 #region Zinit
 # zinit plugin manager, installed via ansible (roles/zsh)
 source ~/.zinit/bin/zinit.zsh
