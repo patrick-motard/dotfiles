@@ -64,6 +64,7 @@
       - age
       - antigen # zsh plugin manager
       - automake
+      - bat
       - bdui
       - chezmoi # dotfile manager
       - cmake
