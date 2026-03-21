@@ -152,8 +152,7 @@ Interactive fzf-driven popups available from anywhere in tmux (no prefix needed)
 
 | Keybinding | Description |
 |------------|-------------|
-| `Alt+h` | Shell command history browser (tv) - search by dir+command |
-| `Alt+y` | Shell command history browser (fzf) - search across command + output text |
+| `Alt+y` | Shell command history browser - search across command, directory, and output |
 | `Alt+H` | Tmux scrollback search - raw pane content, useful inside subshells |
 | `Alt+c` | Claude pane message picker - browse and copy messages from the focused Claude Code pane |
 
@@ -170,16 +169,14 @@ Interactive fzf-driven popups available from anywhere in tmux (no prefix needed)
 
 ### Shell Command History Detail
 
-The `Alt+h` / `Alt+y` pickers require the command history logger to be running (sourced automatically from `.zshrc`). Output capture is opt-in to avoid prompt latency:
+Requires the command history logger sourced automatically from `.zshrc`. Output capture is opt-in to avoid prompt latency:
 
 ```zsh
 cmd-capture-on   # enable output capture for this session
 cmd-capture-off  # disable
 ```
 
-History is logged to `~/.local/share/cmd-history/history.jsonl`.
-
-The fzf picker (`Alt+y`) searches across command text, directory, and captured output. Stage 2 lets you pick what to copy: command, output, command+output, directory+command, or all fields.
+History is logged to `~/.local/share/cmd-history/history.jsonl`. Searches across command text, directory, and captured output. Stage 2 lets you pick what to copy: command, output, command+output, directory+command, or all fields.
 
 ### Claude Pane Picker Detail
 
