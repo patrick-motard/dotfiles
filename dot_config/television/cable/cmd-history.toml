@@ -1,0 +1,24 @@
+[metadata]
+name = "cmd-history"
+description = "Browse shell command history with cwd and output"
+
+[source]
+command = "$HOME/code/scripts/shell/cmd-history-source --mode dir-cmd"
+no_sort = true
+
+[preview]
+command = "$HOME/code/scripts/shell/cmd-history-preview '{}'"
+
+[ui]
+preview_panel_position = "right"
+preview_panel_size = 55
+
+[actions.copy_command]
+description = "Copy command to clipboard"
+command = "$HOME/code/scripts/shell/cmd-history-extract --field cmd '{}' | pbcopy"
+mode = "execute"
+
+[actions.copy_output]
+description = "Copy output to clipboard"
+command = "$HOME/code/scripts/shell/cmd-history-extract --field output '{}' | pbcopy"
+mode = "execute"
