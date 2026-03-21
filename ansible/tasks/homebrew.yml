@@ -73,6 +73,7 @@
       - entr
       - eqmac
       - eza # colorized terminal ls
+      - fd
       - ffmpeg
       - fzf
       - gemini-cli
