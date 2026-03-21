@@ -134,6 +134,59 @@ sesh connect <session-name>
 sesh last
 ```
 
+## fzf Pickers
+
+Interactive fzf-driven popups available from anywhere in tmux (no prefix needed).
+
+### Session & Navigation
+
+| Keybinding | Description |
+|------------|-------------|
+| `Alt+s` | Session picker (sesh) - browse tmux sessions, zoxide dirs, configs |
+| `Alt+t` | Switch to last session |
+| `Alt+Tab` / `Alt+Shift+Tab` | Cycle sessions forward/backward |
+| `Alt+w` | Worktree branch selector - pick repo + branch, creates worktree session |
+| `Alt+g` | GitHub PR popup (toggle) |
+
+### History & Clipboard
+
+| Keybinding | Description |
+|------------|-------------|
+| `Alt+h` | Shell command history browser (tv) - search by dir+command |
+| `Alt+y` | Shell command history browser (fzf) - search across command + output text |
+| `Alt+H` | Tmux scrollback search - raw pane content, useful inside subshells |
+| `Alt+c` | Claude pane message picker - browse and copy messages from the focused Claude Code pane |
+
+### Copy Mode
+
+| Keybinding | Description |
+|------------|-------------|
+| `Alt+v` | Enter copy mode |
+| `Alt+u` | Enter copy mode and scroll up half page |
+| `m/n/e/i` | Navigate in copy mode (left/down/up/right, homerow) |
+| `Alt+u` / `Alt+d` | Half page up/down while in copy mode |
+| `v` | Begin selection |
+| `y` | Copy selection to clipboard (pbcopy) |
+
+### Shell Command History Detail
+
+The `Alt+h` / `Alt+y` pickers require the command history logger to be running (sourced automatically from `.zshrc`). Output capture is opt-in to avoid prompt latency:
+
+```zsh
+cmd-capture-on   # enable output capture for this session
+cmd-capture-off  # disable
+```
+
+History is logged to `~/.local/share/cmd-history/history.jsonl`.
+
+The fzf picker (`Alt+y`) searches across command text, directory, and captured output. Stage 2 lets you pick what to copy: command, output, command+output, directory+command, or all fields.
+
+### Claude Pane Picker Detail
+
+`Alt+c` captures the scrollback of the currently focused pane, parses it into user/assistant messages, and presents them in fzf with a bat-highlighted preview. Press enter to copy the selected message to the clipboard.
+
+Works best when focused on a Claude Code pane. The UI chrome (input box, status line) is automatically stripped from the last message.
+
 ## Tips
 
 1. **Use tmuxinator for fresh starts** - When you need specific commands running in specific panes
