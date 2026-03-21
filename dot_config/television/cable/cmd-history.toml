@@ -15,10 +15,10 @@ preview_panel_size = 55
 
 [actions.copy_command]
 description = "Copy command to clipboard"
-command = "$HOME/code/scripts/shell/cmd-history-extract --field cmd '{}' | pbcopy"
+command = "$HOME/code/scripts/shell/cmd-history-copy cmd {}"
 mode = "execute"
 
 [actions.copy_output]
 description = "Copy output to clipboard"
-command = "$HOME/code/scripts/shell/cmd-history-extract --field output '{}' | pbcopy"
+command = "$HOME/code/scripts/shell/cmd-history-copy output {}"
 mode = "execute"
