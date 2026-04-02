@@ -19,6 +19,7 @@ return {
         '~/code/clients/*/*',
         '~/code/zendesk/*',
         '~/code/claude/*',
+        '~/code/worktrees/*/*',
         '~/.local/share/chezmoi',
       },
       -- Exclude config directories from project discovery
@@ -26,6 +27,8 @@ return {
         '~/code/claude',
         '~/code/clients',
         '~/code/clients/*',
+        '~/code/worktrees',
+        '~/code/worktrees/*',
         '~/.config',
       },
       -- Automatically detect project root
