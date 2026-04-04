@@ -12,6 +12,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+vim.keymap.set('t', '<C-Space>', '<C-\\><C-n><Space>', { desc = 'Which-key menu from terminal' })
 
 -- q in normal mode starts a macro. I often misfire this when typing :q. It is difficult to
 -- exit macro mode so I am rebinding it to gq.
