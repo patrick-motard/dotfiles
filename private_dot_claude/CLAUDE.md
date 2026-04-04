@@ -22,6 +22,8 @@ Beads issues are tracked in these repos only:
 
 Do not initialize or look for `.beads/` in other repositories.
 
+When filing an issue from a repo that doesn't have its own `.beads/`, create it in `~/code/wiki` with `--label repo/<repo-name>` (e.g., `--label repo/qyk` when working in qyk). This tags the issue back to its source project.
+
 ## Script Creation Conventions
 
 When creating scripts in the scripts repo:
