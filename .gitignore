@@ -24,5 +24,6 @@ dot_config/gh-dash/config.yml.tmpl
 dot_local/bin/zshenv.sh
 private_dot_ssh/config
 private_dot_claude/
+docs/CLAUDE.md
 
 thoughts/

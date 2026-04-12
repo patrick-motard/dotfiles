@@ -257,7 +257,7 @@ The `dot_` prefix is used every time a dot is needed in the path, whether for di
 ## Important Paths
 
 - Chezmoi source: `$HOME/.local/share/chezmoi`
-- Global Claude instructions (tracked in dotfiles): `~/.local/share/chezmoi/private_dot_claude/CLAUDE.md` - this is the primary place for user preferences that apply across all projects
+- Global Claude instructions (tracked in private dotfiles): `~/code/dotfiles-private/dot_claude/CLAUDE.md` - this is the primary place for user preferences that apply across all projects
 - Config files: `~/.config/`
 - Local binaries: `~/.local/bin`
 - ZSH configs: `$ZDOTDIR` (usually `~/.zsh/`)
