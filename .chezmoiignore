@@ -14,3 +14,8 @@ dot_local/bin/zshenv.sh
 private_dot_ssh/config
 private_dot_claude/
 docs/CLAUDE.md
+
+# Machine-local theme selection (not tracked in git)
+dot_config/alacritty/current-theme.toml
+dot_config/tmux/themes/current-theme.conf
+dot_local/share/theme-picker/
