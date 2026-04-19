@@ -17,6 +17,16 @@ echo "Deployed tmux-which-key config to $plugin_dir/config.yaml"
 
 # Rebuild the init.tmux from the new config
 if command -v python3 &>/dev/null && [[ -f "$plugin_dir/plugin/build.py" ]]; then
+  # Silence the display-message status lines before building
+  python3 -c "
+import re, sys
+path = '$plugin_dir/plugin/build.py'
+with open(path) as f:
+    content = f.read()
+fixed = re.sub(r\"(display -p ['\\\"])\", r'# \1', content)
+with open(path, 'w') as f:
+    f.write(fixed)
+"
   python3 "$plugin_dir/plugin/build.py" "$plugin_dir/config.yaml" "$plugin_dir/plugin/init.tmux" \
     && echo "Rebuilt tmux-which-key init.tmux"
 fi
