@@ -40,4 +40,5 @@ return {
   { 'sainnhe/gruvbox-material', lazy = true },
   { 'sainnhe/everforest', lazy = true },
   { 'ptdewey/darkearth-nvim', lazy = true, priority = 1000 },
+  { 'folke/tokyonight.nvim', lazy = true, priority = 1000 },
 }
