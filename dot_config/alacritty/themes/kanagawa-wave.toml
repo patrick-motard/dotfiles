@@ -1,0 +1,26 @@
+# -*- mode: toml; -*-
+# vim: set ft=toml:
+# Kanagawa Wave
+[colors.primary]
+background = "#1F1F28"
+foreground = "#DCD7BA"
+
+[colors.normal]
+black   = "#16161D"
+red     = "#E46876"
+green   = "#98BB6C"
+yellow  = "#E6C384"
+blue    = "#7E9CD8"
+magenta = "#957FB8"
+cyan    = "#7AA89F"
+white   = "#C8C093"
+
+[colors.bright]
+black   = "#363646"
+red     = "#E46876"
+green   = "#98BB6C"
+yellow  = "#E6C384"
+blue    = "#7E9CD8"
+magenta = "#957FB8"
+cyan    = "#7AA89F"
+white   = "#DCD7BA"

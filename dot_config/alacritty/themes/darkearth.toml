@@ -1,0 +1,26 @@
+# -*- mode: toml; -*-
+# vim: set ft=toml:
+# Dark Earth
+[colors.primary]
+background = "#24211E"
+foreground = "#D7C484"
+
+[colors.normal]
+black   = "#1a1714"
+red     = "#B3664D"
+green   = "#5F865F"
+yellow  = "#B3854D"
+blue    = "#77824A"
+magenta = "#BB7844"
+cyan    = "#6E8C6E"
+white   = "#D7C484"
+
+[colors.bright]
+black   = "#3a3530"
+red     = "#c47060"
+green   = "#6f9a6f"
+yellow  = "#c4965d"
+blue    = "#889054"
+magenta = "#cc8850"
+cyan    = "#7ea07e"
+white   = "#e0d090"
