@@ -186,6 +186,11 @@ if command -v fzf >/dev/null 2>&1; then
 else
     echo "fzf is not installed. Please install it to use its features."
 fi
+# Rebind fzf cd-widget from Alt-C to Alt-F
+bindkey -M vicmd '\ef' fzf-cd-widget
+bindkey -M viins '\ef' fzf-cd-widget
+bindkey -M vicmd -r '\ec'
+bindkey -M viins -r '\ec'
 #endregion fzf
 
 #region Custom Key Bindings
