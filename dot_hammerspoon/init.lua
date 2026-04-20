@@ -100,3 +100,4 @@ hs.hotkey.bind(hyper, "g", "Toggle Game Mode", function()
 end)
 
 require("src/firefox-tabs")
+require("src/clipboard")
