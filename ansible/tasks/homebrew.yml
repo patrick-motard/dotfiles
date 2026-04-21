@@ -26,6 +26,8 @@
 
 
 
+
+
          not brew_hash_cache.stat.exists or
          current_brew_hash.stdout != cached_brew_hash }}
 - name: Check when Homebrew was last updated
@@ -37,6 +39,8 @@
   set_fact:
     should_update_brew: >-
       {{ force_update | default(false) | bool or
+
+
 
 
 
