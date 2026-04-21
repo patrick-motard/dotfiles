@@ -66,6 +66,7 @@
     name:
       - assimelha/tap
       - d12frosted/emacs-plus
+      - yhkl-dev/navicli
       - zjrosen/perles
     state: present
   when: should_check_brew_packages | bool
