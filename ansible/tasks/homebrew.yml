@@ -108,6 +108,7 @@
       - television
       - tmux
       - tmuxinator
+      - uv
       - watch
       - yq
       - zig
