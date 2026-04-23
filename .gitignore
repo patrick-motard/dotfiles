@@ -25,5 +25,7 @@ dot_local/bin/zshenv.sh
 private_dot_ssh/config
 private_dot_claude/
 docs/CLAUDE.md
+dot_pi/agent/settings.json.tmpl
+dot_pi/agent/models.json.tmpl
 
 thoughts/

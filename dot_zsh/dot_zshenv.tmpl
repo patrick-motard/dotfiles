@@ -37,6 +37,9 @@ export NODE_USE_SYSTEM_CA=1
 ## END -- managed by dot-ansible:zendesk -- ##
 {{ end -}}
 
+# Skip pi version check (Homebrew formula lags behind npm registry)
+export PI_SKIP_VERSION_CHECK=1
+
 # Needed to ensure Lazygit looks in this dir for it's config.
 export XDG_CONFIG_HOME="$HOME/.config"
 
