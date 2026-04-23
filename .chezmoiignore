@@ -5,17 +5,16 @@ README.md
 docs/
 .claude/ticket-state.json*
 
-# Managed by private dotfiles
-dot_claude/settings.json
-dot_claude/CLAUDE.md
-dot_claude/executable_statusline.sh
-dot_config/gh-dash/config.yml.tmpl
-dot_local/bin/zshenv.sh
-private_dot_ssh/config
-private_dot_claude/
-docs/CLAUDE.md
-dot_pi/agent/settings.json.tmpl
-dot_pi/agent/models.json.tmpl
+# Managed by private dotfiles (use target paths, not source paths)
+.claude/settings.json
+.claude/CLAUDE.md
+.claude/statusline.sh
+.config/gh-dash/config.yml
+.local/bin/zshenv.sh
+.ssh/config
+.claude/
+.pi/agent/settings.json
+.pi/agent/models.json
 
 # Machine-local theme selection (not tracked in git)
 dot_config/alacritty/current-theme.toml

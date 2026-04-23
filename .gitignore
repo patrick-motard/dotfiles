@@ -20,6 +20,7 @@ ansible/.git-repos-hash
 dot_claude/settings.json
 dot_claude/CLAUDE.md
 dot_claude/executable_statusline.sh
+dot_config/gh-dash/config.yml
 dot_config/gh-dash/config.yml.tmpl
 dot_local/bin/zshenv.sh
 private_dot_ssh/config
