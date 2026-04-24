@@ -36,66 +36,6 @@
         dest: "{{dirs.bin}}/tools"
         state: link
 
-- name: Clone Claude plugin repos
-  tags: [repos, claude, claude-plugins]
-  block:
-    - name: ensure claude plugins directory exists
-      file:
-        path: "{{dirs.code}}/claude"
-        state: directory
-    - name: clone claude-plugins-public
-      command: gh repo clone patrick-motard/claude-plugins-public "{{dirs.code}}/claude/plugins-public"
-      args:
-        creates: "{{dirs.code}}/claude/plugins-public"
-    - name: clone claude-plugins-private
-      command: gh repo clone patrick-motard/claude-plugins-private "{{dirs.code}}/claude/plugins-private"
-      args:
-        creates: "{{dirs.code}}/claude/plugins-private"
-    - name: install pre-commit hook in claude-plugins-private
-      copy:
-        dest: "{{dirs.code}}/claude/plugins-private/.git/hooks/pre-commit"
-        mode: "0755"
-        content: |
-          #!/usr/bin/env zsh
-
-          # Auto-bump patch version in marketplace.json when plugin files are staged
-
-          MARKETPLACE=".claude-plugin/marketplace.json"
-
-          # Check if any plugin files are staged (excluding marketplace.json itself)
-          staged=$(git diff --cached --name-only | grep -v "^${MARKETPLACE}$")
-
-          if [[ -z "$staged" ]]; then
-            exit 0
-          fi
-
-          # Read current version
-          current=$(python3 -c "import json; d=json.load(open('${MARKETPLACE}')); print(d['plugins'][0]['version'])")
-
-          # Bump patch version
-          new=$(echo "$current" | awk -F. '{print $1"."$2"."$3+1}')
-
-          # Update marketplace.json in place
-          python3 - << PYEOF
-          import json
-          with open('${MARKETPLACE}') as f:
-              d = json.load(f)
-          d['plugins'][0]['version'] = '${new}'
-          with open('${MARKETPLACE}', 'w') as f:
-              json.dump(d, f, indent=2)
-              f.write('\n')
-          PYEOF
-
-          git add "${MARKETPLACE}"
-          echo "Bumped plugin version: ${current} -> ${new}"
-
-- name: Clone Claude zendesk plugin (work machine only)
-  tags: [repos, claude, claude-plugins]
-  when: is_work_machine | default(false)
-  command: gh repo clone patrick-motard/claude-plugins-zendesk "{{dirs.code}}/claude/plugins-zendesk"
-  args:
-    creates: "{{dirs.code}}/claude/plugins-zendesk"
-
 - name: Manage scripts-private repo
   tags: [repos, scripts-private]
   block:
@@ -185,10 +125,17 @@
             stash_pop_result.rc != 0 and
             ('CONFLICT' in stash_pop_result.stdout or 'CONFLICT' in stash_pop_result.stderr)
 
-- name: Install Claude plugins via marketplaces
-  tags: [repos, claude, claude-plugins]
-  command: "{{dirs.code}}/scripts-private/claude-plugins-sync"
-  environment:
-    IS_WORK_MACHINE: "{{ '1' if is_work_machine | default(false) else '0' }}"
-  register: plugins_sync_result
-  changed_when: "'No changes' not in plugins_sync_result.stdout and 'Already up to date' not in plugins_sync_result.stdout"
+- name: Remove old Claude plugin repo directories
+  tags: [cleanup]
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "{{dirs.code}}/claude/plugins-public"
+    - "{{dirs.code}}/claude/plugins-private"
+    - "{{dirs.code}}/claude/plugins-zendesk"
+    - "{{ ansible_env.HOME }}/.claude/plugins/marketplaces/pm-public"
+    - "{{ ansible_env.HOME }}/.claude/plugins/marketplaces/pm-private"
+    - "{{ ansible_env.HOME }}/.claude/plugins/marketplaces/pm-zendesk"
+
+
