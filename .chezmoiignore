@@ -22,3 +22,4 @@ docs/
 dot_config/alacritty/current-theme.toml
 dot_config/tmux/themes/current-theme.conf
 dot_local/share/theme-picker/
+.config/refine-clipboard/dictionary.txt
