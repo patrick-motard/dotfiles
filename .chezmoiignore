@@ -16,6 +16,8 @@ docs/
 .pi/agent/settings.json
 .pi/agent/models.json
 
+.zshenv
+
 # Machine-local theme selection (not tracked in git)
 dot_config/alacritty/current-theme.toml
 dot_config/tmux/themes/current-theme.conf

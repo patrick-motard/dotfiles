@@ -30,3 +30,4 @@ dot_pi/agent/settings.json.tmpl
 dot_pi/agent/models.json.tmpl
 
 thoughts/
+dot_zshenv
