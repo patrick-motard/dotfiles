@@ -32,3 +32,15 @@ dot_pi/agent/models.json.tmpl
 thoughts/
 dot_zshenv
 dot_config/refine-clipboard/dictionary.txt
+
+# Moved to private dotfiles
+dot_gitconfig.tmpl
+dot_hammerspoon/src/connect_to_vpn.lua
+dot_config/tmuxinator/private_homelab-laptop.yml
+dot_config/tmuxinator/dev-wide-zendesk.yml
+dot_config/tmuxinator/growth-engine.yml
+
+# Deleted (junk/sensitive)
+dot_hammerspoon/src/gcal/events.json
+dot_hammerspoon/bookmarks/bookmarks.json
+.claude/settings.local.json

@@ -23,3 +23,10 @@ dot_config/alacritty/current-theme.toml
 dot_config/tmux/themes/current-theme.conf
 dot_local/share/theme-picker/
 .config/refine-clipboard/dictionary.txt
+
+# Managed by private dotfiles
+.gitconfig
+.hammerspoon/src/connect_to_vpn.lua
+.config/tmuxinator/homelab-laptop.yml
+.config/tmuxinator/dev-wide-zendesk.yml
+.config/tmuxinator/growth-engine.yml
