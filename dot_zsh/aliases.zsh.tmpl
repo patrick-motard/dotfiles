@@ -155,12 +155,10 @@ alias bi="bundle install"
 
 # Homebrew with Ansible sync
 # brew-ansible-sync functions (brewi, brewci, brewtap, etc)
-# Sourced from scripts repo
-if [[ -f "$HOME/code/scripts/brew-ansible-sync" ]]; then
-  source "$HOME/code/scripts/brew-ansible-sync"
+if [[ -f "$HOME/code/dotfiles-private/bin/brew-ansible-sync" ]]; then
+  source "$HOME/code/dotfiles-private/bin/brew-ansible-sync"
 else
-  echo "Warning: brew-ansible-sync script not found at $HOME/code/scripts/brew-ansible-sync"
-  echo "Possible cause: scripts repo not cloned yet. Run 'dotansible' to clone it."
+  echo "Warning: brew-ansible-sync not found. Is dotfiles-private cloned at ~/code/dotfiles-private?"
 fi
 
 #region Program Related
