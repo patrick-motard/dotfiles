@@ -178,6 +178,15 @@ zinit light zsh-users/zsh-syntax-highlighting
 if command -v zoxide >/dev/null 2>&1; then
   eval "$(zoxide init zsh)"
 fi
+# Interactive zoxide picker (Alt-Z) — zinit steals `zi`, so we bind directly
+function __zoxide_interactive_widget() {
+  local result
+  result="$(\command zoxide query --interactive -- "$@")" && cd "${result}"
+  zle reset-prompt
+}
+zle -N __zoxide_interactive_widget
+bindkey -M vicmd '\ez' __zoxide_interactive_widget
+bindkey -M viins '\ez' __zoxide_interactive_widget
 #endregion zoxide
 
 #region fzf
