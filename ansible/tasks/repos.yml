@@ -29,6 +29,16 @@
     - "{{dirs.code}}/scripts-private"
     - "{{dirs.bin}}/tools"
 
+- name: Remove old scripts repos and symlink
+  tags: [cleanup, scripts-cleanup]
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "{{dirs.code}}/scripts"
+    - "{{dirs.code}}/scripts-private"
+    - "{{dirs.bin}}/tools"
+
 - name: Remove old Claude plugin repo directories
   tags: [cleanup]
   file:
