@@ -19,7 +19,6 @@
   args:
     creates: "{{dirs.code}}/dotfiles-private"
 
-
 - name: Remove old scripts repos and symlink
   tags: [cleanup, scripts-cleanup]
   file:
@@ -42,5 +41,3 @@
     - "{{ ansible_env.HOME }}/.claude/plugins/marketplaces/pm-public"
     - "{{ ansible_env.HOME }}/.claude/plugins/marketplaces/pm-private"
     - "{{ ansible_env.HOME }}/.claude/plugins/marketplaces/pm-zendesk"
-
-
