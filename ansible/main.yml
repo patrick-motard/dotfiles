@@ -47,3 +47,5 @@
       tags: [kanata]
     - import_tasks: tasks/repos.yml
       tags: [repos]
+    - import_tasks: tasks/dotfiles-private-hooks.yml
+      tags: [dotfiles-private, hooks, go-binaries]

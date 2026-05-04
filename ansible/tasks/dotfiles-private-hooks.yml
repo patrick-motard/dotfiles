@@ -1,0 +1,27 @@
+---
+# Configure dotfiles-private repo to use committed git hooks,
+# and build all Go project binaries on initial setup.
+
+- name: Configure dotfiles-private to use .githooks directory
+  command: git -C "{{ ansible_env.HOME }}/code/dotfiles-private" config core.hooksPath .githooks
+  args:
+    creates: "{{ ansible_env.HOME }}/code/dotfiles-private/.git/config"
+  changed_when: false
+
+- name: Find Go projects with Makefiles in dotfiles-private
+  find:
+    paths: "{{ ansible_env.HOME }}/code/dotfiles-private"
+    patterns: "Makefile"
+    recurse: yes
+  register: dotfiles_makefiles
+
+- name: Build and install Go binaries from dotfiles-private projects
+  command: make install --no-print-directory
+  args:
+    chdir: "{{ item.path | dirname }}"
+  loop: "{{ dotfiles_makefiles.files }}"
+  when: >
+    (item.path | dirname) | regex_search('projects/[^/]+$') or
+    (item.path | dirname) | regex_search('skills/.*/scripts$')
+  failed_when: false
+  changed_when: false
