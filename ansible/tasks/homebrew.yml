@@ -84,6 +84,7 @@
       - antigen # zsh plugin manager
       - automake
       - bat
+      - btop
       - chezmoi # dotfile manager
       - cmake
       - elixir
