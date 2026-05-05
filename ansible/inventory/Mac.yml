@@ -17,3 +17,4 @@ all:
     hammerspoon_enabled: true
     aerospace_enabled: false
     kanata_enabled: true
+    transcription_enabled: true

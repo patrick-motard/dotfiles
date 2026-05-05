@@ -49,3 +49,6 @@
       tags: [repos]
     - import_tasks: tasks/dotfiles-private-hooks.yml
       tags: [dotfiles-private, hooks, go-binaries]
+    - import_tasks: tasks/transcription.yml
+      when: transcription_enabled | default(false)
+      tags: [transcription]

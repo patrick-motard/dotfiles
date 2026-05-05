@@ -1,0 +1,19 @@
+# -*- mode: yaml; -*-
+# vim: set ft=yaml:
+---
+# Requires: uv (installed via homebrew task)
+- name: Check if whisperx is installed
+  command: uv tool list
+  register: uv_tool_list
+  changed_when: false
+  failed_when: false
+
+- name: Install whisperx via uv
+  command: uv tool install whisperx
+  when: "'whisperx' not in uv_tool_list.stdout"
+
+- name: Create transcribe-recordings data directory
+  file:
+    path: "{{ home }}/.local/share/transcribe-recordings"
+    state: directory
+    mode: '0755'
