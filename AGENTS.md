@@ -39,3 +39,17 @@ bd sync               # Sync with git
 - If push fails, resolve and retry until it succeeds
 
 See [CLAUDE.md](./CLAUDE.md) for full project guidelines and instructions.
+
+## Jira Wiki Markup Gotchas
+
+When writing Jira comments or descriptions via MCP tools (`atlassian_mcp_jira_add_comment`, `atlassian_mcp_jira_edit_comment`):
+
+- **NEVER use `#` for ordered lists.** Jira renders `#` at line start as H1 headings, not numbered lists. Use `* *Step 1*: ...` (bold labels inside bullet points) instead.
+- **Bold**: Use `*text*` (single asterisk). `**text**` does NOT work — it renders as literal asterisks.
+- **Headings**: Use `h1.`, `h2.`, `h3.` etc. (with a period), NOT `#`, `##`, `###`.
+- **Links**: Use `[display text|https://url]`, NOT `[display text](url)`.
+- **Tables**: Use `||header||header||` for header rows and `|cell|cell|` for data rows.
+- **Horizontal rules**: Use `----` on its own line.
+- **Code blocks**: Use `{code}...{code}` or backticks for inline code.
+
+This is Jira wiki markup, NOT Markdown. The MCP tool does NOT auto-convert.
