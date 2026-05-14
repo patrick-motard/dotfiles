@@ -13,20 +13,4 @@ unset _brew_cache
 {{ end -}}
 #endregion homebrew
 
-{{ if eq .chezmoi.hostname "GVXPDWWKWG" -}}
-#region zetup
-# Cache zetup env exports (saves ~400ms, regenerate with: rm ~/.cache/zsh/zetup-exports.zsh)
-_zetup_cache="$HOME/.cache/zsh/zetup-exports.zsh"
-if [[ ! -f "$_zetup_cache" ]]; then
-  mkdir -p "$HOME/.cache/zsh"
-  # Filter out the brew shellenv line - we handle that separately above
-  zetup env shell-exports --zsh | grep -v 'brew shellenv' > "$_zetup_cache"
-fi
-source "$_zetup_cache"
-unset _zetup_cache
-#endregion zetup
-
-# zendesk_zprofile.sh only runs rbenv init, which is lazy-loaded in .zshrc
-
-export ZDP_DBT_DIR={{ .chezmoi.homeDir }}/zdp_dbt_repos
-{{ end -}}
+[[ -f $ZDOTDIR/work-zprofile.zsh ]] && source $ZDOTDIR/work-zprofile.zsh

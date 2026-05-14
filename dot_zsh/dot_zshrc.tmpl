@@ -85,35 +85,7 @@ export TERM=tmux-256color
 
 #endregion OSX specific
 
-{{ if eq .chezmoi.hostname "GVXPDWWKWG" -}}
-#region Zendesk-specific configuration
-[[ -f ~/.ssh/zendesk-company ]] && ssh-add -qK ~/.ssh/zendesk-company
-
-## BEGIN -- managed by dot-ansible:zendesk -- ##
-# export PLUGINS=$plugins
-[[ -f ~/.local/bin/zendesk_zshrc.sh ]] && source ~/.local/bin/zendesk_zshrc.sh
-## END -- managed by dot-ansible:zendesk -- ##
-
-# for the billing repo
-export HUSKY=0
-
-# CICD - lazy-load completion on first use (saves ~160ms)
-cicd() {
-  unfunction cicd
-  source <(command cicd completion zsh)
-  cicd "$@"
-}
-
-## BEGIN -- managed by workstation, role: aws_cli -- ##
-alias awswhoami='aws sts get-caller-identity'
-function awscreds {
-    aws-work.sh $1
-    export AWS_PROFILE=$1
-}
-## END -- managed by workstation, role: aws_cli -- ##
-
-#endregion Zendesk-specific configuration
-{{ end -}}
+[[ -f $ZDOTDIR/work-zshrc.zsh ]] && source $ZDOTDIR/work-zshrc.zsh
 
 #region Directories
 setopt AUTO_CD           # Auto-change directory without typing cd.

@@ -1,13 +1,6 @@
 # -*- mode: sh; -*-
 # vim: set ft=zsh:
 
-# Machine type detection
-{{ if eq .chezmoi.hostname "GVXPDWWKWG" -}}
-export IS_WORK_MACHINE=1
-{{ else -}}
-export IS_WORK_MACHINE=0
-{{ end -}}
-
 export ZDOTDIR="$HOME/.zsh"
 # code_dir="$(which code)"
 # export EDITOR="${code_dir}"
@@ -22,18 +15,7 @@ export PATH="$PATH:$HOME/code/dotfiles-private/bin"
 
 # export BROWSER=''
 
-{{ if eq .chezmoi.hostname "GVXPDWWKWG" -}}
-# Zendesk wiki vault root for zd plugin
-export ZD_VAULT_ROOT="${HOME}/code/zendesk/wiki-zendesk"
-
-# Enable Node.js to use system CA certificates (required for Claude Code)
-export NODE_USE_SYSTEM_CA=1
-
-[[ -f ~/.zendesk-zshenv ]] && source ~/.zendesk-zshenv
-## BEGIN -- managed by dot-ansible:zendesk -- ##
-[[ -f ~/.local/bin/zendesk_zshenv.sh ]] && source ~/.local/bin/zendesk_zshenv.sh
-## END -- managed by dot-ansible:zendesk -- ##
-{{ end -}}
+[[ -f $ZDOTDIR/work-zshenv.zsh ]] && source $ZDOTDIR/work-zshenv.zsh
 
 # Skip pi version check (Homebrew formula lags behind npm registry)
 export PI_SKIP_VERSION_CHECK=1

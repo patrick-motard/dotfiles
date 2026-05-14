@@ -310,16 +310,7 @@ function hgrep() {
 
 #endregion Programs
 
-{{ if eq .chezmoi.hostname "GVXPDWWKWG" -}}
-#region Zendesk-Specific Configuration
-# Directories
-alias zen="cd ~/code/zendesk"
-function start_bill() {
-    pushd ~/code/zendesk/billing
-    zdi zendesk_billing -d restart -e UNICORN_TIMEOUT=600000
-}
-#endregion Zendesk-Specific Configuration
-{{ end -}}
+[[ -f $ZDOTDIR/work-aliases.zsh ]] && source $ZDOTDIR/work-aliases.zsh
 
 function generate_password() {
     if [[ $isLinux == 0 ]]; then
