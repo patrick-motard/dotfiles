@@ -8,16 +8,9 @@ return {
   ---@type AutoSession.Config
   opts = {
     bypass_session_save_file_types = { 'help' },
-    -- suppressed_dirs = { '~/' },
-    -- allowed_dirs = {
-    --   '~/code/*',
-    --   '~/code/zendesk/*',
-    --   '~/.local/share/chezmoi/*',
-    --   '~/.local/share/chezmoi/dot_config/nvim-custom/*',
-    --   'local/share/chezmoi/dot_config/nvim-custom/*',
-    --   '~/.config/',
-    --   '~/.ssh/',
-    -- },
-    -- log_level = 'debug',
+    -- Use cwd as session key, not git root — critical for git worktrees
+    -- where git root would resolve to the main worktree instead of the branch worktree
+    use_git_branch = false,
+    suppressed_dirs = { '~/', '~/Downloads', '~/Desktop' },
   },
 }
