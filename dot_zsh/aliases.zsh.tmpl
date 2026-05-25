@@ -182,6 +182,12 @@ ma() {
   sz
 }
 
+# Apply dotfiles, rebuild private Go projects, and source changes.
+mab() {
+  "$HOME/code/dotfiles-private/bin/mab-build-go-projects" "$@" || return $?
+  sz
+}
+
 # Apply and source changes with pre-flight system state check.
 mam() {
   # Run system state check first
