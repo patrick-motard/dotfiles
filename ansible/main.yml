@@ -47,6 +47,8 @@
       tags: [kanata]
     - import_tasks: tasks/repos.yml
       tags: [repos]
+    - import_tasks: tasks/skill-repos.yml
+      tags: [skill-repos, repos]
     - import_tasks: tasks/dotfiles-private-hooks.yml
       tags: [dotfiles-private, hooks, go-binaries]
     - import_tasks: tasks/transcription.yml
