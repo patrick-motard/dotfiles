@@ -9,7 +9,8 @@ bd ready              # Find available work
 bd show <id>          # View issue details
 bd update <id> --status in_progress  # Claim work
 bd close <id>         # Complete work
-bd sync               # Sync with git
+bd vc status          # Check beads database version-control state
+bd dolt push          # Push beads state when a remote is configured
 ```
 
 ## Landing the Plane (Session Completion)
@@ -24,7 +25,8 @@ bd sync               # Sync with git
 4. **PUSH TO REMOTE** - This is MANDATORY:
    ```bash
    git pull --rebase
-   bd sync
+   bd vc status
+   bd dolt push       # If configured; if no remote is configured, note that explicitly
    git push
    git status  # MUST show "up to date with origin"
    ```
@@ -37,6 +39,10 @@ bd sync               # Sync with git
 - NEVER stop before pushing - that leaves work stranded locally
 - NEVER say "ready to push when you are" - YOU must push
 - If push fails, resolve and retry until it succeeds
+
+## Beads Command Drift Note
+
+If `bd sync` appears in older notes or habits, do not use it. In this environment, check beads state with `bd vc status` and push with `bd dolt push` when a remote is configured. If `bd dolt push` reports that no remote is configured, record that outcome and continue with normal git push verification.
 
 See [CLAUDE.md](./CLAUDE.md) for full project guidelines and instructions.
 
