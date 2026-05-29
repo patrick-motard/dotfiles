@@ -21,3 +21,11 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.keymap.set('n', '<leader>cs', '<cmd>luafile %<cr>', { desc = 'Source current file', noremap = true, silent = true })
   end,
 })
+
+-- Silence W325 swap file warnings - open read-only if another Nvim has the file
+vim.api.nvim_create_autocmd('SwapExists', {
+  pattern = '*',
+  callback = function()
+    vim.v.swapchoice = 'e'
+  end,
+})
