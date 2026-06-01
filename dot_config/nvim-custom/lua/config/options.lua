@@ -74,12 +74,14 @@ vim.opt.scrolloff = 10
 
 vim.opt.termguicolors = true
 
--- Swap file settings - reduce E325 swap file warnings
--- Keep swap files but auto-recover without prompting
+-- Swap file settings - suppress all swap warnings (E325 and W325)
 vim.opt.swapfile = true
 vim.opt.directory = vim.fn.stdpath 'data' .. '/swap//'
 -- Create swap directory if it doesn't exist
 vim.fn.mkdir(vim.fn.stdpath 'data' .. '/swap', 'p')
+-- Suppress "ATTENTION: swap file already exists" messages entirely
+-- (the SwapExists autocmd in autocmds.lua handles the choice silently)
+vim.opt.shortmess:append 'A'
 -- Shorter time before writing swap file (default 4000ms)
 vim.opt.updatetime = 250
 -- Auto-read files when changed outside of vim
