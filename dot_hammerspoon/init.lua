@@ -29,7 +29,12 @@ local function isZSAConnected()
 end
 
 local function startKanata()
+    -- bootstrap loads the service definition (no-op if already loaded); kickstart
+    -- then actually (re)starts it. bootstrap alone cannot start an
+    -- already-loaded-but-stopped job, which previously left kanata dead after a
+    -- crash or a ZSA connect/disconnect cycle.
     hs.execute("launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.kanata.plist 2>/dev/null")
+    hs.execute("launchctl kickstart -k gui/$(id -u)/com.kanata 2>/dev/null")
 end
 
 local function stopKanata()
