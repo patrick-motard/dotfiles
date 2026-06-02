@@ -49,9 +49,11 @@ local notify_seq = 0
 local function notify_pi(message, file)
   pcall(vim.fn.mkdir, MESSAGE_DIR, 'p')
   notify_seq = notify_seq + 1
-  -- os.time + pid + seq keeps filenames lexicographically ordered and unique
-  -- across nvim instances sharing the directory.
-  local base = string.format('%d-%d-%05d', os.time(), vim.fn.getpid(), notify_seq)
+  -- Prefix with THIS nvim's pid so the paired pi instance (which knows its
+  -- sibling nvim socket /tmp/nvim-<pid>.sock) only drains its own notes. This
+  -- scopes notifications per session and prevents other pi instances sharing
+  -- the directory from stealing them. time+seq keep per-instance ordering.
+  local base = string.format('%d-%d-%05d', vim.fn.getpid(), os.time(), notify_seq)
   local tmp = MESSAGE_DIR .. '/.' .. base .. '.json.tmp'
   local final = MESSAGE_DIR .. '/' .. base .. '.json'
   local payload = vim.fn.json_encode({ message = message, file = file })
