@@ -30,6 +30,39 @@ M._last_accepted = nil
 M._queue = {}
 M._queue_index = 0
 
+-- Forward declarations: these are defined further down but referenced earlier
+-- (in M.accept and the reject keymap). Declaring them as locals up here keeps
+-- those references in scope; without this they resolve to nil globals.
+local mark_queue_accepted, mark_queue_rejected
+
+-- Drop-directory drained by the nvim-buffer pi extension every 500ms. Each note
+-- is written to a unique temp file and atomically renamed into place, so
+-- concurrent writes (accept_all, or rapid sequential accepts in a queue) never
+-- clobber one another the way the legacy single-slot /tmp/pi-nvim-message.json
+-- did. The extension turns each note into a user message back to pi.
+local MESSAGE_DIR = '/tmp/pi-nvim-messages'
+local notify_seq = 0
+
+--- Drop a note for pi.
+--- @param message string Human-readable note (becomes a message to pi)
+--- @param file string|nil Associated file path (shown as context)
+local function notify_pi(message, file)
+  pcall(vim.fn.mkdir, MESSAGE_DIR, 'p')
+  notify_seq = notify_seq + 1
+  -- os.time + pid + seq keeps filenames lexicographically ordered and unique
+  -- across nvim instances sharing the directory.
+  local base = string.format('%d-%d-%05d', os.time(), vim.fn.getpid(), notify_seq)
+  local tmp = MESSAGE_DIR .. '/.' .. base .. '.json.tmp'
+  local final = MESSAGE_DIR .. '/' .. base .. '.json'
+  local payload = vim.fn.json_encode({ message = message, file = file })
+  local f = io.open(tmp, 'w')
+  if f then
+    f:write(payload)
+    f:close()
+    os.rename(tmp, final)  -- atomic on the same filesystem
+  end
+end
+
 --- Show a vertical split diff between the current file and a proposed version.
 --- @param target_file string Absolute path to the file being edited
 --- @param proposed_file string Path to temp file containing proposed content
@@ -72,6 +105,15 @@ function M.show(target_file, proposed_file, silent)
 
   -- Enable diff on proposed
   vim.cmd('diffthis')
+
+  -- Enable line wrapping in both diff windows. Diff mode turns 'wrap' off by
+  -- default (Neovim's 'diffopt' lacks 'followwrap'), so set it explicitly here
+  -- so long lines are visible without horizontal scrolling. 'linebreak' wraps
+  -- at word boundaries rather than mid-token.
+  for _, win in ipairs({ original_win, proposed_win }) do
+    vim.wo[win].wrap = true
+    vim.wo[win].linebreak = true
+  end
 
   -- Store state
   M._active = {
@@ -135,13 +177,24 @@ function M.accept()
   -- Apply to original buffer
   vim.api.nvim_buf_set_lines(state.original_buf, 0, -1, false, proposed_lines)
 
+  -- Persist to disk. Accept previously only updated the buffer, leaving the
+  -- change unsaved (and pi unaware it had even happened).
+  if vim.bo[state.original_buf].buftype == '' and vim.api.nvim_buf_get_name(state.original_buf) ~= '' then
+    vim.api.nvim_buf_call(state.original_buf, function()
+      pcall(vim.cmd, 'silent keepalt write')
+    end)
+  end
+
   -- Close the diff
   M.close(true)
 
   -- Advance queue if we're in multi-file mode
   mark_queue_accepted()
 
-  vim.notify('pi diff: Changes accepted. <leader>dp to review.', vim.log.levels.INFO)
+  -- Notify pi (drained by the nvim-buffer extension)
+  notify_pi('Accepted and saved your proposed edit to ' .. state.target_file, state.target_file)
+
+  vim.notify('pi diff: Changes accepted & saved. <leader>dp to review.', vim.log.levels.INFO)
 end
 
 --- Close the diff session
@@ -168,6 +221,7 @@ function M.close(accepted, silent)
   vim.fn.delete(state.proposed_file)
 
   if not accepted and not silent then
+    notify_pi('Rejected your proposed edit to ' .. state.target_file, state.target_file)
     vim.notify('pi diff: Changes rejected', vim.log.levels.INFO)
   end
 end
@@ -279,6 +333,7 @@ function M.accept_all()
   end
 
   local count = 0
+  local accepted_names = {}
   for _, item in ipairs(M._queue) do
     if item.status == 'pending' then
       -- Read proposed content and apply
@@ -291,9 +346,14 @@ function M.accept_all()
         vim.cmd('edit ' .. vim.fn.fnameescape(item.target_file))
         local buf = vim.api.nvim_get_current_buf()
         vim.api.nvim_buf_set_lines(buf, 0, -1, false, proposed_lines)
+        -- Persist to disk
+        if vim.bo[buf].buftype == '' and vim.api.nvim_buf_get_name(buf) ~= '' then
+          pcall(vim.cmd, 'silent keepalt write')
+        end
         vim.fn.delete(item.proposed_file)
       end
       item.status = 'accepted'
+      accepted_names[#accepted_names + 1] = vim.fn.fnamemodify(item.target_file, ':t')
       count = count + 1
     end
   end
@@ -305,6 +365,8 @@ function M.accept_all()
 
   M._queue = {}
   M._queue_index = 0
+  -- One batched note so none get clobbered in the extension's mailbox
+  notify_pi(string.format('Accepted and saved all %d proposed edits: %s', count, table.concat(accepted_names, ', ')))
   vim.notify(string.format('pi diff: Accepted all (%d files)', count), vim.log.levels.INFO)
 end
 
@@ -316,10 +378,12 @@ function M.reject_all()
   end
 
   local count = 0
+  local rejected_names = {}
   for _, item in ipairs(M._queue) do
     if item.status == 'pending' then
       vim.fn.delete(item.proposed_file)
       item.status = 'rejected'
+      rejected_names[#rejected_names + 1] = vim.fn.fnamemodify(item.target_file, ':t')
       count = count + 1
     end
   end
@@ -331,6 +395,8 @@ function M.reject_all()
 
   M._queue = {}
   M._queue_index = 0
+  -- One batched note so none get clobbered in the extension's mailbox
+  notify_pi(string.format('Rejected all %d proposed edits: %s', count, table.concat(rejected_names, ', ')))
   vim.notify(string.format('pi diff: Rejected all (%d files)', count), vim.log.levels.INFO)
 end
 
@@ -450,7 +516,7 @@ function M.telescope_pick()
 end
 
 --- Mark current queued item as accepted (called from the accept flow)
-local function mark_queue_accepted()
+function mark_queue_accepted()
   if M._queue_index > 0 and M._queue_index <= #M._queue then
     M._queue[M._queue_index].status = 'accepted'
     -- Auto-advance to next pending
@@ -470,7 +536,7 @@ local function mark_queue_accepted()
 end
 
 --- Mark current queued item as rejected (called from the reject flow)
-local function mark_queue_rejected()
+function mark_queue_rejected()
   if M._queue_index > 0 and M._queue_index <= #M._queue then
     M._queue[M._queue_index].status = 'rejected'
     -- Auto-advance to next pending
@@ -760,7 +826,15 @@ function M.accept_inline()
   pcall(vim.keymap.del, 'n', '<leader>dy', { buffer = state.buf })
   pcall(vim.keymap.del, 'n', '<leader>dn', { buffer = state.buf })
 
-  vim.notify('pi diff: Changes accepted. <leader>dp to review.', vim.log.levels.INFO)
+  -- Persist to disk (inline applies content at show time but never saved it)
+  if vim.bo[state.buf].buftype == '' and vim.api.nvim_buf_get_name(state.buf) ~= '' then
+    vim.api.nvim_buf_call(state.buf, function()
+      pcall(vim.cmd, 'silent keepalt write')
+    end)
+  end
+
+  notify_pi('Accepted and saved your proposed edit to ' .. state.target_file, state.target_file)
+  vim.notify('pi diff: Changes accepted & saved. <leader>dp to review.', vim.log.levels.INFO)
 end
 
 --- Reject inline changes (restore original content, clear virtual text)
@@ -787,6 +861,7 @@ function M.reject_inline()
   pcall(vim.keymap.del, 'n', '<leader>dy', { buffer = state.buf })
   pcall(vim.keymap.del, 'n', '<leader>dn', { buffer = state.buf })
 
+  notify_pi('Rejected your proposed edit to ' .. state.target_file, state.target_file)
   vim.notify('pi diff: Changes rejected, original restored.', vim.log.levels.INFO)
 end
 
