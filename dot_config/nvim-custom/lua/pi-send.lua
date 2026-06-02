@@ -6,7 +6,8 @@
 --
 local M = {}
 
-local MESSAGE_FILE = '/tmp/pi-nvim-message.json'
+local MESSAGE_DIR = '/tmp/pi-nvim-messages'
+local send_seq = 0
 
 --- Open a floating input and send the message to pi
 --- @param selection string|nil Selected text (if in visual mode)
@@ -57,7 +58,10 @@ function M.send(selection, start_line, end_line)
       return
     end
 
-    -- Write message file for pi extension to pick up
+    -- Write a note into the scoped drop-directory the nvim-buffer extension
+    -- drains. Prefix with THIS nvim's pid so only the paired pi instance picks
+    -- it up (prevents cross-session theft); atomic temp-then-rename avoids
+    -- partial reads.
     local payload = vim.fn.json_encode({
       message = message,
       file = file,
@@ -66,10 +70,16 @@ function M.send(selection, start_line, end_line)
       endLine = end_line,
     })
 
-    local f = io.open(MESSAGE_FILE, 'w')
+    pcall(vim.fn.mkdir, MESSAGE_DIR, 'p')
+    send_seq = send_seq + 1
+    local base = string.format('%d-%d-%05d', vim.fn.getpid(), os.time(), send_seq)
+    local tmp = MESSAGE_DIR .. '/.' .. base .. '.json.tmp'
+    local final = MESSAGE_DIR .. '/' .. base .. '.json'
+    local f = io.open(tmp, 'w')
     if f then
       f:write(payload)
       f:close()
+      os.rename(tmp, final)
       vim.notify('pi ← ' .. message, vim.log.levels.INFO)
     else
       vim.notify('pi-send: Failed to write message file', vim.log.levels.ERROR)
