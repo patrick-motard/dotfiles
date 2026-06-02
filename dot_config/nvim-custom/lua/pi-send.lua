@@ -72,7 +72,10 @@ function M.send(selection, start_line, end_line)
 
     pcall(vim.fn.mkdir, MESSAGE_DIR, 'p')
     send_seq = send_seq + 1
-    local base = string.format('%d-%d-%05d', vim.fn.getpid(), os.time(), send_seq)
+    -- Scope by the socket-name pid (v:servername), which is what the nvim-buffer
+    -- extension filters on - NOT vim.fn.getpid() (differs; nvim is a shell child).
+    local sid = (vim.v.servername or ''):match('nvim%-(%d+)%.sock') or tostring(vim.fn.getpid())
+    local base = string.format('%s-%d-%05d', sid, os.time(), send_seq)
     local tmp = MESSAGE_DIR .. '/.' .. base .. '.json.tmp'
     local final = MESSAGE_DIR .. '/' .. base .. '.json'
     local f = io.open(tmp, 'w')

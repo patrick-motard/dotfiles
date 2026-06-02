@@ -49,11 +49,12 @@ local notify_seq = 0
 local function notify_pi(message, file)
   pcall(vim.fn.mkdir, MESSAGE_DIR, 'p')
   notify_seq = notify_seq + 1
-  -- Prefix with THIS nvim's pid so the paired pi instance (which knows its
-  -- sibling nvim socket /tmp/nvim-<pid>.sock) only drains its own notes. This
-  -- scopes notifications per session and prevents other pi instances sharing
-  -- the directory from stealing them. time+seq keep per-instance ordering.
-  local base = string.format('%d-%d-%05d', vim.fn.getpid(), os.time(), notify_seq)
+  -- Scope the note to THIS nvim so only the paired pi instance drains it. The
+  -- nvim-buffer extension scopes by the socket name (/tmp/nvim-<pid>.sock), and
+  -- that pid is NOT vim.fn.getpid() (nvim is a child of the launching shell).
+  -- So derive the id from v:servername (the socket path) to match the extension.
+  local sid = (vim.v.servername or ''):match('nvim%-(%d+)%.sock') or tostring(vim.fn.getpid())
+  local base = string.format('%s-%d-%05d', sid, os.time(), notify_seq)
   local tmp = MESSAGE_DIR .. '/.' .. base .. '.json.tmp'
   local final = MESSAGE_DIR .. '/' .. base .. '.json'
   local payload = vim.fn.json_encode({ message = message, file = file })
