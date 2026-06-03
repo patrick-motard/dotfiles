@@ -1,4 +1,10 @@
 ---
+git:
+  # Respect global pull.rebase=true so pulls rebase local commits instead of
+  # merging. Prevents lazygit's default 'merge' mode from clobbering local work
+  # when local and remote have diverged.
+  pull:
+    mode: 'rebase'
 os:
   editPreset: 'nvim-remote'
   editTemplate: '[ -z "$NVIM" ] && nvim -- {{filename}} || nvim --server "$NVIM" --remote {{filename}}'
