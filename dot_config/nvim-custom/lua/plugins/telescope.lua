@@ -51,6 +51,23 @@ return {
         file_ignore_patterns = {
           'vendor',
         },
+        -- Use the 'flex' layout so telescope switches between horizontal
+        -- (results left, preview right) on wide screens and vertical
+        -- (preview on top, results on bottom) on narrow screens.
+        layout_strategy = 'flex',
+        layout_config = {
+          -- Below this many columns, flip to the vertical layout.
+          flex = { flip_columns = 140 },
+          vertical = {
+            -- preview pane gets the top portion, results below it
+            preview_height = 0.5,
+            -- always show the preview, even on short windows (default cutoff
+            -- hides it below ~40 lines)
+            preview_cutoff = 1,
+            mirror = false,
+            prompt_position = 'bottom',
+          },
+        },
       },
       -- defaults = {
       --   mappings = {
@@ -58,12 +75,8 @@ return {
       --   },
       -- },
       pickers = {
-        find_files = {
-          theme = 'ivy',
-        },
-        -- find_files = {
-        --   hidden = true,
-        -- },
+        -- find_files uses an adaptive layout (see find_files_opts below):
+        -- ivy on wide screens, vertical (preview on top) on narrow screens.
       },
       extensions = {
         ['ui-select'] = {
@@ -81,25 +94,45 @@ return {
 
     -- See `:help telescope.builtin`
     local builtin = require 'telescope.builtin'
+
+    -- find_files layout: keep the compact ivy theme on wide screens, but on
+    -- narrow screens use a vertical layout so the preview of the selected file
+    -- shows on top with the list below.
+    local function find_files_opts(opts)
+      opts = opts or {}
+      if vim.o.columns >= 140 then
+        return vim.tbl_extend('keep', opts, require('telescope.themes').get_ivy())
+      end
+      opts.layout_strategy = 'vertical'
+      opts.layout_config = {
+        vertical = {
+          preview_height = 0.6,
+          preview_cutoff = 1,
+          mirror = false,
+          prompt_position = 'bottom',
+        },
+      }
+      return opts
+    end
     vim.keymap.set('n', '<leader>sC', builtin.commands, { desc = '[C]ommands' })
     vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[h]elp' })
     vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[k]eymaps' })
     vim.keymap.set('n', '<leader><leader>', function()
-      builtin.find_files {
+      builtin.find_files(find_files_opts {
         -- show hidden files
         hidden = true,
         -- show gitignored files
         -- no_ignore = true, -- this really slows down the search in large repos.
-      }
+      })
     end, { desc = '[f]iles' })
 
     vim.keymap.set('n', '<leader>sa', function()
-      builtin.find_files {
+      builtin.find_files(find_files_opts {
         -- show hidden files
         hidden = true,
         -- show gitignored files
         no_ignore = true, -- this really slows down the search in large repos.
-      }
+      })
     end, { desc = '[a]ll files' })
     vim.keymap.set('n', '<leader>sb', builtin.current_buffer_fuzzy_find, { desc = '[b]uffer fuzzy' })
     vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[s]elect telescope' })
@@ -134,13 +167,13 @@ return {
 
     -- Shortcut for searching your Neovim configuration files
     vim.keymap.set('n', '<leader>sn', function()
-      builtin.find_files { cwd = vim.fn.stdpath 'config' }
+      builtin.find_files(find_files_opts { cwd = vim.fn.stdpath 'config' })
     end, { desc = '[n]eovim files' })
 
     vim.keymap.set('n', '<leader>sp', function()
-      require('telescope.builtin').find_files {
+      builtin.find_files(find_files_opts {
         cwd = vim.fs.joinpath(vim.fn.stdpath 'data', 'lazy'),
-      }
+      })
     end, { desc = '[p]lugin files' })
 
     require('config.telescope.multigrep').setup()
