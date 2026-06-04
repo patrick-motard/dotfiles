@@ -153,14 +153,6 @@ alias wt="cd $HOME/code/worktrees"
 # Ruby
 alias bi="bundle install"
 
-# Homebrew with Ansible sync
-# brew-ansible-sync functions (brewi, brewci, brewtap, etc)
-if [[ -f "$HOME/code/dotfiles-private/bin/brew-ansible-sync" ]]; then
-  source "$HOME/code/dotfiles-private/bin/brew-ansible-sync"
-else
-  echo "Warning: brew-ansible-sync not found. Is dotfiles-private cloned at ~/code/dotfiles-private?"
-fi
-
 #region Program Related
 
 ## Chezmoi
@@ -213,58 +205,8 @@ mam() {
 
 alias moi_add_nvim="chezmoi add ~/.config/nvim && rm $MOIDIR/dot_config/nvim/lazy-lock.json"
 
-## Ansible
-# Run dotfiles ansible playbook. Uses hostname-specific inventory if available.
-# Usage: dotansible [options] [tag] [ansible args...]
-#        dotansible              - run full playbook
-#        dotansible tags         - list available tags
-#        dotansible -i           - select tag interactively with fzf
-#        dotansible brew         - run only brew tasks
-#        dotansible zsh --check  - dry-run zsh tasks
-dotansible() {
-  local inventory playbook cmd
-  playbook="$MOIDIR/ansible/main.yml"
-  if [[ -f "$MOIDIR/ansible/inventory/$HOST.yml" ]]; then
-    inventory="$MOIDIR/ansible/inventory/$HOST.yml"
-  else
-    inventory="$MOIDIR/ansible/inventory/main.yml"
-  fi
-
-  case "$1" in
-    tags|--list-tags)
-      cmd=(ansible-playbook "$playbook" -i "$inventory" --list-tags)
-      ;;
-    -i|--interactive)
-      shift
-      local tag
-      tag=$(ansible-playbook "$playbook" -i "$inventory" --list-tags 2>/dev/null \
-        | grep -oE '\b[a-z][-a-z0-9_]*\b' \
-        | sort -u \
-        | fzf --prompt="Select tag: " --height=40% --reverse)
-      [[ -z "$tag" ]] && return 0
-      cmd=(ansible-playbook "$playbook" -i "$inventory" --tags "$tag" "$@")
-      ;;
-    "")
-      cmd=(ansible-playbook "$playbook" -i "$inventory")
-      ;;
-    -*)
-      cmd=(ansible-playbook "$playbook" -i "$inventory" "$@")
-      ;;
-    *)
-      local tag="$1"
-      shift
-      cmd=(ansible-playbook "$playbook" -i "$inventory" --tags "$tag" "$@")
-      ;;
-  esac
-
-  # --ask-become-pass is required on Arch Linux so emacs can be installed via pacman
-  if grep -q '^ID=arch' /etc/os-release 2>/dev/null; then
-    cmd+=('--ask-become-pass')
-  fi
-
-  echo "Running: ${cmd[*]}"
-  "${cmd[@]}"
-}
+# Optional private aliases/functions
+[[ -f $ZDOTDIR/private-aliases.zsh ]] && source $ZDOTDIR/private-aliases.zsh
 
 ## Nodenv
 alias update_nodenv_build="git -C ~/.nodenv/plugins/node-build pull"
