@@ -65,6 +65,7 @@ nvim-lazyvim
 Files with `.tmpl` extension are processed as Go templates. Key variables:
 - `{{ .chezmoi.os }}` - OS detection (`darwin` or `linux`)
 - `{{ .chezmoi.hostname }}` - Machine hostname for machine-specific configuration
+- Conditional blocks are used for OS-specific and hostname-specific config
 
 Example:
 ```tmpl
@@ -77,25 +78,60 @@ Example:
 {{ end -}}
 ```
 
+Machine-specific configuration is determined directly in templates with `{{ .chezmoi.hostname }}`. There is no separate machine settings file in this public repo.
+
 ### ZSH Configuration
 
+**Structure**:
 - `.zshenv` - environment variables, sourced first
 - `.zprofile` - login shell configuration
-- `.zshrc` - interactive shell setup
+- `.zshrc` - interactive shell setup, sources `aliases.zsh`
 - `aliases.zsh` - shell aliases and functions
+
+**Plugin management**: Zinit/Zplug-era shell config and plugin setup live here.
+
+**Key integrations**:
+- `fzf` - fuzzy finder
+- `zoxide` - smart directory jumping
+- `sesh` - tmux session manager
 
 ### Neovim Configurations
 
 - `dot_config/nvim-custom/` - kickstart.nvim-based setup
 - `dot_config/nvim-lazyvim/` - LazyVim setup
 
+Switch between configs using `vv` or by setting `NVIM_APPNAME`.
+
 ## Development Workflow
+
+### Making Changes to Dotfiles
 
 1. Navigate to the chezmoi source: `moicd` or `edit`
 2. Edit files in the source directory
 3. For templated files, edit the `.tmpl` source file
 4. Apply changes: `ma`
 5. Commit changes: `gmoi add . && gmoi commit`
+
+### Adding New Configuration Files
+
+```bash
+# Add a file to chezmoi management
+chezmoi add ~/.config/newapp/config.yml
+
+# Add with auto-template generation
+chezmoi add --autotemplate ~/.gitconfig
+```
+
+### Machine-Specific Configuration
+
+Use `{{ .chezmoi.hostname }}` for machine-specific config and `{{ .chezmoi.os }}` for OS-specific config.
+
+Example:
+```tmpl
+{{ if eq .chezmoi.hostname "GVXPDWWKWG" -}}
+# Work machine only
+{{ end -}}
+```
 
 ## File Naming Conventions
 
@@ -104,6 +140,11 @@ Chezmoi uses special prefixes in the source directory:
 - `.tmpl` suffix → Go template processing
 - `executable_` → make file executable
 - `private_` → set file permissions to `0600`
+
+Examples:
+- `dot_config/nvim/init.lua` → `~/.config/nvim/init.lua`
+- `dot_zsh/dot_zprofile.tmpl` → `~/.zsh/.zprofile`
+- `dot_tmux.conf` → `~/.tmux.conf`
 
 ## Important Paths
 
