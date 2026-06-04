@@ -4,31 +4,17 @@ Notes for myself because I forget a lot.
 
 ## Chezmoi
 
-- edit = open chezmoi dir in editor
-- ma = chezmoi apply + source zsh files
-- moi = chezmoi
-- moi cd = go to chezmoi dir
+- `edit` = open chezmoi dir in editor
+- `ma` = chezmoi apply + source zsh files
+- `moi` = chezmoi
+- `moicd` = go to chezmoi dir
 
-## Ansible
+## Tmux
 
-Call from anywhere. Uses hostname-specific inventory if available.
+- `t` = attach to the first sesh/tmux session or create one
+- `tmux_uninstall_plugins` = remove TPM-managed plugins
 
-```shell
-# Run full playbook
-dotansible
+## Neovim
 
-# Interactive tag selection with fzf
-dotansible -i
-
-# Run specific tasks by tag
-dotansible brew      # Install/update Homebrew packages
-dotansible packages  # Install all packages
-dotansible zsh       # Configure ZSH
-dotansible tmux      # Configure tmux
-
-# List available tags
-dotansible tags
-
-# For WSL (prompts for sudo password)
-dotansible --ask-become
-```
+- `v` = open Neovim with a per-process socket for editor integrations
+- `vv` = choose a Neovim config from `~/.config/nvim-*`

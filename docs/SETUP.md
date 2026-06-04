@@ -13,30 +13,18 @@
 
 2. **Apply dotfiles**:
    ```shell
-   # Apply all dotfiles
    chezmoi apply
    ```
 
-   **Note**: Machine-specific configurations (e.g., for work vs. personal machines) are automatically determined by your hostname. No manual configuration is needed. Templates will use `{{ .chezmoi.hostname }}` to apply machine-specific settings.
+   **Note**: Machine-specific configurations (for example, work vs. personal machines) are automatically determined by hostname inside templates.
 
 3. **Install ZSH plugins**:
    ```shell
-   # Install zplug plugins (including agnoster theme)
    zplug install
    ```
 
-4. **Run Ansible** to install packages and configure system:
-   ```shell
-   # macOS
-   ./ansible/mac-setup.sh  # First time only
-   dotansible
-
-   # Linux/Fedora
-   ./ansible/fedora-setup.sh  # First time only
-   ```
-
-5. **Install Tmux plugins**:
+4. **Install tmux plugins**:
    - Open tmux: `tmux`
    - Press `Ctrl+t` then `I` (capital I) to install TPM plugins
 
-6. **Restart your terminal** to see the new theme and configuration take effect.
+5. **Restart your terminal** to see the new theme and configuration take effect.

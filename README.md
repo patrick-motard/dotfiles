@@ -19,7 +19,7 @@ The dotfiles pertaining to the keyboard driven desktop environment have moved lo
 These dotfiles provide a reproducible, cross-platform development environment that can be set up on any new machine in minutes. Whether you're switching between macOS and Linux, setting up a new work laptop, or just want a solid foundation for your terminal workflow, these configurations give you:
 
 - **Reproducibility**: Identical setup across all your machines
-- **Automation**: One command to install and configure everything
+- **Portability**: Chezmoi-managed config that can be applied anywhere
 - **Flexibility**: Machine profiles for different contexts (personal, work, etc.)
 - **Power**: Keyboard-driven workflow with tmux, vim, and modern shell tools
 - **Speed**: Optimized for fast shell startup and efficient terminal navigation
@@ -27,7 +27,6 @@ These dotfiles provide a reproducible, cross-platform development environment th
 **Key technologies:**
 
 - [Chezmoi](https://www.chezmoi.io/) dotfile manager
-- [Ansible](https://www.ansible.com/) to automate setup
 - [Neovim](https://neovim.io/) and [VsCode](https://code.visualstudio.com/) (with vim keybinds) are my editors
 - [lazy.nvim](https://github.com/folke/lazy.nvim) for vim plugin management
 - [tmux](https://github.com/tmux/tmux) for terminal multiplexing
