@@ -11,6 +11,7 @@ docs/
 .claude/statusline.sh
 .config/gh-dash/config.yml
 .local/bin/zshenv.sh
+.local/bin/zshenv.local.sh
 .ssh/config
 .claude/
 .pi/agent/settings.json

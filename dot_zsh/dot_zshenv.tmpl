@@ -33,6 +33,8 @@ export XDG_CONFIG_HOME="$HOME/.config"
 #
 # For env vars not to be checked in.
 [[ -f ~/.local/bin/zshenv.sh ]] && source ~/.local/bin/zshenv.sh || touch ~/.local/bin/zshenv.sh
+# For machine-local secrets not tracked in either dotfiles repo.
+[[ -f ~/.local/bin/zshenv.local.sh ]] && source ~/.local/bin/zshenv.local.sh
 
 # Ensure Node's global packages are in the PATH
 # Use nodenv shims path directly instead of calling npm (saves ~465ms)
