@@ -2,6 +2,10 @@ hyper = { "cmd", "alt" }
 
 hs.loadSpoon("HSKeybindings")
 hs.loadSpoon("ReloadConfiguration")
+-- Actually start the config pathwatcher. Without :start() the spoon is inert,
+-- so Hammerspoon never auto-reloads on edits and runs stale in-memory config
+-- (this silently kept old kanata logic alive and broke restarts).
+spoon.ReloadConfiguration:start()
 hs.loadSpoon("SpoonInstall")
 Install = spoon.SpoonInstall
 
@@ -15,48 +19,25 @@ Install:andUse("FadeLogo", {
 menuHammer = hs.loadSpoon("MenuHammer")
 menuHammer:enter()
 
--- Auto-toggle kanata based on ZSA keyboard connection
-local function isZSAConnected()
-    local usb = hs.usb.attachedDevices()
-    if not usb then return false end
-    for _, device in ipairs(usb) do
-        local name = (device.productName or ""):lower()
-        if name:find("voyager") or name:find("zsa") or name:find("ergodox") or name:find("moonlander") then
-            return true
-        end
-    end
-    return false
-end
-
+-- Keep kanata running at all times.
+--
+-- kanata only grabs the built-in keyboard (see macos-dev-names-include in
+-- ~/.config/kanata/config.kbd), so it never touches the ZSA Voyager. That
+-- means there is no double-remap risk and no reason to stop kanata when the
+-- Voyager is connected. The previous USB auto-toggle (stop on connect / start
+-- on disconnect) predated that device filter and was the main cause of kanata
+-- being left dead. It has been removed: kanata just stays up.
+--
+-- bootstrap loads the service definition (no-op if already loaded); kickstart
+-- then actually (re)starts it. bootstrap alone cannot start an
+-- already-loaded-but-stopped job, which previously left kanata dead after a
+-- crash or a bootout.
 local function startKanata()
-    -- bootstrap loads the service definition (no-op if already loaded); kickstart
-    -- then actually (re)starts it. bootstrap alone cannot start an
-    -- already-loaded-but-stopped job, which previously left kanata dead after a
-    -- crash or a ZSA connect/disconnect cycle.
     hs.execute("launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.kanata.plist 2>/dev/null")
     hs.execute("launchctl kickstart -k gui/$(id -u)/com.kanata 2>/dev/null")
 end
 
-local function stopKanata()
-    hs.execute("launchctl bootout gui/$(id -u)/com.kanata 2>/dev/null")
-end
-
-local usbWatcher = hs.usb.watcher.new(function(device)
-    local name = (device.productName or ""):lower()
-    if name:find("voyager") or name:find("zsa") or name:find("ergodox") or name:find("moonlander") then
-        if device.eventType == "added" then
-            stopKanata()
-        elseif device.eventType == "removed" then
-            startKanata()
-        end
-    end
-end)
-usbWatcher:start()
-
--- Start kanata now if ZSA is not connected
-if not isZSAConnected() then
-    startKanata()
-end
+startKanata()
 
 -- Game layer toggle with menu bar indicator
 -- Communicates with kanata via TCP (127.0.0.1:7070, set in ~/.config/kanata/config.kbd)
