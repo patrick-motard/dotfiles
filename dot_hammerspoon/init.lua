@@ -1,5 +1,8 @@
 hyper = { "cmd", "alt" }
 
+-- Enable the `hs` command-line tool (message port) for scripting/diagnostics.
+require("hs.ipc")
+
 hs.loadSpoon("HSKeybindings")
 hs.loadSpoon("ReloadConfiguration")
 -- Actually start the config pathwatcher. Without :start() the spoon is inert,

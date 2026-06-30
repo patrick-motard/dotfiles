@@ -1,7 +1,10 @@
 -- MenuHammer config - https://github.com/FryJay/MenuHammer
 
 -- Styling
-menuItemFont = "JetBrainsMono-Regular"
+-- NOTE: must be a font registered with macOS (see `hs.styledtext.fontNames()`).
+-- JetBrainsMono-Regular is NOT installed here, which silently broke menu
+-- rendering (hs.canvas font errors). Hack-Regular is installed.
+menuItemFont = "Hack-Regular"
 menuItemFontSize = 14
 menuNumberOfColumns = 3
 menuMinNumberOfRows = 3
