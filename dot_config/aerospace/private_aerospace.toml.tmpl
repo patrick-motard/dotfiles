@@ -14,8 +14,12 @@ start-at-login = false
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
 
-# Mouse follows focus
-on-focus-changed = ['move-mouse window-lazy-center']
+# Mouse follows focus -- DISABLED.
+# This was yanking the pointer into whatever window briefly stole focus
+# (e.g. the Handy dictation paste momentarily activating Firefox), making the
+# cursor "fly" to the browser. Disabling stops the cursor jump; a transient
+# focus change no longer drags the mouse with it.
+# on-focus-changed = ['move-mouse window-lazy-center']
 
 # Gaps between windows
 [gaps]
