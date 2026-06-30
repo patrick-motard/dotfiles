@@ -37,7 +37,9 @@ end
 menuHammerMenuList = {
     mainMenu = {
         parentMenu = nil,
-        menuHotkey = { hyper, "m" },
+        -- cmd-alt-m collides with Aerospace 'focus left' and cmd-alt-ctrl-m
+        -- is taken in Pi; use the physical Hyper key (Alt+Shift+Ctrl+Cmd).
+        menuHotkey = { { "cmd", "alt", "ctrl", "shift" }, "m" },
         menuItems = {
             { cons.cat.action, "", "r", "Reload Hammerspoon", { { cons.act.func, function()
                 hs.notify.new({ informativeText = "Reloading Hammerspoon." }):send()
