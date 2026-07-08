@@ -47,7 +47,7 @@ unfocused_hollow = true
 style = "Block"
 
 [terminal]
-shell = { program = "/bin/zsh", args = ["-l", "-c", "session=$(sesh list -t | head -1); [ -n \"$session\" ] && sesh connect \"$session\" || tmux new-session"] }
+shell = { program = "/bin/zsh", args = ["-l", "-c", "export PATH=\"$HOME/.local/bin:$PATH\"; session=$(sesh list -t | head -1); [ -n \"$session\" ] && sesh connect \"$session\" || tmux new-session"] }
 
 [mouse]
 hide_when_typing = false
