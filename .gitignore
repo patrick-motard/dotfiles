@@ -40,6 +40,7 @@ dot_hammerspoon/src/connect_to_vpn.lua
 dot_config/tmuxinator/private_homelab-laptop.yml
 dot_config/tmuxinator/dev-wide-zendesk.yml
 dot_config/tmuxinator/growth-engine.yml
+dot_zsh/dot_zprofile.tmpl
 
 # Deleted (junk/sensitive)
 dot_hammerspoon/src/gcal/events.json

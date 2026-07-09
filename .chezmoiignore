@@ -31,3 +31,4 @@ dot_local/share/theme-picker/
 .config/tmuxinator/homelab-laptop.yml
 .config/tmuxinator/dev-wide-zendesk.yml
 .config/tmuxinator/growth-engine.yml
+.zsh/.zprofile
