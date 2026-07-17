@@ -87,6 +87,9 @@ function M.show(target_file, proposed_file, silent)
   end  -- Remember the original buffer
   local original_buf = vim.api.nvim_get_current_buf()
   local original_win = vim.api.nvim_get_current_win()
+  -- Capture the target's filetype so the proposed pane can inherit it (correct
+  -- syntax highlighting that matches the left pane). See filetype note below.
+  local original_ft = vim.bo[original_buf].filetype
 
   -- Enable diff on the original
   vim.cmd('diffthis')
@@ -101,7 +104,14 @@ function M.show(target_file, proposed_file, silent)
   vim.bo[proposed_buf].bufhidden = 'wipe'
   vim.bo[proposed_buf].swapfile = false
   vim.bo[proposed_buf].modifiable = false
-  vim.bo[proposed_buf].filetype = 'diff'  -- Prevent obsidian.nvim from attaching
+  -- Inherit the target file's filetype so the proposed pane gets correct syntax
+  -- highlighting and matches the left (original) pane. Previously this was
+  -- hard-coded to 'diff', which made vim apply diff *syntax* highlighting to
+  -- real source code (coloring lines by their leading +/-/context char) on top
+  -- of diff *mode* backgrounds - producing nonsensical colors. obsidian.nvim
+  -- does not attach here because the proposed buffer is a nofile buffer with a
+  -- synthetic '[pi-proposed] ...' name that matches no vault path.
+  vim.bo[proposed_buf].filetype = original_ft ~= '' and original_ft or 'text'
 
   -- Set a descriptive name (unique per file)
   pcall(vim.api.nvim_buf_set_name, proposed_buf, '[pi-proposed] ' .. vim.fn.fnamemodify(target_file, ':t') .. ' (' .. proposed_buf .. ')')
