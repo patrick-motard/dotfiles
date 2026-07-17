@@ -23,6 +23,22 @@ return {
   },
   config = function(_, opts)
     require('octo').setup(opts)
+    -- Work around an octo.nvim bug (present through at least commit 8476766):
+    -- the `update_pull_request_state` mutation used by `Octo pr close`/reopen
+    -- concatenates the ReviewThreadInformation and ReviewThreadComment fragment
+    -- *definitions* but never spreads them, so GitHub rejects the whole mutation
+    -- with "Fragment X was defined, but not used" and the PR never closes. Strip
+    -- those dead definitions from just that mutation. This is a harmless no-op
+    -- if upstream later fixes it (the substrings simply stop matching).
+    do
+      local ok_m, mutations = pcall(require, 'octo.gh.mutations')
+      local ok_f, frags = pcall(require, 'octo.gh.fragments')
+      if ok_m and ok_f and type(mutations.update_pull_request_state) == 'string' then
+        mutations.update_pull_request_state = mutations.update_pull_request_state
+          :gsub(vim.pesc(frags.review_thread_information), '')
+          :gsub(vim.pesc(frags.review_thread_comment), '')
+      end
+    end
     -- Octo sets buffer-local <localleader> (,) prefixed keymaps, but a global
     -- bare `,` map from nvim-treesitter-textobjects (repeat-move) shadows
     -- which-key's popup trigger. Override `,` buffer-locally in octo buffers so
