@@ -73,7 +73,9 @@ return { -- Useful plugin to show you pending keybinds.
       { '<leader>e', group = '[e] Editor' },
       { '<leader>h', group = '[h] Help', mode = { 'n', 'v' } },
       -- Octo localleader prefix groups
+      { ',a', group = '[a] Assignee' },
       { ',c', group = '[c] Comment' },
+      { ',p', group = '[p] PR Actions' },
       { ',r', group = '[r] Review/Reaction' },
       { ',s', group = '[s] Suggestion' },
       { ',l', group = '[l] Label' },
