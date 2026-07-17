@@ -21,4 +21,28 @@ return {
       projects_v2 = true,
     },
   },
+  config = function(_, opts)
+    require('octo').setup(opts)
+    -- Register which-key groups for octo buffer-local keymaps
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = 'octo',
+      callback = function(event)
+        local wk = require('which-key')
+        wk.add({
+          { ',a', group = '[a] Assignee', buffer = event.buf },
+          { ',c', group = '[c] Comment', buffer = event.buf },
+          { ',p', group = '[p] PR Actions', buffer = event.buf },
+          { ',r', group = '[r] Review/Reaction', buffer = event.buf },
+          { ',s', group = '[s] Suggestion', buffer = event.buf },
+          { ',l', group = '[l] Label', buffer = event.buf },
+          { ',v', group = '[v] Review Submit', buffer = event.buf },
+          { ',i', group = '[i] Issue', buffer = event.buf },
+          { ',e', group = '[e] Files Panel', buffer = event.buf },
+          { ',b', group = '[b] Toggle Panel', buffer = event.buf },
+          { ',g', group = '[g] Goto', buffer = event.buf },
+          { ',t', group = '[t] Thread', buffer = event.buf },
+        })
+      end,
+    })
+  end,
 }
