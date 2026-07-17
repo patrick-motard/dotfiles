@@ -23,25 +23,27 @@ return {
   },
   config = function(_, opts)
     require('octo').setup(opts)
-    -- Register which-key groups for octo buffer-local keymaps
+    -- Octo sets buffer-local <localleader> (,) prefixed keymaps, but a global
+    -- bare `,` map from nvim-treesitter-textobjects (repeat-move) shadows
+    -- which-key's popup trigger. Override `,` buffer-locally in octo buffers so
+    -- which-key shows the action menu instead of running repeat-move.
     vim.api.nvim_create_autocmd('FileType', {
       pattern = 'octo',
       callback = function(event)
-        local wk = require('which-key')
-        wk.add({
-          { ',a', group = '[a] Assignee', buffer = event.buf },
-          { ',c', group = '[c] Comment', buffer = event.buf },
-          { ',p', group = '[p] PR Actions', buffer = event.buf },
-          { ',r', group = '[r] Review/Reaction', buffer = event.buf },
-          { ',s', group = '[s] Suggestion', buffer = event.buf },
-          { ',l', group = '[l] Label', buffer = event.buf },
-          { ',v', group = '[v] Review Submit', buffer = event.buf },
-          { ',i', group = '[i] Issue', buffer = event.buf },
-          { ',e', group = '[e] Files Panel', buffer = event.buf },
-          { ',b', group = '[b] Toggle Panel', buffer = event.buf },
-          { ',g', group = '[g] Goto', buffer = event.buf },
-          { ',t', group = '[t] Thread', buffer = event.buf },
-        })
+        vim.keymap.set('n', ',', function()
+          require('which-key').show { keys = ',', loop = true }
+        end, { buffer = event.buf, desc = 'which-key octo actions' })
+        require('which-key').add {
+          { ',a', group = 'Assignee', buffer = event.buf },
+          { ',c', group = 'Comment', buffer = event.buf },
+          { ',g', group = 'Goto', buffer = event.buf },
+          { ',i', group = 'Issue', buffer = event.buf },
+          { ',l', group = 'Label', buffer = event.buf },
+          { ',p', group = 'PR Actions', buffer = event.buf },
+          { ',r', group = 'Review/Reaction', buffer = event.buf },
+          { ',s', group = 'Suggestion', buffer = event.buf },
+          { ',v', group = 'Review Submit', buffer = event.buf },
+        }
       end,
     })
   end,
