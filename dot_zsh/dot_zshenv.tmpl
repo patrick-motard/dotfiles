@@ -17,9 +17,6 @@ export PATH="$PATH:$HOME/code/dotfiles-private/bin"
 
 [[ -f $ZDOTDIR/work-zshenv.zsh ]] && source $ZDOTDIR/work-zshenv.zsh
 
-# Skip pi version check (Homebrew formula lags behind npm registry)
-export PI_SKIP_VERSION_CHECK=1
-
 # Needed to ensure Lazygit looks in this dir for it's config.
 export XDG_CONFIG_HOME="$HOME/.config"
 
