@@ -132,6 +132,8 @@ return {
         hidden = true,
         -- show gitignored files
         no_ignore = true, -- this really slows down the search in large repos.
+        -- follow symlinks (e.g. a worktree's config.yml symlinked to the main repo)
+        follow = true,
       })
     end, { desc = '[a]ll files' })
     vim.keymap.set('n', '<leader>sb', builtin.current_buffer_fuzzy_find, { desc = '[b]uffer fuzzy' })
