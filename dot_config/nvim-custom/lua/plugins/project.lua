@@ -16,10 +16,17 @@ return {
     require('neovim-project').setup {
       projects = {
         '~/code/*',
+        -- Git worktrees live nested under their repo as `<repo>/.worktrees/<branch>`
+        -- (never a flat `~/code/worktrees/*/*` - that convention isn't used anywhere).
+        -- Without these, chdir_closest_parent_project() can't glob-match a worktree
+        -- dir at all and walks up to the main repo instead (regression, see wiki-2c7x).
+        '~/code/*/.worktrees/*',
         '~/code/clients/*/*',
+        '~/code/clients/*/*/.worktrees/*',
         '~/code/zendesk/*',
+        '~/code/zendesk/*/.worktrees/*',
         '~/code/claude/*',
-        '~/code/worktrees/*/*',
+        '~/code/claude/*/.worktrees/*',
         '~/.local/share/chezmoi',
       },
       -- Exclude config directories from project discovery
@@ -27,8 +34,6 @@ return {
         '~/code/claude',
         '~/code/clients',
         '~/code/clients/*',
-        '~/code/worktrees',
-        '~/code/worktrees/*',
         '~/.config',
       },
       -- Automatically detect project root
