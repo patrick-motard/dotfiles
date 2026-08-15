@@ -31,7 +31,7 @@ local agent_dir = vim.fs.joinpath(root, 'agent')
 local extension_root = vim.fs.joinpath(agent_dir, 'extensions')
 local skill_root = vim.fs.joinpath(agent_dir, 'skills')
 local managed_source_root = vim.fs.joinpath(root, 'managed-extensions')
-local pi_target = vim.fs.joinpath(root, 'bin', 'pi-real')
+local pi_target = vim.fs.joinpath(package_root, 'bin', 'pi-real')
 local pi_link = vim.fs.joinpath(root, 'bin', 'pi')
 local package_a = vim.fs.joinpath(package_parent, 'package-a')
 local package_b = vim.fs.joinpath(package_parent, 'package-b')
@@ -60,16 +60,15 @@ for _, package in ipairs { package_a, package_b } do
   write(vim.fs.joinpath(package, 'package.json'), { '{"name":"' .. vim.fs.basename(package) .. '"}' })
   write(vim.fs.joinpath(package, 'skills', 'shared', 'SKILL.md'), { '# Shared skill' })
 end
+write(vim.fs.joinpath(package_a, 'extensions', 'package-extension', 'index.ts'))
 
 local opts = {
   pi_executable = pi_link,
   agent_dir = agent_dir,
-  package_root = package_root,
   package_root_parent = package_parent,
   managed_source_root = managed_source_root,
   extension_root = extension_root,
   skill_root = skill_root,
-  roots = { package_root, package_a, package_b },
 }
 local resources, warnings = resource.collect(opts)
 
@@ -96,6 +95,9 @@ check(find('package', 'fixture-pi', 'examples/example.ts') ~= nil, 'package exam
 check(find('package', 'fixture-pi', 'dist/runtime.js') ~= nil, 'package runtime is missing')
 
 for _, item in ipairs(resources) do
+  for _, field in ipairs { 'kind', 'name', 'origin', 'logical_path', 'open_path', 'relative_path', 'ordinal' } do
+    check(type(item[field]) == 'string', field .. ' is not a string')
+  end
   check(not item.logical_path:find('node_modules', 1, true), 'node_modules leaked into inventory')
   check(not item.logical_path:find 'mcp%-oauth', 'mcp-oauth leaked into inventory')
   check(not item.logical_path:find 'tokens%.json', 'token file leaked into inventory')
@@ -120,7 +122,16 @@ check(
   user.open_path == (uv.fs_realpath(vim.fs.joinpath(user_skill_target, 'SKILL.md')) or vim.fs.joinpath(user_skill_target, 'SKILL.md')),
   'user skill symlink target is wrong'
 )
-check(resource.identity(user):find(user.relative_path, 1, true) ~= nil, 'identity omits relative path')
+local user_identity = resource.identity(user)
+check(user_identity:find(user.open_path, 1, true) ~= nil, 'identity omits resolved open path')
+check(
+  user_identity == resource.identity(vim.tbl_extend('force', user, { origin = 'alias', relative_path = 'alias/SKILL.md' })),
+  'identity changed for an alias of the same resolved file'
+)
+check(
+  user_identity ~= resource.identity(vim.tbl_extend('force', user, { open_path = readme.open_path })),
+  'identity did not distinguish a different resolved file'
+)
 check(resource.display(user):find(user.logical_path, 1, true) ~= nil, 'display omits logical path')
 
 local duplicate_skills = {}
@@ -131,6 +142,7 @@ for _, item in ipairs(resources) do
 end
 check(#duplicate_skills == 2, 'same-name package skills were not retained separately')
 check(resource.identity(duplicate_skills[1]) ~= resource.identity(duplicate_skills[2]), 'duplicate package skill identities collided')
+check(find('extension', 'package-extension', 'index.ts') ~= nil, 'package extension is missing')
 
 local missing_resources, missing_warnings = resource.collect {
   pi_executable = vim.fs.joinpath(root, 'missing-pi'),
@@ -151,4 +163,4 @@ end
 check(missing_has_extension and missing_has_skill, 'missing pi results omitted extension or skill resources')
 
 vim.fn.delete(root, 'rf')
-print(string.format('pi_resources_spec: %d assertions passed', 36 - failures))
+print 'pi_resources_spec: all assertions passed'

@@ -328,7 +328,7 @@ local function package_resources(packages, resources, seen)
 end
 
 M.identity = function(resource)
-  return table.concat({ resource.kind, resource.name, resource.origin, resource.relative_path }, '\031')
+  return table.concat({ resource.kind, resource.name, realpath(resource.open_path) or resource.open_path }, '\031')
 end
 
 M.display = function(resource)
