@@ -188,6 +188,12 @@ return {
       -- },
       marksman = {},
 
+      -- Clojure LSP is supplied by the Apple Silicon-only Nix wrapper.
+      clojure_lsp = vim.uv.os_uname().machine == 'arm64' and {
+        mason = false,
+        cmd = { vim.fn.expand '~/bin/clojure-lsp' },
+      } or nil,
+
       solargraph = {
         cmd = { os.getenv 'HOME' .. '/.rbenv/shims/solargraph', 'stdio' },
         root_dir = nvim_lsp.util.root_pattern('Gemfile', '.git', '.'),
@@ -222,9 +228,24 @@ return {
     --  You can press `g?` for help in this menu.
     require('mason').setup()
 
+    local function setup_server(server_name)
+      local server = vim.deepcopy(servers[server_name] or {})
+      server.mason = nil
+      -- This handles overriding only values explicitly passed
+      -- by the server configuration above. Useful when disabling
+      -- certain features of an LSP (for example, turning off formatting for ts_ls)
+      server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+      nvim_lsp[server_name].setup(server)
+    end
+
     -- You can add other tools here that you want Mason to install
     -- for you, so that they are available from within Neovim.
-    local ensure_installed = vim.tbl_keys(servers or {})
+    local ensure_installed = {}
+    for server_name, server in pairs(servers) do
+      if server.mason ~= false then
+        table.insert(ensure_installed, server_name)
+      end
+    end
     vim.list_extend(ensure_installed, {
       'stylua', -- Used to format Lua code
     })
@@ -232,15 +253,14 @@ return {
 
     require('mason-lspconfig').setup {
       handlers = {
-        function(server_name)
-          local server = servers[server_name] or {}
-          -- This handles overriding only values explicitly passed
-          -- by the server configuration above. Useful when disabling
-          -- certain features of an LSP (for example, turning off formatting for ts_ls)
-          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-          require('lspconfig')[server_name].setup(server)
-        end,
+        setup_server,
       },
     }
+
+    for server_name, server in pairs(servers) do
+      if server.mason == false then
+        setup_server(server_name)
+      end
+    end
   end,
 }
