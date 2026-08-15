@@ -50,6 +50,13 @@ Increment number | `3 C-a`
 Decrement number | `3 C-x`
 Redo | `C-r`
 
+## Telescope_Search
+Search workspace text | `<leader>sg`, type `timeout`
+Search workspace text in Lua files | `<leader>sG`, type `timeout  **/*.lua`
+Search Pi resource files by name or path | `<leader>sP`, type `externalEditor`
+Find extension implementation files | `<leader>sP`, type `extension consent-gate`
+Find skill documentation | `<leader>sP`, type `skill brainstorming SKILL.md`
+
 ## Vim_Patterns
 Delete all lines containing pattern | `:g/pattern/d`
 Case sensitive match | `:s/\CPatern/Replacement/g    the \C makes the search case sensitive`
