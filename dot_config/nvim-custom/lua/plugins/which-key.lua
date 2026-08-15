@@ -13,6 +13,95 @@
 -- after the plugin has been loaded:
 --  config = function() ... end
 
+local function diff_active()
+  return vim.wo.diff
+end
+
+local function diff_action(action)
+  return function()
+    if diff_active() then
+      action()
+    end
+  end
+end
+
+local diff_keymaps = {
+  {
+    '<leader>d]',
+    function()
+      vim.cmd.normal { ']c', bang = true }
+    end,
+    'Next diff change',
+  },
+  {
+    '<leader>d[',
+    function()
+      vim.cmd.normal { '[c', bang = true }
+    end,
+    'Previous diff change',
+  },
+  {
+    '<leader>do',
+    function()
+      vim.cmd.diffget()
+    end,
+    'Obtain change from other pane',
+  },
+  {
+    '<leader>dP',
+    function()
+      vim.cmd.diffput()
+    end,
+    'Put change into other pane',
+  },
+  {
+    '<leader>du',
+    function()
+      vim.cmd.diffupdate()
+    end,
+    'Update diff',
+  },
+  {
+    '<leader>dx',
+    function()
+      vim.cmd.diffoff { bang = true }
+    end,
+    'Disable diff mode',
+  },
+}
+
+local function refresh_diff_keymaps(buf)
+  for _, mapping in ipairs(diff_keymaps) do
+    pcall(vim.keymap.del, 'n', mapping[1], { buffer = buf })
+  end
+  if not diff_active() then
+    return
+  end
+  for _, mapping in ipairs(diff_keymaps) do
+    vim.keymap.set('n', mapping[1], diff_action(mapping[2]), {
+      buffer = buf,
+      silent = true,
+      desc = mapping[3],
+    })
+  end
+end
+
+local diff_keymap_group = vim.api.nvim_create_augroup('which-key-diff-context', { clear = true })
+vim.api.nvim_create_autocmd({ 'BufWinEnter', 'WinEnter' }, {
+  group = diff_keymap_group,
+  callback = function(args)
+    refresh_diff_keymaps(args.buf)
+  end,
+})
+vim.api.nvim_create_autocmd('OptionSet', {
+  group = diff_keymap_group,
+  pattern = 'diff',
+  callback = function()
+    refresh_diff_keymaps(0)
+  end,
+})
+refresh_diff_keymaps(0)
+
 return { -- Useful plugin to show you pending keybinds.
   'folke/which-key.nvim',
   event = 'VimEnter', -- Sets the loading event to 'VimEnter'
@@ -58,11 +147,11 @@ return { -- Useful plugin to show you pending keybinds.
       },
     },
 
-    -- Document existing key chains
+    -- Document existing key chains. Diff and pi-diff mappings are buffer-local,
+    -- so WhichKey discovers them only while their context is active.
     spec = {
       { '<leader>c', group = '[c] Code/Claude', mode = { 'n', 'x' } },
       { '<leader>b', group = '[b] Buffer' },
-      { '<leader>d', group = '[d] Diff' },
       { '<leader>g', group = '[g] Git' },
       { '<leader>o', group = '[o] Octo' },
       { '<leader>p', group = '[p] Project' },

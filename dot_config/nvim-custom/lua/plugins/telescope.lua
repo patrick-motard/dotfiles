@@ -94,6 +94,7 @@ return {
 
     -- See `:help telescope.builtin`
     local builtin = require 'telescope.builtin'
+    local home_files = require 'config.home_files'
 
     -- find_files layout: keep the compact ivy theme on wide screens, but on
     -- narrow screens use a vertical layout so the preview of the selected file
@@ -114,6 +115,23 @@ return {
       }
       return opts
     end
+
+    local function home_files_picker()
+      if vim.fn.executable 'fd' ~= 1 then
+        vim.notify('Home file search requires fd', vim.log.levels.WARN)
+        return
+      end
+      local home = vim.fn.expand '~'
+      local search_dirs = home_files.search_dirs(home)
+      builtin.find_files(find_files_opts {
+        cwd = home,
+        search_dirs = search_dirs,
+        find_command = home_files.find_command(search_dirs),
+        prompt_title = 'Home files',
+      })
+    end
+
+    vim.keymap.set('n', '<leader>sH', home_files_picker, { desc = '[H]ome files' })
     vim.keymap.set('n', '<leader>sC', builtin.commands, { desc = '[C]ommands' })
     vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[h]elp' })
     vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[k]eymaps' })

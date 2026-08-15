@@ -21,6 +21,7 @@
 --   <leader>dp  - Re-show last accepted diff
 --
 local M = {}
+local context = require 'config.diff_context'
 
 -- Track active diff state
 M._active = nil
@@ -34,6 +35,55 @@ M._queue_index = 0
 -- (in M.accept and the reject keymap). Declaring them as locals up here keeps
 -- those references in scope; without this they resolve to nil globals.
 local mark_queue_accepted, mark_queue_rejected
+
+local pi_key_names = {
+  '<leader>dy',
+  '<leader>dn',
+  '<leader>dp',
+  '<leader>dj',
+  '<leader>dk',
+  '<leader>da',
+  '<leader>dA',
+  '<leader>df',
+}
+
+local function clear_pi_keymaps(buf)
+  for _, key in ipairs(pi_key_names) do
+    pcall(vim.keymap.del, 'n', key, { buffer = buf })
+  end
+end
+
+local function install_history_keymap(buf)
+  if not M._last_accepted then
+    return
+  end
+  vim.keymap.set('n', '<leader>dp', function() M.show_previous() end, {
+    noremap = true,
+    silent = true,
+    buffer = buf,
+    desc = '[d]iff show [p]revious',
+  })
+end
+
+local function install_active_keymaps(buf)
+  local opts = { noremap = true, silent = true, buffer = buf }
+  vim.keymap.set('n', '<leader>dy', function() M.accept() end,
+    vim.tbl_extend('force', opts, { desc = '[d]iff accept ([y]es)' }))
+  vim.keymap.set('n', '<leader>dn', function() M.close(false); mark_queue_rejected() end,
+    vim.tbl_extend('force', opts, { desc = '[d]iff reject ([n]o)' }))
+  if context.has_pending(M._queue) then
+    vim.keymap.set('n', '<leader>dj', function() M.show_next() end,
+      vim.tbl_extend('force', opts, { desc = '[d]iff next queued file' }))
+    vim.keymap.set('n', '<leader>dk', function() M.show_prev() end,
+      vim.tbl_extend('force', opts, { desc = '[d]iff previous queued file' }))
+    vim.keymap.set('n', '<leader>da', function() M.accept_all() end,
+      vim.tbl_extend('force', opts, { desc = '[d]iff accept [a]ll queued' }))
+    vim.keymap.set('n', '<leader>dA', function() M.reject_all() end,
+      vim.tbl_extend('force', opts, { desc = '[d]iff reject [A]ll queued' }))
+    vim.keymap.set('n', '<leader>df', function() M.telescope_pick() end,
+      vim.tbl_extend('force', opts, { desc = '[d]iff [f]ind queued file' }))
+  end
+end
 
 -- Drop-directory drained by the nvim-buffer pi extension every 500ms. Each note
 -- is written to a unique temp file and atomically renamed into place, so
@@ -138,21 +188,12 @@ function M.show(target_file, proposed_file, silent)
     target_file = target_file,
   }
 
-  -- Set up keybindings in both windows
-  local opts = { noremap = true, silent = true, buffer = true }
-
-  -- Keybindings for the proposed buffer (where cursor lands)
-  vim.keymap.set('n', '<leader>dy', function() M.accept() end,
-    vim.tbl_extend('force', opts, { desc = '[d]iff accept ([y]es)' }))
-  vim.keymap.set('n', '<leader>dn', function() M.close(false); mark_queue_rejected() end,
-    vim.tbl_extend('force', opts, { desc = '[d]iff reject ([n]o)' }))
-
-  -- Also set keybindings on the original buffer
-  vim.api.nvim_set_current_win(original_win)
-  vim.keymap.set('n', '<leader>dy', function() M.accept() end,
-    vim.tbl_extend('force', opts, { desc = '[d]iff accept ([y]es)' }))
-  vim.keymap.set('n', '<leader>dn', function() M.close(false); mark_queue_rejected() end,
-    vim.tbl_extend('force', opts, { desc = '[d]iff reject ([n]o)' }))
+  -- Set up keybindings in both windows. They are buffer-local so the Diff
+  -- menu disappears as soon as the pi review closes.
+  install_active_keymaps(proposed_buf)
+  install_active_keymaps(original_buf)
+  install_history_keymap(proposed_buf)
+  install_history_keymap(original_buf)
 
   -- Move cursor back to proposed window for review
   vim.api.nvim_set_current_win(proposed_win)
@@ -217,6 +258,8 @@ function M.close(accepted, silent)
   if not M._active then return end
 
   local state = M._active
+  clear_pi_keymaps(state.original_buf)
+  clear_pi_keymaps(state.proposed_buf)
   M._active = nil
 
   -- Close proposed window if it still exists
@@ -232,6 +275,7 @@ function M.close(accepted, silent)
 
   -- Clean up temp file
   vim.fn.delete(state.proposed_file)
+  install_history_keymap(state.original_buf)
 
   if not accepted and not silent then
     notify_pi('Rejected your proposed edit to ' .. state.target_file, state.target_file)
@@ -623,19 +667,15 @@ function M.show_previous()
   vim.notify('pi diff: Showing previous state (q or Esc to close)', vim.log.levels.INFO)
 end
 
--- Set up global keymaps
-vim.keymap.set('n', '<leader>dp', function() M.show_previous() end,
-  { noremap = true, silent = true, desc = '[d]iff show [p]revious' })
-vim.keymap.set('n', '<leader>dj', function() M.show_next() end,
-  { noremap = true, silent = true, desc = '[d]iff next file' })
-vim.keymap.set('n', '<leader>dk', function() M.show_prev() end,
-  { noremap = true, silent = true, desc = '[d]iff prev file' })
-vim.keymap.set('n', '<leader>da', function() M.accept_all() end,
-  { noremap = true, silent = true, desc = '[d]iff accept [a]ll' })
-vim.keymap.set('n', '<leader>dA', function() M.reject_all() end,
-  { noremap = true, silent = true, desc = '[d]iff reject [A]ll' })
-vim.keymap.set('n', '<leader>df', function() M.telescope_pick() end,
-  { noremap = true, silent = true, desc = '[d]iff [f]ind (telescope)' })
+-- Keep global fallbacks for compatibility, but hide them from WhichKey.
+-- Active buffer-local versions above provide the descriptions users should see.
+local hidden_fallback = { noremap = true, silent = true, desc = 'which_key_ignore' }
+vim.keymap.set('n', '<leader>dp', function() M.show_previous() end, hidden_fallback)
+vim.keymap.set('n', '<leader>dj', function() M.show_next() end, hidden_fallback)
+vim.keymap.set('n', '<leader>dk', function() M.show_prev() end, hidden_fallback)
+vim.keymap.set('n', '<leader>da', function() M.accept_all() end, hidden_fallback)
+vim.keymap.set('n', '<leader>dA', function() M.reject_all() end, hidden_fallback)
+vim.keymap.set('n', '<leader>df', function() M.telescope_pick() end, hidden_fallback)
 
 -- Namespace for inline diff virtual text
 local ns_inline = vim.api.nvim_create_namespace('pi_diff_inline')
@@ -836,8 +876,8 @@ function M.accept_inline()
   vim.wo.conceallevel = state.saved_conceallevel or 3
 
   -- Remove buffer-local keymaps
-  pcall(vim.keymap.del, 'n', '<leader>dy', { buffer = state.buf })
-  pcall(vim.keymap.del, 'n', '<leader>dn', { buffer = state.buf })
+  clear_pi_keymaps(state.buf)
+  install_history_keymap(state.buf)
 
   -- Persist to disk (inline applies content at show time but never saved it)
   if vim.bo[state.buf].buftype == '' and vim.api.nvim_buf_get_name(state.buf) ~= '' then
@@ -871,8 +911,8 @@ function M.reject_inline()
   vim.wo.conceallevel = state.saved_conceallevel or 3
 
   -- Remove buffer-local keymaps
-  pcall(vim.keymap.del, 'n', '<leader>dy', { buffer = state.buf })
-  pcall(vim.keymap.del, 'n', '<leader>dn', { buffer = state.buf })
+  clear_pi_keymaps(state.buf)
+  install_history_keymap(state.buf)
 
   notify_pi('Rejected your proposed edit to ' .. state.target_file, state.target_file)
   vim.notify('pi diff: Changes rejected, original restored.', vim.log.levels.INFO)
