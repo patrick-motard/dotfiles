@@ -22,6 +22,9 @@ Forward to letter | `f{n}`
 Forward, next result | `f{n}`
 Motion: Backward | `F`
 
+## Telescope
+Pi resources | `:PiResources` or `<leader>sP`
+
 ## Vim
 Capitalize word | `gUiw`
 Save | `C-s`
