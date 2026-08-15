@@ -4,6 +4,13 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
     vim.schedule(require('chezmoi.commands.__edit').watch)
   end,
 })
+
+vim.filetype.add {
+  pattern = {
+    ['.*%.json%.tmpl'] = 'chezmoi-json',
+  },
+}
+
 local function remove_trailing_whitespace()
   vim.cmd [[ %s/\s\+$//e ]]
 end
