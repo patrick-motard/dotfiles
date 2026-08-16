@@ -142,7 +142,7 @@ return {
     --
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-    local nvim_lsp = require 'lspconfig'
+    local lspconfig_util = require 'lspconfig.util'
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
     --
@@ -191,12 +191,12 @@ return {
       -- Clojure LSP is supplied by the Apple Silicon-only Nix wrapper.
       clojure_lsp = vim.uv.os_uname().machine == 'arm64' and {
         mason = false,
-        cmd = { vim.fn.expand '~/bin/clojure-lsp' },
+        cmd = { vim.fn.expand '~/code/dotfiles-private/bin/clojure-lsp' },
       } or nil,
 
       solargraph = {
         cmd = { os.getenv 'HOME' .. '/.rbenv/shims/solargraph', 'stdio' },
-        root_dir = nvim_lsp.util.root_pattern('Gemfile', '.git', '.'),
+        root_dir = lspconfig_util.root_pattern('Gemfile', '.git', '.'),
       },
       rubocop = {
         -- mason = false,
@@ -235,7 +235,8 @@ return {
       -- by the server configuration above. Useful when disabling
       -- certain features of an LSP (for example, turning off formatting for ts_ls)
       server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-      nvim_lsp[server_name].setup(server)
+      vim.lsp.config(server_name, server)
+      vim.lsp.enable(server_name)
     end
 
     -- You can add other tools here that you want Mason to install
