@@ -105,7 +105,6 @@ return {
 
     -- Repeatable move with ; and ,
     vim.keymap.set({ 'n', 'x', 'o' }, ';', repeat_move.repeat_last_move)
-    vim.keymap.set({ 'n', 'x', 'o' }, ',', repeat_move.repeat_last_move_opposite)
 
     -- Make builtin f, F, t, T also repeatable with ; and ,
     vim.keymap.set({ 'n', 'x', 'o' }, 'f', repeat_move.builtin_f_expr, { expr = true })

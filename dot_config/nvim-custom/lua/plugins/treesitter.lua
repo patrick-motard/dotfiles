@@ -86,7 +86,20 @@ return {
     -- Repeatable move with ; and ,
     local ts_repeat_move = require 'nvim-treesitter-textobjects.repeatable_move'
     vim.keymap.set({ 'n', 'x', 'o' }, ';', ts_repeat_move.repeat_last_move)
-    vim.keymap.set({ 'n', 'x', 'o' }, ',', ts_repeat_move.repeat_last_move_opposite)
+
+    -- Keep comma available for which-key's localleader trigger in Clojure
+    -- buffers. Other filetypes retain the repeatable-move behavior.
+    vim.api.nvim_create_autocmd('FileType', {
+      group = vim.api.nvim_create_augroup('treesitter-repeat-move', { clear = true }),
+      pattern = '*',
+      callback = function(event)
+        local filetype = vim.bo[event.buf].filetype
+        if filetype == 'clojure' or filetype == 'edn' then
+          return
+        end
+        vim.keymap.set({ 'n', 'x', 'o' }, ',', ts_repeat_move.repeat_last_move_opposite, { buffer = event.buf })
+      end,
+    })
 
     -- Make builtin f, F, t, T also repeatable with ; and ,
     vim.keymap.set({ 'n', 'x', 'o' }, 'f', ts_repeat_move.builtin_f_expr, { expr = true })
