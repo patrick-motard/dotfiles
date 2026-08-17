@@ -20,5 +20,6 @@ return {
     require('cheatsheet').setup {
       bundled_cheatsheets = false,
     }
+    require('config.cheatsheet_telescope').setup()
   end,
 }

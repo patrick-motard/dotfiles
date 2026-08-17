@@ -95,6 +95,60 @@ return {
     -- See `:help telescope.builtin`
     local builtin = require 'telescope.builtin'
     local home_files = require 'config.home_files'
+    local pi_inventory = require 'config.telescope.pi_resources'
+    local pickers = require 'telescope.pickers'
+    local finders = require 'telescope.finders'
+    local actions = require 'telescope.actions'
+    local action_state = require 'telescope.actions.state'
+    local conf = require('telescope.config').values
+
+    local function pi_resources()
+      local resources, warnings = pi_inventory.collect()
+      local notified = {}
+      for _, warning in ipairs(warnings) do
+        if not notified[warning] then
+          vim.notify(warning, vim.log.levels.WARN, { title = 'Pi resources' })
+          notified[warning] = true
+        end
+      end
+
+      pickers
+        .new({}, {
+          prompt_title = 'Pi resources',
+          finder = finders.new_table {
+            results = resources,
+            entry_maker = function(resource)
+              return {
+                value = resource,
+                id = pi_inventory.identity(resource),
+                ordinal = resource.ordinal,
+                display = function()
+                  return pi_inventory.display(resource)
+                end,
+                filename = resource.open_path,
+                path = resource.open_path,
+              }
+            end,
+          },
+          previewer = conf.file_previewer {},
+          sorter = conf.generic_sorter {},
+          attach_mappings = function(prompt_bufnr)
+            actions.select_default:replace(function()
+              local entry = action_state.get_selected_entry()
+              actions.close(prompt_bufnr)
+              if entry and entry.value and entry.value.open_path then
+                vim.cmd.edit { args = vim.fn.fnameescape(entry.value.open_path) }
+              end
+            end)
+            return true
+          end,
+        })
+        :find()
+    end
+
+    if vim.fn.exists ':PiResources' ~= 2 then
+      vim.api.nvim_create_user_command('PiResources', pi_resources, {})
+    end
 
     -- find_files layout: keep the compact ivy theme on wide screens, but on
     -- narrow screens use a vertical layout so the preview of the selected file
@@ -195,6 +249,7 @@ return {
         cwd = vim.fs.joinpath(vim.fn.stdpath 'data', 'lazy'),
       })
     end, { desc = '[p]lugin files' })
+    vim.keymap.set('n', '<leader>sP', pi_resources, { desc = '[P]i resources' })
 
     require('config.telescope.multigrep').setup()
   end,

@@ -157,6 +157,7 @@ return { -- Useful plugin to show you pending keybinds.
       { '<leader>p', group = '[p] Project' },
       { '<leader>r', group = '[r] Rename' },
       { '<leader>s', group = '[s] Search' },
+      { '<leader>sP', desc = '[P]i resources' },
       { '<leader>w', group = '[w] Workspace' },
       { '<leader>t', group = '[t] Toggle' },
       { '<leader>e', group = '[e] Editor' },
