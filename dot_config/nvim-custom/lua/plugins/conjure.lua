@@ -108,13 +108,109 @@ return {
       desc = 'Start and connect to the Clojure nREPL',
     })
 
+    local doc_win
+
+    local function decode_result(result)
+      local ok, decoded = pcall(vim.json.decode, result)
+      if ok and type(decoded) == 'string' then
+        return decoded
+      end
+      return result
+    end
+
+    local function format_docs(output)
+      local entries = {}
+      local current = {}
+
+      local function add_entry()
+        if #current > 0 then
+          table.insert(entries, current)
+          current = {}
+        end
+      end
+
+      for _, line in ipairs(vim.split(output, '\n', { plain = true })) do
+        local normalized = line:gsub('%s+$', '')
+        if normalized ~= '' and normalized:match '^%-+$' then
+          add_entry()
+        elseif normalized ~= '' then
+          table.insert(current, normalized)
+        end
+      end
+      add_entry()
+
+      local markdown = {}
+      for _, entry in ipairs(entries) do
+        local title = table.remove(entry, 1)
+        table.insert(markdown, '## `' .. title .. '`')
+        table.insert(markdown, '')
+
+        local signatures = {}
+        while entry[1] and entry[1]:match '^%(' do
+          table.insert(signatures, table.remove(entry, 1))
+        end
+        if #signatures > 0 then
+          table.insert(markdown, '```clojure')
+          vim.list_extend(markdown, signatures)
+          table.insert(markdown, '```')
+          table.insert(markdown, '')
+        end
+
+        for _, line in ipairs(entry) do
+          table.insert(markdown, (line:gsub('^%s+', '')))
+        end
+        table.insert(markdown, '')
+      end
+
+      if #markdown == 0 then
+        return { '_No matching documentation found._' }
+      end
+      return markdown
+    end
+
+    local function show_docs(result)
+      if doc_win and vim.api.nvim_win_is_valid(doc_win) then
+        vim.api.nvim_win_close(doc_win, true)
+      end
+
+      local output = decode_result(result)
+      local buf, win = vim.lsp.util.open_floating_preview(
+        format_docs(output),
+        'markdown',
+        {
+          border = 'rounded',
+          focusable = true,
+          max_width = math.floor(vim.o.columns * 0.8),
+          max_height = math.floor(vim.o.lines * 0.6),
+          wrap = true,
+        }
+      )
+      doc_win = win
+      vim.keymap.set('n', 'q', function()
+        if vim.api.nvim_win_is_valid(win) then
+          vim.api.nvim_win_close(win, true)
+        end
+      end, { buffer = buf, silent = true })
+      vim.keymap.set('n', '<Esc>', '<cmd>close<cr>', { buffer = buf, silent = true })
+    end
+
     local function find_clojure_doc()
       vim.ui.input({ prompt = 'Clojure docs: ' }, function(query)
         if not query or query == '' then
           return
         end
-        local form = ('(do (require \'clojure.repl) (clojure.repl/find-doc %s))'):format(vim.json.encode(query))
-        vim.cmd('ConjureEval ' .. form)
+        local form = ('(do (require \'clojure.repl) (with-out-str (clojure.repl/find-doc %s)))'):format(vim.json.encode(query))
+        require('conjure.eval')['eval-str'] {
+          code = form,
+          origin = 'command',
+          ['passive?'] = true,
+          ['suppress-hud?'] = true,
+          ['on-result'] = function(result)
+            vim.schedule(function()
+              show_docs(result)
+            end)
+          end,
+        }
       end)
     end
 
