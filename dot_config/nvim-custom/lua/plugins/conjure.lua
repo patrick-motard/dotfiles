@@ -3,6 +3,10 @@ return {
   ft = { 'clojure', 'edn' },
   config = function()
     vim.g['conjure#mapping#prefix'] = '<localleader>'
+    vim.g['conjure#log#wrap'] = true
+    vim.g['conjure#log#hud#width'] = 0.8
+    vim.g['conjure#log#hud#height'] = 0.4
+    vim.g['conjure#log#hud#anchor'] = 'SE'
     require('conjure.main').main()
     require('conjure.mapping')['on-filetype']()
 
