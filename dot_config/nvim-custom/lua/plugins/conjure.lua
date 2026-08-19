@@ -107,5 +107,36 @@ return {
     vim.api.nvim_create_user_command('ClojureStart', start_clojure, {
       desc = 'Start and connect to the Clojure nREPL',
     })
+
+    local function find_clojure_doc()
+      vim.ui.input({ prompt = 'Clojure docs: ' }, function(query)
+        if not query or query == '' then
+          return
+        end
+        local form = ('(do (require \'clojure.repl) (clojure.repl/find-doc %s))'):format(vim.json.encode(query))
+        vim.cmd('ConjureEval ' .. form)
+      end)
+    end
+
+    pcall(vim.api.nvim_del_user_command, 'ClojureFindDoc')
+    vim.api.nvim_create_user_command('ClojureFindDoc', find_clojure_doc, {
+      desc = 'Search Clojure documentation by text',
+    })
+
+    local function setup_doc_search_mapping(buf)
+      vim.keymap.set('n', '<localleader>fd', find_clojure_doc, {
+        buffer = buf,
+        desc = 'Search Clojure documentation',
+      })
+    end
+
+    setup_doc_search_mapping(0)
+    vim.api.nvim_create_autocmd('FileType', {
+      group = vim.api.nvim_create_augroup('conjure-documentation', { clear = true }),
+      pattern = { 'clojure', 'edn' },
+      callback = function(event)
+        setup_doc_search_mapping(event.buf)
+      end,
+    })
   end,
 }
