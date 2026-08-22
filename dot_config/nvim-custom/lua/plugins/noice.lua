@@ -17,7 +17,8 @@ return {
       override = {
         ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
         ['vim.lsp.util.stylize_markdown'] = true,
-        ['cmp.entry.get_documentation'] = true,
+        -- cmp can return userdata on Neovim 0.12; Noice's formatter expects tables.
+        ['cmp.entry.get_documentation'] = false,
       },
     },
     routes = {
