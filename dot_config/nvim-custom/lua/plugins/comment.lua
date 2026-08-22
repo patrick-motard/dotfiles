@@ -1,6 +1,10 @@
 return {
   'numToStr/Comment.nvim',
   opts = {
-    -- add any options here
+    pre_hook = function()
+      if vim.bo.filetype == 'ruby' then
+        return '# %s'
+      end
+    end,
   },
 }
