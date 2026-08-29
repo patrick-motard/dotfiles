@@ -1,0 +1,37 @@
+#+TITLE: Lantern Emacs Configuration
+#+AUTHOR: Patrick Motard
+
+* Theme
+#+BEGIN_SRC emacs-lisp
+  (use-package doom-themes
+    :config
+    (load-theme 'doom-lantern t))
+#+END_SRC
+
+* Org mode
+#+BEGIN_SRC emacs-lisp
+  (use-package org
+    :config
+    (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)))
+    (setq org-startup-indented t)
+    (setq org-hide-emphasis-markers t))
+#+END_SRC
+
+* UI
+#+BEGIN_SRC emacs-lisp
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (global-display-line-numbers-mode)
+#+END_SRC
+
+* Claude Code IDE
+Native Emacs integration for Claude Code CLI.
+#+BEGIN_SRC emacs-lisp
+  (use-package vterm)
+  (use-package claude-code-ide
+    :vc (:url "https://github.com/manzaltu/claude-code-ide.el" :rev :newest)
+    :bind ("C-c C-'" . claude-code-ide-menu)
+    :config
+    (claude-code-ide-emacs-tools-setup))
+#+END_SRC

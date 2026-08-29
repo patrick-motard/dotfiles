@@ -1,3 +1,4 @@
-(("default" . ((user-emacs-directory . "~/.emacs.d.han")))
+(("han"     . ((user-emacs-directory . "~/.emacs.d.han")))
  ("doom"    . ((user-emacs-directory . "~/.emacs.d.doom")
-               (env . (("DOOMDIR" . "~/.doom.d"))))))
+               (env . (("DOOMDIR" . "~/.doom.d")))))
+ ("lantern" . ((user-emacs-directory . "~/.emacs.d.lantern"))))
