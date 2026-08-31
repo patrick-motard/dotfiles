@@ -212,3 +212,8 @@ bindkey -M viins '\es' sesh-sessions
 if [[ "$PROFILE_STARTUP" == true ]]; then
   zprof
 fi
+
+
+# bun completions
+# used for running localchamber locally.
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
