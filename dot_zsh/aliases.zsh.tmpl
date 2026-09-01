@@ -294,6 +294,10 @@ alias tmux_uninstall_plugins="~/.tmux/plugins/tpm/bin/clean_plugins"
 # This environment variable is the name of the folder in ~/.config/nvim that contains the
 # configuration you want to use for neovim.
 export NVIM_APPNAME="nvim-custom"
+
+{{ if eq .chezmoi.os "linux" -}}
+alias paseo='~/.local/share/appimages/Paseo-x86_64.appimage --no-sandbox'
+{{- end }}
 vv() {
   # Assumes all configs exist in directories named ~/.config/nvim-*
   local config=$(fd --max-depth 1 --glob 'nvim-*' ~/.config | fzf --prompt="Neovim Configs > " --height=~50% --layout=reverse --border --exit-0)
