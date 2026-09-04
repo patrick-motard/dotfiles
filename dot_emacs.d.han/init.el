@@ -101,6 +101,7 @@
     go-mode
     exec-path-from-shell
     yaml-mode
+    eca ;; https://github.com/editor-code-assistant/eca-emacs
     circe
     org
     spaceline
@@ -113,7 +114,7 @@
     (package-install package)))
 
 (use-package auto-complete :ensure t)
-;; (use-package auto-complete :ensure t :defer t)
+
 ;; In elisp-mode, allows jumping to definition of function or variables under cursor.
 (use-package elisp-def :ensure t)
 (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
