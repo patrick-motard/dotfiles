@@ -32,3 +32,6 @@ dot_local/share/theme-picker/
 .config/tmuxinator/dev-wide-zendesk.yml
 .config/tmuxinator/growth-engine.yml
 .zsh/.zprofile
+
+# Emacs autosave/lock files
+\#*#
