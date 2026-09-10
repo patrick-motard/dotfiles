@@ -10,6 +10,7 @@ docs/
 .claude/CLAUDE.md
 .claude/statusline.sh
 .config/gh-dash/config.yml
+.config/tea/config.yml
 .local/bin/zshenv.sh
 .local/bin/zshenv.local.sh
 .ssh/config
