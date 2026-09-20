@@ -1,17 +1,8 @@
 # Agent Instructions
 
-This project uses **bd** (beads) for issue tracking. Run `bd onboard` to get started.
+## Task Tracking
 
-## Quick Reference
-
-```bash
-bd ready              # Find available work
-bd show <id>          # View issue details
-bd update <id> --status in_progress  # Claim work
-bd close <id>         # Complete work
-bd vc status          # Check beads database version-control state
-bd dolt push          # Push beads state when a remote is configured
-```
+Use a task tracker only when the user explicitly requests it.
 
 ## Landing the Plane (Session Completion)
 
@@ -19,14 +10,12 @@ bd dolt push          # Push beads state when a remote is configured
 
 **MANDATORY WORKFLOW:**
 
-1. **File issues for remaining work** - Create issues for anything that needs follow-up
+1. **Record remaining work** - Include any follow-up work in the handoff
 2. **Run quality gates** (if code changed) - Tests, linters, builds
-3. **Update issue status** - Close finished work, update in-progress items
+3. **Update an explicitly user-selected tracker** - Only when applicable
 4. **PUSH TO REMOTE** - This is MANDATORY:
    ```bash
    git pull --rebase
-   bd vc status
-   bd dolt push       # If configured; if no remote is configured, note that explicitly
    git push
    git status  # MUST show "up to date with origin"
    ```
@@ -40,9 +29,4 @@ bd dolt push          # Push beads state when a remote is configured
 - NEVER say "ready to push when you are" - YOU must push
 - If push fails, resolve and retry until it succeeds
 
-## Beads Command Drift Note
-
-If `bd sync` appears in older notes or habits, do not use it. In this environment, check beads state with `bd vc status` and push with `bd dolt push` when a remote is configured. If `bd dolt push` reports that no remote is configured, record that outcome and continue with normal git push verification.
-
 See [CLAUDE.md](./CLAUDE.md) for full project guidelines and instructions.
-
