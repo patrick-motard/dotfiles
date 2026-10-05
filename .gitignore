@@ -29,6 +29,7 @@ private_dot_ssh/config
 private_dot_claude/
 docs/CLAUDE.md
 dot_pi/
+.pi/
 
 thoughts/
 dot_zshenv
