@@ -15,8 +15,7 @@ docs/
 .local/bin/zshenv.local.sh
 .ssh/config
 .claude/
-.pi/agent/settings.json
-.pi/agent/models.json
+.pi/
 
 .zshenv
 
