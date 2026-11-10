@@ -147,7 +147,11 @@ zinit light zsh-users/zsh-syntax-highlighting
 #region zoxide
 # Fast zsh directory switching
 # Note: eager init required so cd hook tracks all directory changes
+# Never track PATH dirs: non-interactive shells (agent scans, `zsh -ilc`) cd
+# through bin dirs thousands of times a day, which inflates ranks and evicts
+# real entries from the db (zoxide 'no match found' bug).
 if command -v zoxide >/dev/null 2>&1; then
+  export _ZO_EXCLUDE_DIRS="${_ZO_EXCLUDE_DIRS:+$_ZO_EXCLUDE_DIRS:}$PATH"
   eval "$(zoxide init zsh)"
 fi
 # Interactive zoxide picker (Alt-Z) — zinit steals `zi`, so we bind directly
